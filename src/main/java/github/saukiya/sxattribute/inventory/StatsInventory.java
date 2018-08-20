@@ -148,9 +148,9 @@ public class StatsInventory {
                 String[] loreSplit = lore.split("%");
                 String string = loreSplit[1].split("_")[1];
                 String str = null;
-                if (string.equalsIgnoreCase("value")){
+                if (string.equalsIgnoreCase("value")) {
                     str = SXAttribute.getDf().format(data.getValue());
-                }else {
+                } else {
                     for (SubAttribute attribute : data.getAttributeMap().values()) {
                         str = attribute.getPlaceholder(string);
                         if (str != null) break;

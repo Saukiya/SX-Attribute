@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.util.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -30,6 +31,9 @@ public abstract class SubAttribute {
     private final String name;
 
     private final SXAttributeType[] attributeTypes;
+
+    @Getter
+    private JavaPlugin plugin = null;
 
     private Double[] doubles;
 
@@ -71,17 +75,19 @@ public abstract class SubAttribute {
     /**
      * 注册属性方法
      */
-    protected final void registerAttribute() {
-        if (attributeTypes.length == 0){
+    protected final void registerAttribute(JavaPlugin plugin) {
+        if (plugin == null) {
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubAttribute >> §4" + this.getName() + " §cNull Plugin!");
+            return;
+        } else if (this.getPriority() < 0) {
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§8SubAttribute >> §4" + this.getName() + " §8Disable!");
+            return;
+        } else if (attributeTypes.length == 0) {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubAttribute >> §4" + this.getName() + " §cNo SXAttributeType!");
             return;
         }
 
-        if (this.getPriority() < 0) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§8SubAttribute >> Disable §4" + this.getName() + " §8!");
-            return;
-        }
-
+        this.plugin = plugin;
         if (!attributeMap.containsKey(this.getPriority())) {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubAttribute >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
         } else {
@@ -93,7 +99,7 @@ public abstract class SubAttribute {
     /**
      * 属性注册启动时执行的方法
      */
-    public void onEnable(){
+    public void onEnable() {
 
     }
 

@@ -46,34 +46,30 @@ public class SXAttributeManager {
     public SXAttributeManager(SXAttribute plugin) {
         this.plugin = plugin;
 
-        new BlindnessAttribute().registerAttribute();
-        new CritAttribute().registerAttribute();
-        new DamageAttribute().registerAttribute();
-        new HitRateAttribute().registerAttribute();
-        new IgnitionAttribute().registerAttribute();
-        new LifeStealAttribute().registerAttribute();
-        new LightningAttribute().registerAttribute();
-        new PoisonAttribute().registerAttribute();
-        new RealAttribute().registerAttribute();
-        new SlownessAttribute().registerAttribute();
-        new TearingAttribute().registerAttribute();
-        new WitherAttribute().registerAttribute();
+        new BlindnessAttribute().registerAttribute(SXAttribute.getPlugin());
+        new CritAttribute().registerAttribute(SXAttribute.getPlugin());
+        new DamageAttribute().registerAttribute(SXAttribute.getPlugin());
+        new HitRateAttribute().registerAttribute(SXAttribute.getPlugin());
+        new IgnitionAttribute().registerAttribute(SXAttribute.getPlugin());
+        new LifeStealAttribute().registerAttribute(SXAttribute.getPlugin());
+        new LightningAttribute().registerAttribute(SXAttribute.getPlugin());
+        new PoisonAttribute().registerAttribute(SXAttribute.getPlugin());
+        new RealAttribute().registerAttribute(SXAttribute.getPlugin());
+        new SlownessAttribute().registerAttribute(SXAttribute.getPlugin());
+        new TearingAttribute().registerAttribute(SXAttribute.getPlugin());
+        new WitherAttribute().registerAttribute(SXAttribute.getPlugin());
 
-        new BlockAttribute().registerAttribute();
-        new DefenseAttribute().registerAttribute();
-        new DodgeAttribute().registerAttribute();
-        new ReflectionAttribute().registerAttribute();
-        new ToughnessAttribute().registerAttribute();
+        new BlockAttribute().registerAttribute(SXAttribute.getPlugin());
+        new DefenseAttribute().registerAttribute(SXAttribute.getPlugin());
+        new DodgeAttribute().registerAttribute(SXAttribute.getPlugin());
+        new ReflectionAttribute().registerAttribute(SXAttribute.getPlugin());
+        new ToughnessAttribute().registerAttribute(SXAttribute.getPlugin());
 
-        new ExpAdditionAttribute().registerAttribute();
-        new HealthRegenAttribute().registerAttribute();
+        new ExpAdditionAttribute().registerAttribute(SXAttribute.getPlugin());
+        new HealthRegenAttribute().registerAttribute(SXAttribute.getPlugin());
 
-        new HealthAttribute().registerAttribute();
-        new SpeedAttribute().registerAttribute();
-    }
-
-    public void onAttributeEnable(){
-        attributeMap.values().forEach(SubAttribute::onEnable);
+        new HealthAttribute().registerAttribute(SXAttribute.getPlugin());
+        new SpeedAttribute().registerAttribute(SXAttribute.getPlugin());
     }
 
     /**
@@ -83,6 +79,10 @@ public class SXAttributeManager {
      */
     static Map<Integer, SubAttribute> cloneSXAttributeList() {
         return attributeMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().newAttribute(), (a, b) -> b, TreeMap::new));
+    }
+
+    public void onAttributeEnable() {
+        attributeMap.values().forEach(SubAttribute::onEnable);
     }
 
     /**

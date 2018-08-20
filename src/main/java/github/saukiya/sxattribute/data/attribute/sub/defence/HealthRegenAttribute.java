@@ -45,7 +45,7 @@ public class HealthRegenAttribute extends SubAttribute {
                                 if (healthRegen > 0) {
                                     EntityRegainHealthEvent event = new EntityRegainHealthEvent(player, healthRegen, EntityRegainHealthEvent.RegainReason.CUSTOM);
                                     Bukkit.getPluginManager().callEvent(event);
-                                    if (!event.isCancelled()){
+                                    if (!event.isCancelled()) {
                                         healthRegen = (event.getAmount() + player.getHealth()) > maxHealth ? (maxHealth - player.getHealth()) : event.getAmount();
                                         player.setHealth(healthRegen + player.getHealth());
                                     }

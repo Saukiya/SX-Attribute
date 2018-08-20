@@ -30,9 +30,10 @@ public class RandomStringManager {
 
     /**
      * 获取随机字符串数据
+     *
      * @return Set
      */
-    public Set<Map.Entry<String, List<String>>> entrySet(){
+    public Set<Map.Entry<String, List<String>>> entrySet() {
         return map.entrySet();
     }
 

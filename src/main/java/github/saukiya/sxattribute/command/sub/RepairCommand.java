@@ -16,7 +16,7 @@ import java.util.List;
 public class RepairCommand extends SubCommand {
 
     public RepairCommand() {
-        super("repair", SenderType.PLAYER);
+        super(SXAttribute.getPlugin(), "repair", SenderType.PLAYER);
     }
 
     @Override

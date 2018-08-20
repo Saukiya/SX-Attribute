@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class GiveCommand extends SubCommand {
 
     public GiveCommand() {
-        super("give", " <ItemName> <Player> <Amount>", SenderType.ALL);
+        super(SXAttribute.getPlugin(), "give", " <ItemName> <Player> <Amount>", SenderType.ALL);
     }
 
     @Override

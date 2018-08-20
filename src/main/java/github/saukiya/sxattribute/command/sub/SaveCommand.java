@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class SaveCommand extends SubCommand {
     public SaveCommand() {
-        super("save", " <ItemName>", SenderType.PLAYER);
+        super(SXAttribute.getPlugin(), "save", " <ItemName>", SenderType.PLAYER);
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
 public class StatsCommand extends SubCommand {
 
     public StatsCommand() {
-        super("stats", SenderType.PLAYER);
+        super(SXAttribute.getPlugin(), "stats", SenderType.PLAYER);
     }
 
     @Override

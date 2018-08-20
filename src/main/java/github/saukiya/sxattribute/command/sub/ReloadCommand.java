@@ -21,7 +21,7 @@ import java.util.UUID;
 public class ReloadCommand extends SubCommand {
 
     public ReloadCommand() {
-        super("reload");
+        super(SXAttribute.getPlugin(), "reload");
     }
 
     @Override

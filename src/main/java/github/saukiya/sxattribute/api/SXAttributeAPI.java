@@ -55,7 +55,7 @@ public class SXAttributeAPI {
      *
      * @return ItemUtil
      */
-    public ItemUtil getItemUtil(){
+    public ItemUtil getItemUtil() {
         return plugin.getItemUtil();
     }
 
@@ -64,7 +64,7 @@ public class SXAttributeAPI {
      *
      * @return RandomStringManager
      */
-    public RandomStringManager getRandomStringManager(){
+    public RandomStringManager getRandomStringManager() {
         return plugin.getRandomStringManager();
     }
 

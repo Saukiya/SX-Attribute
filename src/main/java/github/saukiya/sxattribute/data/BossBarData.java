@@ -34,25 +34,26 @@ public class BossBarData {
     private int updateTick = Config.getConfig().getInt(Config.HEALTH_BOSS_BAR_DISPLAY_TIME);
 
     @Getter
-    private Map<Player,Long> timeMap = new HashMap<>();
+    private Map<Player, Long> timeMap = new HashMap<>();
 
-    public BossBarData(LivingEntity entity,String name, double maxHealth, double progress){
+    public BossBarData(LivingEntity entity, String name, double maxHealth, double progress) {
         this.entity = entity;
         this.name = name;
         this.maxHealth = maxHealth;
         bossBar = Bukkit.createBossBar(MessageFormat.format(Config.getConfig().getString(Config.HEALTH_BOSS_BAR_FORMAT), name, SXAttribute.getDf().format(progress * maxHealth), SXAttribute.getDf().format(maxHealth)).replace("&", "§"), BarColor.GREEN, BarStyle.SEGMENTED_20);
         setProgress(progress);
     }
-    public void updateTitle(){
+
+    public void updateTitle() {
         bossBar.setTitle(MessageFormat.format(Config.getConfig().getString(Config.HEALTH_BOSS_BAR_FORMAT), name, SXAttribute.getDf().format(bossBar.getProgress() * maxHealth), SXAttribute.getDf().format(maxHealth)).replace("&", "§"));
     }
 
-    public void setProgress(double progress){
+    public void setProgress(double progress) {
         bossBar.setProgress(progress);
         bossBar.setColor(progress > 0.66 ? BarColor.GREEN : progress > 0.33 ? BarColor.YELLOW : BarColor.RED);
     }
 
-    public BossBarData addPlayer(Player player){
+    public BossBarData addPlayer(Player player) {
         bossBar.addPlayer(player);
         timeMap.put(player, System.currentTimeMillis() + (updateTick * 1000));
         return this;

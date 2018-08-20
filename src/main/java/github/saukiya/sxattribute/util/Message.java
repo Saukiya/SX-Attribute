@@ -117,12 +117,10 @@ public enum Message {
     REPLACE_LIST;
 
     private static final File FILE = new File(SXAttribute.getPlugin().getDataFolder(), "Message.yml");
-
-    @Getter
-    private static YamlConfiguration messages;
-
     @Getter
     private static final String messagePrefix = "[" + SXAttribute.getPlugin().getName() + "] ";
+    @Getter
+    private static YamlConfiguration messages;
 
     private static void createDefaultMessage() {
         messages.set(MESSAGE_VERSION.toString(), SXAttribute.getPlugin().getDescription().getVersion());
@@ -276,7 +274,7 @@ public enum Message {
      * @throws IOException IOException
      */
     private static boolean detectionVersion() throws IOException {
-        if (!messages.getString(Message.MESSAGE_VERSION.toString(),"").equals(SXAttribute.getPlugin().getDescription().getVersion())) {
+        if (!messages.getString(Message.MESSAGE_VERSION.toString(), "").equals(SXAttribute.getPlugin().getDescription().getVersion())) {
             messages.save(new File(FILE.toString().replace(".yml", "_" + messages.getString(Message.MESSAGE_VERSION.toString()) + ".yml")));
             messages = new YamlConfiguration();
             createDefaultMessage();

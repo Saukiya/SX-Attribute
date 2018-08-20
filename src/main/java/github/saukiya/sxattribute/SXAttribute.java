@@ -221,7 +221,7 @@ public class SXAttribute extends JavaPlugin {
             onHealthChangeDisplayListener.getBossList().forEach((bossBarData -> bossBarData.getBossBar().removeAll()));
         }
         if (Config.isHealthNameVisible()) {
-            onHealthChangeDisplayListener.getNameList().forEach((nameData) ->{
+            onHealthChangeDisplayListener.getNameList().forEach((nameData) -> {
                 if (nameData.getEntity() != null && !nameData.getEntity().isDead()) {
                     nameData.getEntity().setCustomName(nameData.getName());
                     nameData.getEntity().setCustomNameVisible(nameData.isVisible());

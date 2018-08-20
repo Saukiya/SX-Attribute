@@ -1,14 +1,15 @@
 package github.saukiya.sxattribute.data.condition;
 
-import github.saukiya.sxlevel.SXLevel;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxlevel.SXLevel;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
@@ -23,6 +24,9 @@ public abstract class SubCondition {
 
     @Getter
     private final String name;
+
+    @Getter
+    private JavaPlugin plugin = null;
 
     @Getter
     private SXConditionType[] updateTypes = new SXConditionType[]{SXConditionType.ALL};
@@ -153,11 +157,15 @@ public abstract class SubCondition {
     /**
      * 注册属性方法
      */
-    protected final void registerCondition() {
-        if (this.getPriority() < 0) {
+    protected final void registerCondition(JavaPlugin plugin) {
+        if (plugin == null) {
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubCondition >> §4" + this.getName() + " §cNull Plugin!");
+            return;
+        } else if (this.getPriority() < 0) {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§8SubCondition >> Disable §4" + this.getName() + " §8!");
             return;
         }
+        this.plugin = plugin;
         if (!conditionMap.containsKey(this.getPriority())) {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubCondition >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
         } else {

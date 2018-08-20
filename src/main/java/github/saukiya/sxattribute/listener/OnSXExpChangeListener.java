@@ -1,9 +1,9 @@
 package github.saukiya.sxattribute.listener;
 
-import github.saukiya.sxlevel.event.ChangeType;
-import github.saukiya.sxlevel.event.SXExpChangeEvent;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxlevel.event.ChangeType;
+import github.saukiya.sxlevel.event.SXExpChangeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

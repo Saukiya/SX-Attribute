@@ -16,7 +16,7 @@ import java.util.List;
 public class NBTCommand extends SubCommand {
 
     public NBTCommand() {
-        super("nbt", SenderType.PLAYER);
+        super(SXAttribute.getPlugin(), "nbt", SenderType.PLAYER);
     }
 
     @Override

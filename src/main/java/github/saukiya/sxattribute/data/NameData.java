@@ -26,18 +26,18 @@ public class NameData {
     /**
      * 头顶血条显示数据
      *
-     * @param entity    实体
+     * @param entity  实体
      * @param name    原来的名字
      * @param visible 是否隐藏
      */
-    public NameData(LivingEntity entity,String name, boolean visible) {
+    public NameData(LivingEntity entity, String name, boolean visible) {
         this.entity = entity;
         this.name = name;
         this.visible = visible;
     }
 
-    public void updateTick(){
-        this.tick = System.currentTimeMillis() + (updateTick  * 1000);
+    public void updateTick() {
+        this.tick = System.currentTimeMillis() + (updateTick * 1000);
     }
 
 }

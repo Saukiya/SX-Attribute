@@ -355,7 +355,7 @@ public class Config {
      * @throws IOException IOException
      */
     private static boolean detectionVersion() throws IOException {
-        if (!config.getString(CONFIG_VERSION,"").equals(SXAttribute.getPlugin().getDescription().getVersion())) {
+        if (!config.getString(CONFIG_VERSION, "").equals(SXAttribute.getPlugin().getDescription().getVersion())) {
             config.save(new File(FILE.toString().replace(".yml", "_" + config.getString(CONFIG_VERSION) + ".yml")));
             config = new YamlConfiguration();
             createDefaultConfig();

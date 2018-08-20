@@ -15,7 +15,7 @@ import java.util.List;
 public class DisplaySlotCommand extends SubCommand {
 
     public DisplaySlotCommand() {
-        super("displaySlot", SenderType.PLAYER);
+        super(SXAttribute.getPlugin(), "displaySlot", SenderType.PLAYER);
     }
 
     @Override

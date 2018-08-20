@@ -16,7 +16,7 @@ import java.util.List;
 public class SellCommand extends SubCommand {
 
     public SellCommand() {
-        super("sell", SenderType.PLAYER);
+        super(SXAttribute.getPlugin(), "sell", SenderType.PLAYER);
     }
 
     @Override

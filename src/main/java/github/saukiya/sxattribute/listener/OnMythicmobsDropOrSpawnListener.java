@@ -1,8 +1,8 @@
 package github.saukiya.sxattribute.listener;
 
-import github.saukiya.sxseal.SXSeal;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxseal.SXSeal;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import io.lumine.xikage.mythicmobs.mobs.MythicMob;

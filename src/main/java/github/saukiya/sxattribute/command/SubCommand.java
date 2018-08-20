@@ -2,8 +2,10 @@ package github.saukiya.sxattribute.command;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Message;
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -17,47 +19,62 @@ public abstract class SubCommand {
 
     static final CommandList subCommands = new CommandList();
 
+    @Getter
+    private final JavaPlugin plugin;
+
     private String cmd, arg = "";
 
     private Boolean hide = false;
 
     private SenderType[] senderTypes = new SenderType[]{SenderType.ALL};
 
-    public SubCommand(String cmd, String arg, Boolean hide, SenderType... senderTypes) {
+    public SubCommand(JavaPlugin plugin, String cmd, String arg, Boolean hide, SenderType... senderTypes) {
+        this.plugin = plugin;
         this.cmd = cmd;
         this.arg = arg;
         this.hide = hide;
         this.senderTypes = senderTypes;
-        subCommands.add(this);
+        if (plugin != null) {
+            subCommands.add(this);
+        }
     }
 
-    public SubCommand(String cmd, String arg, SenderType... senderTypes) {
+    public SubCommand(JavaPlugin plugin, String cmd, String arg, SenderType... senderTypes) {
+        this.plugin = plugin;
         this.cmd = cmd;
         this.arg = arg;
         this.senderTypes = senderTypes;
-        subCommands.add(this);
+        if (plugin != null) {
+            subCommands.add(this);
+        }
     }
 
-    public SubCommand(String cmd, SenderType... senderTypes) {
+    public SubCommand(JavaPlugin plugin, String cmd, SenderType... senderTypes) {
+        this.plugin = plugin;
         this.cmd = cmd;
         this.senderTypes = senderTypes;
-        subCommands.add(this);
+        if (plugin != null) {
+            subCommands.add(this);
+        }
     }
 
-    public SubCommand(String cmd) {
+    public SubCommand(JavaPlugin plugin, String cmd) {
+        this.plugin = plugin;
         this.cmd = cmd;
-        subCommands.add(this);
+        if (plugin != null) {
+            subCommands.add(this);
+        }
     }
 
-    protected String cmd() {
+    String cmd() {
         return cmd;
     }
 
-    protected String arg() {
+    private String arg() {
         return arg;
     }
 
-    protected Boolean hide() {
+    Boolean hide() {
         return hide;
     }
 
