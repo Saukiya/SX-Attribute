@@ -20,7 +20,7 @@ public abstract class SubCommand {
     static final CommandList subCommands = new CommandList();
 
     @Getter
-    private final JavaPlugin plugin;
+    private String pluginName;
 
     private String cmd, arg = "";
 
@@ -28,40 +28,31 @@ public abstract class SubCommand {
 
     private SenderType[] senderTypes = new SenderType[]{SenderType.ALL};
 
-    public SubCommand(JavaPlugin plugin, String cmd, String arg, Boolean hide, SenderType... senderTypes) {
-        this.plugin = plugin;
+    public SubCommand(String cmd, String arg, Boolean hide, SenderType... senderTypes) {
         this.cmd = cmd;
         this.arg = arg;
         this.hide = hide;
         this.senderTypes = senderTypes;
-        if (plugin != null) {
-            subCommands.add(this);
-        }
     }
 
-    public SubCommand(JavaPlugin plugin, String cmd, String arg, SenderType... senderTypes) {
-        this.plugin = plugin;
+    public SubCommand(String cmd, String arg, SenderType... senderTypes) {
         this.cmd = cmd;
         this.arg = arg;
         this.senderTypes = senderTypes;
-        if (plugin != null) {
-            subCommands.add(this);
-        }
     }
 
-    public SubCommand(JavaPlugin plugin, String cmd, SenderType... senderTypes) {
-        this.plugin = plugin;
+    public SubCommand(String cmd, SenderType... senderTypes) {
         this.cmd = cmd;
         this.senderTypes = senderTypes;
-        if (plugin != null) {
-            subCommands.add(this);
-        }
     }
 
-    public SubCommand(JavaPlugin plugin, String cmd) {
-        this.plugin = plugin;
+    public SubCommand(String cmd) {
         this.cmd = cmd;
-        if (plugin != null) {
+    }
+
+    public final void registerCommand(JavaPlugin plugin) {
+        if (plugin != null){
+            this.pluginName = plugin.getName();
             subCommands.add(this);
         }
     }
@@ -79,7 +70,7 @@ public abstract class SubCommand {
     }
 
     private String permission() {
-        return SXAttribute.getPlugin().getName() + "." + cmd;
+        return SXAttribute.getPluginName() + "." + cmd;
     }
 
     public abstract void onCommand(SXAttribute plugin, CommandSender sender, String[] args);

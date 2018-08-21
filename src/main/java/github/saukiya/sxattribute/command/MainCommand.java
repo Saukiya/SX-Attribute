@@ -22,18 +22,20 @@ public class MainCommand implements CommandExecutor, TabCompleter {
 
     private final CommandList subCommands = SubCommand.subCommands;
 
-    private SXAttribute plugin;
+    private final SXAttribute plugin;
 
     public MainCommand(SXAttribute plugin) {
         this.plugin = plugin;
-        new StatsCommand();
-        new RepairCommand();
-        new SellCommand();
-        new GiveCommand();
-        new SaveCommand();
-        new DisplaySlotCommand();
-        new NBTCommand();
-        new ReloadCommand();
+        new StatsCommand().registerCommand(plugin);
+        new RepairCommand().registerCommand(plugin);
+        new SellCommand().registerCommand(plugin);
+        new GiveCommand().registerCommand(plugin);
+        new SaveCommand().registerCommand(plugin);
+        new NBTCommand().registerCommand(plugin);
+        new DisplaySlotCommand().registerCommand(plugin);
+        new AttributeListCommand().registerCommand(plugin);
+        new ConditionListCommand().registerCommand(plugin);
+        new ReloadCommand().registerCommand(plugin);
     }
 
     public void setUp(String command) {
@@ -53,7 +55,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command arg1, String label, String[] args) {
         SenderType type = getType(sender);
         if (args.length == 0) {
-            sender.sendMessage("§0-§8 --§7 ---§c ----§4 -----§b " + SXAttribute.getPlugin().getName() + "§4 -----§c ----§7 ---§8 --§0 - §0Author Saukiya");
+            sender.sendMessage("§0-§8 --§7 ---§c ----§4 -----§b " + SXAttribute.getPluginName() + "§4 -----§c ----§7 ---§8 --§0 - §0Author Saukiya");
             String color = "§7";
             for (SubCommand sub : subCommands.toCollection()) {
                 if (sub.isUse(sender, type) && !sub.hide()) {

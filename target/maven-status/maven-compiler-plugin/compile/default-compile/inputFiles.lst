@@ -36,6 +36,7 @@ F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\condition\sub\LimitLevelCondition.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\listener\OnUpdateStatsListener.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\util\MoneyUtil.java
+F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\command\sub\ConditionListCommand.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\command\CommandList.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\RegisterSlotManager.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\attribute\sub\other\ExpAdditionAttribute.java
@@ -70,6 +71,7 @@ F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\condition\SubCondition.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\RandomStringManager.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\attribute\sub\defence\BlockAttribute.java
+F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\command\sub\AttributeListCommand.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\data\RegisterSlot.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\listener\OnBanShieldInteractListener.java
 F:\游戏\我的世界\服务测试\开发库\Saukiya\SX-Attribute\src\main\java\github\saukiya\sxattribute\command\sub\SellCommand.java

@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class SaveCommand extends SubCommand {
     public SaveCommand() {
-        super(SXAttribute.getPlugin(), "save", " <ItemName>", SenderType.PLAYER);
+        super("save", " <ItemName>", SenderType.PLAYER);
     }
 
     @Override

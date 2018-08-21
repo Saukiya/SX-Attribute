@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -33,8 +34,13 @@ public class SXAttribute extends JavaPlugin {
     private static final int[] versionSplit = new int[3];
     @Getter
     private static final Random random = new Random();
+
     @Getter
-    private static JavaPlugin plugin;
+    private static String pluginName;
+    @Getter
+    private static String pluginVersion;
+    @Getter
+    private static File pluginFile;
     @Getter
     @Setter
     private static DecimalFormat df = new DecimalFormat("#.##");
@@ -101,7 +107,9 @@ public class SXAttribute extends JavaPlugin {
     @Override
     public void onLoad() {
         super.onLoad();
-        plugin = this;
+        pluginFile = this.getDataFolder();
+        pluginName = this.getName();
+        pluginVersion = this.getDescription().getVersion();
         api = new SXAttributeAPI(this);
         try {
             Config.loadConfig();

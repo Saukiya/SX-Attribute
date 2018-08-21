@@ -16,7 +16,7 @@ import java.util.*;
  * @author Saukiya
  */
 public class RandomStringManager {
-    private final File file = new File(SXAttribute.getPlugin().getDataFolder(), "RandomString");
+    private final File file = new File(SXAttribute.getPluginFile(), "RandomString");
     private final File file1 = new File(file, "DefaultRandom.yml");
     private final File file2 = new File(file, "10Level" + File.separator + "Random.yml");
 
@@ -193,7 +193,7 @@ public class RandomStringManager {
                 yml.load(file);
                 for (String name : yml.getKeys(false)) {
                     if (map.containsKey(name)) {
-                        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c不要重复随机字符组名:§4 " + file.getName().replace("plugins" + File.separator + SXAttribute.getPlugin().getName() + File.separator, "") + File.separator + name + "§c !");
+                        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c不要重复随机字符组名:§4 " + file.getName().replace("plugins" + File.separator + SXAttribute.getPluginName() + File.separator, "") + File.separator + name + "§c !");
                     }
                     if (yml.get(name) instanceof String) {
                         map.put(name, Collections.singletonList(yml.getString(name)));

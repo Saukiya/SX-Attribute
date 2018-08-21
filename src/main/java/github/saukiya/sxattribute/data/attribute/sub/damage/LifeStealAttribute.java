@@ -5,10 +5,12 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
+import github.saukiya.sxattribute.listener.OnHealthChangeDisplayListener;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,14 +34,17 @@ public class LifeStealAttribute extends SubAttribute {
             if (probability(getAttributes()[0])) {
                 DamageEventData damageEventData = (DamageEventData) eventData;
                 LivingEntity damager = damageEventData.getDamager();
-                double maxHealth = SXAttribute.getVersionSplit()[1] >= 9 ? damager.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : damager.getMaxHealth();
-                if (damager.getHealth() < maxHealth) {
-                    double lifeHealth = damageEventData.getEvent().getFinalDamage() * getAttributes()[0] / 100;
-                    damager.setHealth((damager.getHealth() + lifeHealth) > maxHealth ? maxHealth : (damager.getHealth() + lifeHealth));
-                    damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__LIFE_STEAL, getDf().format(lifeHealth)));
-                    Message.send(damager, Message.PLAYER__BATTLE__LIFE_STEAL, damageEventData.getEntityName(), getFirstPerson());
-                    Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__LIFE_STEAL, getFirstPerson(), damageEventData.getDamagerName());
+                double maxHealth = OnHealthChangeDisplayListener.getMaxHealth(damager);
+                double lifeHealth = damageEventData.getEvent().getFinalDamage() * getAttributes()[0] / 100;
+                EntityRegainHealthEvent event = new EntityRegainHealthEvent(damager, lifeHealth, EntityRegainHealthEvent.RegainReason.CUSTOM);
+                if (event.isCancelled()){
+                    return;
                 }
+                lifeHealth = (maxHealth < damager.getHealth() + event.getAmount()) ? (maxHealth - damager.getHealth()) : event.getAmount();
+                damager.setHealth(damager.getHealth() + lifeHealth);
+                damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__LIFE_STEAL, getDf().format(lifeHealth)));
+                Message.send(damager, Message.PLAYER__BATTLE__LIFE_STEAL, damageEventData.getEntityName(), getFirstPerson());
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__LIFE_STEAL, getFirstPerson(), damageEventData.getDamagerName());
             }
         }
     }

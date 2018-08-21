@@ -13,13 +13,13 @@ public class SXConditionManager {
     private final ConditionMap conditionMap = SubCondition.conditionMap;
 
     public SXConditionManager(SXAttribute plugin) {
-        new MainHandCondition().registerCondition(SXAttribute.getPlugin());
-        new OffHandCondition().registerCondition(SXAttribute.getPlugin());
-        new HandCondition(plugin).registerCondition(SXAttribute.getPlugin());
-        new LimitLevelCondition().registerCondition(SXAttribute.getPlugin());
-        new RoleCondition().registerCondition(SXAttribute.getPlugin());
-        new ExpiryTimeCondition().registerCondition(SXAttribute.getPlugin());
-        new AttackSpeedCondition().registerCondition(SXAttribute.getPlugin());
+        new MainHandCondition().registerCondition(plugin);
+        new OffHandCondition().registerCondition(plugin);
+        new HandCondition(plugin).registerCondition(plugin);
+        new LimitLevelCondition().registerCondition(plugin);
+        new RoleCondition().registerCondition(plugin);
+        new ExpiryTimeCondition().registerCondition(plugin);
+        new AttackSpeedCondition().registerCondition(plugin);
     }
 
 }

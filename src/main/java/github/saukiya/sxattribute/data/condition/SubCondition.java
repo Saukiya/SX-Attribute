@@ -28,7 +28,6 @@ public abstract class SubCondition {
     @Getter
     private JavaPlugin plugin = null;
 
-    @Getter
     private SXConditionType[] updateTypes = new SXConditionType[]{SXConditionType.ALL};
 
     /**
@@ -40,6 +39,15 @@ public abstract class SubCondition {
     public SubCondition(String name, SXConditionType... type) {
         this.name = name;
         this.updateTypes = type;
+    }
+
+    /**
+     * 获取类型
+     *
+     * @return SXConditionType[]
+     */
+    public SXConditionType[] getType(){
+        return updateTypes.clone();
     }
 
     /**
@@ -157,7 +165,7 @@ public abstract class SubCondition {
     /**
      * 注册属性方法
      */
-    protected final void registerCondition(JavaPlugin plugin) {
+    public final void registerCondition(JavaPlugin plugin) {
         if (plugin == null) {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubCondition >> §4" + this.getName() + " §cNull Plugin!");
             return;

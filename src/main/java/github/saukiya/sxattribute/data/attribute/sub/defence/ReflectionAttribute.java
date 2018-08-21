@@ -1,12 +1,16 @@
 package github.saukiya.sxattribute.data.attribute.sub.defence;
 
+import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
+import github.saukiya.sxattribute.listener.OnHealthChangeDisplayListener;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -32,11 +36,20 @@ public class ReflectionAttribute extends SubAttribute {
             if (probability(getAttributes()[0])) {
                 DamageEventData damageEventData = (DamageEventData) eventData;
                 if (!(damageEventData.getEffectiveAttributeList().contains("Real") || damageEventData.getEffectiveAttributeList().contains("Block"))) {
-//                    damageEventData.getDamager().playEffect(EntityEffect.HURT);
                     damageEventData.getEffectiveAttributeList().add(this.getName());
                     double damage = damageEventData.getDamage() * getAttributes()[0] / 100;
-                    EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getDamager(), damageEventData.getEntity(), EntityDamageEvent.DamageCause.CUSTOM, damage);
+                    //TODO 测试
+//                    EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getDamager(),
+//                            damageEventData.getEntity(),EntityDamageEvent.DamageCause.CUSTOM,null,null);
+//                            )
+                    EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getEntity(), damageEventData.getDamager(), EntityDamageEvent.DamageCause.CUSTOM, damage);
                     Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled()){
+                        return;
+                    }
+                    double maxHealth = OnHealthChangeDisplayListener.getMaxHealth(damageEventData.getDamager());
+                    damageEventData.getDamager().playEffect(EntityEffect.HURT);
+                    damageEventData.getDamager().setHealth(maxHealth < event.getFinalDamage() ? 0 : (maxHealth - event.getFinalDamage()));
                     damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__REFLECTION, getDf().format(damage)));
                     Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__REFLECTION, getFirstPerson(), damageEventData.getEntityName());
                     Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__REFLECTION, damageEventData.getDamagerName(), getFirstPerson());

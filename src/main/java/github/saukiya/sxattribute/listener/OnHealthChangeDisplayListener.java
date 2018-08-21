@@ -80,7 +80,7 @@ public class OnHealthChangeDisplayListener implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(SXAttribute.getPlugin(), 20, 20);
+        }.runTaskTimer(plugin, 20, 20);
     }
 
     public String getEntityName(LivingEntity entity, String entityName) {
@@ -104,7 +104,7 @@ public class OnHealthChangeDisplayListener implements Listener {
         return Message.replace(entityName);
     }
 
-    private double getMaxHealth(LivingEntity entity) {
+    public static double getMaxHealth(LivingEntity entity) {
         return SXAttribute.getVersionSplit()[1] >= 9 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
     }
 
@@ -146,7 +146,7 @@ public class OnHealthChangeDisplayListener implements Listener {
             }
             if (damager != null) {
                 // BossBar
-                if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.getVersionSplit()[1] >= 9 && !event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
+                if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.getVersionSplit()[1] >= 9 && !Config.getBossBarBlackCauseList().contains(event.getCause().name())) {
                     if (bossBarData == null) {
                         bossBarData = new BossBarData(entity, name, maxHealth, progress);
                         bossList.add(bossBarData);
@@ -156,11 +156,11 @@ public class OnHealthChangeDisplayListener implements Listener {
             }
         }
 
-        if (damager == null && Config.isHolographic() && Config.isHolographicHealthTake() && SXAttribute.isHolographic()) {
+        if (damager == null && Config.isHolographic() && Config.isHolographicHealthTake() && SXAttribute.isHolographic() && !Config.getHolographicBlackList().contains(event.getCause().name())) {
             Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() / 2, 0);
             loc.setYaw(entity.getLocation().getYaw() - 90);
             loc.add(loc.getDirection().multiply(0.8D));
-            Hologram hologram = HologramsAPI.createHologram(SXAttribute.getPlugin(), loc);
+            Hologram hologram = HologramsAPI.createHologram(plugin, loc);
             hologram.appendTextLine(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__TAKE, event.getFinalDamage()));
             plugin.getOnDamageListener().getHologramsList().add(hologram);
             new BukkitRunnable() {
@@ -169,7 +169,7 @@ public class OnHealthChangeDisplayListener implements Listener {
                     hologram.delete();
                     plugin.getOnDamageListener().getHologramsList().remove(hologram);
                 }
-            }.runTaskLater(SXAttribute.getPlugin(), Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
+            }.runTaskLater(plugin, Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
         }
         if (Config.isHealthNameVisible()) {
             NameData nameData = null;
@@ -248,7 +248,7 @@ public class OnHealthChangeDisplayListener implements Listener {
             Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() * 1.5, 0);
             loc.setYaw(entity.getLocation().getYaw() + 90);
             loc.add(loc.getDirection().multiply(0.8D));
-            Hologram hologram = HologramsAPI.createHologram(SXAttribute.getPlugin(), loc);
+            Hologram hologram = HologramsAPI.createHologram(plugin, loc);
             hologram.appendTextLine(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HEALTH, event.getAmount()));
             plugin.getOnDamageListener().getHologramsList().add(hologram);
             new BukkitRunnable() {
@@ -257,7 +257,7 @@ public class OnHealthChangeDisplayListener implements Listener {
                     hologram.delete();
                     plugin.getOnDamageListener().getHologramsList().remove(hologram);
                 }
-            }.runTaskLater(SXAttribute.getPlugin(), Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
+            }.runTaskLater(plugin, Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
         }
         for (NameData nameData : nameList) {
             if (nameData.getEntity().equals(entity)) {

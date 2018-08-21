@@ -11,8 +11,9 @@ public class CommandList {
     private final Map<Integer, SubCommand> subCommands = new TreeMap<>();
 
     public void add(SubCommand subCommand) {
-        for (SubCommand command : subCommands.values()) {
-            if (command.cmd().equalsIgnoreCase(subCommand.cmd())) {
+        for (Map.Entry<Integer, SubCommand> entry : subCommands.entrySet()) {
+            if (entry.getValue().cmd().equalsIgnoreCase(subCommand.cmd())){
+                subCommands.put(entry.getKey(),subCommand);
                 return;
             }
         }

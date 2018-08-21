@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.List;
 
 public class Config {
     public static final String HOLOGRAPHIC_DISPLAY_TIME = "Holographic.DisplayTime";
@@ -136,9 +137,11 @@ public class Config {
     private static final String REGISTER_SLOTS_LOCK_ENABLED = "RegisterSlots.Lock.Enabled";
     private static final String ITEM_UPDATE_ENABLED = "ItemUpdate.Enabled";
     private static final String HOLOGRAPHIC_ENABLED = "Holographic.Enabled";
+    private static final String HOLOGRAPHIC_BLACK_CAUSE_LIST = "Holographic.BlackCauseList";
     private static final String HOLOGRAPHIC_HEALTH_TAKE_ENABLED = "Holographic.HealthOrTake.Enabled";
     private static final String HEALTH_NAME_VISIBLE_ENABLED = "Health.NameVisible.Enabled";
     private static final String HEALTH_BOSS_BAR_ENABLED = "Health.BossBar.Enabled";
+    private static final String HEALTH_BOSS_BAR_BLACK_CAUSE_LIST = "Health.BossBar.BlackCauseList";
     private static final String HEALTH_SCALED_ENABLED = "HealthScaled.Enabled";
     private static final String ITEM_DISPLAY_NAME = "ItemDisplayName";
     private static final String DAMAGE_CALCULATION_TO_EVE = "DamageCalculationToEVE";
@@ -149,7 +152,7 @@ public class Config {
     private static final String CLEAR_DEFAULT_ATTRIBUTE_RESET = "ClearDefaultAttribute.Reset";
     private static final String RANDOM_STRING = "RandomString";
 
-    private static final File FILE = new File(SXAttribute.getPlugin().getDataFolder(), "Config.yml");
+    private static final File FILE = new File(SXAttribute.getPluginFile(), "Config.yml");
     @Getter
     private static YamlConfiguration config;
     @Getter
@@ -162,6 +165,8 @@ public class Config {
     private static boolean healthScaled;
     @Getter
     private static boolean holographic;
+    @Getter
+    private static List<String> holographicBlackList;
     @Getter
     private static boolean holographicHealthTake;
     @Getter
@@ -184,18 +189,21 @@ public class Config {
     private static boolean registerSlot;
     @Getter
     private static boolean registerSlotsLock;
+    @Getter
+    private  static List<String> bossBarBlackCauseList;
 
     /**
      * 创建默认Config文件
      */
     private static void createDefaultConfig() {
-        config.set(CONFIG_VERSION, SXAttribute.getPlugin().getDescription().getVersion());
+        config.set(CONFIG_VERSION, SXAttribute.getPluginVersion());
         config.set(DECIMAL_FORMAT, "#.##");
         // 物品更新机制
         config.set(ITEM_UPDATE_ENABLED, false);
         // 全息显示
         config.set(HOLOGRAPHIC_ENABLED, true);
         config.set(HOLOGRAPHIC_DISPLAY_TIME, 40);
+        config.set(HOLOGRAPHIC_BLACK_CAUSE_LIST,Arrays.asList("ENTITY_SWEEP_ATTACK","POISON"));
         config.set(HOLOGRAPHIC_HEALTH_TAKE_ENABLED, false);
         // 血量头顶显示
         config.set(HEALTH_NAME_VISIBLE_ENABLED, true);
@@ -209,6 +217,7 @@ public class Config {
         config.set(HEALTH_BOSS_BAR_ENABLED, true);
         config.set(HEALTH_BOSS_BAR_FORMAT, "&a&l{0}:&8&l[&a&l{1}&7&l/&c&l{2}&8&l]");
         config.set(HEALTH_BOSS_BAR_DISPLAY_TIME, 4);
+        config.set(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST,Arrays.asList("ENTITY_SWEEP_ATTACK","POISON"));
         // 血条压缩
         config.set(HEALTH_SCALED_ENABLED, true);
         config.set(HEALTH_SCALED_VALUE, 40);
@@ -355,7 +364,7 @@ public class Config {
      * @throws IOException IOException
      */
     private static boolean detectionVersion() throws IOException {
-        if (!config.getString(CONFIG_VERSION, "").equals(SXAttribute.getPlugin().getDescription().getVersion())) {
+        if (!config.getString(CONFIG_VERSION, "").equals(SXAttribute.getPluginVersion())) {
             config.save(new File(FILE.toString().replace(".yml", "_" + config.getString(CONFIG_VERSION) + ".yml")));
             config = new YamlConfiguration();
             createDefaultConfig();
@@ -390,8 +399,10 @@ public class Config {
         itemUpdate = config.getBoolean(ITEM_UPDATE_ENABLED);
         healthNameVisible = config.getBoolean(HEALTH_NAME_VISIBLE_ENABLED);
         healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED);
+        bossBarBlackCauseList = config.getStringList(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST);
         healthScaled = config.getBoolean(HEALTH_SCALED_ENABLED);
         holographic = config.getBoolean(HOLOGRAPHIC_ENABLED);
+        holographicBlackList = config.getStringList(HOLOGRAPHIC_BLACK_CAUSE_LIST);
         holographicHealthTake = config.getBoolean(HOLOGRAPHIC_HEALTH_TAKE_ENABLED);
         itemDisplayName = config.getBoolean(ITEM_DISPLAY_NAME);
         damageCalculationToEVE = config.getBoolean(DAMAGE_CALCULATION_TO_EVE);

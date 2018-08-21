@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.inventory.RepairInventory;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class RepairCommand extends SubCommand {
 
     public RepairCommand() {
-        super(SXAttribute.getPlugin(), "repair", SenderType.PLAYER);
+        super("repair", SenderType.PLAYER);
     }
 
     @Override

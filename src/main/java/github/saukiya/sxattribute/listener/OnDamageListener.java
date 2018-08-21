@@ -133,11 +133,11 @@ public class OnDamageListener implements Listener {
             damageEventData.sendHolo(Message.getMsg(damageEventData.isCrit() && event.getDamage() > 0 ? Message.PLAYER__HOLOGRAPHIC__CRIT : Message.PLAYER__HOLOGRAPHIC__DAMAGE, SXAttribute.getDf().format(event.getFinalDamage())));
         }
 
-        if (Config.isHolographic() && SXAttribute.isHolographic() && !event.getCause().equals(DamageCause.ENTITY_SWEEP_ATTACK)) {
+        if (Config.isHolographic() && SXAttribute.isHolographic() && !Config.getHolographicBlackList().contains(event.getCause().name())) {
             Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() / 2, 0);
             loc.setYaw(damager.getLocation().getYaw() + 90);
             loc.add(loc.getDirection().multiply(0.8D));
-            Hologram hologram = HologramsAPI.createHologram(SXAttribute.getPlugin(), loc);
+            Hologram hologram = HologramsAPI.createHologram(plugin, loc);
             for (String message : damageEventData.getHoloList()) {
                 hologram.appendTextLine(message);
             }
@@ -148,7 +148,7 @@ public class OnDamageListener implements Listener {
                     hologram.delete();
                     hologramsList.remove(hologram);
                 }
-            }.runTaskLater(SXAttribute.getPlugin(), Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
+            }.runTaskLater(plugin, Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
         }
     }
 }

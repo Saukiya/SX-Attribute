@@ -11,7 +11,7 @@ public class Placeholders extends EZPlaceholderHook {
     private final SXAttribute plugin;
 
     public Placeholders(SXAttribute plugin) {
-        super(plugin, "sx");
+        super(plugin,"sx");
         this.plugin = plugin;
         this.hook();
     }

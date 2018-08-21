@@ -61,7 +61,7 @@ public class HealthRegenAttribute extends SubAttribute {
                     Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c如果此消息连续刷屏，请通过Yum重载本插件");
                 }
             }
-        }.runTaskTimer(SXAttribute.getPlugin(), 19, 20);
+        }.runTaskTimer(getPlugin(), 19, 20);
     }
 
     @Override

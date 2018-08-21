@@ -63,3 +63,4 @@ public class WitherAttribute extends SubAttribute {
         return getAttributes()[0] * Config.getConfig().getInt(Config.VALUE_WITHER);
     }
 }
+

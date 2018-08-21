@@ -111,19 +111,25 @@ public enum Message {
     COMMAND__REPAIR,
     COMMAND__GIVE,
     COMMAND__SAVE,
-    COMMAND__DISPLAYSLOT,
     COMMAND__NBT,
+    COMMAND__DISPLAYSLOT,
+    COMMAND__ATTRIBUTELIST,
+    COMMAND__CONDITIONLIST,
     COMMAND__RELOAD,
     REPLACE_LIST;
 
-    private static final File FILE = new File(SXAttribute.getPlugin().getDataFolder(), "Message.yml");
+
+
+    private static final File FILE = new File(SXAttribute.getPluginFile(), "Message.yml");
+
     @Getter
-    private static final String messagePrefix = "[" + SXAttribute.getPlugin().getName() + "] ";
+    private static final String messagePrefix = "[" + SXAttribute.getPluginName() + "] ";
+
     @Getter
     private static YamlConfiguration messages;
 
     private static void createDefaultMessage() {
-        messages.set(MESSAGE_VERSION.toString(), SXAttribute.getPlugin().getDescription().getVersion());
+        messages.set(MESSAGE_VERSION.toString(), SXAttribute.getPluginVersion());
 
         messages.set(PLAYER__NO_REGISTER_SLOTS.toString(), getMessagePrefix() + "&c服务器没有开启额外的槽位识别");
         messages.set(PLAYER__NO_LEVEL_USE.toString(), getMessagePrefix() + "&c你没有达到使用 &a{0} &c的等级要求!");
@@ -251,8 +257,10 @@ public enum Message {
         messages.set(COMMAND__REPAIR.toString(), "打开修理界面");
         messages.set(COMMAND__GIVE.toString(), "给予玩家RPG物品");
         messages.set(COMMAND__SAVE.toString(), "保存当前的物品到配置文件");
-        messages.set(COMMAND__DISPLAYSLOT.toString(), "显示可装载物品的槽位");
         messages.set(COMMAND__NBT.toString(), "查看当前手持物品的NBT数据");
+        messages.set(COMMAND__DISPLAYSLOT.toString(), "显示可装载物品的槽位");
+        messages.set(COMMAND__ATTRIBUTELIST.toString(), "查看当前属性列表");
+        messages.set(COMMAND__CONDITIONLIST.toString(), "查看当前条件列表");
         messages.set(COMMAND__RELOAD.toString(), "重新加载这个插件的配置");
 
         messages.set(REPLACE_LIST.toString() + ".Pig", "猪猪");
@@ -274,7 +282,7 @@ public enum Message {
      * @throws IOException IOException
      */
     private static boolean detectionVersion() throws IOException {
-        if (!messages.getString(Message.MESSAGE_VERSION.toString(), "").equals(SXAttribute.getPlugin().getDescription().getVersion())) {
+        if (!messages.getString(Message.MESSAGE_VERSION.toString(), "").equals(SXAttribute.getPluginVersion())) {
             messages.save(new File(FILE.toString().replace(".yml", "_" + messages.getString(Message.MESSAGE_VERSION.toString()) + ".yml")));
             messages = new YamlConfiguration();
             createDefaultMessage();

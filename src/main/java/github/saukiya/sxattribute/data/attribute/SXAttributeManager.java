@@ -46,30 +46,30 @@ public class SXAttributeManager {
     public SXAttributeManager(SXAttribute plugin) {
         this.plugin = plugin;
 
-        new BlindnessAttribute().registerAttribute(SXAttribute.getPlugin());
-        new CritAttribute().registerAttribute(SXAttribute.getPlugin());
-        new DamageAttribute().registerAttribute(SXAttribute.getPlugin());
-        new HitRateAttribute().registerAttribute(SXAttribute.getPlugin());
-        new IgnitionAttribute().registerAttribute(SXAttribute.getPlugin());
-        new LifeStealAttribute().registerAttribute(SXAttribute.getPlugin());
-        new LightningAttribute().registerAttribute(SXAttribute.getPlugin());
-        new PoisonAttribute().registerAttribute(SXAttribute.getPlugin());
-        new RealAttribute().registerAttribute(SXAttribute.getPlugin());
-        new SlownessAttribute().registerAttribute(SXAttribute.getPlugin());
-        new TearingAttribute().registerAttribute(SXAttribute.getPlugin());
-        new WitherAttribute().registerAttribute(SXAttribute.getPlugin());
+        new BlindnessAttribute().registerAttribute(plugin);
+        new CritAttribute().registerAttribute(plugin);
+        new DamageAttribute().registerAttribute(plugin);
+        new HitRateAttribute().registerAttribute(plugin);
+        new IgnitionAttribute().registerAttribute(plugin);
+        new LifeStealAttribute().registerAttribute(plugin);
+        new LightningAttribute().registerAttribute(plugin);
+        new PoisonAttribute().registerAttribute(plugin);
+        new RealAttribute().registerAttribute(plugin);
+        new SlownessAttribute().registerAttribute(plugin);
+        new TearingAttribute().registerAttribute(plugin);
+        new WitherAttribute().registerAttribute(plugin);
 
-        new BlockAttribute().registerAttribute(SXAttribute.getPlugin());
-        new DefenseAttribute().registerAttribute(SXAttribute.getPlugin());
-        new DodgeAttribute().registerAttribute(SXAttribute.getPlugin());
-        new ReflectionAttribute().registerAttribute(SXAttribute.getPlugin());
-        new ToughnessAttribute().registerAttribute(SXAttribute.getPlugin());
+        new BlockAttribute().registerAttribute(plugin);
+        new DefenseAttribute().registerAttribute(plugin);
+        new DodgeAttribute().registerAttribute(plugin);
+        new ReflectionAttribute().registerAttribute(plugin);
+        new ToughnessAttribute().registerAttribute(plugin);
 
-        new ExpAdditionAttribute().registerAttribute(SXAttribute.getPlugin());
-        new HealthRegenAttribute().registerAttribute(SXAttribute.getPlugin());
+        new ExpAdditionAttribute().registerAttribute(plugin);
+        new HealthRegenAttribute().registerAttribute(plugin);
 
-        new HealthAttribute().registerAttribute(SXAttribute.getPlugin());
-        new SpeedAttribute().registerAttribute(SXAttribute.getPlugin());
+        new HealthAttribute().registerAttribute(plugin);
+        new SpeedAttribute().registerAttribute(plugin);
     }
 
     /**
@@ -78,7 +78,11 @@ public class SXAttributeManager {
      * @return Map
      */
     static Map<Integer, SubAttribute> cloneSXAttributeList() {
-        return attributeMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().newAttribute(), (a, b) -> b, TreeMap::new));
+        TreeMap<Integer, SubAttribute> map = new TreeMap<>();
+        for (Map.Entry<Integer, SubAttribute> entry : attributeMap.entrySet()) {
+            map.put(entry.getKey(), entry.getValue().newAttribute());
+        }
+        return map;
     }
 
     public void onAttributeEnable() {
@@ -94,7 +98,7 @@ public class SXAttributeManager {
      * @return SXAttributeData
      */
     public SXAttributeData getItemData(LivingEntity entity, SXConditionType type, ItemStack... itemArray) {
-        SXAttributeData sxAttributeData = new SXAttributeData();
+        SXAttributeData sxAttributeDataList = new SXAttributeData();
         for (int i = 0; i < itemArray.length; i++) {
             ItemStack item = itemArray[i];
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -104,15 +108,30 @@ public class SXAttributeManager {
                     continue;
                 }
 
-                SXAttributeData sxAttributeData1 = getListStats(entity, type, item.getItemMeta().getLore());
-                if (sxAttributeData1 == null) {
-                    itemArray[i] = null;
-                    continue;
+                SXAttributeData sxAttributeData = new SXAttributeData();
+                for (String lore : item.getItemMeta().getLore()) {
+                    if (!lore.contains("§X")){
+                        for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
+                            if (subCondition.containsType(type, true)) {
+                                if (subCondition.determine(entity, item, lore)) {
+                                    sxAttributeData = null;
+                                    break;
+                                }
+                            }
+                        }
+                        if (sxAttributeData == null){
+                            itemArray[i] = null;
+                            break;
+                        }
+                        for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
+                            if (sxAttribute.loadAttribute(lore)) break;
+                        }
+                    }
                 }
-                sxAttributeData.add(sxAttributeData1);
+                sxAttributeDataList.add(sxAttributeData);
             }
         }
-        return sxAttributeData;
+        return sxAttributeDataList;
     }
 
     /**
@@ -190,7 +209,7 @@ public class SXAttributeManager {
                     }
                 }
             }
-        }.runTask(SXAttribute.getPlugin());
+        }.runTask(plugin);
     }
 
     public void loadDefaultAttributeData() {
@@ -227,7 +246,9 @@ public class SXAttributeManager {
         // 计算点数
         data.calculationValue();
         // 生物默认数据
-        data.add(defaultAttributeData);
+        if (entity instanceof Player){
+            data.add(defaultAttributeData);
+        }
         // 纠正数值
         data.correct();
         return data;

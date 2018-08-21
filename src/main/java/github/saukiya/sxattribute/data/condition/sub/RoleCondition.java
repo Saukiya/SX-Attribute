@@ -19,7 +19,7 @@ public class RoleCondition extends SubCondition {
 
     @Override
     public boolean determine(LivingEntity entity, ItemStack item, String lore) {
-        if (lore.contains(Config.getConfig().getString(Config.NAME_ROLE)) && entity instanceof Player && !entity.hasPermission(SXAttribute.getPlugin().getName() + "." + getText(lore))) {
+        if (lore.contains(Config.getConfig().getString(Config.NAME_ROLE)) && entity instanceof Player && !entity.hasPermission(SXAttribute.getPluginName() + "." + getText(lore))) {
             Message.send(entity, Message.PLAYER__NO_ROLE, getItemName(item));
             return true;
         }

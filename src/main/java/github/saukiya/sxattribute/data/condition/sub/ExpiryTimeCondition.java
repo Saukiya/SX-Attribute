@@ -31,8 +31,8 @@ public class ExpiryTimeCondition extends SubCondition {
                 }
             } catch (ParseException e) {
                 Location loc = entity.getLocation();
-                Bukkit.getConsoleSender().sendMessage("[" + SXAttribute.getPlugin().getName() + "] §cItem §4" + getItemName(item) + "§c Time Format Error: §4" + lore);
-                Bukkit.getConsoleSender().sendMessage("[" + SXAttribute.getPlugin().getName() + "] §cEntity: §4" + (entity.getCustomName() != null ? entity.getCustomName() : entity.getName()) + "§c To Location: §4[" + loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "]");
+                Bukkit.getConsoleSender().sendMessage("[" + SXAttribute.getPluginName() + "] §cItem §4" + getItemName(item) + "§c Time Format Error: §4" + lore);
+                Bukkit.getConsoleSender().sendMessage("[" + SXAttribute.getPluginName() + "] §cEntity: §4" + (entity.getCustomName() != null ? entity.getCustomName() : entity.getName()) + "§c To Location: §4[" + loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "]");
                 return true;
             }
         }

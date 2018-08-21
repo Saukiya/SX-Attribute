@@ -32,7 +32,7 @@ public class ItemDataManager {
     private static final List<String> COLOR_LIST = Arrays.asList("§0", "§1", "§2", "§3", "§4", "§5", "§6", "§7", "§8", "§9");
     private static final List<String> COLOR_REPLACE_LIST = Arrays.asList("%零%", "%一%", "%二%", "%三%", "%四%", "%五%", "%六%", "%七%", "%八%", "%九%");
 
-    private final File itemFiles = new File(SXAttribute.getPlugin().getDataFolder(), "Item");
+    private final File itemFiles = new File(SXAttribute.getPluginFile(), "Item");
     private final File itemDefaultFile = new File(itemFiles, "Default" + File.separator + "Default.yml");
     private final Map<String, ItemData> itemMap = new HashMap<>();
     private final SXAttribute plugin;

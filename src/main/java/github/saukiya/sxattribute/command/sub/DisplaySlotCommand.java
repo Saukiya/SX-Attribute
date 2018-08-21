@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.command.SubCommand;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class DisplaySlotCommand extends SubCommand {
 
     public DisplaySlotCommand() {
-        super(SXAttribute.getPlugin(), "displaySlot", SenderType.PLAYER);
+        super("displaySlot", SenderType.PLAYER);
     }
 
     @Override

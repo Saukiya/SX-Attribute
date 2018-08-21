@@ -60,7 +60,7 @@ public class HealthAttribute extends SubAttribute {
 
     @Override
     public void correct() {
-        if (getAttributes()[0] <= 0) getAttributes()[1] = 1D;
+        if (getAttributes()[0] < 0) getAttributes()[0] = 1D;
     }
 
     @Override

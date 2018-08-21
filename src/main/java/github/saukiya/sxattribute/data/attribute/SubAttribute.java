@@ -68,6 +68,10 @@ public abstract class SubAttribute {
         return str.length() == 0 ? "0" : str;
     }
 
+    public SXAttributeType[] getType(){
+        return attributeTypes.clone();
+    }
+
     public final boolean containsType(SXAttributeType attributeType) {
         return Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
     }
@@ -75,7 +79,7 @@ public abstract class SubAttribute {
     /**
      * 注册属性方法
      */
-    protected final void registerAttribute(JavaPlugin plugin) {
+    public final void registerAttribute(JavaPlugin plugin) {
         if (plugin == null) {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubAttribute >> §4" + this.getName() + " §cNull Plugin!");
             return;
@@ -103,6 +107,11 @@ public abstract class SubAttribute {
 
     }
 
+    SubAttribute setPlugin(JavaPlugin plugin){
+        this.plugin = plugin;
+        return this;
+    }
+
     /**
      * 实例化一个属性
      *
@@ -110,7 +119,7 @@ public abstract class SubAttribute {
      */
     SubAttribute newAttribute() {
         try {
-            return this.getClass().newInstance();
+            return this.getClass().newInstance().setPlugin(plugin);
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
