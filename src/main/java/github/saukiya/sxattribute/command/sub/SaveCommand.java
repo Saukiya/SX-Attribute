@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * 保存物品指令(非完全保存)
+ *
  * @author Saukiya
  */
 public class SaveCommand extends SubCommand {

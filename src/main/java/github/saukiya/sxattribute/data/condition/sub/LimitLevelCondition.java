@@ -7,6 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * 限制等级
  * @author Saukiya
  */
 public class LimitLevelCondition extends SubCondition {

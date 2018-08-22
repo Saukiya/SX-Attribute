@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 子指令抽象类
+ *
  * @author Saukiya
  */
 public abstract class SubCommand {

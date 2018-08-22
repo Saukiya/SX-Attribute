@@ -3,7 +3,7 @@ package github.saukiya.sxattribute.data.attribute.sub.defence;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
-import github.saukiya.sxattribute.data.eventdata.sub.PlayerEventData;
+import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
 import github.saukiya.sxattribute.util.Config;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -12,11 +12,13 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 生命 - 当前不更新怪物生命
  * @author Saukiya
  */
 public class HealthAttribute extends SubAttribute {
 
     /**
+     * 生命
      * double[0] 生命值
      */
     public HealthAttribute() {
@@ -25,8 +27,8 @@ public class HealthAttribute extends SubAttribute {
 
     @Override
     public void eventMethod(EventData eventData) {
-        if (eventData instanceof PlayerEventData) {
-            Player player = ((PlayerEventData) eventData).getPlayer();
+        if (eventData instanceof UpdateEventData && ((UpdateEventData) eventData).getEntity() instanceof Player) {
+            Player player = (Player) ((UpdateEventData) eventData).getEntity();
             if (player.getHealth() > getAttributes()[0]) player.setHealth(getAttributes()[0]);
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(getAttributes()[0]);
             int healthScale = Config.getConfig().getInt(Config.HEALTH_SCALED_VALUE);

@@ -8,6 +8,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * 攻击速度
+ *
  * @author Saukiya
  */
 public class AttackSpeedCondition extends SubCondition {

@@ -6,12 +6,33 @@ import lombok.Getter;
  * @author Saukiya
  */
 public class SXConditionType {
+    /**
+     * RPGInventory区域判断
+     */
     public static final SXConditionType RPG_INVENTORY = new SXConditionType(Type.RPG_INVENTORY);
+    /**
+     * 装备区域判断
+     */
     public static final SXConditionType EQUIPMENT = new SXConditionType(Type.EQUIPMENT);
+    /**
+     * 手持区域判断
+     */
     public static final SXConditionType HAND = new SXConditionType(Type.HAND);
+    /**
+     * 主手区域判断
+     */
     public static final SXConditionType MAIN_HAND = new SXConditionType(Type.HAND, "MainHand");
+    /**
+     * 副手区域判断
+     */
     public static final SXConditionType OFF_HAND = new SXConditionType(Type.HAND, "OffHand");
+    /**
+     * 自定义槽位区域判断
+     */
     public static final SXConditionType SLOT = new SXConditionType(Type.SLOT);
+    /**
+     * 完全判断 代表判断每个区域时都会判断该类型条件
+     */
     public static final SXConditionType ALL = new SXConditionType(Type.ALL);
 
     @Getter
@@ -30,11 +51,19 @@ public class SXConditionType {
         this.name = name;
     }
 
+    /**
+     * 判断条件的Type是否相同
+     * @param obj SXConditionType
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         return obj instanceof SXConditionType && type.equals(((SXConditionType) obj).type);
     }
 
+    /**
+     * 条件类型枚举
+     */
     public enum Type {
         RPG_INVENTORY("RpgInventory"),
         EQUIPMENT("Equipment"),

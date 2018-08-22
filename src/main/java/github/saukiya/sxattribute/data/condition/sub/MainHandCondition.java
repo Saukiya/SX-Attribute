@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * 限制主手
  * @author Saukiya
  */
 public class MainHandCondition extends SubCondition {

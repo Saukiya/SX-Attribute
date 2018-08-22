@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
+ * 查询属性指令
+ *
  * @author Saukiya
  */
 public class StatsCommand extends SubCommand {

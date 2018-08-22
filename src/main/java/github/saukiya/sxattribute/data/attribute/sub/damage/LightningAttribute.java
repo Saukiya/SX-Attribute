@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 雷霆
  * @author Saukiya
  */
 public class LightningAttribute extends SubAttribute {

@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 韧性
  * @author Saukiya
  */
 public class ToughnessAttribute extends SubAttribute {

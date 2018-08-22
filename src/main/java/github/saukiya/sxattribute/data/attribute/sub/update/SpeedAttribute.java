@@ -3,7 +3,7 @@ package github.saukiya.sxattribute.data.attribute.sub.update;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
-import github.saukiya.sxattribute.data.eventdata.sub.PlayerEventData;
+import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
 import github.saukiya.sxattribute.util.Config;
 import org.bukkit.entity.Player;
 
@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 速度
  * @author Saukiya
  */
 public class SpeedAttribute extends SubAttribute {
@@ -24,8 +25,8 @@ public class SpeedAttribute extends SubAttribute {
 
     @Override
     public void eventMethod(EventData eventData) {
-        if (eventData instanceof PlayerEventData) {
-            Player player = ((PlayerEventData) eventData).getPlayer();
+        if (eventData instanceof UpdateEventData && ((UpdateEventData) eventData).getEntity() instanceof Player) {
+            Player player = (Player) ((UpdateEventData) eventData).getEntity();
             player.setWalkSpeed((float) (getAttributes()[0] / 500D));
         }
     }

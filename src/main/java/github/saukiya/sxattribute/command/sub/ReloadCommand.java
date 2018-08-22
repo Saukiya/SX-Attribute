@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * 重载指令
  * @author Saukiya
  */
 public class ReloadCommand extends SubCommand {

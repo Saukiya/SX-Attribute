@@ -25,7 +25,6 @@ public abstract class SubCondition {
     @Getter
     private final String name;
 
-    @Getter
     private JavaPlugin plugin = null;
 
     private SXConditionType[] updateTypes = new SXConditionType[]{SXConditionType.ALL};
@@ -192,5 +191,13 @@ public abstract class SubCondition {
      */
     public int getPriority() {
         return Config.getConfig().getInt("ConditionPriority." + getName(), -1);
+    }
+
+    /**
+     * 获取注册该条件的插件
+     * @return JavaPlugin
+     */
+    public JavaPlugin getPlugin() {
+        return plugin;
     }
 }

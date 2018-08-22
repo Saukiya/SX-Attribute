@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * 这里是玩家属性总值
+ * 实体属性存储区
+ * @author Saukiya
  */
 public class SXAttributeData {
 

@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
+ * 槽位展示指令
+ *
  * @author Saukiya
  */
 public class DisplaySlotCommand extends SubCommand {

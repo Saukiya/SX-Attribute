@@ -68,7 +68,7 @@
 /sx stats    : 查看属性
 /sx sell     : 打开售出界面
 /sx repair   : 打开修理界面
-/sx give <itemName> [player] [amount]  : 给予玩家RPG物品
+/sx give <itemName> [entity] [amount]  : 给予玩家RPG物品
 /sx save <itemName> : 保存当前的物品到配置文件
 /sx reload   : 重新加载这个插件的配置
 

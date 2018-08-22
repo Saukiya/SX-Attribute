@@ -15,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 /**
+ * API 获取方式为 SXAttribute.getApi()
+ *
  * @author Saukiya
  * @since 2018年3月25日
  */
@@ -200,20 +202,20 @@ public class SXAttributeAPI {
      * 判断玩家是否达到使用物品要求
      * SXConditionType 为判断位置 一般情况为ALL
      *
-     * @param player Player
+     * @param entity LivingEntity
      * @param type   SXConditionType
      * @param item   ItemStack
      * @return boolean
      */
-    public boolean isUse(Player player, SXConditionType type, ItemStack item) {
-        return plugin.getAttributeManager().isUse(player, type, item);
+    public boolean isUse(LivingEntity entity, SXConditionType type, ItemStack item) {
+        return plugin.getAttributeManager().isUse(entity, type, item);
     }
 
     /**
      * 获取物品的限制等级
      *
-     * @param item 物品
-     * @return level 没有则为-1
+     * @param item ItemStack
+     * @return int / -1
      */
     public int getItemLevel(ItemStack item) {
         return SubCondition.getItemLevel(item);
@@ -223,7 +225,7 @@ public class SXAttributeAPI {
      * 获取实体等级(如果SX-Level工作时 那将会获取SL等级)
      * 怪物目前为10000
      *
-     * @param entity 实体
+     * @param entity LivingEntity
      * @return level
      */
     public int getEntityLevel(LivingEntity entity) {
@@ -231,32 +233,40 @@ public class SXAttributeAPI {
     }
 
     /**
-     * 更新玩家手持+装备+饰品属性
+     * 更新玩家装备属性
      * RPGInventory运行的情况下，不更新装备属性(特殊情况)
      *
-     * @param player 玩家
+     * @param entity LivingEntity
      */
-    public void updateEquipmentData(Player player) {
-        plugin.getOnUpdateStatsListener().updateEquipmentData(player);
+    public void updateEquipmentData(LivingEntity entity) {
+        plugin.getAttributeManager().loadEquipmentData(entity);
     }
 
     /**
      * 更新玩家手持属性
      *
-     * @param player 玩家
+     * @param entity LivingEntity
      */
-    public void updateHandData(Player player) {
-        plugin.getOnUpdateStatsListener().updateHandData(player);
+    public void updateHandData(LivingEntity entity) {
+        plugin.getAttributeManager().loadHandData(entity);
     }
 
     /**
-     * 单纯更新玩家生命、速度等数据
-     * 不更新装备手持属性
+     * 更新玩家自定义槽属性
      *
-     * @param player 玩家
+     * @param player Player
      */
-    public void updateStats(Player player) {
-        plugin.getAttributeManager().updateStatsEvent(player);
+    public void updateSlotData(Player player) {
+        plugin.getAttributeManager().loadSlotData(player);
+    }
+
+    /**
+     * UPDATE类属性更新
+     *
+     * @param entity LivingEntity
+     */
+    public void updateStats(LivingEntity entity) {
+        plugin.getAttributeManager().updateStatsEvent(entity);
     }
 
     /**

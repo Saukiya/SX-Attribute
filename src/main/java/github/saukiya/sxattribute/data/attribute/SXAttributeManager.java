@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.attribute.sub.other.ExpAdditionAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.update.SpeedAttribute;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
-import github.saukiya.sxattribute.data.eventdata.sub.PlayerEventData;
+import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
 import github.saukiya.sxattribute.event.StatsUpdateType;
 import github.saukiya.sxattribute.event.UpdateStatsEvent;
 import github.saukiya.sxattribute.util.Config;
@@ -23,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 /**
+ * 属性管理器
  * @author Saukiya
  */
 public class SXAttributeManager {
@@ -192,24 +193,26 @@ public class SXAttributeManager {
     }
 
     /**
-     * 更新玩家血量、移动速度、血量压缩值
+     * 更新实体UPDATE类属性
      *
-     * @param player Player
+     * @param entity Player
      */
-    public void updateStatsEvent(Player player) {
+    public void updateStatsEvent(LivingEntity entity) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Config.isClearDefaultAttributeAll()) {
-                    plugin.getItemUtil().clearAttribute(player);
-                } else if (Config.isClearDefaultAttributeReset()) {
-                    plugin.getItemUtil().removeAttribute(player);
+                if (entity instanceof Player){
+                    if (Config.isClearDefaultAttributeAll()) {
+                        plugin.getItemUtil().clearAttribute((Player) entity);
+                    } else if (Config.isClearDefaultAttributeReset()) {
+                        plugin.getItemUtil().removeAttribute((Player) entity);
+                    }
                 }
-                PlayerEventData playerEventData = new PlayerEventData(player);
-                SXAttributeData attributeData = getEntityData(player);
+                UpdateEventData updateEventData = new UpdateEventData(entity);
+                SXAttributeData attributeData = getEntityData(entity);
                 for (SubAttribute subAttribute : attributeData.getAttributeMap().values()) {
                     if (subAttribute.containsType(SXAttributeType.UPDATE)) {
-                        subAttribute.eventMethod(playerEventData);
+                        subAttribute.eventMethod(updateEventData);
                     }
                 }
             }

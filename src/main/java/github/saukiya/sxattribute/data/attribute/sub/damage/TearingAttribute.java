@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 撕裂
  * @author Saukiya
  */
 public class TearingAttribute extends SubAttribute {

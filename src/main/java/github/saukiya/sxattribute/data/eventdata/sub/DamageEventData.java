@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 伤害事件统计
+ *
  * @author Saukiya
  */
 public class DamageEventData extends EventData {

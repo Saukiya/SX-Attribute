@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
+ * 出售物品指令
+ *
  * @author Saukiya
  */
 public class SellCommand extends SubCommand {

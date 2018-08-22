@@ -5,6 +5,8 @@ import github.saukiya.sxattribute.data.condition.sub.*;
 import lombok.Getter;
 
 /**
+ * 条件管理器
+ *
  * @author Saukiya
  */
 public class SXConditionManager {

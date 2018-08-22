@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 缓慢
  * @author Saukiya
  */
 public class SlownessAttribute extends SubAttribute {

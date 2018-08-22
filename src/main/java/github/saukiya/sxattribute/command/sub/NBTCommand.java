@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 /**
+ * NBT显示指令
  * @author Saukiya
  */
 public class NBTCommand extends SubCommand {

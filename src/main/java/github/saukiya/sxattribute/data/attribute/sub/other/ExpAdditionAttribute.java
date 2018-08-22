@@ -9,10 +9,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 经验加成
  * @author Saukiya
  */
 public class ExpAdditionAttribute extends SubAttribute {
 
+    /**
+     * double[] 经验加成
+     */
     public ExpAdditionAttribute() {
         super("ExpAddition", 1, SXAttributeType.OTHER);
     }

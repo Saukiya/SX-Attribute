@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 破甲
  * @author Saukiya
  */
 public class RealAttribute extends SubAttribute {

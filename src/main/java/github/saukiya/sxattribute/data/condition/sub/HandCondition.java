@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * 手持免疫
  * @author Saukiya
  */
 public class HandCondition extends SubCondition {

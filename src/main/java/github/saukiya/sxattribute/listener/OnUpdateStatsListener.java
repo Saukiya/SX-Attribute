@@ -191,6 +191,7 @@ public class OnUpdateStatsListener implements Listener {
                 if (entity != null && !entity.isDead()) {
                     plugin.getAttributeManager().loadHandData(entity);
                     plugin.getAttributeManager().loadEquipmentData(entity);
+                    plugin.getAttributeManager().updateStatsEvent(entity);
                 }
             }
         }.runTaskLaterAsynchronously(plugin, 20);

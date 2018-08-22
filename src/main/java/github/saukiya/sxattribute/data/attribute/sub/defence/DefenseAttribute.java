@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 防御
  * @author Saukiya
  */
 public class DefenseAttribute extends SubAttribute {

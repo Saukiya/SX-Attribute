@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 命中
  * @author Saukiya
  */
 public class HitRateAttribute extends SubAttribute {

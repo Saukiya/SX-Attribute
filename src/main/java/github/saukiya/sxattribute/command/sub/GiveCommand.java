@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 给予物品指令
+ *
  * @author Saukiya
  */
 public class GiveCommand extends SubCommand {

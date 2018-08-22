@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import java.text.ParseException;
 
 /**
+ * 限制时间
+ *
  * @author Saukiya
  */
 public class ExpiryTimeCondition extends SubCondition {

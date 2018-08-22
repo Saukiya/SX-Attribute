@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 生命恢复
  * @author Saukiya
  */
 public class HealthRegenAttribute extends SubAttribute {

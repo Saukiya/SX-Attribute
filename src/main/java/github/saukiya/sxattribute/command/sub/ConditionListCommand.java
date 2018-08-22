@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * 条件标签查询指令
+ *
  * @author Saukiya
  */
 public class ConditionListCommand extends SubCommand {

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * 限制职业(权限)
  * @author Saukiya
  */
 public class RoleCondition extends SubCondition {

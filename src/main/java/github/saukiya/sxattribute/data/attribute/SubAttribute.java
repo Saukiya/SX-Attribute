@@ -18,6 +18,8 @@ import java.util.stream.IntStream;
 
 /**
  * 属性抽象类
+ *
+ * @author  Saukiya
  */
 public abstract class SubAttribute {
 
@@ -32,7 +34,6 @@ public abstract class SubAttribute {
 
     private final SXAttributeType[] attributeTypes;
 
-    @Getter
     private JavaPlugin plugin = null;
 
     private Double[] doubles;
@@ -259,5 +260,14 @@ public abstract class SubAttribute {
         } catch (CloneNotSupportedException e) {
             return null;
         }
+    }
+
+    /**
+     * 获取注册该属性的插件
+     *
+     * @return JavaPlugin
+     */
+    public JavaPlugin getPlugin(){
+        return plugin;
     }
 }

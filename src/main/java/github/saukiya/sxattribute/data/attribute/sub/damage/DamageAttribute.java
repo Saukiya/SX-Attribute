@@ -5,9 +5,10 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
-import github.saukiya.sxattribute.data.eventdata.sub.PlayerEventData;
+import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
 import github.saukiya.sxattribute.util.Config;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 攻击力
  * @author Saukiya
  */
 public class DamageAttribute extends SubAttribute {
@@ -47,15 +49,15 @@ public class DamageAttribute extends SubAttribute {
             } else {
                 damageEventData.addDamage(getPVEAttribute());
             }
-        } else if (eventData instanceof PlayerEventData) {
-            PlayerEventData playerEventData = (PlayerEventData) eventData;
-            Player player = playerEventData.getPlayer();
+        } else if (eventData instanceof UpdateEventData) {
+            UpdateEventData updateEventData = (UpdateEventData) eventData;
+            LivingEntity entity = updateEventData.getEntity();
             if (Config.isDamageGauges()) {
-                player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(getAttributes()[0]);
+                entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(getAttributes()[0]);
             } else if (getAttribute() == 0D) {
-                player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1);
+                entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1);
             } else {
-                player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(0.01);
+                entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(0.01);
             }
         }
     }
