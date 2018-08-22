@@ -1,6 +1,5 @@
 package github.saukiya.sxattribute.data.attribute.sub.damage;
 
-import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
@@ -8,7 +7,6 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.listener.OnHealthChangeDisplayListener;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
@@ -35,9 +33,9 @@ public class LifeStealAttribute extends SubAttribute {
                 DamageEventData damageEventData = (DamageEventData) eventData;
                 LivingEntity damager = damageEventData.getDamager();
                 double maxHealth = OnHealthChangeDisplayListener.getMaxHealth(damager);
-                double lifeHealth = damageEventData.getEvent().getFinalDamage() * getAttributes()[0] / 100;
+                double lifeHealth = damageEventData.getDamage() * getAttributes()[1] / 100;
                 EntityRegainHealthEvent event = new EntityRegainHealthEvent(damager, lifeHealth, EntityRegainHealthEvent.RegainReason.CUSTOM);
-                if (event.isCancelled()){
+                if (event.isCancelled()) {
                     return;
                 }
                 lifeHealth = (maxHealth < damager.getHealth() + event.getAmount()) ? (maxHealth - damager.getHealth()) : event.getAmount();

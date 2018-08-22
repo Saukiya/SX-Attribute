@@ -42,15 +42,6 @@ public abstract class SubCondition {
     }
 
     /**
-     * 获取类型
-     *
-     * @return SXConditionType[]
-     */
-    public SXConditionType[] getType(){
-        return updateTypes.clone();
-    }
-
-    /**
      * 实现一个条件类
      *
      * @param name 名称
@@ -99,7 +90,7 @@ public abstract class SubCondition {
      */
     public static int getItemLevel(ItemStack item) {
         if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
-            return item.getItemMeta().getLore().stream().filter(lore -> lore.contains(Config.getConfig().getString(Config.NAME_LIMIT_LEVEL))).findFirst().map(lore -> Integer.valueOf(SubCondition.getNumber(lore).replace(".", ""))).orElse(-1);
+            return item.getItemMeta().getLore().stream().filter(lore -> lore.contains(Config.getConfig().getString(Config.NAME_LIMIT_LEVEL))).findFirst().map(lore -> Integer.valueOf(getNumber(lore).replace(".", ""))).orElse(-1);
         }
         return -1;
     }
@@ -139,6 +130,15 @@ public abstract class SubCondition {
     public static String getNumber(String lore) {
         String str = lore.replaceAll("§+[a-z0-9]", "").replaceAll("[^-0-9.]", "");
         return str.length() == 0 ? "0" : str;
+    }
+
+    /**
+     * 获取类型
+     *
+     * @return SXConditionType[]
+     */
+    public SXConditionType[] getType() {
+        return updateTypes.clone();
     }
 
     /**

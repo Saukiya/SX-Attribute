@@ -31,7 +31,7 @@ public class TearingAttribute extends SubAttribute {
     public void eventMethod(EventData eventData) {
         if (eventData instanceof DamageEventData) {
             DamageEventData damageEventData = (DamageEventData) eventData;
-            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttribute("Toughness").getAttributes()[0])) {
+            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttributeDoubles("Toughness")[0])) {
                 int size = SXAttribute.getRandom().nextInt(3) + 1;
                 double tearingDamage = damageEventData.getEntity().getHealth() / 100;
                 new BukkitRunnable() {

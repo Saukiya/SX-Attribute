@@ -27,7 +27,7 @@ public class IgnitionAttribute extends SubAttribute {
     public void eventMethod(EventData eventData) {
         if (eventData instanceof DamageEventData) {
             DamageEventData damageEventData = (DamageEventData) eventData;
-            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttribute("Toughness").getAttributes()[0])) {
+            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttributeDoubles("Toughness")[0])) {
                 damageEventData.getEntity().setFireTicks(40 + SXAttribute.getRandom().nextInt(60));
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__IGNITION, getDf().format(damageEventData.getEntity().getFireTicks() / 20D)));
                 Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__IGNITION, damageEventData.getEntityName(), getFirstPerson());

@@ -26,7 +26,7 @@ public class ExpiryTimeCondition extends SubCondition {
             String timeStr = getTime(lore);
             try {
                 if (System.currentTimeMillis() > SXAttribute.getSdf().parse(timeStr).getTime()) {
-                    Message.send(entity, Message.PLAYER__OVERDUE_ITEM, getItemName(item), timeStr);
+                    if (item != null) Message.send(entity, Message.PLAYER__OVERDUE_ITEM, getItemName(item), timeStr);
                     return true;
                 }
             } catch (ParseException e) {

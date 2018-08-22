@@ -83,6 +83,10 @@ public class OnHealthChangeDisplayListener implements Listener {
         }.runTaskTimer(plugin, 20, 20);
     }
 
+    public static double getMaxHealth(LivingEntity entity) {
+        return SXAttribute.getVersionSplit()[1] >= 9 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
+    }
+
     public String getEntityName(LivingEntity entity, String entityName) {
         if (entity instanceof Player) {
             return ((Player) entity).getDisplayName();
@@ -102,10 +106,6 @@ public class OnHealthChangeDisplayListener implements Listener {
             }
         }
         return Message.replace(entityName);
-    }
-
-    public static double getMaxHealth(LivingEntity entity) {
-        return SXAttribute.getVersionSplit()[1] >= 9 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

@@ -29,6 +29,7 @@ github\saukiya\sxattribute\bstats\Metrics.class
 github\saukiya\sxattribute\data\attribute\sub\update\SpeedAttribute.class
 github\saukiya\sxattribute\listener\OnMythicmobsDropOrSpawnListener.class
 github\saukiya\sxattribute\command\CommandList.class
+github\saukiya\sxattribute\command\MainCommand.class
 github\saukiya\sxattribute\listener\OnUpdateStatsListener$3.class
 github\saukiya\sxattribute\inventory\SellInventory.class
 github\saukiya\sxattribute\data\attribute\sub\damage\BlindnessAttribute.class

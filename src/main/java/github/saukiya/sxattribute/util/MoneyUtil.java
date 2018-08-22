@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 public class MoneyUtil {
-    private static Economy economy;
+    private static Economy economy = null;
 
     /**
      * 初始化MoneyUtil类

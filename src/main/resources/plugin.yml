@@ -13,9 +13,7 @@ softdepend:
 
 commands:
    sxattribute:
-      # 命令使用方法，当命令被错误使用时将显示这个
       usage: error! please reload this plugin
-      # 可自行添加删除触发指令的条件
       aliases:
       - sx
 permissions:

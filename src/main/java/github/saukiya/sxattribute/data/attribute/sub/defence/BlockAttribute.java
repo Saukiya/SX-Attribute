@@ -30,7 +30,7 @@ public class BlockAttribute extends SubAttribute {
                 DamageEventData damageEventData = (DamageEventData) eventData;
                 if (!(damageEventData.getEffectiveAttributeList().contains("Real") || damageEventData.getEffectiveAttributeList().contains("Reflection"))) {
                     damageEventData.getEffectiveAttributeList().add(this.getName());
-                    double blockDamage = damageEventData.getDamage() * getAttributes()[0] / 100;
+                    double blockDamage = damageEventData.getDamage() * getAttributes()[1] / 100;
                     damageEventData.setDamage(damageEventData.getDamage() - blockDamage);
                     damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__BLOCK, getDf().format(blockDamage)));
                     Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__BLOCK, damageEventData.getEntityName(), getFirstPerson());

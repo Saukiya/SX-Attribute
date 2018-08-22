@@ -18,7 +18,7 @@ public class LimitLevelCondition extends SubCondition {
     @Override
     public boolean determine(LivingEntity entity, ItemStack item, String lore) {
         if (lore.contains(Config.getConfig().getString(Config.NAME_LIMIT_LEVEL)) && Integer.valueOf(getNumber(lore)) > getLevel(entity)) {
-            Message.send(entity, Message.PLAYER__NO_LEVEL_USE, getItemName(item));
+            if (item != null) Message.send(entity, Message.PLAYER__NO_LEVEL_USE, getItemName(item));
             return true;
         }
         return false;

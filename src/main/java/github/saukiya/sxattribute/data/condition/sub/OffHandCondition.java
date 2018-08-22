@@ -19,7 +19,8 @@ public class OffHandCondition extends SubCondition {
     @Override
     public boolean determine(LivingEntity entity, ItemStack item, String lore) {
         if (lore.contains(Config.getConfig().getString(Config.NAME_HAND_MAIN))) {
-            Message.send(entity, Message.PLAYER__NO_USE_SLOT, getItemName(item), Config.getConfig().getString(Config.NAME_HAND_MAIN));
+            if (item != null)
+                Message.send(entity, Message.PLAYER__NO_USE_SLOT, getItemName(item), Config.getConfig().getString(Config.NAME_HAND_MAIN));
             return true;
         }
         return false;

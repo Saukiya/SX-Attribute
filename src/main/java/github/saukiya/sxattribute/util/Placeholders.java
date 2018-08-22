@@ -11,9 +11,13 @@ public class Placeholders extends EZPlaceholderHook {
     private final SXAttribute plugin;
 
     public Placeholders(SXAttribute plugin) {
-        super(plugin,"sx");
+        super(plugin, "sx");
         this.plugin = plugin;
         this.hook();
+    }
+
+    public static void main(String[] args) {
+        System.out.println("-13333");
     }
 
     @Override

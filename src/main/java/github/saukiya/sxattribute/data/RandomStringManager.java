@@ -251,7 +251,7 @@ public class RandomStringManager {
         yml.set("好丑Color", Arrays.asList("&1", "&8", "&7", "&5", "&3", "&2"));
         yml.set("攻随一", Arrays.asList("命中几率", "失明几率", "缓慢几率", "凋零几率"));
         yml.set("攻随二", Arrays.asList("雷霆几率", "破甲几率", "撕裂几率"));
-        yml.set("防随一", Arrays.asList("反射几率", "格挡几率", "韧性", "速度"));
+        yml.set("防随一", Arrays.asList("反射几率", "格挡几率", "韧性", "移动速度"));
         yml.set("防随二", Arrays.asList("反射伤害", "格挡伤害", "闪避几率"));
         yml.set("防随三", Arrays.asList("生命恢复", "生命上限", "PVP防御力", "PVE防御力"));
         yml.save(file1);

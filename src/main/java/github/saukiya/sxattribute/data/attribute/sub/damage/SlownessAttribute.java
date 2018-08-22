@@ -29,7 +29,7 @@ public class SlownessAttribute extends SubAttribute {
     public void eventMethod(EventData eventData) {
         if (eventData instanceof DamageEventData) {
             DamageEventData damageEventData = (DamageEventData) eventData;
-            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttribute("Toughness").getAttributes()[0])) {
+            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttributeDoubles("Toughness")[0])) {
                 int tick = 40 + SXAttribute.getRandom().nextInt(60);
                 damageEventData.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, tick, SXAttribute.getRandom().nextInt(2) + 1));
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__SLOWNESS, getDf().format(tick / 20D)));

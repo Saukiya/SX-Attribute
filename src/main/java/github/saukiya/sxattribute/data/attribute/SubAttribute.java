@@ -68,7 +68,7 @@ public abstract class SubAttribute {
         return str.length() == 0 ? "0" : str;
     }
 
-    public SXAttributeType[] getType(){
+    public SXAttributeType[] getType() {
         return attributeTypes.clone();
     }
 
@@ -107,7 +107,14 @@ public abstract class SubAttribute {
 
     }
 
-    SubAttribute setPlugin(JavaPlugin plugin){
+    /**
+     * 属性关闭时执行的方法
+     */
+    public void onDisable() {
+
+    }
+
+    SubAttribute setPlugin(JavaPlugin plugin) {
         this.plugin = plugin;
         return this;
     }

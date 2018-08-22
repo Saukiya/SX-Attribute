@@ -8,14 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe2977b6-118c-4a45-b021-ff9703e19422" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/CommandList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/CommandList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/GiveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/GiveCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/NBTCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/NBTCommand.java" afterDir="false" />
@@ -28,25 +27,34 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,24 +66,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AttributeListCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java">
+      <file leaf-file-name="SubAttribute.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="48" column="70" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="70" />
-              <folding>
-                <element signature="e#886#887#0" expanded="true" />
-                <element signature="e#940#941#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1900">
+              <caret line="113" selection-start-line="113" selection-end-line="113" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LimitLevelCondition.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java">
+      <file leaf-file-name="MainCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+            <state relative-caret-position="1000">
+              <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubCommand.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="373">
+              <caret line="87" column="159" selection-start-line="87" selection-start-column="159" selection-end-line="87" selection-end-column="159" />
             </state>
           </provider>
         </entry>
@@ -83,70 +96,8 @@
       <file leaf-file-name="HealthAttribute.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
-              <folding>
-                <element signature="e#2126#2127#0" expanded="true" />
-                <element signature="e#2194#2195#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SXAttributeManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="119" column="29" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HealthRegenAttribute.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="44" column="54" lean-forward="true" selection-start-line="44" selection-start-column="54" selection-end-line="45" selection-end-column="162" />
-              <folding>
-                <element signature="e#1054#3008#0" expanded="true" />
-                <element signature="e#3007#3008#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LifeStealAttribute.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="47" column="13" lean-forward="true" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReflectionAttribute.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DamageAttribute.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="47" column="47" selection-start-line="47" selection-start-column="47" selection-end-line="47" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OnDamageListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2340">
-              <caret line="143" column="40" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
+            <state relative-caret-position="700">
+              <caret line="46" column="13" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -173,6 +124,8 @@
       <find>JavaPlugin plugin,</find>
       <find>SXAttribute.getPlugin()</find>
       <find>callEvent</find>
+      <find>速度</find>
+      <find>getItem</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -190,22 +143,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/NameData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnUpdateStatsListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RegisterSlot.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/inventory/StatsInventory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/HandCondition.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/AttributeMap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/GiveCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/NBTCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ReloadCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SaveCommand.java" />
@@ -213,22 +156,44 @@
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/CommandList.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/RepairCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/StatsCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/GiveCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" />
       </list>
     </option>
   </component>
@@ -258,8 +223,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="775" />
-    <option name="width" value="1145" />
+    <option name="width" value="960" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -268,6 +232,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -435,6 +401,45 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="sxattribute" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="eventdata" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sxattribute" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="eventdata" type="462c0819:PsiDirectoryNode" />
+              <item name="sub" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sxattribute" type="462c0819:PsiDirectoryNode" />
+              <item name="event" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sxattribute" type="462c0819:PsiDirectoryNode" />
+              <item name="inventory" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sxattribute" type="462c0819:PsiDirectoryNode" />
               <item name="listener" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -446,13 +451,18 @@
               <item name="sxattribute" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -555,12 +565,17 @@
       <workItem from="1534782215892" duration="2077000" />
       <workItem from="1534834809392" duration="6090000" />
       <workItem from="1534844966014" duration="10382000" />
-      <workItem from="1534855928926" duration="510000" />
+      <workItem from="1534855928926" duration="1386000" />
+      <workItem from="1534858477130" duration="743000" />
+      <workItem from="1534904690447" duration="2366000" />
+      <workItem from="1534907357886" duration="4474000" />
+      <workItem from="1534917609588" duration="548000" />
+      <workItem from="1534920062582" duration="231000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30686000" />
+    <option name="totallyTimeSpent" value="39924000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -573,15 +588,16 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info active="true" anchor="right" id="Maven Projects" order="3" visible="true" weight="0.108208954" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.24733475" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32279173" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24055299" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22068231" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -593,34 +609,33 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3293348" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2595949" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3293348" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info id="Capture Tool" order="5" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32852387" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.1705757" />
       <window_info id="Favorites" order="6" side_tool="true" />
@@ -642,307 +657,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="29" column="51" selection-start-line="29" selection-start-column="51" selection-end-line="29" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/AttributeMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/util/Arrays.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="3800" column="5" lean-forward="true" selection-start-line="3800" selection-start-column="5" selection-end-line="3800" selection-end-column="5" />
-          <folding>
-            <element signature="e#177013#177014#0" expanded="true" />
-            <element signature="e#177054#177055#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="20" column="75" lean-forward="true" selection-start-line="20" selection-start-column="75" selection-end-line="20" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="24" column="17" lean-forward="true" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnItemDurabilityListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="48" column="23" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.9.0.jar!/org/bukkit/event/entity/EntityDamageEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="177" column="14" selection-start-line="177" selection-start-column="8" selection-end-line="177" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="168" column="32" selection-start-line="168" selection-start-column="32" selection-end-line="168" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/lang/Enum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="75" column="24" selection-start-line="75" selection-start-column="24" selection-end-line="75" selection-end-column="24" />
-          <folding>
-            <element signature="e#2036#2037#0" expanded="true" />
-            <element signature="e#2063#2064#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/util/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="395" column="10" selection-start-line="395" selection-start-column="10" selection-end-line="395" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="39" column="25" lean-forward="true" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
-          <folding>
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1121#1122#0" expanded="true" />
-            <element signature="e#1182#1183#0" expanded="true" />
-            <element signature="e#1214#1215#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
-            <element signature="e#5510#5511#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ReloadCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/NBTCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SaveCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="20" column="20" lean-forward="true" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SellCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/GiveCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="113" column="28" selection-start-line="113" selection-start-column="28" selection-end-line="113" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/RepairCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="19" column="43" lean-forward="true" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/StatsCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="38" column="5" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-          <folding>
-            <element signature="e#537#538#0" expanded="true" />
-            <element signature="e#586#587#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/CommandList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="4" column="25" lean-forward="true" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.11.2.jar!/org/bukkit/plugin/java/JavaPlugin.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="46" column="29" lean-forward="true" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="45" column="57" lean-forward="true" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="72" column="42" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
-          <folding>
-            <element signature="e#1654#1655#0" expanded="true" />
-            <element signature="e#1722#1723#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="91" column="9" lean-forward="true" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
-          <folding>
-            <element signature="e#1792#1793#0" expanded="true" />
-            <element signature="e#1837#1838#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="71" column="24" lean-forward="true" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="18" column="60" lean-forward="true" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="133" column="37" selection-start-line="133" selection-start-column="25" selection-end-line="133" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="42" column="53" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.11.2.jar!/org/bukkit/event/entity/EntityDamageByEntityEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/libs/spigot-1.11.2.jar!/org/bukkit/event/entity/EntityDamageEvent.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="239">
           <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
         </state>
       </provider>
     </entry>
@@ -953,49 +671,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2340">
-          <caret line="143" column="40" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="47" column="47" selection-start-line="47" selection-start-column="47" selection-end-line="47" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="48" column="70" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="70" />
-          <folding>
-            <element signature="e#886#887#0" expanded="true" />
-            <element signature="e#940#941#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="134" column="21" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        <state relative-caret-position="580">
+          <caret line="45" column="72" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="72" />
         </state>
       </provider>
     </entry>
@@ -1013,39 +692,347 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="289">
+          <caret line="129" column="25" selection-start-line="129" selection-start-column="25" selection-end-line="129" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="61" column="5" lean-forward="true" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="37" column="7" lean-forward="true" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="134" column="21" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/HandCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="20" column="100" lean-forward="true" selection-start-line="20" selection-start-column="100" selection-end-line="20" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="257" column="38" lean-forward="true" selection-start-line="257" selection-start-column="38" selection-end-line="257" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="237" column="17" lean-forward="true" selection-start-line="237" selection-start-column="17" selection-end-line="237" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="28" column="40" lean-forward="true" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
           <folding>
-            <element signature="e#2126#2127#0" expanded="true" />
-            <element signature="e#2194#2195#0" expanded="true" />
+            <element signature="e#580#581#0" expanded="true" />
+            <element signature="e#624#625#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="53" column="21" lean-forward="true" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+          <folding>
+            <element signature="e#1054#2906#0" expanded="true" />
+            <element signature="e#2905#2906#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="43" column="31" lean-forward="true" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DodgeAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/CritAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-80">
+          <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/RealAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/HitRateAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="22" column="21" lean-forward="true" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="32" column="13" lean-forward="true" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="49" column="5" lean-forward="true" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="31" column="90" selection-start-line="31" selection-start-column="90" selection-end-line="31" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="33" column="116" selection-start-line="33" selection-start-column="116" selection-end-line="33" selection-end-column="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="29" column="116" selection-start-line="29" selection-start-column="116" selection-end-line="29" selection-end-column="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="29" column="116" selection-start-line="29" selection-start-column="116" selection-end-line="29" selection-end-column="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="35" column="136" selection-start-line="35" selection-start-column="136" selection-end-line="35" selection-end-column="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="35" column="135" selection-start-line="35" selection-start-column="135" selection-end-line="35" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/PlayerEventData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/GiveCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="426" column="30" lean-forward="true" selection-start-line="426" selection-start-column="30" selection-end-line="426" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="240" column="5" lean-forward="true" selection-start-line="240" selection-start-column="5" selection-end-line="240" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="119" column="29" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="44" column="54" lean-forward="true" selection-start-line="44" selection-start-column="54" selection-end-line="45" selection-end-column="162" />
+        <state relative-caret-position="251">
+          <caret line="80" column="54" lean-forward="true" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
           <folding>
-            <element signature="e#1054#3008#0" expanded="true" />
-            <element signature="e#3007#3008#0" expanded="true" />
+            <element signature="e#3455#3456#0" expanded="true" />
+            <element signature="e#3525#3526#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="47" column="13" lean-forward="true" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
+        <state relative-caret-position="700">
+          <caret line="46" column="13" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1900">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1000">
+          <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="87" column="159" selection-start-line="87" selection-start-column="159" selection-end-line="87" selection-end-column="159" />
         </state>
       </provider>
     </entry>

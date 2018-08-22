@@ -7,7 +7,6 @@ import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,7 +59,7 @@ public class GiveCommand extends SubCommand {
     @Override
     public List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args) {
         if (args.length == 2) {
-            plugin.getItemDataManager().sendItemMapToPlayer(sender);
+            if (args[1].length() == 0) plugin.getItemDataManager().sendItemMapToPlayer(sender);
             return plugin.getItemDataManager().getItemList().stream().filter(itemName -> itemName.contains(args[1])).collect(Collectors.toList());
         }
         if (args.length == 4) {

@@ -37,11 +37,10 @@ public class HealthRegenAttribute extends SubAttribute {
             public void run() {
                 try {
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        if (!player.isDead()) {
+                        if (player != null && !player.isDead() && player.isOnline()) {
                             Double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
                             if (player.getHealth() < maxHealth) {
                                 Double healthRegen = SXAttribute.getApi().getEntityAllData(player).getSubAttribute("HealthRegen").getAttributes()[0];
-                                healthRegen = (healthRegen + player.getHealth()) > maxHealth ? (maxHealth - player.getHealth()) : healthRegen;
                                 if (healthRegen > 0) {
                                     EntityRegainHealthEvent event = new EntityRegainHealthEvent(player, healthRegen, EntityRegainHealthEvent.RegainReason.CUSTOM);
                                     Bukkit.getPluginManager().callEvent(event);
@@ -54,6 +53,7 @@ public class HealthRegenAttribute extends SubAttribute {
                         }
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§4生命恢复系统崩溃 正在重新启动!");
                     this.cancel();
                     HealthRegenAttribute.this.onEnable();

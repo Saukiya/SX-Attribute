@@ -12,8 +12,8 @@ public class CommandList {
 
     public void add(SubCommand subCommand) {
         for (Map.Entry<Integer, SubCommand> entry : subCommands.entrySet()) {
-            if (entry.getValue().cmd().equalsIgnoreCase(subCommand.cmd())){
-                subCommands.put(entry.getKey(),subCommand);
+            if (entry.getValue().cmd().equalsIgnoreCase(subCommand.cmd())) {
+                subCommands.put(entry.getKey(), subCommand);
                 return;
             }
         }

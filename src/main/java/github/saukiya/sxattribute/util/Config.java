@@ -190,7 +190,7 @@ public class Config {
     @Getter
     private static boolean registerSlotsLock;
     @Getter
-    private  static List<String> bossBarBlackCauseList;
+    private static List<String> bossBarBlackCauseList;
 
     /**
      * 创建默认Config文件
@@ -203,7 +203,7 @@ public class Config {
         // 全息显示
         config.set(HOLOGRAPHIC_ENABLED, true);
         config.set(HOLOGRAPHIC_DISPLAY_TIME, 40);
-        config.set(HOLOGRAPHIC_BLACK_CAUSE_LIST,Arrays.asList("ENTITY_SWEEP_ATTACK","POISON"));
+        config.set(HOLOGRAPHIC_BLACK_CAUSE_LIST, Arrays.asList("ENTITY_SWEEP_ATTACK", "POISON"));
         config.set(HOLOGRAPHIC_HEALTH_TAKE_ENABLED, false);
         // 血量头顶显示
         config.set(HEALTH_NAME_VISIBLE_ENABLED, true);
@@ -217,7 +217,7 @@ public class Config {
         config.set(HEALTH_BOSS_BAR_ENABLED, true);
         config.set(HEALTH_BOSS_BAR_FORMAT, "&a&l{0}:&8&l[&a&l{1}&7&l/&c&l{2}&8&l]");
         config.set(HEALTH_BOSS_BAR_DISPLAY_TIME, 4);
-        config.set(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST,Arrays.asList("ENTITY_SWEEP_ATTACK","POISON"));
+        config.set(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST, Arrays.asList("ENTITY_SWEEP_ATTACK", "POISON"));
         // 血条压缩
         config.set(HEALTH_SCALED_ENABLED, true);
         config.set(HEALTH_SCALED_VALUE, 40);
@@ -248,7 +248,7 @@ public class Config {
         config.set(REGISTER_SLOTS_LOCK_ENABLED, false);
         config.set(REGISTER_SLOTS_LOCK_NAME, "&7&o%SlotName%槽");
         // 默认属性
-        config.set(DEFAULT_STATS, Arrays.asList("生命上限: 20", "暴击伤害: 100", "速度: 100"));
+        config.set(DEFAULT_STATS, Arrays.asList("生命上限: 20", "暴击伤害: 100", "移动速度: 100"));
 
         config.set(NAME_HAND_MAIN, "主武器");
         config.set(NAME_HAND_OFF, "副武器");
@@ -260,7 +260,7 @@ public class Config {
         config.set(NAME_SELL, "出售价格");
         config.set(NAME_EXPIRY_TIME, "到期时间");
         config.set(FORMAT_EXPIRY_TIME, "yyyy/MM/dd HH:mm");
-        config.set(NAME_SPEED, "速度");
+        config.set(NAME_SPEED, "移动速度");
         config.set(NAME_ATTACK_SPEED, "攻击速度");
 
         config.set(NAME_HEALTH, "生命上限");

@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Saukiya
@@ -89,6 +88,11 @@ public class SXAttributeManager {
         attributeMap.values().forEach(SubAttribute::onEnable);
     }
 
+
+    public void onAttributeDisable() {
+        attributeMap.values().forEach(SubAttribute::onDisable);
+    }
+
     /**
      * 获取物品的属性
      *
@@ -110,7 +114,7 @@ public class SXAttributeManager {
 
                 SXAttributeData sxAttributeData = new SXAttributeData();
                 for (String lore : item.getItemMeta().getLore()) {
-                    if (!lore.contains("§X")){
+                    if (!lore.contains("§X")) {
                         for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
                             if (subCondition.containsType(type, true)) {
                                 if (subCondition.determine(entity, item, lore)) {
@@ -119,7 +123,7 @@ public class SXAttributeManager {
                                 }
                             }
                         }
-                        if (sxAttributeData == null){
+                        if (sxAttributeData == null) {
                             itemArray[i] = null;
                             break;
                         }
@@ -246,7 +250,7 @@ public class SXAttributeManager {
         // 计算点数
         data.calculationValue();
         // 生物默认数据
-        if (entity instanceof Player){
+        if (entity instanceof Player) {
             data.add(defaultAttributeData);
         }
         // 纠正数值

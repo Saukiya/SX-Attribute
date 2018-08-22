@@ -119,7 +119,6 @@ public enum Message {
     REPLACE_LIST;
 
 
-
     private static final File FILE = new File(SXAttribute.getPluginFile(), "Message.yml");
 
     @Getter

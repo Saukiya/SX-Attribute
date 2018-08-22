@@ -298,7 +298,7 @@ public class ItemDataManager {
         itemData.set("默认一.Unbreakable", false);
         itemData.set("默认二.Name", "&c机械轻羽之靴");
         itemData.set("默认二.ID", 301);
-        itemData.set("默认二.Lore", Arrays.asList("&6物品类型: 靴子", "&b防御力: +15", "&c生命上限: +2000", "&d速度: +100%", "&d闪避几率: +20%", "&2生命恢复: +10", "&e经验加成: +20%", "&6限制等级: <r:50_100>级", "&r", "<s:DefaultLore>", "&r", "&e出售价格: 250"));
+        itemData.set("默认二.Lore", Arrays.asList("&6物品类型: 靴子", "&b防御力: +15", "&c生命上限: +2000", "&d移动速度: +100%", "&d闪避几率: +20%", "&2生命恢复: +10", "&e经验加成: +20%", "&6限制等级: <r:50_100>级", "&r", "<s:DefaultLore>", "&r", "&e出售价格: 250"));
         itemData.set("默认二.EnchantList", Collections.singletonList("DURABILITY:1"));
         itemData.set("默认二.ItemFlagList", Arrays.asList("HIDE_ENCHANTS", "HIDE_UNBREAKABLE"));
         itemData.set("默认二.Unbreakable", true);
@@ -307,7 +307,7 @@ public class ItemDataManager {
         itemData.set("默认三.ID", 287);
         itemData.set("默认三.Lore", Arrays.asList("&6物品类型: 项链",
                 "&c生命上限: +200",
-                "&d速度: +50%",
+                "&d移动速度: +50%",
                 "&d雷霆几率: +20%",
                 "&6限制等级: <r:20_30>级",
                 "&r", "&e出售价格: 500"));
@@ -427,7 +427,7 @@ public class ItemDataManager {
             // 存储lockRandomMap
             if (lockRandomMap.size() > 0) {
                 List<String> list = new ArrayList<>();
-                lockRandomMap.forEach((key, value) -> list.add(key + " §e/§X§e/§r " + value));
+                lockRandomMap.forEach((key, value) -> list.add(key + "§e§l§k|§e§r" + value));
                 plugin.getItemUtil().setNBTList(item, "LockRandomMap", list);
             }
             if (Config.isDamageGauges()) {

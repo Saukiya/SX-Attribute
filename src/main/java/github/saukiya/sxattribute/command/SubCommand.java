@@ -51,21 +51,21 @@ public abstract class SubCommand {
     }
 
     public final void registerCommand(JavaPlugin plugin) {
-        if (plugin != null){
+        if (plugin != null) {
             this.pluginName = plugin.getName();
             subCommands.add(this);
         }
     }
 
-    String cmd() {
+    public String cmd() {
         return cmd;
     }
 
-    private String arg() {
+    public String arg() {
         return arg;
     }
 
-    Boolean hide() {
+    public Boolean hide() {
         return hide;
     }
 
