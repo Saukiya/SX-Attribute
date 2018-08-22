@@ -50,6 +50,11 @@ public class SpeedAttribute extends SubAttribute {
     }
 
     @Override
+    public void correct() {
+        if (getAttributes()[0] <= 0) getAttributes()[0] = 1D;
+    }
+
+    @Override
     public double getValue() {
         return getAttributes()[0] * Config.getConfig().getInt(Config.VALUE_SPEED);
     }

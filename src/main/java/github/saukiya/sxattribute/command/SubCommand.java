@@ -28,6 +28,13 @@ public abstract class SubCommand {
 
     private SenderType[] senderTypes = new SenderType[]{SenderType.ALL};
 
+    /**
+     *
+     * @param cmd String
+     * @param arg String
+     * @param hide Boolean
+     * @param senderTypes SenderType[]
+     */
     public SubCommand(String cmd, String arg, Boolean hide, SenderType... senderTypes) {
         this.cmd = cmd;
         this.arg = arg;
@@ -35,21 +42,41 @@ public abstract class SubCommand {
         this.senderTypes = senderTypes;
     }
 
+    /**
+     *
+     * @param cmd String
+     * @param arg String
+     * @param senderTypes SenderType[]
+     */
     public SubCommand(String cmd, String arg, SenderType... senderTypes) {
         this.cmd = cmd;
         this.arg = arg;
         this.senderTypes = senderTypes;
     }
 
+    /**
+     *
+     * @param cmd String
+     * @param senderTypes SenderType[]
+     */
     public SubCommand(String cmd, SenderType... senderTypes) {
         this.cmd = cmd;
         this.senderTypes = senderTypes;
     }
 
+    /**
+     *
+     * @param cmd String
+     */
     public SubCommand(String cmd) {
         this.cmd = cmd;
     }
 
+    /**
+     * 注册指令方法
+     *
+     * @param plugin JavaPlugin
+     */
     public final void registerCommand(JavaPlugin plugin) {
         if (plugin != null) {
             this.pluginName = plugin.getName();
@@ -70,17 +97,46 @@ public abstract class SubCommand {
     }
 
     private String permission() {
-        return SXAttribute.getPluginName() + "." + cmd;
+        return pluginName + "." + cmd;
     }
 
+    /**
+     * 执行指令抽象方法
+     *
+     * @param plugin SXAttribute
+     * @param sender CommandSender
+     * @param args String[]
+     */
     public abstract void onCommand(SXAttribute plugin, CommandSender sender, String[] args);
 
+    /**
+     * TAB执行方法
+     *
+     * @param plugin SXAttribute
+     * @param sender CommandSender
+     * @param args String[]
+     * @return List
+     */
     public abstract List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args);
 
-    Boolean isUse(CommandSender sender, SenderType type) {
+    /**
+     * 判断是否可用
+     *
+     * @param sender CommandSender
+     * @param type SenderType
+     * @return boolean
+     */
+   public boolean isUse(CommandSender sender, SenderType type) {
         return sender.hasPermission(permission()) && Arrays.stream(this.senderTypes).anyMatch(senderType -> senderType.equals(SenderType.ALL) || senderType.equals(type));
     }
 
+    /**
+     * 输出介绍 可覆盖
+     *
+     * @param sender CommandSender
+     * @param color String
+     * @param label String
+     */
     public void sendIntroduction(CommandSender sender, String color, String label) {
         String introduction = Message.getMsg(Message.valueOf("COMMAND__" + cmd().toUpperCase()));
         String message = color + MessageFormat.format("/{0} {1}{2}§7 -§c {3}", label, cmd(), arg(), introduction);

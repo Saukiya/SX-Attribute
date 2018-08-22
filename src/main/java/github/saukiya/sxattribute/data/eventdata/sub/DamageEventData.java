@@ -16,28 +16,20 @@ import java.util.List;
  */
 public class DamageEventData extends EventData {
 
-    @Getter
     private final LivingEntity entity;
 
-    @Getter
     private final LivingEntity damager;
 
-    @Getter
     private final String entityName;
 
-    @Getter
     private final String damagerName;
 
-    @Getter
     private final SXAttributeData entityData;
 
-    @Getter
     private final SXAttributeData damagerData;
 
-    @Getter
     private final EntityDamageByEntityEvent event;
 
-    @Getter
     private final List<String> EffectiveAttributeList = new ArrayList<>();
 
     @Getter
@@ -52,7 +44,6 @@ public class DamageEventData extends EventData {
     private boolean crit;
 
     @Getter
-    @Setter
     private boolean cancelled = false;
 
     public DamageEventData(LivingEntity entity, LivingEntity damager, String entityName, String damagerName, SXAttributeData entityData, SXAttributeData damagerData, EntityDamageByEntityEvent event) {
@@ -66,27 +57,115 @@ public class DamageEventData extends EventData {
         this.damage = event.getDamage();
     }
 
+    /**
+     * 输出一个全息文本
+     *
+     * @param message String
+     */
     public void sendHolo(String message) {
         if (!message.contains("Null Message: ")) {
             holoList.add(message);
         }
     }
 
+    /**
+     * 获取被攻击方的属性值
+     *
+     * @param attributeName String
+     * @return Double[]
+     */
     public Double[] getEntityAttributeDoubles(String attributeName) {
         SubAttribute attribute = entityData.getSubAttribute(attributeName);
         return attribute != null ? attribute.getAttributes() : new Double[]{0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D};
     }
 
+    /**
+     * 获取攻击方的属性值
+     * @param attributeName String
+     * @return Double[]
+     */
     public SubAttribute getDamageAttribute(String attributeName) {
         return damagerData.getSubAttribute(attributeName);
     }
 
+    /**
+     * 增加伤害值
+     *
+     * @param addDamage double
+     */
     public void addDamage(double addDamage) {
         damage += addDamage;
     }
 
+    /**
+     * 减少伤害值
+     * @param takeDamage double
+     */
     public void takeDamage(double takeDamage) {
         damage -= takeDamage;
     }
 
+    /**
+     * 获取被攻击方
+     *
+     * @return LivingEntity
+     */
+    public LivingEntity getEntity() {
+        return entity;
+    }
+
+    /**
+     * 获取攻击方
+     *
+     * @return LivingEntity
+     */
+    public LivingEntity getDamager() {
+        return damager;
+    }
+
+    /**
+     * 获取被攻击方名字
+     *
+     * @return String
+     */
+    public String getEntityName() {
+        return entityName;
+    }
+
+    /**
+     * 获取攻击方名字
+     *
+     * @return String
+     */
+    public String getDamagerName() {
+        return damagerName;
+    }
+
+    /**
+     * 获取原事件
+     * 注意，事件内的FinalDamage是无效的
+     *
+     * @return EntityDamageByEntityEvent
+     */
+    public EntityDamageByEntityEvent getEvent() {
+        return event;
+    }
+
+    /**
+     * 获取被触发的效果
+     *
+     * @return List
+     */
+    public List<String> getEffectiveAttributeList() {
+        return EffectiveAttributeList;
+    }
+
+    /**
+     * 取消该事件
+     *
+     * @param cancelled boolean
+     */
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
 }

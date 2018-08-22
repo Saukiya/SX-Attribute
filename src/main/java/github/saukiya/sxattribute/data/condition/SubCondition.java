@@ -163,7 +163,10 @@ public abstract class SubCondition {
     }
 
     /**
-     * 注册属性方法
+     * 注册条件方法
+     * 优先级需在SX-Attribute/Config.yml 设定
+     *
+     * @param plugin JavaPlugin
      */
     public final void registerCondition(JavaPlugin plugin) {
         if (plugin == null) {

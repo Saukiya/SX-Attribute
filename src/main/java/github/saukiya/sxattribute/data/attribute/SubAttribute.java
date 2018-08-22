@@ -78,6 +78,9 @@ public abstract class SubAttribute {
 
     /**
      * 注册属性方法
+     * 优先级需在SX-Attribute/Config.yml 设定
+     *
+     * @param plugin JavaPlugin
      */
     public final void registerAttribute(JavaPlugin plugin) {
         if (plugin == null) {

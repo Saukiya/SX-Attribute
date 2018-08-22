@@ -99,7 +99,7 @@ public class ItemDataManager {
      */
     @SuppressWarnings("deprecation")
     private static ItemStack getItemStack(String itemName, String id, List<String> itemLore, List<String> itemFlagList, Boolean unbreakable, String color, String skullName) {
-        int itemMaterial = 260;
+        int itemMaterial = 0;
         int itemDurability = 0;
         if (id != null) {
             if (id.contains(":") && id.split(":")[0].replaceAll("[^0-9]", "").length() > 0) {
@@ -114,7 +114,7 @@ public class ItemDataManager {
         }
         ItemStack item = new ItemStack(itemMaterial, 1, (short) itemDurability);
         if (item.getType().name().equals(Material.AIR.name())) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c物品 §4" + itemName + "§c 的ID有误! 请检查是否写了双引号: §4" + id + "§c!");
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cItem §4" + itemName + "§c ID Error: §4'" + id + "'§c!");
             return null;
         }
         ItemMeta meta = item.getItemMeta();
@@ -385,9 +385,9 @@ public class ItemDataManager {
                         loreList.remove(i);
                     } else {
                         lore = lore.replace("&", "§");
-                        if (lore.contains("\n")) {
+                        if (lore.contains("\n") || lore.contains("/n")) {
                             loreList.remove(i);
-                            loreList.addAll(i, Arrays.asList(lore.split("\n")));
+                            loreList.addAll(i, Arrays.asList(lore.replace("/n","\n").split("\n")));
                         } else {
                             loreList.set(i, lore);
                         }
@@ -403,8 +403,8 @@ public class ItemDataManager {
                 List<String> enchantList = new ArrayList<>();
                 for (String enchantName : itemData.getEnchantList()) {
                     enchantName = plugin.getRandomStringManager().processRandomString(itemName, enchantName, lockRandomMap);
-                    if (enchantName.contains("\n")) {
-                        enchantList.addAll(Arrays.asList(enchantName.split("\n")));
+                    if (enchantName.contains("\n")  || enchantName.contains("/n")) {
+                        enchantList.addAll(Arrays.asList(enchantName.replace("/n","\n").split("\n")));
                     } else {
                         enchantList.add(enchantName);
                     }
