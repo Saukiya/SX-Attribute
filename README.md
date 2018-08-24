@@ -167,8 +167,8 @@
 下载
 --------
 
-* 插件下载: SX-Attribute -> [SX-Attribute-1.1.3.jar (127.07 KB, 从上次更新README到现在的下载次数: 282) ](http://www.mcbbs.net/forum.php?mod=attachment&aid=MTIwNzg2M3w4M2QxNjA0Y3wxNTI5MzYxMTkxfDE1NjE4ODN8NzkzMzYy)
-* 插件版本: V1.1.3 - 18/6/19 01:48
+* 插件下载: SX-Attribute -> [SX-Attribute-1.3.6.jar (231.27 KB, 从上次更新README到现在的下载次数: 1260) ](http://www.mcbbs.net/forum.php?mod=attachment&aid=MTIwNzg2M3w4M2QxNjA0Y3wxNTI5MzYxMTkxfDE1NjE4ODN8NzkzMzYy)
+* 插件版本: V1.3.6 - 2018/08/24 10:42
 * 可选前置: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) / [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays) / [MythicMobs](https://www.spigotmc.org/resources/%E2%9A%94-mythicmobs-%E2%96%BAthe-1-custom-mob-creator%E2%97%84.5702/) / [RPGInventory](https://www.spigotmc.org/resources/rpg-inventory-premium-now-without-bugs-d-1-7-10-1-12-x.12498/)
 * 插件作者: [Saukiya](https://github.com/Saukiya)
 * 插件源码: [Github](https://github.com/Saukiya/SX-Attribute) GPLv3
