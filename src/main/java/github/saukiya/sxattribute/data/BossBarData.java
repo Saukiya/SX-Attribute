@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Saukiya
@@ -34,14 +35,13 @@ public class BossBarData {
     private int updateTick = Config.getConfig().getInt(Config.HEALTH_BOSS_BAR_DISPLAY_TIME);
 
     @Getter
-    private Map<Player, Long> timeMap = new HashMap<>();
+    private Map<Player, Long> timeMap = new ConcurrentHashMap<>();
 
     public BossBarData(LivingEntity entity, String name, double maxHealth, double progress) {
         this.entity = entity;
         this.name = name;
         this.maxHealth = maxHealth;
         bossBar = Bukkit.createBossBar(MessageFormat.format(Config.getConfig().getString(Config.HEALTH_BOSS_BAR_FORMAT), name, SXAttribute.getDf().format(progress * maxHealth), SXAttribute.getDf().format(maxHealth)).replace("&", "§"), BarColor.GREEN, BarStyle.SEGMENTED_20);
-        setProgress(progress);
     }
 
     public void updateTitle() {

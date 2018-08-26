@@ -13,11 +13,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * 生命恢复
+ *
  * @author Saukiya
  */
 public class HealthRegenAttribute extends SubAttribute {
@@ -37,7 +39,7 @@ public class HealthRegenAttribute extends SubAttribute {
             @Override
             public void run() {
                 try {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
+                    for (Player player : new ArrayList<>(Bukkit.getOnlinePlayers())) {
                         if (player != null && !player.isDead() && player.isOnline()) {
                             Double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
                             if (player.getHealth() < maxHealth) {

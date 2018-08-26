@@ -4,6 +4,7 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxattribute.util.MoneyUtil;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -50,14 +51,20 @@ public class StatsInventory {
         } else {
             skullLoreList.add(Message.getMsg(Message.INVENTORY__STATS__HIDE_ON));
         }
-        skullLoreList.addAll(setPlaceholders(attributeData, Message.getStringList(Message.INVENTORY__STATS__SKULL_LORE)));
+        skullLoreList.addAll(setPlaceholders(player, attributeData, Message.getStringList(Message.INVENTORY__STATS__SKULL_LORE)));
         if (SXAttribute.isPlaceholder()) {
             skullLoreList = PlaceholderAPI.setPlaceholders(player, skullLoreList);
         }
         skullmeta.setLore(skullLoreList);
         skullmeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
-        // 1.9.0 以上的方法
-        ((SkullMeta) skullmeta).setOwner(player.getName());
+        // 1.12.2 以上的方法
+        if (SXAttribute.getVersionSplit()[1] >= 12) {
+            new Thread(() -> ((SkullMeta) skullmeta).setOwningPlayer(player));
+            skull.setItemMeta(skullmeta);
+            inv.setItem(4, skull);
+        } else if (SXAttribute.getVersionSplit()[1] >= 9) {
+            ((SkullMeta) skullmeta).setOwner(player.getName());
+        }
         skull.setItemMeta(skullmeta);
         for (int i = 0; i < 9; i++) {
             if (i == 4) {
@@ -84,7 +91,7 @@ public class StatsInventory {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__ATTACK));
-        List<String> loreList = setPlaceholders(data, Message.getStringList(Message.INVENTORY__STATS__ATTACK_LORE));
+        List<String> loreList = setPlaceholders(player, data, Message.getStringList(Message.INVENTORY__STATS__ATTACK_LORE));
         if (SXAttribute.isPlaceholder()) {
             loreList = PlaceholderAPI.setPlaceholders(player, loreList);
         }
@@ -105,7 +112,7 @@ public class StatsInventory {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__DEFENSE));
-        List<String> loreList = setPlaceholders(data, Message.getStringList(Message.INVENTORY__STATS__DEFENSE_LORE));
+        List<String> loreList = setPlaceholders(player, data, Message.getStringList(Message.INVENTORY__STATS__DEFENSE_LORE));
         if (SXAttribute.isPlaceholder()) {
             loreList = PlaceholderAPI.setPlaceholders(player, loreList);
         }
@@ -125,7 +132,7 @@ public class StatsInventory {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__BASE));
-        List<String> loreList = setPlaceholders(data, Message.getStringList(Message.INVENTORY__STATS__BASE_LORE));
+        List<String> loreList = setPlaceholders(player, data, Message.getStringList(Message.INVENTORY__STATS__BASE_LORE));
         if (SXAttribute.isPlaceholder()) {
             loreList = PlaceholderAPI.setPlaceholders(player, loreList);
         }
@@ -141,14 +148,18 @@ public class StatsInventory {
         return item;
     }
 
-    private List<String> setPlaceholders(SXAttributeData data, List<String> list) {
+    private List<String> setPlaceholders(Player player, SXAttributeData data, List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             String lore = list.get(i);
             while (lore.contains("%") && lore.split("%").length > 1 && lore.split("%")[1].contains("sx_") && lore.split("%")[1].split("_").length > 1) {
                 String[] loreSplit = lore.split("%");
                 String string = loreSplit[1].split("_")[1];
                 String str = null;
-                if (string.equalsIgnoreCase("value")) {
+                if (string.equalsIgnoreCase("Money") && SXAttribute.isVault()) {
+                    str = SXAttribute.getDf().format(MoneyUtil.get(player));
+                } else if (string.equalsIgnoreCase("Health")) {
+                    str = SXAttribute.getDf().format(player.getHealth());
+                } else if (string.equalsIgnoreCase("value")) {
                     str = SXAttribute.getDf().format(data.getValue());
                 } else {
                     for (SubAttribute attribute : data.getAttributeMap().values()) {

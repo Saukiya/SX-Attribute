@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 暴击
+ *
  * @author Saukiya
  */
 public class CritAttribute extends SubAttribute {

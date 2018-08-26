@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * 属性标签查询指令
+ *
  * @author Saukiya
  */
 public class AttributeListCommand extends SubCommand {

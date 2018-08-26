@@ -5,14 +5,18 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.spigotmc.SpigotConfig;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
  * 生命 - 当前不更新怪物生命
+ *
  * @author Saukiya
  */
 public class HealthAttribute extends SubAttribute {
@@ -43,12 +47,12 @@ public class HealthAttribute extends SubAttribute {
 
     @Override
     public String getPlaceholder(String string) {
-        return string.equalsIgnoreCase("Health") ? getDf().format(getAttributes()[0]) : null;
+        return string.equalsIgnoreCase("MaxHealth") ? getDf().format(getAttributes()[0]) : null;
     }
 
     @Override
     public List<String> getPlaceholders() {
-        return Collections.singletonList("Health");
+        return Collections.singletonList("MaxHealth");
     }
 
     @Override
@@ -63,6 +67,11 @@ public class HealthAttribute extends SubAttribute {
     @Override
     public void correct() {
         if (getAttributes()[0] < 0) getAttributes()[0] = 1D;
+        if (getAttributes()[0] > Double.MAX_VALUE) getAttributes()[0] = Double.MAX_VALUE;
+        if (getAttributes()[0] > SpigotConfig.maxHealth){
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cPlease set maxHealth to spigot.yml §8[§4" + getAttributes()[0] + "§7 > §4"+SpigotConfig.maxHealth + "§8]");
+            getAttributes()[0] = SpigotConfig.maxHealth;
+        }
     }
 
     @Override

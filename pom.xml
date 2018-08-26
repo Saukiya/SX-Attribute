@@ -6,7 +6,7 @@
 
     <groupId>github.saukiya</groupId>
     <artifactId>SX-Attribute</artifactId>
-    <version>1.3.4</version>
+    <version>1.3.6</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -40,7 +40,7 @@
             <artifactId>spigot</artifactId>
             <version>1.11.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/spigot-1.11.2.jar</systemPath>
+            <systemPath>${basedir}/libs/spigot-1.12.2.jar</systemPath>
         </dependency>
 
         <!-- PlaceholderAPI v2.8.2 -->
@@ -70,7 +70,6 @@
             <systemPath>${basedir}/libs/Vault.jar</systemPath>
         </dependency>
 
-        <!-- 没有Repo -->
         <!-- MythicMobs v4.3.2-SNAPSHOT -->
         <dependency>
             <groupId>local</groupId>
@@ -78,6 +77,15 @@
             <version>4.3.2-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/MythicMobs-4.3.2-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <!-- MythicArtifacts v4.3.2-SNAPSHOT -->
+        <dependency>
+            <groupId>local</groupId>
+            <artifactId>MythicArtifacts</artifactId>
+            <version>0.1.14-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/MythicArtifacts.jar</systemPath>
         </dependency>
 
         <!-- RPGInventory v1.0.6 -->

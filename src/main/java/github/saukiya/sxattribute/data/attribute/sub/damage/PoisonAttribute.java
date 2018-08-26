@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 中毒
+ *
  * @author Saukiya
  */
 public class PoisonAttribute extends SubAttribute {

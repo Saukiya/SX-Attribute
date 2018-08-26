@@ -23,7 +23,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -46,7 +45,7 @@ public class SXAttribute extends JavaPlugin {
     private static DecimalFormat df = new DecimalFormat("#.##");
     @Getter
     @Setter
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    private static SimpleDateFormatUtils sdf;
     @Getter
     private static SXAttributeAPI api;
 
@@ -118,6 +117,7 @@ public class SXAttribute extends JavaPlugin {
             e.printStackTrace();
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cIO Error!");
         }
+        sdf = new SimpleDateFormatUtils();
         mainCommand = new MainCommand(this);
         attributeManager = new SXAttributeManager(this);
         conditionManager = new SXConditionManager(this);
@@ -162,9 +162,13 @@ public class SXAttribute extends JavaPlugin {
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-            vault = true;
-            MoneyUtil.setup();
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Find Vault");
+            try {
+                MoneyUtil.setup();
+                vault = true;
+                Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Find Vault");
+            }catch (NullPointerException e){
+                Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find Vault-Economy!");
+            }
         } else {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find Vault!");
         }
@@ -196,7 +200,6 @@ public class SXAttribute extends JavaPlugin {
         } else {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find SX-Level!");
         }
-
         registerSlotManager = new RegisterSlotManager(this);
         statsInventory = new StatsInventory(this);
         displaySlotInventory = new DisplaySlotInventory(this);
@@ -213,7 +216,6 @@ public class SXAttribute extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(onHealthChangeDisplayListener, this);
         Bukkit.getPluginManager().registerEvents(new OnItemSpawnListener(), this);
         Bukkit.getPluginManager().registerEvents(sxLevel ? new OnSXExpChangeListener(this) : new OnExpChangeListener(this), this);
-
         mainCommand.setUp("sxAttribute");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load Time: §c" + (System.currentTimeMillis() - oldTimes) + "§r ms");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cAuthor: Saukiya QQ: 1940208750");

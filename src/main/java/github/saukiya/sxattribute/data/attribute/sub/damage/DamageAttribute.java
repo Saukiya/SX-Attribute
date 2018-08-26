@@ -7,17 +7,21 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.spigotmc.SpigotConfig;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * 攻击力
+ *
  * @author Saukiya
  */
 public class DamageAttribute extends SubAttribute {
@@ -41,17 +45,18 @@ public class DamageAttribute extends SubAttribute {
             EntityDamageByEntityEvent event = damageEventData.getEvent();
             if (!Config.isDamageGauges() || event.getDamager() instanceof Projectile) {
                 damageEventData.addDamage(getAttribute());
-            } else {
+            } else if (event.getDamager() instanceof Player) {
                 damageEventData.addDamage(getAttribute() - getAttributes()[0]);
+            } else {
+                damageEventData.addDamage(getAttribute());
             }
             if (event.getEntity() instanceof Player) {
                 damageEventData.addDamage(getPVPAttribute());
             } else {
                 damageEventData.addDamage(getPVEAttribute());
             }
-        } else if (eventData instanceof UpdateEventData) {
-            UpdateEventData updateEventData = (UpdateEventData) eventData;
-            LivingEntity entity = updateEventData.getEntity();
+        } else if (eventData instanceof UpdateEventData && ((UpdateEventData) eventData).getEntity() instanceof Player) {
+            LivingEntity entity = ((UpdateEventData) eventData).getEntity();
             if (Config.isDamageGauges()) {
                 entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(getAttributes()[0]);
             } else if (getAttribute() == 0D) {
@@ -69,19 +74,19 @@ public class DamageAttribute extends SubAttribute {
         } else if (string.equalsIgnoreCase("MaxDamage")) {
             return getDf().format(getAttributes()[1]);
         } else if (string.equalsIgnoreCase("Damage")) {
-            return getAttributes()[0].equals(getAttributes()[1]) ? getDf().format(getAttributes()[0]) : (getDf().format(getAttributes()[0]) + " - " + getDf().format(getAttributes()[1]));
+            return getAttributes()[0] == getAttributes()[1] ? getDf().format(getAttributes()[0]) : (getDf().format(getAttributes()[0]) + " - " + getDf().format(getAttributes()[1]));
         } else if (string.equalsIgnoreCase("PvpMinDamage")) {
             return getDf().format(getAttributes()[2]);
         } else if (string.equalsIgnoreCase("PvpMaxDamage")) {
             return getDf().format(getAttributes()[3]);
         } else if (string.equalsIgnoreCase("PvpDamage")) {
-            return getAttributes()[2].equals(getAttributes()[3]) ? getDf().format(getAttributes()[2]) : (getDf().format(getAttributes()[2]) + " - " + getDf().format(getAttributes()[3]));
+            return getAttributes()[2] == getAttributes()[3] ? getDf().format(getAttributes()[2]) : (getDf().format(getAttributes()[2]) + " - " + getDf().format(getAttributes()[3]));
         } else if (string.equalsIgnoreCase("PveMinDamage")) {
             return getDf().format(getAttributes()[4]);
         } else if (string.equalsIgnoreCase("PveMaxDamage")) {
             return getDf().format(getAttributes()[5]);
         } else if (string.equalsIgnoreCase("PveDamage")) {
-            return getAttributes()[4].equals(getAttributes()[5]) ? getDf().format(getAttributes()[4]) : (getDf().format(getAttributes()[4]) + " - " + getDf().format(getAttributes()[5]));
+            return getAttributes()[4] == getAttributes()[5] ? getDf().format(getAttributes()[4]) : (getDf().format(getAttributes()[4]) + " - " + getDf().format(getAttributes()[5]));
         } else {
             return null;
         }
@@ -124,11 +129,16 @@ public class DamageAttribute extends SubAttribute {
 
     @Override
     public void correct() {
-        if (getAttributes()[0] <= 0) getAttributes()[0] = Config.isDamageGauges() ? 1D : 0D;
+        if (getAttributes()[0] <= 0) getAttributes()[0] = Config.isDamageGauges() ? 1 : 0;
+        if (getAttributes()[0] > Double.MAX_VALUE) getAttributes()[0] = Double.MAX_VALUE;
+        if (getAttributes()[0] > SpigotConfig.attackDamage){
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cPlease set attackDamage to spigot.yml §8[§4" + getAttributes()[0] + "§7 > §4"+SpigotConfig.attackDamage + "§8]");
+            getAttributes()[0] = SpigotConfig.attackDamage;
+        }
         if (getAttributes()[1] < getAttributes()[0]) getAttributes()[1] = getAttributes()[0];
-        if (getAttributes()[2] <= 0) getAttributes()[2] = 0D;
+        if (getAttributes()[2] <= 0) getAttributes()[2] = 0;
         if (getAttributes()[3] < getAttributes()[2]) getAttributes()[3] = getAttributes()[2];
-        if (getAttributes()[4] <= 0) getAttributes()[4] = 0D;
+        if (getAttributes()[4] <= 0) getAttributes()[4] = 0;
         if (getAttributes()[5] < getAttributes()[4]) getAttributes()[5] = getAttributes()[4];
     }
 

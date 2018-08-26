@@ -31,6 +31,11 @@ public class RepairCommand extends SubCommand {
     }
 
     @Override
+    public boolean hide() {
+        return !SXAttribute.isVault();
+    }
+
+    @Override
     public List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args) {
         return null;
     }

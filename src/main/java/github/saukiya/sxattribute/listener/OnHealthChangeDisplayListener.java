@@ -24,6 +24,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,35 +48,38 @@ public class OnHealthChangeDisplayListener implements Listener {
             public void run() {
                 //TODO 架构修改为List
                 if (bossList.size() > 0) {
-                    for (int i = bossList.size() - 1; i >= 0; i--) {
-                        BossBarData bossBarData = bossList.get(i);
-                        if (bossBarData.getEntity() != null && !bossBarData.getEntity().isDead() && bossBarData.getEntity().getHealth() < getMaxHealth(bossBarData.getEntity()) && bossBarData.getTimeMap().size() > 0) {
-                            for (Map.Entry<Player, Long> playerEntry : bossBarData.getTimeMap().entrySet()) {
-                                if (!playerEntry.getKey().isOnline() || playerEntry.getKey().isDead() || playerEntry.getValue() < System.currentTimeMillis()) {
-                                    bossBarData.getBossBar().removePlayer(playerEntry.getKey());
-                                    bossBarData.getTimeMap().remove(playerEntry.getKey());
+                    Iterator<BossBarData> bossDataIterator = bossList.iterator();
+                    while (bossDataIterator.hasNext()){
+                        BossBarData bossBarData = bossDataIterator.next();
+                        if (bossBarData.getEntity() != null && !bossBarData.getEntity().isDead() && bossBarData.getTimeMap().size() > 0) {
+                            Iterator<Map.Entry<Player, Long>> entryIterator = bossBarData.getTimeMap().entrySet().iterator();
+                            while (entryIterator.hasNext()){
+                                Map.Entry<Player, Long> entry = entryIterator.next();
+                                if (!entry.getKey().isOnline() || entry.getKey().isDead() || entry.getValue() < System.currentTimeMillis()) {
+                                    bossBarData.getBossBar().removePlayer(entry.getKey());
+                                    entryIterator.remove();
                                 }
                             }
                             if (bossBarData.getTimeMap().size() == 0) {
                                 bossBarData.getBossBar().removeAll();
-                                bossList.remove(i);
+                                bossDataIterator.remove();
                             }
                         } else {
                             bossBarData.getBossBar().removeAll();
-                            bossList.remove(i);
+                            bossDataIterator.remove();
                         }
                     }
                 }
-                //TODO 架构修改为List
                 if (nameList.size() > 0) {
-                    for (int i = nameList.size() - 1; i >= 0; i--) {
-                        NameData nameData = nameList.get(i);
+                    Iterator<NameData> nameDataIterator = nameList.iterator();
+                    while (nameDataIterator.hasNext()){
+                        NameData nameData = nameDataIterator.next();
                         if (nameData.getEntity() == null || nameData.getEntity().isDead() || nameData.getEntity().getHealth() == getMaxHealth(nameData.getEntity()) || nameData.getTick() < System.currentTimeMillis()) {
                             if (nameData.getEntity() != null) {
                                 nameData.getEntity().setCustomName(nameData.getName());
                                 nameData.getEntity().setCustomNameVisible(nameData.isVisible());
                             }
-                            nameList.remove(i);
+                            nameDataIterator.remove();
                         }
                     }
                 }
@@ -87,11 +91,11 @@ public class OnHealthChangeDisplayListener implements Listener {
         return SXAttribute.getVersionSplit()[1] >= 9 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
     }
 
-    public String getEntityName(LivingEntity entity, String entityName) {
+    public String getEntityName(LivingEntity entity) {
         if (entity instanceof Player) {
             return ((Player) entity).getDisplayName();
         }
-        // 获取原来的名字
+        String entityName = entity.getName();
         for (NameData nameData : nameList) {
             if (nameData.getEntity().equals(entity)) {
                 if (nameData.getName() != null) {
@@ -108,7 +112,7 @@ public class OnHealthChangeDisplayListener implements Listener {
         return Message.replace(entityName);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     void OnEntityDamageEvent(EntityDamageEvent event) {
         if (event.isCancelled()) return;
         if (!(event.getEntity() instanceof LivingEntity) || event.getEntity() instanceof ArmorStand) {
@@ -116,8 +120,7 @@ public class OnHealthChangeDisplayListener implements Listener {
         }
         LivingEntity entity = (LivingEntity) event.getEntity();
         LivingEntity damager = null;
-//        String name = getEntityName(entity, entity.getCustomName() != null ? entity.getCustomName() : entity.getName());
-        String name = getEntityName(entity, entity.getName());
+        String name = getEntityName(entity);
 
         double health = entity.getHealth() - event.getFinalDamage();
         if (health < 0) health = 0;
@@ -149,9 +152,11 @@ public class OnHealthChangeDisplayListener implements Listener {
                 if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.getVersionSplit()[1] >= 9 && !Config.getBossBarBlackCauseList().contains(event.getCause().name())) {
                     if (bossBarData == null) {
                         bossBarData = new BossBarData(entity, name, maxHealth, progress);
+                        bossBarData.setProgress(entity.getHealth()/maxHealth);
                         bossList.add(bossBarData);
                     }
                     bossBarData.addPlayer((Player) damager);
+                    bossBarData.setProgress(progress);
                 }
             }
         }

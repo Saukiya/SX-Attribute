@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 /**
  * 属性抽象类
  *
- * @author  Saukiya
+ * @author Saukiya
  */
 public abstract class SubAttribute {
 
@@ -34,18 +34,18 @@ public abstract class SubAttribute {
 
     private final SXAttributeType[] attributeTypes;
 
-    private JavaPlugin plugin = null;
+    private final double[] doubles;
 
-    private Double[] doubles;
+    private JavaPlugin plugin = null;
 
     @Getter
     private DecimalFormat df = SXAttribute.getDf();
 
+
     public SubAttribute(String name, int doublesLength, SXAttributeType... attributeTypes) {
         this.name = name;
         this.attributeTypes = attributeTypes;
-        this.doubles = new Double[doublesLength];
-        IntStream.range(0, doublesLength).forEach(i -> doubles[i] = 0D);
+        this.doubles = new double[doublesLength];
     }
 
     /**
@@ -69,12 +69,17 @@ public abstract class SubAttribute {
         return str.length() == 0 ? "0" : str;
     }
 
+    public double[] newAttributes(int doublesLength) {
+
+        return null;
+    }
+
     public SXAttributeType[] getType() {
         return attributeTypes.clone();
     }
 
     public final boolean containsType(SXAttributeType attributeType) {
-        return Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
+        return getAttributes()[0] > 0 && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
     }
 
     /**
@@ -116,11 +121,6 @@ public abstract class SubAttribute {
      */
     public void onDisable() {
 
-    }
-
-    SubAttribute setPlugin(JavaPlugin plugin) {
-        this.plugin = plugin;
-        return this;
     }
 
     /**
@@ -174,7 +174,7 @@ public abstract class SubAttribute {
      * @param doubles 属性
      */
     public void setAttribute(Double... doubles) {
-        this.doubles = doubles;
+        IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] = doubles[i]);
     }
 
     /**
@@ -182,7 +182,7 @@ public abstract class SubAttribute {
      *
      * @return Double[] 属性值组
      */
-    public Double[] getAttributes() {
+    public double[] getAttributes() {
         return doubles;
     }
 
@@ -191,7 +191,7 @@ public abstract class SubAttribute {
      *
      * @param doubles 属性组
      */
-    public void addAttribute(Double[] doubles) {
+    public void addAttribute(double[] doubles) {
         IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] += doubles[i]);
     }
 
@@ -238,7 +238,7 @@ public abstract class SubAttribute {
      * 纠正属性值
      */
     public void correct() {
-        IntStream.range(0, doubles.length).filter(i -> doubles[i] == null || doubles[i] < 0).forEach(i -> doubles[i] = 0D);
+        IntStream.range(0, doubles.length).filter(i -> doubles[i] < 0).forEach(i -> doubles[i] = 0D);
     }
 
     /**
@@ -267,7 +267,12 @@ public abstract class SubAttribute {
      *
      * @return JavaPlugin
      */
-    public JavaPlugin getPlugin(){
+    public JavaPlugin getPlugin() {
         return plugin;
+    }
+
+    SubAttribute setPlugin(JavaPlugin plugin) {
+        this.plugin = plugin;
+        return this;
     }
 }

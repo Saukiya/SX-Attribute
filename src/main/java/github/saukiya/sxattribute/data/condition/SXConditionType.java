@@ -53,6 +53,7 @@ public class SXConditionType {
 
     /**
      * 判断条件的Type是否相同
+     *
      * @param obj SXConditionType
      * @return boolean
      */

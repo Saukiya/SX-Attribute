@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 速度
+ *
  * @author Saukiya
  */
 public class SpeedAttribute extends SubAttribute {
@@ -52,7 +53,8 @@ public class SpeedAttribute extends SubAttribute {
 
     @Override
     public void correct() {
-        if (getAttributes()[0] <= 0) getAttributes()[0] = 1D;
+        if (getAttributes()[0] <= 0) getAttributes()[0] = 1;
+        if (getAttributes()[0] > 400) getAttributes()[0] = 400;
     }
 
     @Override

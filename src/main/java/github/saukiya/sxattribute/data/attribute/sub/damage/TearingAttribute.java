@@ -10,6 +10,8 @@ import github.saukiya.sxattribute.util.Message;
 import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
@@ -17,6 +19,7 @@ import java.util.List;
 
 /**
  * 撕裂
+ *
  * @author Saukiya
  */
 public class TearingAttribute extends SubAttribute {
@@ -44,12 +47,16 @@ public class TearingAttribute extends SubAttribute {
                         if (i >= 12 / size || damageEventData.getEntity().isDead() || damageEventData.getEvent().isCancelled())
                             cancel();
                         damageEventData.getEntity().playEffect(EntityEffect.HURT);
-                        damageEventData.getEntity().setHealth(damageEventData.getEntity().getHealth() - tearingDamage);
-                        if (SXAttribute.getVersionSplit()[1] >= 9) {
-                            damageEventData.getEntity().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, damageEventData.getEntity().getEyeLocation().add(0, -1, 0), 2, 0.2D, 0.2D, 0.2D, 0.1f);
-                        }
-                        if (damageEventData.getDamager() instanceof Player) {
-                            ((Player) damageEventData.getDamager()).playSound(damageEventData.getEntity().getEyeLocation(), "ENTITY_" + damageEventData.getEntity().getType().toString() + "_HURT", 1, 1);
+                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getDamager(), damageEventData.getEntity(), EntityDamageEvent.DamageCause.CUSTOM, tearingDamage);
+                        if (!event.isCancelled()) {
+                            double damage = damageEventData.getEntity().getHealth() < event.getDamage() ? damageEventData.getEntity().getHealth() : event.getDamage();
+                            damageEventData.getEntity().setHealth(damageEventData.getEntity().getHealth() - damage);
+                            if (SXAttribute.getVersionSplit()[1] >= 9) {
+                                damageEventData.getEntity().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, damageEventData.getEntity().getEyeLocation().add(0, -1, 0), 2, 0.2D, 0.2D, 0.2D, 0.1f);
+                            }
+                            if (damageEventData.getDamager() instanceof Player) {
+                                ((Player) damageEventData.getDamager()).playSound(damageEventData.getEntity().getEyeLocation(), "ENTITY_" + damageEventData.getEntity().getType().toString() + "_HURT", 1, 1);
+                            }
                         }
                     }
                 }.runTaskTimer(getPlugin(), 5, size);

@@ -3,15 +3,20 @@ package github.saukiya.sxattribute.util;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class MoneyUtil {
     private static Economy economy = null;
 
     /**
      * 初始化MoneyUtil类
+     *
+     * @throws NullPointerException NullPointerException
      */
-    public static void setup() {
-        economy = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
+    public static void setup() throws NullPointerException{
+        RegisteredServiceProvider<Economy> registeredServiceProvider = Bukkit.getServicesManager().getRegistration(Economy.class);
+        if (registeredServiceProvider == null) throw new NullPointerException();
+        economy = registeredServiceProvider.getProvider();
     }
 
     /**

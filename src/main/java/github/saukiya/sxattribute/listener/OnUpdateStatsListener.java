@@ -1,12 +1,7 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.data.attribute.SXAttributeData;
-import github.saukiya.sxattribute.data.condition.SXConditionType;
-import github.saukiya.sxattribute.event.StatsUpdateType;
-import github.saukiya.sxattribute.event.UpdateStatsEvent;
-import github.saukiya.sxattribute.util.Config;
-import org.bukkit.Bukkit;
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,10 +13,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import ru.endlesscode.rpginventory.api.InventoryAPI;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OnUpdateStatsListener implements Listener {
 
@@ -67,6 +58,7 @@ public class OnUpdateStatsListener implements Listener {
             public void run() {
                 plugin.getAttributeManager().loadSlotData(player);
                 plugin.getAttributeManager().loadEquipmentData(player);
+                plugin.getAttributeManager().loadRPGInventoryData(player);
                 plugin.getAttributeManager().loadHandData(player);
                 plugin.getAttributeManager().updateStatsEvent(player);
             }
@@ -101,30 +93,6 @@ public class OnUpdateStatsListener implements Listener {
         Player player = (Player) event.getPlayer();
         Inventory inv = event.getInventory();
         if (SXAttribute.isRpgInventory()) {
-            InventoryAPI.getActiveItems(player);
-            InventoryAPI.getPassiveItems(player);
-            if (InventoryAPI.isRPGInventory(inv)) {
-                List<ItemStack> itemList = new ArrayList<>();
-                List<Integer> whiteSlotList = Config.getConfig().getIntegerList(Config.PRG_INVENTORY__WHITE_SLOT);
-                for (int i = 0; i < 54; i++) {
-                    if (whiteSlotList.contains(i)) {
-                        continue;
-                    }
-                    ItemStack item = inv.getItem(i);
-                    if (item != null && item.getItemMeta().hasLore()) {
-                        itemList.add(item);
-                    }
-                }
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        SXAttributeData data = plugin.getAttributeManager().getItemData(player, SXConditionType.RPG_INVENTORY, itemList.toArray(new ItemStack[0]));
-                        Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.RPG_INVENTORY, player, data, itemList.toArray(new ItemStack[0])));
-                        plugin.getAttributeManager().getRpgInventoryMap().put(player.getUniqueId(), data);
-                        plugin.getAttributeManager().updateStatsEvent(player);
-                    }
-                }.runTaskAsynchronously(plugin);
-            }
         } else {
             if (inv.getName().contains("container") || inv.getName().contains("Repair")) {
                 updateEquipmentData(player);
@@ -185,6 +153,7 @@ public class OnUpdateStatsListener implements Listener {
             return;
         }
         LivingEntity entity = event.getEntity();
+        entity.setInvulnerable(true);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -192,9 +161,10 @@ public class OnUpdateStatsListener implements Listener {
                     plugin.getAttributeManager().loadHandData(entity);
                     plugin.getAttributeManager().loadEquipmentData(entity);
                     plugin.getAttributeManager().updateStatsEvent(entity);
+                    entity.setInvulnerable(false);
                 }
             }
-        }.runTaskLaterAsynchronously(plugin, 20);
+        }.runTaskLaterAsynchronously(plugin, 16);
     }
 
     @EventHandler

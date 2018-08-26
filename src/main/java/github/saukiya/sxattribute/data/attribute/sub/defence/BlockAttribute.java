@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 格挡
+ *
  * @author Saukiya
  */
 public class BlockAttribute extends SubAttribute {

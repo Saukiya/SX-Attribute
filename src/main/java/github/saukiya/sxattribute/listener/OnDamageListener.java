@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -64,28 +65,21 @@ public class OnDamageListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
-        if (event.isCancelled()) {
+        if (event.isCancelled() || event.getCause().equals(DamageCause.CUSTOM)) {
             return;
         }
-        LivingEntity entity = null;
+        LivingEntity entity = (event.getEntity() instanceof LivingEntity && !(event.getEntity() instanceof ArmorStand)) ? (LivingEntity) event.getEntity() : null;
         LivingEntity damager = null;
         SXAttributeData entityData;
         SXAttributeData damagerData = null;
         // 当攻击者为投抛物时
-        if (event.getDamager() instanceof Projectile) {
-            Projectile arrow = (Projectile) event.getDamager();
-            if (arrow.getShooter() instanceof LivingEntity) {
-                damagerData = plugin.getAttributeManager().getProjectileData(arrow.getUniqueId());
-                damager = (LivingEntity) arrow.getShooter();
-            }
+        if (event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof LivingEntity) {
+            damager = (LivingEntity) ((Projectile) event.getDamager()).getShooter();
         } else if (event.getDamager() instanceof LivingEntity) {
             damager = (LivingEntity) event.getDamager();
         }
-        if (event.getEntity() instanceof LivingEntity && !(event.getEntity() instanceof ArmorStand)) {
-            entity = (LivingEntity) event.getEntity();
-        }
         // 若有一方为null 或 怪v怪的属性计算 则取消
-        if (entity == null || damager == null || (Config.isDamageCalculationToEVE() && !(entity instanceof Player || damager instanceof Player))) {
+        if (entity == null || damager == null || (!Config.isDamageCalculationToEVE() && !(entity instanceof Player || damager instanceof Player))) {
             return;
         }
 
@@ -111,22 +105,30 @@ public class OnDamageListener implements Listener {
             }
         }
 
-        String entityName = plugin.getOnHealthChangeDisplayListener().getEntityName(entity, entity.getName());
-        String damagerName = plugin.getOnHealthChangeDisplayListener().getEntityName(damager, damager.getName());
+        String entityName = plugin.getOnHealthChangeDisplayListener().getEntityName(entity);
+        String damagerName = plugin.getOnHealthChangeDisplayListener().getEntityName(damager);
 
         DamageEventData damageEventData = new DamageEventData(entity, damager, entityName, damagerName, entityData, damagerData, event);
 
-        for (Map.Entry<Integer, SubAttribute> entry : entityData.getAttributeMap().entrySet()) {
-            if (entry.getValue().containsType(SXAttributeType.DAMAGE)) {
-                damagerData.getAttributeMap().get(entry.getKey()).eventMethod(damageEventData);
-            } else if (entry.getValue().containsType(SXAttributeType.DEFENCE)) {
-                entry.getValue().eventMethod(damageEventData);
+        //双Map遍历模式
+        Iterator<SubAttribute> damagerIterator = damagerData.getAttributeMap().values().iterator();
+        Iterator<SubAttribute> entityIterator = entityData.getAttributeMap().values().iterator();
+
+        while (damagerIterator.hasNext() && entityIterator.hasNext()) {
+            SubAttribute damageAttribute = damagerIterator.next();
+            SubAttribute entityAttribute = entityIterator.next();
+            if (damageAttribute.containsType(SXAttributeType.DAMAGE)) {
+                damageAttribute.eventMethod(damageEventData);
+            } else if (entityAttribute.containsType(SXAttributeType.DEFENCE)) {
+                entityAttribute.eventMethod(damageEventData);
             }
             if (damageEventData.isCancelled() || damageEventData.getDamage() <= 0) {
-                event.setCancelled(true);
+                event.setCancelled(damageEventData.isCancelled());
+                damageEventData.setDamage(0.1D);
                 break;
             }
         }
+
         event.setDamage(damageEventData.getDamage());
 
         if (!event.isCancelled()) {

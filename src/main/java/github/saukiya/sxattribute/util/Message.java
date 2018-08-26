@@ -136,7 +136,7 @@ public enum Message {
         messages.set(PLAYER__NO_USE_SLOT.toString(), getMessagePrefix() + "&7物品 &a{0} &7属于 &a{1}&7 类型!");
         messages.set(PLAYER__OVERDUE_ITEM.toString(), getMessagePrefix() + "&c物品 &a{0}&c 已经过期了:&a{1}");
         messages.set(PLAYER__EXP_ADDITION.toString(), getMessagePrefix() + "&7你的经验增加了 &6{0}&7! [&a+{1}%&7]");
-        messages.set(PLAYER__NO_VAULT.toString(), getMessagePrefix() + "&c服务器没有启用 Vault 插件");
+        messages.set(PLAYER__NO_VAULT.toString(), getMessagePrefix() + "&c服务器没有启用经济系统: Vault-Economy null");
         messages.set(PLAYER__SELL.toString(), getMessagePrefix() + "&7出售成功! 一共出售了 &6{0}&7 个物品，总价 &6{1}&7 金币!");
 
         List<String> attackLoreList = new ArrayList<>();
@@ -163,7 +163,7 @@ public enum Message {
         defenseLoreList.add("&6防御力:&b %sx_defense%");
         defenseLoreList.add("&6PVP防御力:&b %sx_pvpDefense%");
         defenseLoreList.add("&6PVE防御力:&b %sx_pveDefense%");
-        defenseLoreList.add("&a生命上限:&b %sx_health%");
+        defenseLoreList.add("&a生命上限:&b %sx_health%/%sx_maxHealth%");
         defenseLoreList.add("&a生命恢复:&b %sx_healthRegen%");
         defenseLoreList.add("&d闪避几率:&b %sx_dodge%%");
         defenseLoreList.add("&9韧性:&b %sx_toughness%%");

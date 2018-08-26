@@ -5,6 +5,7 @@ import github.saukiya.sxattribute.data.attribute.sub.damage.*;
 import github.saukiya.sxattribute.data.attribute.sub.defence.*;
 import github.saukiya.sxattribute.data.attribute.sub.other.ExpAdditionAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.update.SpeedAttribute;
+import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
@@ -19,16 +20,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import ru.endlesscode.rpginventory.api.InventoryAPI;
+import ru.endlesscode.rpginventory.inventory.InventoryManager;
 
 import java.util.*;
 
 /**
  * 属性管理器
+ *
  * @author Saukiya
  */
 public class SXAttributeManager {
 
-    static final AttributeMap attributeMap = SubAttribute.attributeMap;
+    private static final AttributeMap attributeMap = SubAttribute.attributeMap;
 
     @Getter
     private final Map<UUID, SXAttributeData> rpgInventoryMap = new HashMap<>();
@@ -112,14 +116,16 @@ public class SXAttributeManager {
                     itemArray[i] = null;
                     continue;
                 }
-
                 SXAttributeData sxAttributeData = new SXAttributeData();
                 for (String lore : item.getItemMeta().getLore()) {
                     if (!lore.contains("§X")) {
                         for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
                             if (subCondition.containsType(type, true)) {
-                                if (subCondition.determine(entity, item, lore)) {
+                                SXConditionReturnType returnType = subCondition.determine(entity, item, lore);
+                                if (returnType.equals(SXConditionReturnType.ITEM)) {
                                     sxAttributeData = null;
+                                    break;
+                                }else if (returnType.equals(SXConditionReturnType.LORE)){
                                     break;
                                 }
                             }
@@ -129,14 +135,17 @@ public class SXAttributeManager {
                             break;
                         }
                         for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
-                            if (sxAttribute.loadAttribute(lore)) break;
+                            if (sxAttribute.loadAttribute(lore)){
+                                sxAttributeData.valid();
+                                break;
+                            }
                         }
                     }
                 }
                 sxAttributeDataList.add(sxAttributeData);
             }
         }
-        return sxAttributeDataList;
+        return sxAttributeDataList.isValid() ? sxAttributeDataList : null;
     }
 
     /**
@@ -156,16 +165,22 @@ public class SXAttributeManager {
             }
             for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
                 if (subCondition.containsType(type, true)) {
-                    if (subCondition.determine(entity, null, lore)) {
+                    SXConditionReturnType returnType = subCondition.determine(entity, null, lore);
+                    if (returnType.equals(SXConditionReturnType.ITEM)) {
                         return null;
+                    }else if (returnType.equals(SXConditionReturnType.LORE)){
+                        break;
                     }
                 }
             }
             for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
-                if (sxAttribute.loadAttribute(lore)) break;
+                if (sxAttribute.loadAttribute(lore)){
+                    sxAttributeData.valid();
+                    break;
+                }
             }
         }
-        return sxAttributeData;
+        return sxAttributeData.isValid() ? sxAttributeData : null;
     }
 
     /**
@@ -182,7 +197,7 @@ public class SXAttributeManager {
             for (String lore : loreList) {
                 for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
                     if (subCondition.containsType(type, true)) {
-                        if (subCondition.determine(entity, item, lore)) {
+                        if (subCondition.determine(entity, item, lore).equals(SXConditionReturnType.ITEM)) {
                             return false;
                         }
                     }
@@ -201,7 +216,7 @@ public class SXAttributeManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (entity instanceof Player){
+                if (entity instanceof Player) {
                     if (Config.isClearDefaultAttributeAll()) {
                         plugin.getItemUtil().clearAttribute((Player) entity);
                     } else if (Config.isClearDefaultAttributeReset()) {
@@ -230,7 +245,11 @@ public class SXAttributeManager {
 
     //设置抛射物的数据
     public void setProjectileData(UUID uuid, SXAttributeData attributeData) {
-        equipmentMap.put(uuid, attributeData);
+        if (attributeData != null && attributeData.isValid()){
+            equipmentMap.put(uuid, attributeData);
+        } else {
+            equipmentMap.remove(uuid);
+        }
     }
 
     // 获取生物总数据
@@ -274,6 +293,30 @@ public class SXAttributeManager {
     }
 
     // 加载生物装备槽的数据
+    public void loadRPGInventoryData(Player player) {
+        if (SXAttribute.isRpgInventory()) {
+            Inventory inv = InventoryManager.getInventory(player);
+            if (inv != null) {
+                List<ItemStack> itemList = new ArrayList<>();
+                List<Integer> whiteSlotList = Config.getConfig().getIntegerList(Config.PRG_INVENTORY__WHITE_SLOT);
+                for (int i = 0; i < 54; i++) {
+                    if (!whiteSlotList.contains(i)) {
+                        ItemStack item = inv.getItem(i);
+                        if (item != null && item.getItemMeta().hasLore()) itemList.add(item);
+                    }
+                }
+                SXAttributeData data = getItemData(player, SXConditionType.RPG_INVENTORY, itemList.toArray(new ItemStack[0]));
+                Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.RPG_INVENTORY, player, data, itemList.toArray(new ItemStack[0])));
+                if (data != null){
+                    rpgInventoryMap.put(player.getUniqueId(), data);
+                } else {
+                    rpgInventoryMap.remove(player.getUniqueId());
+                }
+            }
+        }
+    }
+
+    // 加载生物装备槽的数据
     public void loadEquipmentData(LivingEntity entity) {
         if (SXAttribute.isRpgInventory() && entity instanceof Player) {
             return;
@@ -288,10 +331,10 @@ public class SXAttributeManager {
         ItemStack[] itemList = entity.getEquipment().getArmorContents();
         SXAttributeData attributeData = getItemData(entity, SXConditionType.EQUIPMENT, itemList);
         Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.EQUIPMENT, entity, attributeData, itemList));
-        if (!(entity instanceof Player) && attributeData.calculationValue() <= 0) {
-            equipmentMap.remove(entity.getUniqueId());
-        } else {
+        if (attributeData != null) {
             equipmentMap.put(entity.getUniqueId(), attributeData);
+        } else {
+            equipmentMap.remove(entity.getUniqueId());
         }
     }
 
@@ -312,12 +355,12 @@ public class SXAttributeManager {
                     itemList.add(item);
                 }
             });
-            if (itemList.size() > 0) {
-                ItemStack[] items = itemList.toArray(new ItemStack[0]);
-                SXAttributeData attributeData = getItemData(player, SXConditionType.SLOT, items);
-                Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.SLOT, player, attributeData, items));
+            ItemStack[] items = itemList.toArray(new ItemStack[0]);
+            SXAttributeData attributeData = getItemData(player, SXConditionType.SLOT, items);
+            Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.SLOT, player, attributeData, items));
+            if (attributeData != null){
                 slotMap.put(player.getUniqueId(), attributeData);
-            } else {
+            }else {
                 slotMap.remove(player.getUniqueId());
             }
         }
@@ -332,39 +375,17 @@ public class SXAttributeManager {
         }
         ItemStack mainItem = entity.getEquipment().getItemInMainHand();
         ItemStack offItem = entity.getEquipment().getItemInOffHand();
-        if (mainItem != null && mainItem.hasItemMeta() && mainItem.getItemMeta().hasLore()) {
-            for (String lore : mainItem.getItemMeta().getLore()) {
-                if (mainItem == null) break;
-                for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
-                    if (subCondition.containsType(SXConditionType.MAIN_HAND, true)) {
-                        if (subCondition.determine(entity, mainItem, lore)) {
-                            mainItem = null;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        // 判断副手 手持
-        if (offItem != null && offItem.hasItemMeta() && offItem.getItemMeta().hasLore()) {
-            for (String lore : offItem.getItemMeta().getLore()) {
-                if (offItem == null) break;
-                for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
-                    if (subCondition.containsType(SXConditionType.OFF_HAND, true)) {
-                        if (subCondition.determine(entity, offItem, lore)) {
-                            offItem = null;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        SXAttributeData attributeData = getItemData(entity, null, offItem, mainItem);
-        if (attributeData.calculationValue() <= 0) {
+        ItemStack[] itemArray= {mainItem,null};
+        SXAttributeData attributeData = getItemData(entity, SXConditionType.MAIN_HAND, itemArray);
+        itemArray[0] = null;
+        itemArray[1] = offItem;
+        attributeData = attributeData != null ? attributeData.add(getItemData(entity, SXConditionType.OFF_HAND, itemArray)) : getItemData(entity, SXConditionType.OFF_HAND, itemArray);
+        itemArray[1] = mainItem;
+        Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.HAND, entity, attributeData, itemArray));
+        if (attributeData != null){
+            handMap.put(entity.getUniqueId(), attributeData);
+        } else {
             handMap.remove(entity.getUniqueId());
-            return;
         }
-        Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.HAND, entity, attributeData, offItem, mainItem));
-        handMap.put(entity.getUniqueId(), attributeData);
     }
 }

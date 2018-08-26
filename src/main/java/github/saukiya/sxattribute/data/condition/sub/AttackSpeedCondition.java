@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.data.condition.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.Config;
@@ -19,10 +20,10 @@ public class AttackSpeedCondition extends SubCondition {
     }
 
     @Override
-    public boolean determine(LivingEntity entity, ItemStack item, String lore) {
+    public SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore) {
         if (lore.contains(Config.getConfig().getString(Config.NAME_ATTACK_SPEED))) {
             if (item != null) SXAttribute.getApi().getItemUtil().setAttackSpeed(item, Double.valueOf(getNumber(lore)));
         }
-        return false;
+        return SXConditionReturnType.NULL;
     }
 }

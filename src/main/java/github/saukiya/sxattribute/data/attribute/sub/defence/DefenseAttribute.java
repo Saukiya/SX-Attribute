@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 防御
+ *
  * @author Saukiya
  */
 public class DefenseAttribute extends SubAttribute {
@@ -51,19 +52,19 @@ public class DefenseAttribute extends SubAttribute {
         } else if (string.equalsIgnoreCase("MaxDefense")) {
             return getDf().format(getAttributes()[1]);
         } else if (string.equalsIgnoreCase("Defense")) {
-            return getAttributes()[0].equals(getAttributes()[1]) ? getDf().format(getAttributes()[0]) : (getDf().format(getAttributes()[0]) + " - " + getDf().format(getAttributes()[1]));
+            return getAttributes()[0] == getAttributes()[1] ? getDf().format(getAttributes()[0]) : (getDf().format(getAttributes()[0]) + " - " + getDf().format(getAttributes()[1]));
         } else if (string.equalsIgnoreCase("PvpMinDefense")) {
             return getDf().format(getAttributes()[2]);
         } else if (string.equalsIgnoreCase("PvpMaxDefense")) {
             return getDf().format(getAttributes()[3]);
         } else if (string.equalsIgnoreCase("PvpDefense")) {
-            return getAttributes()[2].equals(getAttributes()[3]) ? getDf().format(getAttributes()[2]) : (getDf().format(getAttributes()[2]) + " - " + getDf().format(getAttributes()[3]));
+            return getAttributes()[2] == getAttributes()[3] ? getDf().format(getAttributes()[2]) : (getDf().format(getAttributes()[2]) + " - " + getDf().format(getAttributes()[3]));
         } else if (string.equalsIgnoreCase("PveMinDefense")) {
             return getDf().format(getAttributes()[4]);
         } else if (string.equalsIgnoreCase("PveMaxDefense")) {
             return getDf().format(getAttributes()[5]);
         } else if (string.equalsIgnoreCase("PveDefense")) {
-            return getAttributes()[4].equals(getAttributes()[5]) ? getDf().format(getAttributes()[4]) : (getDf().format(getAttributes()[4]) + " - " + getDf().format(getAttributes()[5]));
+            return getAttributes()[4] == getAttributes()[5] ? getDf().format(getAttributes()[4]) : (getDf().format(getAttributes()[4]) + " - " + getDf().format(getAttributes()[5]));
         } else {
             return null;
         }

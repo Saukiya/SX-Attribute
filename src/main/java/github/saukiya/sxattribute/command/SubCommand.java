@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,15 +25,14 @@ public abstract class SubCommand {
 
     private String cmd, arg = "";
 
-    private Boolean hide = false;
+    private boolean hide = false;
 
     private SenderType[] senderTypes = new SenderType[]{SenderType.ALL};
 
     /**
-     *
-     * @param cmd String
-     * @param arg String
-     * @param hide Boolean
+     * @param cmd         String
+     * @param arg         String
+     * @param hide        Boolean
      * @param senderTypes SenderType[]
      */
     public SubCommand(String cmd, String arg, Boolean hide, SenderType... senderTypes) {
@@ -45,9 +43,8 @@ public abstract class SubCommand {
     }
 
     /**
-     *
-     * @param cmd String
-     * @param arg String
+     * @param cmd         String
+     * @param arg         String
      * @param senderTypes SenderType[]
      */
     public SubCommand(String cmd, String arg, SenderType... senderTypes) {
@@ -57,8 +54,7 @@ public abstract class SubCommand {
     }
 
     /**
-     *
-     * @param cmd String
+     * @param cmd         String
      * @param senderTypes SenderType[]
      */
     public SubCommand(String cmd, SenderType... senderTypes) {
@@ -67,7 +63,6 @@ public abstract class SubCommand {
     }
 
     /**
-     *
      * @param cmd String
      */
     public SubCommand(String cmd) {
@@ -94,7 +89,7 @@ public abstract class SubCommand {
         return arg;
     }
 
-    public Boolean hide() {
+    public boolean hide() {
         return hide;
     }
 
@@ -107,7 +102,7 @@ public abstract class SubCommand {
      *
      * @param plugin SXAttribute
      * @param sender CommandSender
-     * @param args String[]
+     * @param args   String[]
      */
     public abstract void onCommand(SXAttribute plugin, CommandSender sender, String[] args);
 
@@ -116,7 +111,7 @@ public abstract class SubCommand {
      *
      * @param plugin SXAttribute
      * @param sender CommandSender
-     * @param args String[]
+     * @param args   String[]
      * @return List
      */
     public abstract List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args);
@@ -125,10 +120,10 @@ public abstract class SubCommand {
      * 判断是否可用
      *
      * @param sender CommandSender
-     * @param type SenderType
+     * @param type   SenderType
      * @return boolean
      */
-   public boolean isUse(CommandSender sender, SenderType type) {
+    public boolean isUse(CommandSender sender, SenderType type) {
         return sender.hasPermission(permission()) && Arrays.stream(this.senderTypes).anyMatch(senderType -> senderType.equals(SenderType.ALL) || senderType.equals(type));
     }
 
@@ -136,14 +131,14 @@ public abstract class SubCommand {
      * 输出介绍 可覆盖
      *
      * @param sender CommandSender
-     * @param color String
-     * @param label String
+     * @param color  String
+     * @param label  String
      */
     public void sendIntroduction(CommandSender sender, String color, String label) {
         String introduction = Message.getMsg(Message.valueOf("COMMAND__" + cmd().toUpperCase()));
         String message = color + MessageFormat.format("/{0} {1}{2}§7 -§c {3}", label, cmd(), arg(), introduction);
         if (sender instanceof Player) {
-            Message.sendCommandToPlayer((Player) sender, message, MessageFormat.format("/{0} {1}", label, cmd()), Collections.singletonList("§c" + introduction));
+            Message.sendCommandToPlayer((Player) sender, message, MessageFormat.format("/{0} {1}", label, cmd()), Arrays.asList(sender.isOp() ? new String[]{"§c" + introduction, "§cPermission: " + permission()} : new String[]{"§c" + introduction}));
         } else {
             sender.sendMessage(message);
         }

@@ -11,12 +11,16 @@ import java.util.stream.IntStream;
 
 /**
  * 实体属性存储区
+ *
  * @author Saukiya
  */
 public class SXAttributeData {
 
     @Getter
     private double value = 0D;
+
+    @Getter
+    private boolean valid = false;
 
     @Getter
     private Map<Integer, SubAttribute> attributeMap = SXAttributeManager.cloneSXAttributeList();
@@ -37,13 +41,22 @@ public class SXAttributeData {
     }
 
     /**
+     * 属性生效时，设置为有效
+     */
+    public void valid(){
+        this.valid = true;
+    }
+
+    /**
      * 将两个SXAttributeData合并
+     * 如果对方不为null 并且有效 那么设置为有效
      *
      * @param attributeData 另一个SXAttributeData
      * @return 合并后的此类
      */
     public SXAttributeData add(SXAttributeData attributeData) {
-        if (attributeData != null) {
+        if (attributeData != null && attributeData.isValid()) {
+            valid();
             for (SubAttribute attribute : getAttributeMap().values()) {
                 for (SubAttribute subAttribute : attributeData.getAttributeMap().values()) {
                     if (attribute.getName().equals(subAttribute.getName())) {

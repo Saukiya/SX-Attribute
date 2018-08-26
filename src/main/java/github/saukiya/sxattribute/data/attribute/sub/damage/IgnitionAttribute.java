@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 点燃
+ *
  * @author Saukiya
  */
 public class IgnitionAttribute extends SubAttribute {

@@ -1,5 +1,6 @@
 package github.saukiya.sxattribute.data.condition.sub;
 
+import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.Config;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * 限制副手
+ *
  * @author Saukiya
  */
 public class OffHandCondition extends SubCondition {
@@ -18,12 +20,12 @@ public class OffHandCondition extends SubCondition {
     }
 
     @Override
-    public boolean determine(LivingEntity entity, ItemStack item, String lore) {
+    public SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore) {
         if (lore.contains(Config.getConfig().getString(Config.NAME_HAND_MAIN))) {
             if (item != null)
                 Message.send(entity, Message.PLAYER__NO_USE_SLOT, getItemName(item), Config.getConfig().getString(Config.NAME_HAND_MAIN));
-            return true;
+            return SXConditionReturnType.ITEM;
         }
-        return false;
+        return SXConditionReturnType.NULL;
     }
 }

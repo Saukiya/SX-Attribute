@@ -12,6 +12,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -76,20 +77,33 @@ public class SXAttributeAPI {
      * 如需添加其他请自行添加抛射物
      *
      * @param uuid          实体UUID
-     * @param attributeData 属性
+     * @param attributeData / null
      */
+    @Nullable
     public void setProjectileData(UUID uuid, SXAttributeData attributeData) {
         plugin.getAttributeManager().setProjectileData(uuid, attributeData);
     }
 
     /**
+     * 获取抛射物数据，例如箭、雪球、烈焰球。
+     *
+     * @param uuid          实体UUID
+     * @return  SXAttributeData
+     */
+    public SXAttributeData getProjectileData(UUID uuid) {
+        return plugin.getAttributeManager().getProjectileData(uuid);
+    }
+
+    /**
      * 获取实体属性数据 更改无效
+     * 如果添加SXAttributeData 那么sxAttributeData后则替代手持属性(并不覆盖原手持数据)
      *
      * @param livingEntity LivingEntity
+     * @param sxAttributeData SXAttributeData[]
      * @return SXAttributeData
      */
-    public SXAttributeData getEntityAllData(LivingEntity livingEntity) {
-        return plugin.getAttributeManager().getEntityData(livingEntity);
+    public SXAttributeData getEntityAllData(LivingEntity livingEntity,SXAttributeData... sxAttributeData) {
+        return plugin.getAttributeManager().getEntityData(livingEntity,sxAttributeData);
     }
 
     /**
@@ -186,6 +200,7 @@ public class SXAttributeAPI {
      * 获取物品的SXAttributeData数据，可以是多个
      * (entity/type 为null 时不进行条件判断)
      * 不满足条件的ItemStack将会在数组内设置为null
+     * 如果全部物品都无法识别到属性，那么返回null
      *
      * @param livingEntity LivingEntity
      * @param type         SXConditionType
@@ -196,7 +211,15 @@ public class SXAttributeAPI {
         return plugin.getAttributeManager().getItemData(livingEntity, type, item);
     }
 
-    //
+    /**
+     * 获取被本插件修改过的原名
+     *
+     * @param livingEntity LivingEntity
+     * @return String
+     */
+    public String getEntityName(LivingEntity livingEntity){
+        return plugin.getOnHealthChangeDisplayListener().getEntityName(livingEntity);
+    }
 
     /**
      * 判断玩家是否达到使用物品要求

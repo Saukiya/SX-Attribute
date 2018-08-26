@@ -3,13 +3,13 @@ package github.saukiya.sxattribute.data;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxattribute.util.SimpleDateFormatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -83,7 +83,7 @@ public class RandomStringManager {
             // 日期随机
             List<String> replaceTimeList = getStringList("<t:", ">", string);
             if (replaceTimeList.size() > 0) {
-                SimpleDateFormat ft = SXAttribute.getSdf();
+                SimpleDateFormatUtils ft = SXAttribute.getSdf();
                 for (String str : replaceTimeList) {
                     String addTime = str.replace("[^0-9]", "") + "000";
                     long time = System.currentTimeMillis() + Long.valueOf(addTime);

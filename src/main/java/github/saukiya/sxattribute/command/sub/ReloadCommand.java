@@ -17,6 +17,7 @@ import java.util.UUID;
 
 /**
  * 重载指令
+ *
  * @author Saukiya
  */
 public class ReloadCommand extends SubCommand {
@@ -38,6 +39,7 @@ public class ReloadCommand extends SubCommand {
             sender.sendMessage(Message.getMessagePrefix() + "§cIO Error");
             return;
         }
+        SXAttribute.getSdf().reload();
         plugin.getRegisterSlotManager().loadData();
         plugin.getAttributeManager().getSlotMap().clear();
         plugin.getAttributeManager().loadDefaultAttributeData();

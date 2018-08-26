@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 吸血
+ *
  * @author Saukiya
  */
 public class LifeStealAttribute extends SubAttribute {

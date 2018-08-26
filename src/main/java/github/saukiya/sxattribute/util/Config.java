@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -395,7 +394,6 @@ public class Config {
             }
         }
         SXAttribute.setDf(new DecimalFormat(config.getString(DECIMAL_FORMAT)));
-        SXAttribute.setSdf(new SimpleDateFormat(config.getString(FORMAT_EXPIRY_TIME)));
         itemUpdate = config.getBoolean(ITEM_UPDATE_ENABLED);
         healthNameVisible = config.getBoolean(HEALTH_NAME_VISIBLE_ENABLED);
         healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED);

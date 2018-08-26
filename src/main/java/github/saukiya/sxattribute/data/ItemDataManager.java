@@ -387,7 +387,7 @@ public class ItemDataManager {
                         lore = lore.replace("&", "§");
                         if (lore.contains("\n") || lore.contains("/n")) {
                             loreList.remove(i);
-                            loreList.addAll(i, Arrays.asList(lore.replace("/n","\n").split("\n")));
+                            loreList.addAll(i, Arrays.asList(lore.replace("/n", "\n").split("\n")));
                         } else {
                             loreList.set(i, lore);
                         }
@@ -403,8 +403,8 @@ public class ItemDataManager {
                 List<String> enchantList = new ArrayList<>();
                 for (String enchantName : itemData.getEnchantList()) {
                     enchantName = plugin.getRandomStringManager().processRandomString(itemName, enchantName, lockRandomMap);
-                    if (enchantName.contains("\n")  || enchantName.contains("/n")) {
-                        enchantList.addAll(Arrays.asList(enchantName.replace("/n","\n").split("\n")));
+                    if (enchantName.contains("\n") || enchantName.contains("/n")) {
+                        enchantList.addAll(Arrays.asList(enchantName.replace("/n", "\n").split("\n")));
                     } else {
                         enchantList.add(enchantName);
                     }

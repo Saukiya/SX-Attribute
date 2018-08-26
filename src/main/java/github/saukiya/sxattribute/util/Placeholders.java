@@ -16,14 +16,13 @@ public class Placeholders extends EZPlaceholderHook {
         this.hook();
     }
 
-    public static void main(String[] args) {
-        System.out.println("-13333");
-    }
-
     @Override
     public String onPlaceholderRequest(Player player, String string) {
         SXAttributeData attributeData = plugin.getAttributeManager().getEntityData(player);
-        if (string.equalsIgnoreCase("value")) return SXAttribute.getDf().format(attributeData.getValue());
+        if (string.equalsIgnoreCase("Money") && SXAttribute.isVault())
+            return SXAttribute.getDf().format(MoneyUtil.get(player));
+        if (string.equalsIgnoreCase("Health")) return SXAttribute.getDf().format(player.getHealth());
+        if (string.equalsIgnoreCase("Value")) return SXAttribute.getDf().format(attributeData.getValue());
         for (SubAttribute attribute : attributeData.getAttributeMap().values()) {
             String str = attribute.getPlaceholder(string);
             if (str != null) return str;

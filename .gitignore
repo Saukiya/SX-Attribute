@@ -1,6 +1,8 @@
 # Compiled class file
+.gitignore
+.xml
 *.class
-
+.xml
 # Log file
 *.log
 

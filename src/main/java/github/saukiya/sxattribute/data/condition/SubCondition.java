@@ -111,10 +111,10 @@ public abstract class SubCondition {
      * @return String
      */
     protected static String getTime(String lore) {
-        String str = lore.replace(Config.getConfig().getString(Config.FORMAT_EXPIRY_TIME), "").replaceAll("§+[a-z0-9]", "");
-        if (str.contains(":") || str.contains("：")) {
-            str = str.replace("：", ":");
-            str = str.replace(str.split(":")[0] + ":", "");
+        String str = lore.replace(Config.getConfig().getString(Config.NAME_EXPIRY_TIME), "").replaceAll("§+[a-z0-9]", "");
+        if (str.contains(": ") || str.contains("： ")) {
+            str = str.replace("： ", ": ");
+            str = str.replace(str.split(":")[0] + ": ", "");
             return str;
         }
         return str;
@@ -146,9 +146,9 @@ public abstract class SubCondition {
      * @param entity LivingEntity
      * @param item   ItemStack
      * @param lore   String
-     * @return boolean
+     * @return SXConditionReturnType
      */
-    public abstract boolean determine(LivingEntity entity, ItemStack item, String lore);
+    public abstract SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore);
 
     /**
      * 判断类型
@@ -195,6 +195,7 @@ public abstract class SubCondition {
 
     /**
      * 获取注册该条件的插件
+     *
      * @return JavaPlugin
      */
     public JavaPlugin getPlugin() {
