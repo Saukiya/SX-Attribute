@@ -1,7 +1,6 @@
 package github.saukiya.sxattribute.data.attribute.sub.defence;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.data.attribute.SXAttributeManager;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
@@ -23,8 +22,6 @@ import java.util.List;
  * @author Saukiya
  */
 public class HealthRegenAttribute extends SubAttribute {
-
-    private static SXAttributeManager attributeManager = null;
 
     /**
      * double[0] 生命回复
@@ -72,7 +69,7 @@ public class HealthRegenAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("HealthRegen") ? getDf().format(getAttributes()[0]) : null;
     }
 

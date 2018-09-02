@@ -2,13 +2,10 @@ package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Message;
-import github.saukiya.sxseal.SXSeal;
-import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import io.lumine.xikage.mythicmobs.mobs.MythicMob;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.EntityEquipment;
@@ -21,11 +18,11 @@ import java.util.List;
  * @since 2018年5月2日
  */
 
-public class OnMythicmobsDropOrSpawnListener implements Listener {
+public class OnMythicmobsSpawnListener implements Listener {
 
     private final SXAttribute plugin;
 
-    public OnMythicmobsDropOrSpawnListener(SXAttribute plugin) {
+    public OnMythicmobsSpawnListener(SXAttribute plugin) {
         this.plugin = plugin;
     }
 
@@ -90,49 +87,6 @@ public class OnMythicmobsDropOrSpawnListener implements Listener {
                             }
                         } else {
                             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cMythicmobs怪物: §4" + mm.getDisplayName() + "§1 不存在这个穿戴物品: §4" + args2[1]);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler
-    void onMythicMobDeathEvent(MythicMobDeathEvent event) {
-        MythicMob mm = event.getMobType();
-        List<String> dropList = mm.getDrops();
-        List<ItemStack> drops = event.getDrops();
-        if (event.getKiller() instanceof Player) {
-            for (String str : dropList) {
-                if (str.contains(" ")) {
-                    String[] args = str.split(" ");
-                    if (args.length > 1 && args[0].equalsIgnoreCase("sx")) {
-                        int amount = 1;
-                        if (args.length > 3 && args[3].length() > 0 && SXAttribute.getRandom().nextDouble() > Double.valueOf(args[3].replaceAll("[^0-9.]", ""))) {// 几率判断
-                            continue;
-                        }
-                        if (args.length > 2 && args[2].length() > 0) {// 数量判断
-                            if (args[2].contains("-") && args[2].split("-").length > 1) {
-                                int i1 = Integer.valueOf(args[2].split("-")[0].replaceAll("[^0-9]", ""));
-                                int i2 = Integer.valueOf(args[2].split("-")[1].replaceAll("[^0-9]", ""));
-                                if (i1 > i2) {
-                                    Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c随机数大小不正确!: §4" + str);
-                                } else {
-                                    amount = SXAttribute.getRandom().nextInt(i2 - i1 + 1) + i1;
-                                }
-                            } else {
-                                amount = Integer.valueOf(args[2].replaceAll("[^0-9]", ""));
-                            }
-                        }
-                        ItemStack item = plugin.getItemDataManager().getItem(args[1], (Player) event.getKiller());
-                        if (item != null) {
-                            if (str.contains("seal") && Bukkit.getPluginManager().isPluginEnabled("SX-Seal")) {
-                                SXSeal.getApi().sealItem(item);
-                            }
-                            item.setAmount(amount);
-                            drops.add(item.clone());
-                        } else {
-                            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cMythicmobs怪物: §4" + mm.getDisplayName() + "§c 不存在这个掉落物品: §4" + args[1]);
                         }
                     }
                 }

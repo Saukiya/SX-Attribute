@@ -68,7 +68,7 @@ public class DamageAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         if (string.equalsIgnoreCase("MinDamage")) {
             return getDf().format(getAttributes()[0]);
         } else if (string.equalsIgnoreCase("MaxDamage")) {
@@ -131,8 +131,8 @@ public class DamageAttribute extends SubAttribute {
     public void correct() {
         if (getAttributes()[0] <= 0) getAttributes()[0] = Config.isDamageGauges() ? 1 : 0;
         if (getAttributes()[0] > Double.MAX_VALUE) getAttributes()[0] = Double.MAX_VALUE;
-        if (getAttributes()[0] > SpigotConfig.attackDamage){
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cPlease set attackDamage to spigot.yml §8[§4" + getAttributes()[0] + "§7 > §4"+SpigotConfig.attackDamage + "§8]");
+        if (getAttributes()[0] > SpigotConfig.attackDamage) {
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cPlease set attackDamage to spigot.yml §8[§4" + getAttributes()[0] + "§7 > §4" + SpigotConfig.attackDamage + "§8]");
             getAttributes()[0] = SpigotConfig.attackDamage;
         }
         if (getAttributes()[1] < getAttributes()[0]) getAttributes()[1] = getAttributes()[0];

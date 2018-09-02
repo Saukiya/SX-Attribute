@@ -4,6 +4,7 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.damage.*;
 import github.saukiya.sxattribute.data.attribute.sub.defence.*;
 import github.saukiya.sxattribute.data.attribute.sub.other.ExpAdditionAttribute;
+import github.saukiya.sxattribute.data.attribute.sub.other.MythicmobsDropAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.update.SpeedAttribute;
 import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
@@ -20,7 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import ru.endlesscode.rpginventory.api.InventoryAPI;
 import ru.endlesscode.rpginventory.inventory.InventoryManager;
 
 import java.util.*;
@@ -70,6 +70,7 @@ public class SXAttributeManager {
         new ToughnessAttribute().registerAttribute(plugin);
 
         new ExpAdditionAttribute().registerAttribute(plugin);
+        new MythicmobsDropAttribute().registerAttribute(plugin);
         new HealthRegenAttribute().registerAttribute(plugin);
 
         new HealthAttribute().registerAttribute(plugin);
@@ -90,7 +91,12 @@ public class SXAttributeManager {
     }
 
     public void onAttributeEnable() {
-        attributeMap.values().forEach(SubAttribute::onEnable);
+        attributeMap.values().forEach(subAttribute -> {
+            subAttribute.onEnable();
+            if (subAttribute.getAttributes().length == 0) {
+                attributeMap.remove(subAttribute.getPriority());
+            }
+        });
     }
 
 
@@ -118,14 +124,15 @@ public class SXAttributeManager {
                 }
                 SXAttributeData sxAttributeData = new SXAttributeData();
                 for (String lore : item.getItemMeta().getLore()) {
-                    if (!lore.contains("§X")) {
+                    lore = lore.split("§X")[0];
+                    if (lore.length() > 0) {
                         for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
                             if (subCondition.containsType(type, true)) {
                                 SXConditionReturnType returnType = subCondition.determine(entity, item, lore);
                                 if (returnType.equals(SXConditionReturnType.ITEM)) {
                                     sxAttributeData = null;
                                     break;
-                                }else if (returnType.equals(SXConditionReturnType.LORE)){
+                                } else if (returnType.equals(SXConditionReturnType.LORE)) {
                                     break;
                                 }
                             }
@@ -135,7 +142,7 @@ public class SXAttributeManager {
                             break;
                         }
                         for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
-                            if (sxAttribute.loadAttribute(lore)){
+                            if (sxAttribute.loadAttribute(lore)) {
                                 sxAttributeData.valid();
                                 break;
                             }
@@ -168,13 +175,13 @@ public class SXAttributeManager {
                     SXConditionReturnType returnType = subCondition.determine(entity, null, lore);
                     if (returnType.equals(SXConditionReturnType.ITEM)) {
                         return null;
-                    }else if (returnType.equals(SXConditionReturnType.LORE)){
+                    } else if (returnType.equals(SXConditionReturnType.LORE)) {
                         break;
                     }
                 }
             }
             for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
-                if (sxAttribute.loadAttribute(lore)){
+                if (sxAttribute.loadAttribute(lore)) {
                     sxAttributeData.valid();
                     break;
                 }
@@ -245,7 +252,7 @@ public class SXAttributeManager {
 
     //设置抛射物的数据
     public void setProjectileData(UUID uuid, SXAttributeData attributeData) {
-        if (attributeData != null && attributeData.isValid()){
+        if (attributeData != null && attributeData.isValid()) {
             equipmentMap.put(uuid, attributeData);
         } else {
             equipmentMap.remove(uuid);
@@ -307,7 +314,7 @@ public class SXAttributeManager {
                 }
                 SXAttributeData data = getItemData(player, SXConditionType.RPG_INVENTORY, itemList.toArray(new ItemStack[0]));
                 Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.RPG_INVENTORY, player, data, itemList.toArray(new ItemStack[0])));
-                if (data != null){
+                if (data != null) {
                     rpgInventoryMap.put(player.getUniqueId(), data);
                 } else {
                     rpgInventoryMap.remove(player.getUniqueId());
@@ -358,9 +365,9 @@ public class SXAttributeManager {
             ItemStack[] items = itemList.toArray(new ItemStack[0]);
             SXAttributeData attributeData = getItemData(player, SXConditionType.SLOT, items);
             Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.SLOT, player, attributeData, items));
-            if (attributeData != null){
+            if (attributeData != null) {
                 slotMap.put(player.getUniqueId(), attributeData);
-            }else {
+            } else {
                 slotMap.remove(player.getUniqueId());
             }
         }
@@ -375,14 +382,14 @@ public class SXAttributeManager {
         }
         ItemStack mainItem = entity.getEquipment().getItemInMainHand();
         ItemStack offItem = entity.getEquipment().getItemInOffHand();
-        ItemStack[] itemArray= {mainItem,null};
+        ItemStack[] itemArray = {mainItem, null};
         SXAttributeData attributeData = getItemData(entity, SXConditionType.MAIN_HAND, itemArray);
         itemArray[0] = null;
         itemArray[1] = offItem;
         attributeData = attributeData != null ? attributeData.add(getItemData(entity, SXConditionType.OFF_HAND, itemArray)) : getItemData(entity, SXConditionType.OFF_HAND, itemArray);
         itemArray[1] = mainItem;
         Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.HAND, entity, attributeData, itemArray));
-        if (attributeData != null){
+        if (attributeData != null) {
             handMap.put(entity.getUniqueId(), attributeData);
         } else {
             handMap.remove(entity.getUniqueId());

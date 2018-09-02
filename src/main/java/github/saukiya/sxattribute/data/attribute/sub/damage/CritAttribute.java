@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ public class CritAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         if (string.equalsIgnoreCase("CritRate")) {
             return getDf().format(getAttributes()[0]);
         } else if (string.equalsIgnoreCase("Crit")) {
@@ -47,6 +48,18 @@ public class CritAttribute extends SubAttribute {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<String> introduction() {
+        return Arrays.asList(
+                "Chinese: 暴击",
+                "判断几率造成暴击,默认伤害为100%(原伤害)",
+                "",
+                "English: Crit",
+                "Determine the chance to cause a crit",
+                " the default damage is 100% (original damage)"
+        );
     }
 
     @Override

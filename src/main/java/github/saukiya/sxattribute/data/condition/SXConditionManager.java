@@ -22,6 +22,16 @@ public class SXConditionManager {
         new RoleCondition().registerCondition(plugin);
         new ExpiryTimeCondition().registerCondition(plugin);
         new AttackSpeedCondition().registerCondition(plugin);
+        new DurabilityCondition().registerCondition(plugin);
+    }
+
+    public void onConditionEnable() {
+        conditionMap.values().forEach(SubCondition::onEnable);
+    }
+
+
+    public void onConditionDisable() {
+        conditionMap.values().forEach(SubCondition::onDisable);
     }
 
 }

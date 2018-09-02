@@ -1,17 +1,18 @@
 package github.saukiya.sxattribute.data.attribute.sub.defence;
 
+import com.sucy.skill.SkillAPI;
+import com.sucy.skill.manager.AttributeManager;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
+import github.saukiya.sxattribute.listener.OnHealthChangeDisplayListener;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-import org.spigotmc.SpigotConfig;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ import java.util.List;
  * @author Saukiya
  */
 public class HealthAttribute extends SubAttribute {
+
+    private static boolean skillAPI = false;
 
     /**
      * 生命
@@ -33,8 +36,12 @@ public class HealthAttribute extends SubAttribute {
     public void eventMethod(EventData eventData) {
         if (eventData instanceof UpdateEventData && ((UpdateEventData) eventData).getEntity() instanceof Player) {
             Player player = (Player) ((UpdateEventData) eventData).getEntity();
-            if (player.getHealth() > getAttributes()[0]) player.setHealth(getAttributes()[0]);
-            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(getAttributes()[0]);
+            if (skillAPI) {
+                SkillAPI.getPlayerData(player).getAttribute(AttributeManager.HEALTH);
+            }
+            double maxHealth = getAttributes()[0] + getSkillAPIHealth(player);
+            if (player.getHealth() > maxHealth) player.setHealth(maxHealth);
+            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
             int healthScale = Config.getConfig().getInt(Config.HEALTH_SCALED_VALUE);
             if (Config.isHealthScaled() && healthScale < player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()) {
                 player.setHealthScaled(true);
@@ -45,14 +52,26 @@ public class HealthAttribute extends SubAttribute {
         }
     }
 
+    private int getSkillAPIHealth(Player player) {
+        return skillAPI ? SkillAPI.getPlayerData(player).getClasses().stream().mapToInt(aClass -> (int) aClass.getHealth()).sum() : 0;
+    }
+
     @Override
-    public String getPlaceholder(String string) {
-        return string.equalsIgnoreCase("MaxHealth") ? getDf().format(getAttributes()[0]) : null;
+    public void onEnable() {
+        if (Bukkit.getPluginManager().getPlugin("SKillAPI") != null) {
+            skillAPI = true;
+        }
+    }
+
+    @Override
+    public String getPlaceholder(Player player, String string) {
+        return string.equalsIgnoreCase("MaxHealth") ? getDf().format(OnHealthChangeDisplayListener.getMaxHealth(player))
+                : string.equalsIgnoreCase("Health") ? getDf().format(player.getHealth()) : null;
     }
 
     @Override
     public List<String> getPlaceholders() {
-        return Collections.singletonList("MaxHealth");
+        return Arrays.asList("MaxHealth", "Health");
     }
 
     @Override
@@ -67,11 +86,6 @@ public class HealthAttribute extends SubAttribute {
     @Override
     public void correct() {
         if (getAttributes()[0] < 0) getAttributes()[0] = 1D;
-        if (getAttributes()[0] > Double.MAX_VALUE) getAttributes()[0] = Double.MAX_VALUE;
-        if (getAttributes()[0] > SpigotConfig.maxHealth){
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cPlease set maxHealth to spigot.yml §8[§4" + getAttributes()[0] + "§7 > §4"+SpigotConfig.maxHealth + "§8]");
-            getAttributes()[0] = SpigotConfig.maxHealth;
-        }
     }
 
     @Override

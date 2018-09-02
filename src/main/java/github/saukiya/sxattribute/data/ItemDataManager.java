@@ -2,7 +2,8 @@ package github.saukiya.sxattribute.data;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.sxattribute.listener.OnItemDurabilityListener;
+import github.saukiya.sxattribute.data.condition.SubCondition;
+import github.saukiya.sxattribute.data.condition.sub.DurabilityCondition;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -369,12 +370,12 @@ public class ItemDataManager {
                     if (lore.contains(Config.getConfig().getString(Config.NAME_DURABILITY))) {
                         // 识别物品是否为工具
                         if (item.getType().getMaxDurability() > 0) {
-                            if (!OnItemDurabilityListener.getUnbreakable(meta)) {
+                            if (!SubCondition.getUnbreakable(meta)) {
                                 Repairable repairable = (Repairable) meta;
                                 repairable.setRepairCost(999);
                                 meta = (ItemMeta) repairable;
-                                int durability = OnItemDurabilityListener.getDurability(lore);
-                                int maxDurability = OnItemDurabilityListener.getMaxDurability(lore);
+                                int durability = SubCondition.getDurability(lore);
+                                int maxDurability = SubCondition.getMaxDurability(lore);
                                 int maxDefaultDurability = item.getType().getMaxDurability();
                                 int defaultDurability = (int) (((double) durability / maxDurability) * maxDefaultDurability);
                                 item.setDurability((short) (maxDefaultDurability - defaultDurability));
@@ -472,12 +473,12 @@ public class ItemDataManager {
                             for (String itemLote : itemLoreList) {
                                 //判断原来是否有耐久lore
                                 if (itemLote.contains(Config.getConfig().getString(Config.NAME_DURABILITY))) {
-                                    double maxDefaultDurability = OnItemDurabilityListener.getMaxDurability(itemLote);
-                                    double defaultDurability = OnItemDurabilityListener.getDurability(itemLote);
+                                    double maxDefaultDurability = SubCondition.getMaxDurability(itemLote);
+                                    double defaultDurability = SubCondition.getDurability(itemLote);
                                     String lore = dataItemLore.get(i);
-                                    double maxDurability = OnItemDurabilityListener.getMaxDurability(lore);
+                                    double maxDurability = SubCondition.getMaxDurability(lore);
                                     // 根据当前默认耐久百分比，乘以当前RPG最大耐久条得出目前RPG耐久值
-                                    lore = replaceColor(clearColor(lore).replaceFirst(String.valueOf(OnItemDurabilityListener.getDurability(lore)), String.valueOf((int) (defaultDurability / maxDefaultDurability * maxDurability))));
+                                    lore = replaceColor(clearColor(lore).replaceFirst(String.valueOf(DurabilityCondition.getDurability(lore)), String.valueOf((int) (defaultDurability / maxDefaultDurability * maxDurability))));
                                     dataItemLore.set(i, lore);
                                     dataMeta.setLore(dataItemLore);
                                     break;
@@ -557,7 +558,7 @@ public class ItemDataManager {
         if (lore != null) itemData.set(itemName + ".Lore", lore);
         if (enchantList.size() > 0) itemData.set(itemName + ".EnchantList", enchantList);
         if (itemFlagList.size() > 0) itemData.set(itemName + ".ItemFlagList", itemFlagList);
-        itemData.set(itemName + ".Unbreakable", OnItemDurabilityListener.getUnbreakable(itemMeta));
+        itemData.set(itemName + ".Unbreakable", SubCondition.getUnbreakable(itemMeta));
         itemData.set(itemName + ".Color", color);
         itemData.set(itemName + ".SkullName", skullName);
         itemData.save(itemDefaultFile);
@@ -613,7 +614,7 @@ public class ItemDataManager {
                 } else {
                     loreList.add("&cN/A");
                 }
-                Message.sendCommandToPlayer((Player) sender, str, "/sxAttribute give " + key, loreList);
+                ((Player) sender).spigot().sendMessage(Message.getTextComponent(str, "/sxAttribute give " + key, loreList));
             } else {
                 sender.sendMessage(str);
             }

@@ -24,7 +24,6 @@ public class SXConditionReturnType {
     public static final SXConditionReturnType NULL = new SXConditionReturnType(Type.NULL);
 
 
-
     @Getter
     private final String name;
 

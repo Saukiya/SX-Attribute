@@ -7,9 +7,11 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +44,18 @@ public class BlindnessAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public List<String> introduction() {
+        return Arrays.asList(
+                "Chinese: 失明几率",
+                "造成2-5秒的失明效果",
+                "",
+                "English: Blindness",
+                "Causing 2-5 seconds of blindness"
+        );
+    }
+
+    @Override
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("Blindness") ? getDf().format(getAttributes()[0]) : null;
     }
 

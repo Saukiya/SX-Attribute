@@ -6,10 +6,12 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
+import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,7 +30,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Saukiya
@@ -55,10 +57,13 @@ public class OnDamageListener implements Listener {
         if (event.isCancelled()) return;
         Entity projectile = event.getProjectile();
         LivingEntity entity = event.getEntity();
-        plugin.getAttributeManager().setProjectileData(projectile.getUniqueId(), plugin.getAttributeManager().getEntityData(entity));
-        ItemStack item = event.getBow();
-        if (item != null && OnItemDurabilityListener.getUnbreakable(item.getItemMeta())) {
-            plugin.getOnItemDurabilityListener().takeDurability(entity, item, 1, false);
+        if (entity instanceof Player) {
+            plugin.getAttributeManager().setProjectileData(projectile.getUniqueId(), plugin.getAttributeManager().getEntityData(entity));
+            ItemStack item = event.getBow();
+            if (item != null && SubCondition.getUnbreakable(item.getItemMeta())) {
+                Bukkit.getPluginManager().callEvent(new PlayerItemDamageEvent((Player) entity, item, 1));
+//                plugin.getDurabilityCondition().takeDurability(entity, item, 1);
+            }
         }
     }
 
@@ -75,6 +80,7 @@ public class OnDamageListener implements Listener {
         // 当攻击者为投抛物时
         if (event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof LivingEntity) {
             damager = (LivingEntity) ((Projectile) event.getDamager()).getShooter();
+            damagerData = plugin.getAttributeManager().getProjectileData(event.getDamager().getUniqueId());
         } else if (event.getDamager() instanceof LivingEntity) {
             damager = (LivingEntity) event.getDamager();
         }
@@ -86,19 +92,20 @@ public class OnDamageListener implements Listener {
         entityData = plugin.getAttributeManager().getEntityData(entity);
         damagerData = damagerData != null ? damagerData : plugin.getAttributeManager().getEntityData(damager);
 
-        // 主手持弓左键判断
         if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
             EntityEquipment eq = damager.getEquipment();
             ItemStack mainHand = eq.getItemInMainHand();
             if (mainHand != null) {
+                // 主手持弓左键判断
                 if (Material.BOW.equals(mainHand.getType())) {
                     event.setDamage(1);
                     damagerData = plugin.getAttributeManager().getEntityData(damager, new SXAttributeData());
                 }
                 if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                     if (damager instanceof Player && !((HumanEntity) damager).getGameMode().equals(GameMode.CREATIVE)) {
-                        if (mainHand.getType().getMaxDurability() == 0 || OnItemDurabilityListener.getUnbreakable(mainHand.getItemMeta())) {
-                            plugin.getOnItemDurabilityListener().takeDurability(damager, mainHand, 1, false);
+                        if (mainHand.getType().getMaxDurability() == 0 || SubCondition.getUnbreakable(mainHand.getItemMeta())) {
+                            Bukkit.getPluginManager().callEvent(new PlayerItemDamageEvent((Player) damager, mainHand, 1));
+//                            plugin.getDurabilityCondition().takeDurability(damager, mainHand, 1);
                         }
                     }
                 }

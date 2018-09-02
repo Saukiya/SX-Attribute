@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -131,6 +132,37 @@ public abstract class SubCondition {
         return str.length() == 0 ? "0" : str;
     }
 
+
+    /**
+     * 获取当前耐久值
+     *
+     * @param lore String
+     * @return int
+     */
+    public static int getDurability(String lore) {
+        return lore.contains("/") && lore.split("/").length > 1 ? Integer.valueOf(lore.replaceAll("§+[0-9]", "").split("/")[0].replaceAll("[^0-9]", "")) : 0;
+    }
+
+    /**
+     * 获取最大耐久值
+     *
+     * @param lore String
+     * @return int
+     */
+    public static int getMaxDurability(String lore) {
+        return lore.contains("/") && lore.split("/").length > 1 ? Integer.valueOf(lore.replaceAll("§+[0-9]", "").split("/")[1].replaceAll("[^0-9]", "")) : 0;
+    }
+
+    /**
+     * 获取物品是否为无限耐久
+     *
+     * @param meta ItemMeta
+     * @return boolean
+     */
+    public static boolean getUnbreakable(ItemMeta meta) {
+        return SXAttribute.getVersionSplit()[1] >= 11 ? meta.isUnbreakable() : meta.spigot().isUnbreakable();
+    }
+
     /**
      * 获取类型
      *
@@ -182,6 +214,20 @@ public abstract class SubCondition {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubCondition >> §cThe §4" + this.getName() + " §cCover To §4" + conditionMap.get(this.getPriority()).getName() + "§c !");
         }
         conditionMap.put(this.getPriority(), this);
+    }
+
+    /**
+     * 条件注册成功后启动时执行的方法
+     */
+    public void onEnable() {
+
+    }
+
+    /**
+     * 条件注册成功后关闭时执行的方法
+     */
+    public void onDisable() {
+
     }
 
     /**

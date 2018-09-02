@@ -138,7 +138,7 @@ public abstract class SubCommand {
         String introduction = Message.getMsg(Message.valueOf("COMMAND__" + cmd().toUpperCase()));
         String message = color + MessageFormat.format("/{0} {1}{2}§7 -§c {3}", label, cmd(), arg(), introduction);
         if (sender instanceof Player) {
-            Message.sendCommandToPlayer((Player) sender, message, MessageFormat.format("/{0} {1}", label, cmd()), Arrays.asList(sender.isOp() ? new String[]{"§c" + introduction, "§cPermission: " + permission()} : new String[]{"§c" + introduction}));
+            ((Player) sender).spigot().sendMessage(Message.getTextComponent(message, MessageFormat.format("/{0} {1}", label, cmd()), Arrays.asList(sender.isOp() ? new String[]{"§c" + introduction, "§cPermission: " + permission()} : new String[]{"§c" + introduction})));
         } else {
             sender.sendMessage(message);
         }

@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,7 @@ public class BlockAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         if (string.equalsIgnoreCase("BlockRate")) {
             return getDf().format(getAttributes()[0]);
         } else if (string.equalsIgnoreCase("Block")) {

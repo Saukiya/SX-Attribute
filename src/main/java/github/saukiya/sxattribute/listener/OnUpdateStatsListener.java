@@ -1,7 +1,6 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -21,10 +21,9 @@ public class Placeholders extends EZPlaceholderHook {
         SXAttributeData attributeData = plugin.getAttributeManager().getEntityData(player);
         if (string.equalsIgnoreCase("Money") && SXAttribute.isVault())
             return SXAttribute.getDf().format(MoneyUtil.get(player));
-        if (string.equalsIgnoreCase("Health")) return SXAttribute.getDf().format(player.getHealth());
         if (string.equalsIgnoreCase("Value")) return SXAttribute.getDf().format(attributeData.getValue());
         for (SubAttribute attribute : attributeData.getAttributeMap().values()) {
-            String str = attribute.getPlaceholder(string);
+            String str = attribute.getPlaceholder(player, string);
             if (str != null) return str;
         }
         return "N/A";

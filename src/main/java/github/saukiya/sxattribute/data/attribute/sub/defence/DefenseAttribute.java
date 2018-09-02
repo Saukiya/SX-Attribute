@@ -46,7 +46,7 @@ public class DefenseAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         if (string.equalsIgnoreCase("MinDefense")) {
             return getDf().format(getAttributes()[0]);
         } else if (string.equalsIgnoreCase("MaxDefense")) {

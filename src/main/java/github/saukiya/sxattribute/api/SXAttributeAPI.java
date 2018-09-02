@@ -87,8 +87,8 @@ public class SXAttributeAPI {
     /**
      * 获取抛射物数据，例如箭、雪球、烈焰球。
      *
-     * @param uuid          实体UUID
-     * @return  SXAttributeData
+     * @param uuid 实体UUID
+     * @return SXAttributeData
      */
     public SXAttributeData getProjectileData(UUID uuid) {
         return plugin.getAttributeManager().getProjectileData(uuid);
@@ -98,12 +98,12 @@ public class SXAttributeAPI {
      * 获取实体属性数据 更改无效
      * 如果添加SXAttributeData 那么sxAttributeData后则替代手持属性(并不覆盖原手持数据)
      *
-     * @param livingEntity LivingEntity
+     * @param livingEntity    LivingEntity
      * @param sxAttributeData SXAttributeData[]
      * @return SXAttributeData
      */
-    public SXAttributeData getEntityAllData(LivingEntity livingEntity,SXAttributeData... sxAttributeData) {
-        return plugin.getAttributeManager().getEntityData(livingEntity,sxAttributeData);
+    public SXAttributeData getEntityAllData(LivingEntity livingEntity, SXAttributeData... sxAttributeData) {
+        return plugin.getAttributeManager().getEntityData(livingEntity, sxAttributeData);
     }
 
     /**
@@ -217,7 +217,7 @@ public class SXAttributeAPI {
      * @param livingEntity LivingEntity
      * @return String
      */
-    public String getEntityName(LivingEntity livingEntity){
+    public String getEntityName(LivingEntity livingEntity) {
         return plugin.getOnHealthChangeDisplayListener().getEntityName(livingEntity);
     }
 
@@ -263,6 +263,16 @@ public class SXAttributeAPI {
      */
     public void updateEquipmentData(LivingEntity entity) {
         plugin.getAttributeManager().loadEquipmentData(entity);
+    }
+
+    /**
+     * 更新玩家装备属性
+     * RPGInventory运行的情况下，不更新装备属性(特殊情况)
+     *
+     * @param player Player
+     */
+    public void updateRPGInventoryData(Player player) {
+        plugin.getAttributeManager().loadRPGInventoryData(player);
     }
 
     /**

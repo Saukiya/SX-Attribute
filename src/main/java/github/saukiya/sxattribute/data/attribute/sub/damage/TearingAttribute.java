@@ -68,7 +68,7 @@ public class TearingAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("Tearing") ? getDf().format(getAttributes()[0]) : null;
     }
 

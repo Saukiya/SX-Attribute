@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,7 @@ public class DodgeAttribute extends SubAttribute {
     public void eventMethod(EventData eventData) {
         if (eventData instanceof DamageEventData) {
             DamageEventData damageEventData = (DamageEventData) eventData;
-            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getDamageAttribute("HitRate").getAttributes()[0])) {
+            if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getDamagerAttributeDoubles("HitRate")[0])) {
                 damageEventData.setCancelled(true);
                 Location loc = damageEventData.getDamager().getLocation().clone();
                 loc.setYaw(loc.getYaw() + SXAttribute.getRandom().nextInt(80) - 40);
@@ -43,7 +44,7 @@ public class DodgeAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("Dodge") ? getDf().format(getAttributes()[0]) : null;
     }
 

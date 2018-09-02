@@ -4,6 +4,7 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.util.Config;
+import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ public class HitRateAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("HitRate") ? getDf().format(getAttributes()[0]) : null;
     }
 

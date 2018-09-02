@@ -82,13 +82,14 @@ public class DamageEventData extends EventData {
     }
 
     /**
-     * 获取攻击方的属性值
+     * 获取被攻击方的属性值
      *
      * @param attributeName String
      * @return Double[]
      */
-    public SubAttribute getDamageAttribute(String attributeName) {
-        return damagerData.getSubAttribute(attributeName);
+    public double[] getDamagerAttributeDoubles(String attributeName) {
+        SubAttribute attribute = entityData.getSubAttribute(attributeName);
+        return attribute != null ? attribute.getAttributes() : new double[]{0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D};
     }
 
     /**

@@ -9,6 +9,7 @@ softdepend:
 - RPGInventory
 - MythicMobs
 - SX-Level
+- SkillAPI
 - Vault
 
 commands:

@@ -12,8 +12,12 @@ public class AttributeMap {
 
     private Map<Integer, SubAttribute> map = new TreeMap<>();
 
-    public SubAttribute get(Integer i) {
+    public SubAttribute get(int i) {
         return map.get(i);
+    }
+
+    public void remove(int i) {
+        map.remove(i);
     }
 
     public int size() {

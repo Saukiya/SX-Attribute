@@ -95,9 +95,6 @@ public class SXAttribute extends JavaPlugin {
     private OnUpdateStatsListener onUpdateStatsListener;
 
     @Getter
-    private OnItemDurabilityListener onItemDurabilityListener;
-
-    @Getter
     private OnDamageListener onDamageListener;
 
     @Getter
@@ -146,17 +143,11 @@ public class SXAttribute extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-        attributeManager.loadDefaultAttributeData();
-        attributeManager.onAttributeEnable();
-        SXAttributeData attributeData = new SXAttributeData();
-        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + attributeData.getAttributeMap().size() + "§r Attributes");
-        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + conditionManager.getConditionMap().size() + "§r Condition");
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             placeholder = true;
             new Placeholders(this);
-            int size = attributeData.getAttributeMap().values().stream().mapToInt(subAttribute -> subAttribute.getPlaceholders().size()).sum();
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + size + "§r Placeholders");
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Find Placeholders");
         } else {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find PlaceholderAPI!");
         }
@@ -166,7 +157,7 @@ public class SXAttribute extends JavaPlugin {
                 MoneyUtil.setup();
                 vault = true;
                 Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Find Vault");
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find Vault-Economy!");
             }
         } else {
@@ -181,7 +172,7 @@ public class SXAttribute extends JavaPlugin {
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
-            Bukkit.getPluginManager().registerEvents(new OnMythicmobsDropOrSpawnListener(this), this);
+            Bukkit.getPluginManager().registerEvents(new OnMythicmobsSpawnListener(this), this);
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Find MythicMobs");
         } else {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find MythicMobs!");
@@ -200,22 +191,28 @@ public class SXAttribute extends JavaPlugin {
         } else {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cNo Find SX-Level!");
         }
+
+        attributeManager.loadDefaultAttributeData();
+        attributeManager.onAttributeEnable();
+        SXAttributeData attributeData = new SXAttributeData();
+        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + attributeData.getAttributeMap().size() + "§r Attributes");
+
+        conditionManager.onConditionEnable();
+        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + conditionManager.getConditionMap().size() + "§r Condition");
+
         registerSlotManager = new RegisterSlotManager(this);
         statsInventory = new StatsInventory(this);
         displaySlotInventory = new DisplaySlotInventory(this);
         onUpdateStatsListener = new OnUpdateStatsListener(this);
-        onItemDurabilityListener = new OnItemDurabilityListener(this);
         onDamageListener = new OnDamageListener(this);
         onHealthChangeDisplayListener = new OnHealthChangeDisplayListener(this);
         Bukkit.getPluginManager().registerEvents(new OnBanShieldInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnInventoryClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new OnInventoryCloseListener(), this);
         Bukkit.getPluginManager().registerEvents(onUpdateStatsListener, this);
-        Bukkit.getPluginManager().registerEvents(onItemDurabilityListener, this);
         Bukkit.getPluginManager().registerEvents(onDamageListener, this);
         Bukkit.getPluginManager().registerEvents(onHealthChangeDisplayListener, this);
         Bukkit.getPluginManager().registerEvents(new OnItemSpawnListener(), this);
-        Bukkit.getPluginManager().registerEvents(sxLevel ? new OnSXExpChangeListener(this) : new OnExpChangeListener(this), this);
         mainCommand.setUp("sxAttribute");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load Time: §c" + (System.currentTimeMillis() - oldTimes) + "§r ms");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cAuthor: Saukiya QQ: 1940208750");
@@ -226,13 +223,14 @@ public class SXAttribute extends JavaPlugin {
     @Override
     public void onDisable() {
         attributeManager.onAttributeDisable();
-        if (SXAttribute.isHolographic()) {
+        conditionManager.onConditionDisable();
+        if (SXAttribute.isHolographic() && onDamageListener.getHologramsList().size() > 0) {
             onDamageListener.getHologramsList().forEach(Hologram::delete);
         }
-        if (Config.isHealthBossBar()) {
+        if (Config.isHealthBossBar() && onHealthChangeDisplayListener.getBossList().size() > 0) {
             onHealthChangeDisplayListener.getBossList().forEach((bossBarData -> bossBarData.getBossBar().removeAll()));
         }
-        if (Config.isHealthNameVisible()) {
+        if (Config.isHealthNameVisible() && onHealthChangeDisplayListener.getNameList().size() > 0) {
             onHealthChangeDisplayListener.getNameList().forEach((nameData) -> {
                 if (nameData.getEntity() != null && !nameData.getEntity().isDead()) {
                     nameData.getEntity().setCustomName(nameData.getName());

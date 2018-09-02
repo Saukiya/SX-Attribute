@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.util.Message;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -43,10 +44,14 @@ public class AttributeListCommand extends SubCommand {
                     }
                     list.add("&bPlaceholders: ");
                     for (String placeName : entry.getValue().getPlaceholders()) {
-                        list.add("&7- %sx_" + placeName + "% : " + entry.getValue().getPlaceholder(placeName));
+                        list.add("&7- %sx_" + placeName + "% : " + entry.getValue().getPlaceholder((Player) sender, placeName));
                     }
                     list.add("&bValue: " + entry.getValue().getValue());
-                    Message.sendCommandToPlayer((Player) sender, message, null, list);
+                    TextComponent tc = Message.getTextComponent(message, null, list);
+                    if (entry.getValue().introduction().size() > 0) {
+                        tc.addExtra(Message.getTextComponent("§7 - §8[§cIntroduction§8]", null, entry.getValue().introduction()));
+                    }
+                    ((Player) sender).spigot().sendMessage(tc);
                 } else {
                     sender.sendMessage(message);
                 }

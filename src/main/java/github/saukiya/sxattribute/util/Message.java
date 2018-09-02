@@ -33,6 +33,7 @@ public enum Message {
     PLAYER__OVERDUE_ITEM,
     PLAYER__EXP_ADDITION,
     PLAYER__NO_VAULT,
+    PLAYER__NO_DURABILITY,
     PLAYER__SELL,
     PLAYER__BATTLE__FIRST_PERSON,
     PLAYER__BATTLE__CRIT,
@@ -137,6 +138,7 @@ public enum Message {
         messages.set(PLAYER__OVERDUE_ITEM.toString(), getMessagePrefix() + "&c物品 &a{0}&c 已经过期了:&a{1}");
         messages.set(PLAYER__EXP_ADDITION.toString(), getMessagePrefix() + "&7你的经验增加了 &6{0}&7! [&a+{1}%&7]");
         messages.set(PLAYER__NO_VAULT.toString(), getMessagePrefix() + "&c服务器没有启用经济系统: Vault-Economy null");
+        messages.set(PLAYER__NO_DURABILITY.toString(), getMessagePrefix() + "&c物品 &a{0}&c 耐久度已经为零了!");
         messages.set(PLAYER__SELL.toString(), getMessagePrefix() + "&7出售成功! 一共出售了 &6{0}&7 个物品，总价 &6{1}&7 金币!");
 
         List<String> attackLoreList = new ArrayList<>();
@@ -359,24 +361,24 @@ public enum Message {
     }
 
     /**
-     * 发送带指令点击消息
+     * 转换消息为TextComponent
      *
-     * @param player     Player
      * @param message    String
      * @param command    String
      * @param stringList List
+     * @return TextComponent
      */
-    public static void sendCommandToPlayer(Player player, String message, String command, List<String> stringList) {
+    public static TextComponent getTextComponent(String message, String command, List<String> stringList) {
         TextComponent tcMessage = new TextComponent(message);
         if (stringList != null && stringList.size() > 0) {
-            ComponentBuilder bc = new ComponentBuilder(stringList.get(0).replace("&", "§"));
-            IntStream.range(1, stringList.size()).mapToObj(i -> "\n" + stringList.get(i).replace("&", "§")).forEach(bc::append);
+            ComponentBuilder bc = new ComponentBuilder("§7" + stringList.get(0).replace("&", "§"));
+            IntStream.range(1, stringList.size()).mapToObj(i -> "\n§7" + stringList.get(i).replace("&", "§")).forEach(bc::append);
             tcMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, bc.create()));
         }
         if (command != null) {
             tcMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
         }
-        player.spigot().sendMessage(tcMessage);
+        return tcMessage;
     }
 
     /**
@@ -388,35 +390,32 @@ public enum Message {
      */
     public static void send(LivingEntity entity, Message loc, Object... args) {
         if (entity instanceof Player) {
-            send(entity, Message.getMsg(loc, args));
+            send((Player) entity, Message.getMsg(loc, args));
         }
     }
 
     /**
      * 发送消息给玩家
      *
-     * @param entity  Player
+     * @param player  Player
      * @param message String
      */
-    public static void send(LivingEntity entity, String message) {
+    public static void send(Player player, String message) {
         if (message.contains("Null Message")) return;
-        if (entity instanceof Player) {
-            Player player = (Player) entity;
-            if (message.contains("[ACTIONBAR]")) {
-                message = message.replace("[ACTIONBAR]", "");
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-            } else if (message.contains("[TITLE]")) {
-                message = message.replace("[TITLE]", "");
-                if (message.contains(":")) {
-                    String title = message.split(":")[0];
-                    String subTitle = message.split(":")[1];
-                    player.sendTitle(title, subTitle, 5, 20, 5);
-                } else {
-                    player.sendTitle(message, null, 5, 20, 5);
-                }
+        if (message.contains("[ACTIONBAR]")) {
+            message = message.replace("[ACTIONBAR]", "");
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+        } else if (message.contains("[TITLE]")) {
+            message = message.replace("[TITLE]", "");
+            if (message.contains(":")) {
+                String title = message.split(":")[0];
+                String subTitle = message.split(":")[1];
+                player.sendTitle(title, subTitle, 5, 20, 5);
             } else {
-                player.sendMessage(message);
+                player.sendTitle(message, null, 5, 20, 5);
             }
+        } else {
+            player.sendMessage(message);
         }
     }
 

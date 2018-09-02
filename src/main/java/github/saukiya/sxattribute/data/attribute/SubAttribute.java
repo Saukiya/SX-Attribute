@@ -7,9 +7,11 @@ import github.saukiya.sxattribute.util.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,6 +60,7 @@ public abstract class SubAttribute {
         return d > 0 && d / 100D > SXAttribute.getRandom().nextDouble();
     }
 
+
     /**
      * 获取属性值
      *
@@ -69,17 +72,12 @@ public abstract class SubAttribute {
         return str.length() == 0 ? "0" : str;
     }
 
-    public double[] newAttributes(int doublesLength) {
-
-        return null;
-    }
-
     public SXAttributeType[] getType() {
         return attributeTypes.clone();
     }
 
     public final boolean containsType(SXAttributeType attributeType) {
-        return getAttributes()[0] > 0 && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
+        return Arrays.stream(getAttributes()).anyMatch(d -> d != 0) && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
     }
 
     /**
@@ -124,6 +122,15 @@ public abstract class SubAttribute {
     }
 
     /**
+     * 为属性添加介绍说明
+     *
+     * @return List
+     */
+    public List<String> introduction() {
+        return new ArrayList<>();
+    }
+
+    /**
      * 实例化一个属性
      *
      * @return SubAttribute
@@ -148,9 +155,10 @@ public abstract class SubAttribute {
      * 获取placeholder变量
      *
      * @param string String
+     * @param player Player
      * @return String / null
      */
-    public abstract String getPlaceholder(String string);
+    public abstract String getPlaceholder(Player player, String string);
 
     /**
      * 获取placeholder变量列表
@@ -164,7 +172,7 @@ public abstract class SubAttribute {
      *
      * @return int 优先值 -1为关闭
      */
-    private final int getPriority() {
+    public final int getPriority() {
         return Config.getConfig().getInt("AttributePriority." + getName(), -1);
     }
 
@@ -267,7 +275,7 @@ public abstract class SubAttribute {
      *
      * @return JavaPlugin
      */
-    public JavaPlugin getPlugin() {
+    public final JavaPlugin getPlugin() {
         return plugin;
     }
 

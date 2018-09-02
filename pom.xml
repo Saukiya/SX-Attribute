@@ -6,7 +6,7 @@
 
     <groupId>github.saukiya</groupId>
     <artifactId>SX-Attribute</artifactId>
-    <version>1.3.6</version>
+    <version>1.3.8</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -59,6 +59,15 @@
             <version>2.2.2</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/HolographicDisplays.jar</systemPath>
+        </dependency>
+
+        <!-- Vault v1.6 -->
+        <dependency>
+            <groupId>local</groupId>
+            <artifactId>SkillAPI</artifactId>
+            <version>3.108</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/SkillAPI.jar</systemPath>
         </dependency>
 
         <!-- Vault v1.6 -->

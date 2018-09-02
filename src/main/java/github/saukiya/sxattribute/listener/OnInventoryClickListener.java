@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.ItemDataManager;
+import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.inventory.StatsInventory;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
@@ -78,8 +79,8 @@ public class OnInventoryClickListener implements Listener {
                         for (int i = 0; i < loreList.size(); i++) {
                             String lore = loreList.get(i);
                             if (lore.contains(Config.getConfig().getString(Config.NAME_DURABILITY))) {
-                                int durability = OnItemDurabilityListener.getDurability(lore);
-                                int maxDurability = OnItemDurabilityListener.getMaxDurability(lore);
+                                int durability = SubCondition.getDurability(lore);
+                                int maxDurability = SubCondition.getMaxDurability(lore);
                                 if (maxDurability != 0 && durability < maxDurability) {
                                     double money = (maxDurability - durability) * value;
                                     if (!enterMeta.hasEnchants()) {
@@ -100,7 +101,7 @@ public class OnInventoryClickListener implements Listener {
                                             lore = ItemDataManager.replaceColor(ItemDataManager.clearColor(lore).replaceFirst(String.valueOf(durability), String.valueOf(maxDurability)));
                                             loreList.set(i, lore);
                                             meta.setLore(loreList);
-                                            if (!OnItemDurabilityListener.getUnbreakable(meta) && item.getType().getMaxDurability() != 0) {
+                                            if (!SubCondition.getUnbreakable(meta) && item.getType().getMaxDurability() != 0) {
                                                 item.setDurability((short) 0);
                                             }
                                             item.setItemMeta(meta);

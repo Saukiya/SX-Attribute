@@ -43,7 +43,7 @@ public class SXAttributeData {
     /**
      * 属性生效时，设置为有效
      */
-    public void valid(){
+    public void valid() {
         this.valid = true;
     }
 

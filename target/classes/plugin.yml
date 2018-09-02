@@ -1,6 +1,6 @@
 name: SX-Attribute
 main: github.saukiya.sxattribute.SXAttribute
-version: 1.3.6
+version: 1.3.8
 author: 
 - Saukiya
 softdepend:
@@ -9,6 +9,7 @@ softdepend:
 - RPGInventory
 - MythicMobs
 - SX-Level
+- SkillAPI
 - Vault
 
 commands:

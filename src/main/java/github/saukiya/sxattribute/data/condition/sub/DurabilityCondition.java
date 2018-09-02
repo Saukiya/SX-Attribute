@@ -1,8 +1,12 @@
-package github.saukiya.sxattribute.listener;
+package github.saukiya.sxattribute.data.condition.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.ItemDataManager;
+import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
+import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -14,46 +18,22 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class OnItemDurabilityListener implements Listener {
+public class DurabilityCondition extends SubCondition implements Listener {
 
-    private final SXAttribute plugin;
-
-    public OnItemDurabilityListener(SXAttribute plugin) {
-        this.plugin = plugin;
+    public DurabilityCondition() {
+        super("Durability");
     }
 
-    // 获取当前耐久值
-    public static int getDurability(String lore) {
-        int durability = 0;
-        if (lore.contains("/") && lore.split("/").length > 1) {
-            durability = Integer.valueOf(lore.replaceAll("§+[0-9]", "").split("/")[0].replaceAll("[^0-9]", ""));
-        }
-        return durability;
+    @Override
+    public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
     }
 
-    // 获取最大耐久值
-    public static int getMaxDurability(String lore) {
-        int maxDurability = 0;
-        if (lore.contains("/") && lore.split("/").length > 1) {
-            maxDurability = Integer.valueOf(lore.replaceAll("§+[0-9]", "").split("/")[1].replaceAll("[^0-9]", ""));
-        }
-        return maxDurability;
-    }
-
-    public static Boolean getUnbreakable(ItemMeta meta) {
-        if (SXAttribute.getVersionSplit()[1] >= 11) {
-            //1.11.2 方法
-            return meta.isUnbreakable();
-        } else {
-            //1.9.0方法
-            return meta.spigot().isUnbreakable();
-        }
-    }
-
-    public static void clearItem(LivingEntity entity, ItemStack item) {
+    private void clearItem(LivingEntity entity, ItemStack item) {
         EntityEquipment eq = entity.getEquipment();
         if (eq.getBoots() != null && eq.getBoots().equals(item)) {
             eq.setBoots(new ItemStack(Material.AIR));
@@ -70,7 +50,7 @@ public class OnItemDurabilityListener implements Listener {
         }
     }
 
-    public Boolean takeDurability(LivingEntity entity, ItemStack item, int takeDurability, Boolean strip) {
+    private Boolean takeDurability(LivingEntity entity, ItemStack item, int takeDurability) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
             ItemMeta meta = item.getItemMeta();
             List<String> loreList = meta.getLore();
@@ -80,6 +60,7 @@ public class OnItemDurabilityListener implements Listener {
                 if (lore.contains(Config.getConfig().getString(Config.NAME_DURABILITY))) {
                     // 扣取耐久值 设定耐久条耐久
                     int durability = getDurability(lore) - takeDurability;
+                    if (durability < 0) durability = 0;
                     int maxDurability = getMaxDurability(lore);
                     if (durability > maxDurability) {
                         durability = maxDurability;
@@ -99,25 +80,36 @@ public class OnItemDurabilityListener implements Listener {
                     }
                     // 物品是否消失
                     if (durability <= 0) {
-                        // 当耐久为0时物品消失 并取消属性
-                        if (SXAttribute.getVersionSplit()[1] > 10) {
-                            item.setAmount(0);
-                            // 重新加载装备属性
-                            if (entity instanceof Player) {
-                                plugin.getOnUpdateStatsListener().updateEquipmentData((Player) entity);
-                                ((Player) entity).playSound(entity.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
+                        if (Config.isClearItemDurability()) {
+                            // 当耐久为0时物品消失 并取消属性
+                            if (SXAttribute.getVersionSplit()[1] > 10) {
+                                item.setAmount(0);
+                                // 重新加载装备属性
+                                if (entity instanceof Player) {
+                                    ((Player) entity).playSound(entity.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
+                                }
+                            } else {
+                                clearItem(entity, item);
+                                if (entity instanceof Player) {
+                                    ((Player) entity).playSound(entity.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
+                                }
                             }
-                        } else {
-                            clearItem(entity, item);
-                            if (entity instanceof Player) {
-                                plugin.getOnUpdateStatsListener().updateEquipmentData((Player) entity);
-                                ((Player) entity).playSound(entity.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
-                            }
+                            return true;
                         }
-                        return true;
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                SXAttribute.getApi().updateEquipmentData(entity);
+                                if (entity instanceof Player) {
+                                    SXAttribute.getApi().updateRPGInventoryData((Player) entity);
+                                }
+                                SXAttribute.getApi().updateHandData(entity);
+                                SXAttribute.getApi().updateStats(entity);
+                            }
+                        }.runTaskAsynchronously(getPlugin());
                     }
                     // 设定耐久条
-                    if (strip && !getUnbreakable(meta)) {
+                    if (item.getType().getMaxDurability() != 0 && !getUnbreakable(meta)) {
                         int maxDefaultDurability = item.getType().getMaxDurability();
                         int defaultDurability = (int) (((double) durability / maxDurability) * maxDefaultDurability);
                         item.setDurability((short) (maxDefaultDurability - defaultDurability));
@@ -135,9 +127,21 @@ public class OnItemDurabilityListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
         // 如果是 取消原版事件
-        if (takeDurability(player, item, event.getDamage(), true)) {
+        if (takeDurability(player, item, event.getDamage())) {
             event.setCancelled(true);
         }
     }
 
+    @Override
+    public SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore) {
+        if (lore.contains(Config.getConfig().getString(Config.NAME_DURABILITY))) {
+            if (getDurability(lore) <= 0) {
+                if (entity instanceof Player && item != null) {
+                    Message.send((Player) entity, Message.getMsg(Message.PLAYER__NO_DURABILITY, getItemName(item)));
+                }
+                return SXConditionReturnType.ITEM;
+            }
+        }
+        return SXConditionReturnType.NULL;
+    }
 }

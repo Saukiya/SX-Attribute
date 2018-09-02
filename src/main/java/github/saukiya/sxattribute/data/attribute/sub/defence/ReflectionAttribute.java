@@ -10,6 +10,7 @@ import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -61,7 +62,7 @@ public class ReflectionAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         if (string.equalsIgnoreCase("ReflectionRate")) {
             return getDf().format(getAttributes()[0]);
         } else if (string.equalsIgnoreCase("Reflection")) {

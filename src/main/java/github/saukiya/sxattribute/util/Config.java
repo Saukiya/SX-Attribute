@@ -34,6 +34,7 @@ public class Config {
     public static final String NAME_ROLE = "Condition.Role.Name";
     public static final String NAME_LIMIT_LEVEL = "Condition.LimitLevel.Name";
     public static final String NAME_DURABILITY = "Condition.Durability.Name";
+    public static final String CLEAR_ITEM_DURABILITY = "Condition.Durability.ClearItem";
     public static final String NAME_SELL = "Condition.Sell.Name";
     public static final String NAME_EXPIRY_TIME = "Condition.ExpiryTime.Name";
     public static final String FORMAT_EXPIRY_TIME = "Condition.ExpiryTime.Format";
@@ -102,6 +103,7 @@ public class Config {
     private static final String DECIMAL_FORMAT = "DecimalFormat";
     private static final String PRIORITY_EXP_ADDITION = "AttributePriority.ExpAddition";
     private static final String PRIORITY_SPEED = "AttributePriority.Speed";
+    private static final String PRIORITY_MYTHICMOBS_DROP = "AttributePriority.MythicmobsDrop";
 
     private static final String PRIORITY_HEALTH = "AttributePriority.Health";
     private static final String PRIORITY_HEALTH_REGEN = "AttributePriority.HealthRegen";
@@ -124,6 +126,7 @@ public class Config {
     private static final String PRIORITY_LIGHTNING = "AttributePriority.Lightning";
     private static final String PRIORITY_TEARING = "AttributePriority.Tearing";
 
+    private static final String PRIORITY_DURABILITY = "ConditionPriority.Durability";
     private static final String PRIORITY_ATTACK_SPEED = "ConditionPriority.AttackSpeed";
     private static final String PRIORITY_EXPIRY_TIME = "ConditionPriority.ExpiryTime";
     private static final String PRIORITY_LIMIT_LEVEL = "ConditionPriority.LimitLevel";
@@ -190,6 +193,8 @@ public class Config {
     private static boolean registerSlotsLock;
     @Getter
     private static List<String> bossBarBlackCauseList;
+    @Getter
+    private static boolean clearItemDurability;
 
     /**
      * 创建默认Config文件
@@ -256,6 +261,7 @@ public class Config {
         config.set(NAME_LIMIT_LEVEL, "限制等级");
         config.set(NAME_EXP_ADDITION, "经验加成");
         config.set(NAME_DURABILITY, "耐久度");
+        config.set(CLEAR_ITEM_DURABILITY, true);
         config.set(NAME_SELL, "出售价格");
         config.set(NAME_EXPIRY_TIME, "到期时间");
         config.set(FORMAT_EXPIRY_TIME, "yyyy/MM/dd HH:mm");
@@ -323,37 +329,37 @@ public class Config {
         config.set(VALUE_LIGHTNING, 1);
         config.set(VALUE_TEARING, 1);
 
-        config.set(PRIORITY_EXP_ADDITION, 25);
-        config.set(PRIORITY_SPEED, 26);
+        config.set(PRIORITY_DODGE, 10);
+        config.set(PRIORITY_DAMAGE, 20);
+        config.set(PRIORITY_CRIT, 30);
+        config.set(PRIORITY_REAL, 40);
+        config.set(PRIORITY_DEFENSE, 50);
+        config.set(PRIORITY_REFLECTION, 60);
+        config.set(PRIORITY_BLOCK, 70);
+        config.set(PRIORITY_LIFE_STEAL, 80);
+        config.set(PRIORITY_IGNITION, 90);
+        config.set(PRIORITY_WITHER, 100);
+        config.set(PRIORITY_POISON, 110);
+        config.set(PRIORITY_BLINDNESS, 120);
+        config.set(PRIORITY_SLOWNESS, 130);
+        config.set(PRIORITY_LIGHTNING, 140);
+        config.set(PRIORITY_TEARING, 150);
+        config.set(PRIORITY_TOUGHNESS, 200);
+        config.set(PRIORITY_HEALTH, 210);
+        config.set(PRIORITY_HEALTH_REGEN, 220);
+        config.set(PRIORITY_HIT_RATE, 230);
+        config.set(PRIORITY_EXP_ADDITION, 240);
+        config.set(PRIORITY_SPEED, 250);
+        config.set(PRIORITY_MYTHICMOBS_DROP, 260);
 
-        config.set(PRIORITY_DODGE, 1);
-        config.set(PRIORITY_DEFENSE, 6);
-        config.set(PRIORITY_REFLECTION, 7);
-        config.set(PRIORITY_BLOCK, 8);
-        config.set(PRIORITY_TOUGHNESS, 101);
-        config.set(PRIORITY_HEALTH, 102);
-        config.set(PRIORITY_HEALTH_REGEN, 103);
-
-        config.set(PRIORITY_HIT_RATE, 100);
-        config.set(PRIORITY_DAMAGE, 3);
-        config.set(PRIORITY_CRIT, 4);
-        config.set(PRIORITY_REAL, 5);
-        config.set(PRIORITY_LIFE_STEAL, 9);
-        config.set(PRIORITY_IGNITION, 10);
-        config.set(PRIORITY_WITHER, 11);
-        config.set(PRIORITY_POISON, 12);
-        config.set(PRIORITY_BLINDNESS, 13);
-        config.set(PRIORITY_SLOWNESS, 14);
-        config.set(PRIORITY_LIGHTNING, 15);
-        config.set(PRIORITY_TEARING, 16);
-
-        config.set(PRIORITY_HAND, 1);
-        config.set(PRIORITY_MAIN_HAND, 2);
-        config.set(PRIORITY_OFF_HAND, 3);
-        config.set(PRIORITY_LIMIT_LEVEL, 4);
-        config.set(PRIORITY_ROLE, 5);
-        config.set(PRIORITY_EXPIRY_TIME, 6);
-        config.set(PRIORITY_ATTACK_SPEED, 7);
+        config.set(PRIORITY_HAND, 10);
+        config.set(PRIORITY_MAIN_HAND, 20);
+        config.set(PRIORITY_OFF_HAND, 30);
+        config.set(PRIORITY_LIMIT_LEVEL, 40);
+        config.set(PRIORITY_ROLE, 50);
+        config.set(PRIORITY_EXPIRY_TIME, 60);
+        config.set(PRIORITY_ATTACK_SPEED, 70);
+        config.set(PRIORITY_DURABILITY, 80);
     }
 
     /**
@@ -414,5 +420,6 @@ public class Config {
         randomString = config.getBoolean(RANDOM_STRING);
         registerSlot = config.getBoolean(REGISTER_SLOTS_ENABLED);
         registerSlotsLock = registerSlot && config.getBoolean(REGISTER_SLOTS_LOCK_ENABLED);
+        clearItemDurability = config.getBoolean(CLEAR_ITEM_DURABILITY, true);
     }
 }

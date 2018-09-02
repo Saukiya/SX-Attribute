@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.listener.OnHealthChangeDisplayListener;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class LifeStealAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("LifeStealRate") ? getDf().format(getAttributes()[0]) : string.equalsIgnoreCase("LifeSteal") ? getDf().format(getAttributes()[1]) : null;
     }
 

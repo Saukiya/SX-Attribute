@@ -33,7 +33,7 @@ public class SpeedAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("Speed") ? getDf().format(getAttributes()[0]) : null;
     }
 

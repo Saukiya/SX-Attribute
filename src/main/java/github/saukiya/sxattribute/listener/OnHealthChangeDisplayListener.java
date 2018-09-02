@@ -49,11 +49,11 @@ public class OnHealthChangeDisplayListener implements Listener {
                 //TODO 架构修改为List
                 if (bossList.size() > 0) {
                     Iterator<BossBarData> bossDataIterator = bossList.iterator();
-                    while (bossDataIterator.hasNext()){
+                    while (bossDataIterator.hasNext()) {
                         BossBarData bossBarData = bossDataIterator.next();
                         if (bossBarData.getEntity() != null && !bossBarData.getEntity().isDead() && bossBarData.getTimeMap().size() > 0) {
                             Iterator<Map.Entry<Player, Long>> entryIterator = bossBarData.getTimeMap().entrySet().iterator();
-                            while (entryIterator.hasNext()){
+                            while (entryIterator.hasNext()) {
                                 Map.Entry<Player, Long> entry = entryIterator.next();
                                 if (!entry.getKey().isOnline() || entry.getKey().isDead() || entry.getValue() < System.currentTimeMillis()) {
                                     bossBarData.getBossBar().removePlayer(entry.getKey());
@@ -72,7 +72,7 @@ public class OnHealthChangeDisplayListener implements Listener {
                 }
                 if (nameList.size() > 0) {
                     Iterator<NameData> nameDataIterator = nameList.iterator();
-                    while (nameDataIterator.hasNext()){
+                    while (nameDataIterator.hasNext()) {
                         NameData nameData = nameDataIterator.next();
                         if (nameData.getEntity() == null || nameData.getEntity().isDead() || nameData.getEntity().getHealth() == getMaxHealth(nameData.getEntity()) || nameData.getTick() < System.currentTimeMillis()) {
                             if (nameData.getEntity() != null) {
@@ -114,7 +114,7 @@ public class OnHealthChangeDisplayListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     void OnEntityDamageEvent(EntityDamageEvent event) {
-        if (event.isCancelled()) return;
+        if (event.isCancelled() || event.getFinalDamage() == 0) return;
         if (!(event.getEntity() instanceof LivingEntity) || event.getEntity() instanceof ArmorStand) {
             return;
         }
@@ -152,7 +152,7 @@ public class OnHealthChangeDisplayListener implements Listener {
                 if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.getVersionSplit()[1] >= 9 && !Config.getBossBarBlackCauseList().contains(event.getCause().name())) {
                     if (bossBarData == null) {
                         bossBarData = new BossBarData(entity, name, maxHealth, progress);
-                        bossBarData.setProgress(entity.getHealth()/maxHealth);
+                        bossBarData.setProgress(entity.getHealth() / maxHealth);
                         bossList.add(bossBarData);
                     }
                     bossBarData.addPlayer((Player) damager);
@@ -228,7 +228,7 @@ public class OnHealthChangeDisplayListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     void OnEntityRegainHealthEvent(EntityRegainHealthEvent event) {
-        if (event.isCancelled()) return;
+        if (event.isCancelled() || event.getAmount() == 0) return;
         if (!(event.getEntity() instanceof LivingEntity) || event.getEntity() instanceof ArmorStand) {
             return;
         }
@@ -254,7 +254,7 @@ public class OnHealthChangeDisplayListener implements Listener {
             loc.setYaw(entity.getLocation().getYaw() + 90);
             loc.add(loc.getDirection().multiply(0.8D));
             Hologram hologram = HologramsAPI.createHologram(plugin, loc);
-            hologram.appendTextLine(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HEALTH, event.getAmount()));
+            hologram.appendTextLine(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HEALTH, SXAttribute.getDf().format(event.getAmount())));
             plugin.getOnDamageListener().getHologramsList().add(hologram);
             new BukkitRunnable() {
                 @Override

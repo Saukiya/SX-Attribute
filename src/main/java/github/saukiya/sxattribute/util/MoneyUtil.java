@@ -13,7 +13,7 @@ public class MoneyUtil {
      *
      * @throws NullPointerException NullPointerException
      */
-    public static void setup() throws NullPointerException{
+    public static void setup() throws NullPointerException {
         RegisteredServiceProvider<Economy> registeredServiceProvider = Bukkit.getServicesManager().getRegistration(Economy.class);
         if (registeredServiceProvider == null) throw new NullPointerException();
         economy = registeredServiceProvider.getProvider();

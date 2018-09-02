@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +42,7 @@ public class LightningAttribute extends SubAttribute {
     }
 
     @Override
-    public String getPlaceholder(String string) {
+    public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("Lightning") ? getDf().format(getAttributes()[0]) : null;
     }
 

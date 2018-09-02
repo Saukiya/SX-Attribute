@@ -157,13 +157,11 @@ public class StatsInventory {
                 String str = null;
                 if (string.equalsIgnoreCase("Money") && SXAttribute.isVault()) {
                     str = SXAttribute.getDf().format(MoneyUtil.get(player));
-                } else if (string.equalsIgnoreCase("Health")) {
-                    str = SXAttribute.getDf().format(player.getHealth());
                 } else if (string.equalsIgnoreCase("value")) {
                     str = SXAttribute.getDf().format(data.getValue());
                 } else {
                     for (SubAttribute attribute : data.getAttributeMap().values()) {
-                        str = attribute.getPlaceholder(string);
+                        str = attribute.getPlaceholder(player, string);
                         if (str != null) break;
                     }
                 }

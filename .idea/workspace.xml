@@ -8,208 +8,200 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe2977b6-118c-4a45-b021-ff9703e19422" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionReturnType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/SimpleDateFormatUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Saukiya.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Saukiya.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/constant-values.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/SXAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.AdvancedBarChart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.AdvancedPie.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.CustomChart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.DrilldownPie.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.MultiLineChart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SimpleBarChart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SimplePie.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SingleLineChart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/CommandList.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/MainCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/SenderType.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/SubCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/AttributeListCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/ConditionListCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/GiveCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/NBTCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/ReloadCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/RepairCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/SaveCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/SellCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/StatsCommand.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/BossBarData.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/ItemDataManager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/NameData.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RandomStringManager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RegisterSlot.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RegisterSlotManager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/AttributeMap.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeManager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.Type.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/CritAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/HitRateAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/RealAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/DodgeAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/ConditionMap.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionManager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.Type.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/HandCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/RoleCondition.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/EventData.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/StatsUpdateType.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/UpdateStatsEvent.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/DisplaySlotInventory.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/RepairInventory.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/SellInventory.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/StatsInventory.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnBanShieldInteractListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnDamageListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnExpChangeListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnInventoryClickListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnInventoryCloseListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnItemDurabilityListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnItemSpawnListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnSXExpChangeListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnUpdateStatsListener.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Config.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/ItemUtil.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Message.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/MoneyUtil.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Placeholders.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/help-doc.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-10.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-11.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-12.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-13.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-14.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-15.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-16.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-17.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-18.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-19.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-20.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-4.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-5.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-6.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-7.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-8.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-9.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/overview-frame.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/overview-summary.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/package-list" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/allclasses-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/deprecated-list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/SXAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/SXAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/api/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.AdvancedBarChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.AdvancedBarChart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.AdvancedPie.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.AdvancedPie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.CustomChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.CustomChart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.DrilldownPie.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.DrilldownPie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.MultiLineChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.MultiLineChart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SimpleBarChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SimpleBarChart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SimplePie.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SimplePie.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SingleLineChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.SingleLineChart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/Metrics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/bstats/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/CommandList.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/CommandList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/MainCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/MainCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/SenderType.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/SenderType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/SubCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/SubCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/AttributeListCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/AttributeListCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/ConditionListCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/ConditionListCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/GiveCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/GiveCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/NBTCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/NBTCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/ReloadCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/ReloadCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/RepairCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/RepairCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/SaveCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/SaveCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/SellCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/SellCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/StatsCommand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/StatsCommand.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/command/sub/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/BossBarData.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/BossBarData.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/ItemDataManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/ItemDataManager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/NameData.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/NameData.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RandomStringManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RandomStringManager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RegisterSlot.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RegisterSlot.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RegisterSlotManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/RegisterSlotManager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/AttributeMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/AttributeMap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeManager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.Type.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.Type.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/CritAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/CritAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/HitRateAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/HitRateAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/RealAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/RealAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/damage/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/DodgeAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/DodgeAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/defence/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/other/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/attribute/sub/update/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/ConditionMap.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/ConditionMap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionManager.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionManager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionReturnType.Type.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionReturnType.Type.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionReturnType.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionReturnType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.Type.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.Type.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/HandCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/HandCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/RoleCondition.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/RoleCondition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/condition/sub/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/EventData.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/EventData.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/eventdata/sub/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/data/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/StatsUpdateType.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/StatsUpdateType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/UpdateStatsEvent.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/UpdateStatsEvent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/event/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/DisplaySlotInventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/DisplaySlotInventory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/RepairInventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/RepairInventory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/SellInventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/SellInventory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/StatsInventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/StatsInventory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/inventory/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnBanShieldInteractListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnBanShieldInteractListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnDamageListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnDamageListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnInventoryClickListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnInventoryClickListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnInventoryCloseListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnInventoryCloseListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnItemDurabilityListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnItemDurabilityListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnItemSpawnListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnItemSpawnListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnUpdateStatsListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/OnUpdateStatsListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/listener/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Config.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Config.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/ItemUtil.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/ItemUtil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Message.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Message.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/MoneyUtil.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/MoneyUtil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Placeholders.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/Placeholders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/SimpleDateFormatUtils.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/SimpleDateFormatUtils.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/github/saukiya/sxattribute/util/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-10.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-12.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-13.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-14.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-14.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-15.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-16.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-17.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-18.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-18.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-19.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-19.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-20.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-20.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-8.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-9.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/overview-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/overview-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/overview-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SenderType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SenderType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/NBTCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/NBTCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ReloadCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ReloadCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/RepairCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/RepairCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SellCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SellCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/BossBarData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/BossBarData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/AttributeMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/AttributeMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" afterDir="false" />
@@ -234,25 +226,24 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionReturnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionReturnType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/HandCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/HandCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/inventory/StatsInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/inventory/StatsInventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnExpChangeListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnInventoryClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnInventoryClickListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnItemDurabilityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/DurabilityCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnMythicmobsSpawnListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnSXExpChangeListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnUpdateStatsListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnUpdateStatsListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
@@ -282,11 +273,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PoisonAttribute.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java">
+      <file leaf-file-name="DurabilityCondition.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/DurabilityCondition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="30" column="50" lean-forward="true" selection-start-line="30" selection-start-column="50" selection-end-line="32" selection-end-column="74" />
+            <state relative-caret-position="2300">
+              <caret line="139" column="83" selection-start-line="139" selection-start-column="83" selection-end-line="139" selection-end-column="83" />
             </state>
           </provider>
         </entry>
@@ -294,8 +285,44 @@
       <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="211" column="93" lean-forward="true" selection-start-line="211" selection-start-column="93" selection-end-line="212" selection-end-column="93" />
+            <state relative-caret-position="264">
+              <caret line="402" column="19" selection-start-line="402" selection-start-column="19" selection-end-line="402" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubAttribute.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="153" column="7" lean-forward="true" selection-start-line="153" selection-start-column="7" selection-end-line="153" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Config.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="420" column="65" selection-start-line="420" selection-start-column="65" selection-end-line="420" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoleCondition.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="25" column="93" selection-start-line="25" selection-start-column="76" selection-end-line="25" selection-end-column="93" />
             </state>
           </provider>
         </entry>
@@ -311,18 +338,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>SXAttribute.getPlugin().getName()</find>
-      <find>JavaPlugin plugin,</find>
-      <find>SXAttribute.getPlugin()</find>
-      <find>callEvent</find>
-      <find>速度</find>
-      <find>getItem</find>
-      <find>\n</find>
-      <find>CUSTOM</find>
-      <find>public static void m</find>
-      <find>/n</find>
-      <find>[\d{4}]+/+[\d{2}]+[/]+[\d{2}]+ [\d{2}]+:+[\d{2}]</find>
-      <find>\d+/+\d+/+\d+ +\d+:+\d+</find>
       <find>\d{4}+*+\d{2}+/+\d{2}+ +\d{2}+:+\d{2}</find>
       <find>\d{4}+[^\d]+\d{2}+[^\d]+\d{2}+[^\d]+\d{2}+[^\d]+\d{2}</find>
       <find>ft</find>
@@ -341,6 +356,18 @@
       <find>System.out.pr</find>
       <find>[]</find>
       <find>loadAttribute</find>
+      <find>sender.spigot</find>
+      <find>getPlaceholder(String string)</find>
+      <find>health</find>
+      <find>lastHealthlastHealth</find>
+      <find>lastHealth</find>
+      <find>bonusHealth</find>
+      <find>Health</find>
+      <find>add</find>
+      <find>Durability</find>
+      <find>public static void m</find>
+      <find>strip</find>
+      <find>ClearItem</find>
     </findStrings>
     <replaceStrings>
       <replace>super(</replace>
@@ -351,6 +378,8 @@
       <replace>SXAttribute.getPluginName()</replace>
       <replace>/n</replace>
       <replace />
+      <replace>((Player) sender).spigot</replace>
+      <replace>getPlaceholder(Player player, String string)</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -359,57 +388,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/PlayerEventData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/EventData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/TearingAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/DataUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/RandomStringManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ReloadCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/SimpleDateFormatUtils.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/inventory/StatsInventory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/ItemUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/RepairCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SellCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/BossBarData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionReturnType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/HandCondition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnUpdateStatsListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnExpChangeListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnMythicmobsSpawnListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/AttributeMap.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/ConditionListCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/ExpAdditionAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DodgeAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/RealAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/CritAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/HitRateAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/inventory/StatsInventory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnItemDurabilityListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OnItemDurabilityListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnInventoryClickListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/DurabilityCondition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java" />
+        <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" />
       </list>
     </option>
   </component>
@@ -438,7 +467,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="width" value="960" />
     <option name="height" value="1040" />
   </component>
@@ -448,12 +477,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
               <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SX-Attribute" type="462c0819:PsiDirectoryNode" />
+              <item name="libs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SX-Attribute" type="b2602c69:ProjectViewProjectNode" />
@@ -686,7 +721,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -697,7 +731,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="sx-attribute" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ColeopteraSkinManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -760,6 +794,17 @@
         </pattern>
       </extension>
     </configuration>
+    <configuration name="SubAttribute" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="github.saukiya.sxattribute.data.attribute.SubAttribute" />
+      <module name="SX-Attribute" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="github.saukiya.sxattribute.data.attribute.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -805,10 +850,12 @@
       <item itemvalue="Application.DamageEventData" />
       <item itemvalue="Application.Placeholders" />
       <item itemvalue="Application.SXAttributeManager" />
+      <item itemvalue="Application.SubAttribute" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.SXAttributeManager" />
+        <item itemvalue="Application.SubAttribute" />
         <item itemvalue="Application.Placeholders" />
         <item itemvalue="Application.DamageEventData" />
       </list>
@@ -874,14 +921,29 @@
       <workItem from="1535251089325" duration="7097000" />
       <workItem from="1535280352521" duration="148000" />
       <workItem from="1535284087611" duration="819000" />
+      <workItem from="1535335297915" duration="1799000" />
+      <workItem from="1535337879163" duration="31000" />
+      <workItem from="1535341209736" duration="297000" />
+      <workItem from="1535341708496" duration="177000" />
+      <workItem from="1535349612803" duration="10992000" />
+      <workItem from="1535367759968" duration="1226000" />
+      <workItem from="1535430778729" duration="431000" />
+      <workItem from="1535431511788" duration="3221000" />
+      <workItem from="1535435670152" duration="2718000" />
+      <workItem from="1535443879009" duration="993000" />
+      <workItem from="1535535491086" duration="2593000" />
+      <workItem from="1535615823860" duration="33000" />
+      <workItem from="1535621503323" duration="4609000" />
+      <workItem from="1535865258017" duration="370000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103883000" />
+    <option name="totallyTimeSpent" value="133373000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="960" height="1040" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -889,15 +951,16 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" weight="0.42857143" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.21481876" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2780807" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2780807" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.39333335" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30703625" />
       <window_info anchor="right" id="Database" order="3" weight="0.32995737" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -906,41 +969,40 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Messages" order="7" visible="true" weight="0.3217012" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3217012" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3293348" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2780807" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2595949" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
+      <window_info anchor="right" id="Database" order="6" weight="0.32995737" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
       <window_info id="Capture Tool" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32852387" />
-      <window_info anchor="right" id="Maven Projects" order="8" weight="0.1705757" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.3217012" />
+      <window_info anchor="right" id="Maven Projects" order="8" weight="0.42857143" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15405117" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -954,7 +1016,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java</url>
-          <line>218</line>
+          <line>215</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
@@ -967,368 +1029,385 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/DisplaySlotCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="25" column="50" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
+        <state relative-caret-position="420">
+          <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SellCommand.java">
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="26" column="61" lean-forward="true" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/MainCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="62" column="53" selection-start-line="62" selection-start-column="53" selection-end-line="62" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/SubCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1229">
-          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2063#2064#0" expanded="true" />
-            <element signature="e#2090#2091#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="40">
+          <caret line="2" column="14" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/MoneyUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="27" column="24" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
+        <state relative-caret-position="80">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/manager/AttributeManager.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+        <state relative-caret-position="197">
+          <caret line="28" column="47" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DodgeAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="17" column="90" lean-forward="true" selection-start-line="17" selection-start-column="90" selection-end-line="17" selection-end-column="90" />
+        <state relative-caret-position="398">
+          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/event/EventPriority.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LightningAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+        <state relative-caret-position="198">
+          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/BlockAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="827">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="138">
+          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/Server.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/lang/Iterable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="86" column="77" lean-forward="true" selection-start-line="86" selection-start-column="77" selection-end-line="86" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/util/Collection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="143" column="40" selection-start-line="143" selection-start-column="39" selection-end-line="143" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/Bukkit.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="79" column="19" lean-forward="true" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/entity/Damageable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/entity/HumanEntity.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/attribute/Attributable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/entity/Player.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="239" column="9" selection-start-line="239" selection-start-column="9" selection-end-line="239" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/attribute/AttributeInstance.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthRegenAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="56" column="21" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/boss/BossBar.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="31" column="11" selection-start-line="31" selection-start-column="11" selection-end-line="31" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionReturnType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="47" column="22" lean-forward="true" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="23" column="90" lean-forward="true" selection-start-line="23" selection-start-column="90" selection-end-line="23" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-140">
-          <caret line="14" selection-start-line="14" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnHealthChangeDisplayListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="165" column="59" selection-start-line="165" selection-start-column="59" selection-end-line="165" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/BossBarData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="26" column="1" lean-forward="true" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-87">
-          <caret line="136" column="32" lean-forward="true" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/ExpiryTimeCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="33" column="31" lean-forward="true" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/HandCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/LimitLevelCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/MainHandCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/OffHandCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="57" column="60" selection-start-line="57" selection-start-column="60" selection-end-line="57" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/event/player/PlayerJoinEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/AttackSpeedCondition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="95" column="70" lean-forward="true" selection-start-line="95" selection-start-column="70" selection-end-line="95" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/AttributeMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnMythicmobsDropOrSpawnListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-620">
-          <caret line="33" column="56" lean-forward="true" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnUpdateStatsListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="166" column="47" selection-start-line="166" selection-start-column="47" selection-end-line="166" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/event/Event.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="211" column="93" lean-forward="true" selection-start-line="211" selection-start-column="93" selection-end-line="212" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/update/SpeedAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="47" column="58" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="827">
-          <caret line="332" column="59" selection-start-line="332" selection-start-column="59" selection-end-line="332" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="262" column="7" selection-start-line="262" selection-start-column="7" selection-end-line="262" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/SaveCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/DamageAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="41" column="50" lean-forward="true" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
+        <state relative-caret-position="277">
+          <caret line="45" column="37" lean-forward="true" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/PoisonAttribute.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/RealAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="30" column="50" lean-forward="true" selection-start-line="30" selection-start-column="50" selection-end-line="32" selection-end-column="74" />
+        <state relative-caret-position="198">
+          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/SlownessAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/BlindnessAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="57" column="33" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/CritAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ReflectionAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="940">
+          <caret line="64" column="33" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Placeholders.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/spigotmc/SpigotConfig.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/ToughnessAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/command/sub/AttributeListCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="51" column="90" selection-start-line="51" selection-start-column="90" selection-end-line="51" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/IgnitionAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/WitherAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/inventory/StatsInventory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/HitRateAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/api/player/PlayerData.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/api/player/PlayerCombos.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="48" column="5" lean-forward="true" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/api/player/PlayerSkillBar.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/api/player/PlayerSkill.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/SkillAPI.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="321" column="29" selection-start-line="321" selection-start-column="29" selection-end-line="321" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/api/player/PlayerAccounts.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="94" column="59" lean-forward="true" selection-start-line="94" selection-start-column="59" selection-end-line="94" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/com/sucy/skill/api/player/PlayerClass.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="86" column="29" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="109" column="29" lean-forward="true" selection-start-line="109" selection-start-column="29" selection-end-line="109" selection-end-column="29" />
+          <folding>
+            <element signature="e#2868#2869#0" expanded="true" />
+            <element signature="e#2904#2905#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/org/bukkit/event/player/PlayerItemDamageEvent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/DefenseAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="51" column="59" lean-forward="true" selection-start-line="51" selection-start-column="59" selection-end-line="51" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/defence/HealthAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+          <folding>
+            <element signature="e#2749#2750#0" expanded="true" />
+            <element signature="e#2808#2809#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/ItemDataManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="556" column="43" lean-forward="true" selection-start-line="556" selection-start-column="43" selection-end-line="556" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnInventoryClickListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="104" column="61" selection-start-line="104" selection-start-column="61" selection-end-line="104" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="65" column="52" lean-forward="true" selection-start-line="65" selection-start-column="52" selection-end-line="65" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="160" column="34" selection-start-line="160" selection-start-column="34" selection-end-line="160" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="2131" column="19" selection-start-line="2131" selection-start-column="19" selection-end-line="2131" selection-end-column="19" />
+          <folding>
+            <element signature="e#82971#82972#0" expanded="true" />
+            <element signature="e#83020#83021#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="327" column="16" selection-start-line="327" selection-start-column="16" selection-end-line="327" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnUpdateStatsListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="54" column="52" lean-forward="true" selection-start-line="54" selection-start-column="52" selection-end-line="64" selection-end-column="40" />
+          <folding>
+            <element signature="e#1687#2139#0" expanded="true" />
+            <element signature="e#2138#2139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1">
+          <caret line="50" column="34" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/api/SXAttributeAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="272" column="7" lean-forward="true" selection-start-line="272" selection-start-column="7" selection-end-line="272" selection-end-column="7" />
+          <folding>
+            <element signature="e#7008#7009#0" expanded="true" />
+            <element signature="e#7078#7079#0" expanded="true" />
+            <element signature="e#7242#7243#0" expanded="true" />
+            <element signature="e#7315#7316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/RoleCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="25" column="93" selection-start-line="25" selection-start-column="76" selection-end-line="25" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/condition/sub/DurabilityCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2300">
+          <caret line="139" column="83" selection-start-line="139" selection-start-column="83" selection-end-line="139" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="420" column="65" selection-start-line="420" selection-start-column="65" selection-end-line="420" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/util/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="402" column="19" selection-start-line="402" selection-start-column="19" selection-end-line="402" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="153" column="7" lean-forward="true" selection-start-line="153" selection-start-column="7" selection-end-line="153" selection-end-column="7" />
         </state>
       </provider>
     </entry>

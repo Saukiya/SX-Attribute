@@ -36,7 +36,7 @@ public class ConditionListCommand extends SubCommand {
                     List<String> list = new ArrayList<>();
                     list.add("&bConditionType: ");
                     Arrays.stream(entry.getValue().getType()).map(type -> "&7- " + type.getType() + " &8(&7" + type.getName() + "&8)").forEach(list::add);
-                    Message.sendCommandToPlayer((Player) sender, message, null, list);
+                    ((Player) sender).spigot().sendMessage(Message.getTextComponent(message, null, list));
                 } else {
                     sender.sendMessage(message);
                 }
