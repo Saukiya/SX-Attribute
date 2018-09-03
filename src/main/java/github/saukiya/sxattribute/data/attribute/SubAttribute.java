@@ -188,7 +188,7 @@ public abstract class SubAttribute {
     /**
      * 获取准确的属性
      *
-     * @return Double[] 属性值组
+     * @return double[] 属性值组
      */
     public double[] getAttributes() {
         return doubles;

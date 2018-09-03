@@ -10,6 +10,7 @@
 <a href="#tutorial">详细教程</a>&nbsp;&nbsp;
 <a href="#downloads">下载</a>&nbsp;&nbsp;
 <a href="#development">开发</a>&nbsp;&nbsp;
+[JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)&nbsp;&nbsp;
 <a href="#license">开源条款</a>
 </h5>
   <br>
@@ -23,7 +24,7 @@
 插件简介
 --------
 
-* SX-Attribute是一款强大的 RPG属性插件，它可以为你的服务器提供 34+属性标签，通过随机算法而诞生的品质系统、物品关联职业系统是本插件最大特色。
+* SX-Attribute是一款强大的 RPG属性插件，它可以为你的服务器提供 34+属性标签，并且支持外部扩展属性、条件标签，通过随机算法而诞生的品质系统、物品关联职业系统是本插件最大特色。
 * 其次，可以设置每个武器的攻击速度，配合1.9新特性，战斗中可显示触发效果面板，能让玩家感受到更多的战斗乐趣。并且可以通过权限(职业)、主副手来限制使用它，异步计算属性数据以减少主线程负担，长期的改善减少了大量的bug，并且支持 RPGInventory 装备识别、 Mythicmobs 穿戴及掉落。希望你会喜欢。
 * [MCBBS](http://www.mcbbs.net/thread-793362-1-1.html)
 
