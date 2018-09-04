@@ -176,21 +176,21 @@
 * 可选前置: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) / [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays) / [MythicMobs](https://www.spigotmc.org/resources/%E2%9A%94-mythicmobs-%E2%96%BAthe-1-custom-mob-creator%E2%97%84.5702/) / [RPGInventory](https://www.spigotmc.org/resources/rpg-inventory-premium-now-without-bugs-d-1-7-10-1-12-x.12498/) / [SkillAPI](https://www.spigotmc.org/resources/skillapi.4824/)
 * 插件作者: [Saukiya](https://github.com/Saukiya)
 * 相关附属: 
- * [SX-Level](http://www.mcbbs.net/thread-801326-1-1.html) - 一个等级控制系统插件，可以根据权限控制玩家的最大等级
- * [SX-Resource](http://www.mcbbs.net/thread-810267-1-1.html) - RPG额外材质包，只需要高清修复mod，即可修改武器饰品外观
+  * [SX-Level](http://www.mcbbs.net/thread-801326-1-1.html) - 一个等级控制系统插件，可以根据权限控制玩家的最大等级
+  * [SX-Resource](http://www.mcbbs.net/thread-810267-1-1.html) - RPG额外材质包，只需要高清修复mod，即可修改武器饰品外观
 * 相关资料: 
- * [暗黑机制模板](http://www.mcbbs.net/thread-816644-1-1.html) - 参考暗黑破坏神装备生成机制编写的随机物品模板
+  * [暗黑机制模板](http://www.mcbbs.net/thread-816644-1-1.html) - 参考暗黑破坏神装备生成机制编写的随机物品模板
 <br>
 
 <a name="development"></a>
 ## 开发文档 Development
 
- * [开发总览](./markdown/api/overview.md)
- * [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)
- * [注册属性](./markdown/api/attribute.md)
- * [注册条件](./markdown/api/condition.md)
- * [事件监听](./markdown/api/events.md)
- * [API使用](./markdown/api/api.md)
+* [开发总览](./markdown/api/overview.md)
+* [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html) - [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+* [注册属性](./markdown/api/attribute.md)
+* [注册条件](./markdown/api/condition.md)
+* [事件监听](./markdown/api/events.md)
+
 
 <br>
 
