@@ -21,8 +21,7 @@
 </h1>
 
 <a name="introduction"></a>
-插件简介
---------
+## 插件简介
 
 * SX-Attribute是一款强大的 RPG属性插件，它可以为你的服务器提供 34+属性标签，通过随机算法而诞生的品质系统、物品关联职业系统是本插件最大特色。
 * 其次，可以设置每个武器的攻击速度，配合1.9新特性，战斗中可显示触发效果面板，能让玩家感受到更多的战斗乐趣。并且可以通过权限(职业)、主副手来限制使用它，异步计算属性数据以减少主线程负担，长期的改善减少了大量的bug，并且支持 RPGInventory 装备识别、 Mythicmobs 穿戴及掉落、SkillAPI血量兼容。希望你会喜欢。
@@ -33,8 +32,7 @@
 <br>
 
 <a name="features"></a>
-插件特点
---------
+## 插件特点
 
 * 多达 34+种属性标签，可直接在任何物品lore内生效
 * 可以将 全部属性 计算为战斗点数，所有属性支持PlaceholderAPI变量
@@ -62,10 +60,10 @@
 <br>
 
 <a name="config"></a>
-基本信息 Essential Information
---------
+## 基本信息 Essential Information
 
 #### 指令 (Command): 
+
 * /sx stats    : 查看属性
 * /sx repair   : 打开修理界面
 * /sx sell     : 打开售出界面
@@ -78,20 +76,24 @@
 * /sx reload   : 重新加载这个插件的配置
 
 #### 权限(Permissions):
+
 * 基本权限: sx-attribute.use
 * 指令权限: sx-attribute.子指令 (例:sx-attribute.stats)
 
-#### 配置 (Config): [点这里查看配置](./markdown/config.md)
+#### 配置 (Config): 
 
-#### 消息配置 (Messages): [点这里查看消息配置](./markdown/messages.md)
+* [点击查看](./markdown/config.md)
+
+#### 语言 (Messages): 
+
+* [点击查看](./markdown/messages.md)
 
 <br>
 
 <a name="tags"></a>
-标签介绍 Tags
---------
+## 标签介绍 Tags
 
-#### 属性标签: Attribute
+#### 属性标签(Attribute): 
 
 * 攻击力 - 基础伤害，包括弓1、剑等，支持最小-最大伤害 例: 攻击力: 200-500 [不支持负数]3
 * PVP攻击力 - 只针对玩家的伤害，支持最小-最大PVP伤害 [不支持负数]
@@ -129,7 +131,7 @@
 * 经验加成 - 提高每次获得的经验值百分比
 * 速度 - 提高移动速度
 
-#### 规则标签: Contidion
+#### 规则标签(Condition): 
 
 * 主手/副手 - 当装备lore中写了只支持主手时，装在副手无法使属性生效
 * 攻击速度 - 主手武器属性 例: 攻击速度: +50% 根据不同武器的默认攻击速度而调整增幅
@@ -145,15 +147,14 @@
 
 #### 注释:
 
-1. 使用弓近战不会使弓的属性生效。
-2. 已造成的意思是攻击-暴击-破甲/防御-反射-格挡后剩余的伤害值。
-3. 除了攻击力、防御力不支持负数以外，其余都支持。在所有属性计算完毕后，最终属性为负数的将会被自动纠正为零。
+* 使用弓近战不会使弓的属性生效。
+* 已造成的意思是攻击-暴击-破甲/防御-反射-格挡后剩余的伤害值。
+* 除了攻击力、防御力不支持负数以外，其余都支持。在所有属性计算完毕后，最终属性都会进行自动纠正。
 
 <br>
 
 <a name="tutorial"></a>
-详细教程 Tutorial
---------
+## 详细教程 Tutorial
 
 #### 随机字符串: [点这里查看随机字符串教程](./markdown/tutorial/random.md)
 
@@ -168,8 +169,7 @@
 <br>
 
 <a name="downloads"></a>
-下载链接 Downloads
---------
+## 下载链接 Downloads
 
 * 插件下载: SX-Attribute -> [SX-Attribute-1.3.6.jar (241.2 KB, 下载记录: 1435 - 18/9/4 ](http://www.mcbbs.net/forum.php?mod=attachment&aid=MTIwNzg2M3w4M2QxNjA0Y3wxNTI5MzYxMTkxfDE1NjE4ODN8NzkzMzYy)
 * 插件版本: V1.3.8 - 18/8/30 18:50
@@ -183,8 +183,8 @@
 <br>
 
 <a name="development"></a>
-开发文档 Development
---------
+## 开发文档 Development
+
  * [开发总览](./markdown/api/overview.md)
  * [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)
  * [注册属性](./markdown/api/attribute.md)
@@ -195,7 +195,6 @@
 <br>
 
 <a name="license"></a>
-开源条款: [GNU/GPL v3](/LICENSE)
---------
+## 开源条款: [GNU/GPL v3](/LICENSE)
 
 <br>
