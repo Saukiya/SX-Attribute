@@ -11,9 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Saukiya
- * @since 2018年6月12日
  */
-
 public class OnInventoryCloseListener implements Listener {
 
     @EventHandler

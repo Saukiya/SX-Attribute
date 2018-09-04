@@ -22,7 +22,6 @@ import java.util.List;
 
 /**
  * @author Saukiya
- * @since 2018年3月16日
  */
 
 public class OnInventoryClickListener implements Listener {

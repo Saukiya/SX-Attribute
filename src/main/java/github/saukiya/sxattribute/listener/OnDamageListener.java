@@ -33,7 +33,6 @@ import java.util.List;
 
 /**
  * @author Saukiya
- * @since 2018年3月25日
  */
 
 public class OnDamageListener implements Listener {
@@ -62,7 +61,6 @@ public class OnDamageListener implements Listener {
             ItemStack item = event.getBow();
             if (item != null && SubCondition.getUnbreakable(item.getItemMeta())) {
                 Bukkit.getPluginManager().callEvent(new PlayerItemDamageEvent((Player) entity, item, 1));
-//                plugin.getDurabilityCondition().takeDurability(entity, item, 1);
             }
         }
     }
@@ -99,13 +97,12 @@ public class OnDamageListener implements Listener {
                 // 主手持弓左键判断
                 if (Material.BOW.equals(mainHand.getType())) {
                     event.setDamage(1);
-                    damagerData = plugin.getAttributeManager().getEntityData(damager, new SXAttributeData());
+                    damagerData = plugin.getAttributeManager().getEntityData(damager, new SXAttributeData[]{null});
                 }
                 if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                     if (damager instanceof Player && !((HumanEntity) damager).getGameMode().equals(GameMode.CREATIVE)) {
                         if (mainHand.getType().getMaxDurability() == 0 || SubCondition.getUnbreakable(mainHand.getItemMeta())) {
                             Bukkit.getPluginManager().callEvent(new PlayerItemDamageEvent((Player) damager, mainHand, 1));
-//                            plugin.getDurabilityCondition().takeDurability(damager, mainHand, 1);
                         }
                     }
                 }
@@ -117,7 +114,7 @@ public class OnDamageListener implements Listener {
 
         DamageEventData damageEventData = new DamageEventData(entity, damager, entityName, damagerName, entityData, damagerData, event);
 
-        //双Map遍历模式
+        //双Map迭代
         Iterator<SubAttribute> damagerIterator = damagerData.getAttributeMap().values().iterator();
         Iterator<SubAttribute> entityIterator = entityData.getAttributeMap().values().iterator();
 

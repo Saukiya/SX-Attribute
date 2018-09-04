@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * @author Saukiya
- * @since 2018年5月3日
  */
 
 public class OnBanShieldInteractListener implements Listener {

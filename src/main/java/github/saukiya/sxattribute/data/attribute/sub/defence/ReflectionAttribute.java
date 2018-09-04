@@ -1,5 +1,7 @@
 package github.saukiya.sxattribute.data.attribute.sub.defence;
 
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableMap;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
@@ -15,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 
 /**
@@ -41,16 +44,11 @@ public class ReflectionAttribute extends SubAttribute {
                     damageEventData.getEffectiveAttributeList().add(this.getName());
                     double damage = damageEventData.getDamage() * getAttributes()[1] / 100;
                     LivingEntity damager = damageEventData.getDamager();
-                    //TODO 测试
-//                    EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getDamager(),
-//                            damageEventData.getEntity(),EntityDamageEvent.DamageCause.CUSTOM,null,null);
-//                            )
-                    EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getEntity(), damager, EntityDamageEvent.DamageCause.CUSTOM, damage);
+                    EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageEventData.getEntity(), damager, EntityDamageEvent.DamageCause.CUSTOM, ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, damage), ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, Functions.constant(-0.0)));
                     Bukkit.getPluginManager().callEvent(event);
                     if (event.isCancelled()) {
                         return;
                     }
-                    double maxHealth = OnHealthChangeDisplayListener.getMaxHealth(damager);
                     damager.playEffect(EntityEffect.HURT);
                     damager.setHealth(damager.getHealth() < event.getFinalDamage() ? 0 : (damager.getHealth() - event.getFinalDamage()));
                     damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__REFLECTION, getDf().format(damage)));

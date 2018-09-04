@@ -12,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author Saukiya
- * @since 2018年6月16日
  */
 
 public class RepairInventory {

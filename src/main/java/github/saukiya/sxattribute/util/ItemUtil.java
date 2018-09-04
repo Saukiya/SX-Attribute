@@ -17,7 +17,6 @@ import java.util.Objects;
 
 /**
  * @author Saukiya
- * @since 2018年3月22日
  */
 
 public class ItemUtil {

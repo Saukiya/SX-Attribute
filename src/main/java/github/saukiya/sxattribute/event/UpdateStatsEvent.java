@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
  * 可以对里面的Items、AttributeData进行修改操作
  *
  * @author Saukiya
- * @since 2018年5月2日
  */
 
 public class UpdateStatsEvent extends Event {

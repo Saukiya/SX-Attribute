@@ -19,9 +19,7 @@ import java.util.*;
  * API 获取方式为 SXAttribute.getApi()
  *
  * @author Saukiya
- * @since 2018年3月25日
  */
-
 public class SXAttributeAPI {
 
     private final Map<UUID, Map<Class<?>, SXAttributeData>> map = new HashMap<>();

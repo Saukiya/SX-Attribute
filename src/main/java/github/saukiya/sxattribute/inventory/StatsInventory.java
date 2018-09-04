@@ -22,7 +22,6 @@ import java.util.UUID;
 
 /**
  * @author Saukiya
- * @since 2018年3月24日
  */
 
 public class StatsInventory {

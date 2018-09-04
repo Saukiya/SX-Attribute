@@ -11,7 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author Saukiya
- * @since 2018年6月12日
  */
 
 public class SellInventory {

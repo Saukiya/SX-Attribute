@@ -278,9 +278,7 @@ public class SXAttributeManager {
         // 计算点数
         data.calculationValue();
         // 生物默认数据
-        if (entity instanceof Player) {
-            data.add(defaultAttributeData);
-        }
+        data.add(defaultAttributeData);
         // 纠正数值
         data.correct();
         return data;

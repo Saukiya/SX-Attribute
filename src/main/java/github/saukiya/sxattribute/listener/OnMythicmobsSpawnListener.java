@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * @author Saukiya
- * @since 2018年5月2日
  */
 
 public class OnMythicmobsSpawnListener implements Listener {
