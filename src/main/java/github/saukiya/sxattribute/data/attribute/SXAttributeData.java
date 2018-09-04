@@ -16,7 +16,6 @@ import java.util.stream.IntStream;
  */
 public class SXAttributeData {
 
-    @Getter
     private double value = 0D;
 
     @Getter
@@ -28,8 +27,8 @@ public class SXAttributeData {
     /**
      * 获取一个属性值
      *
-     * @param attributeName String
-     * @return SubAttribute
+     * @param attributeName 属性名
+     * @return SubAttribute - 没有则返回null
      */
     public SubAttribute getSubAttribute(String attributeName) {
         for (SubAttribute subAttribute : attributeMap.values()) {
@@ -43,7 +42,7 @@ public class SXAttributeData {
     /**
      * 属性生效时，设置为有效
      */
-    public void valid() {
+    void valid() {
         this.valid = true;
     }
 
@@ -57,14 +56,7 @@ public class SXAttributeData {
     public SXAttributeData add(SXAttributeData attributeData) {
         if (attributeData != null && attributeData.isValid()) {
             valid();
-            for (SubAttribute attribute : getAttributeMap().values()) {
-                for (SubAttribute subAttribute : attributeData.getAttributeMap().values()) {
-                    if (attribute.getName().equals(subAttribute.getName())) {
-                        attribute.addAttribute(subAttribute.getAttributes());
-                        break;
-                    }
-                }
-            }
+            getAttributeMap().values().forEach(attribute -> attributeData.getAttributeMap().values().stream().filter(subAttribute -> attribute.getName().equals(subAttribute.getName())).findFirst().ifPresent(subAttribute -> attribute.addAttribute(subAttribute.getAttributes())));
         }
         return this;
     }
@@ -77,14 +69,21 @@ public class SXAttributeData {
     }
 
     /**
-     * getAttribute
-     * 计算成战斗点数
+     * 将属性计算成战斗点数
      *
      * @return double 战斗点数
      */
     public double calculationValue() {
         this.value = 0D;
         getAttributeMap().values().forEach(attribute -> this.value += attribute.getValue());
+        return this.value;
+    }
+
+    /**
+     * 返回战斗点数
+     * @return double
+     */
+    public double getValue() {
         return this.value;
     }
 
@@ -105,11 +104,7 @@ public class SXAttributeData {
      * @return SXAttributeData
      */
     public SXAttributeData loadFromList(List<String> list) {
-        for (String attributeString : list) {
-            for (SubAttribute attribute : getAttributeMap().values()) {
-                attribute.loadFromString(attributeString);
-            }
-        }
+        list.forEach(attributeString -> getAttributeMap().values().forEach(attribute -> attribute.loadFromString(attributeString)));
         return this;
     }
 

@@ -22,6 +22,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
+/**
+ * 耐久标签
+ *
+ * @author Saukiya
+ */
 public class DurabilityCondition extends SubCondition implements Listener {
 
     public DurabilityCondition() {
@@ -33,24 +38,37 @@ public class DurabilityCondition extends SubCondition implements Listener {
         Bukkit.getPluginManager().registerEvents(this, getPlugin());
     }
 
-    private void clearItem(LivingEntity entity, ItemStack item) {
-        EntityEquipment eq = entity.getEquipment();
-        if (eq.getBoots() != null && eq.getBoots().equals(item)) {
+    /**
+     * 低版本清理物品的方式
+     *
+     * @param player Player
+     * @param item ItemStack
+     */
+    private void clearItem(Player player, ItemStack item) {
+        EntityEquipment eq = player.getEquipment();
+        if (item.equals(eq.getBoots())) {
             eq.setBoots(new ItemStack(Material.AIR));
-        } else if (eq.getChestplate() != null && eq.getChestplate().equals(item)) {
+        } else if (item.equals(eq.getChestplate())) {
             eq.setChestplate(new ItemStack(Material.AIR));
-        } else if (eq.getHelmet() != null && eq.getHelmet().equals(item)) {
+        } else if (item.equals(eq.getHelmet())) {
             eq.setHelmet(new ItemStack(Material.AIR));
-        } else if (eq.getLeggings() != null && eq.getLeggings().equals(item)) {
+        } else if (item.equals(eq.getLeggings())) {
             eq.setLeggings(new ItemStack(Material.AIR));
-        } else if (eq.getItemInMainHand() != null && eq.getItemInMainHand().equals(item)) {
+        } else if (item.equals(eq.getItemInMainHand())) {
             eq.setItemInMainHand(new ItemStack(Material.AIR));
-        } else if (eq.getItemInOffHand() != null && eq.getItemInOffHand().equals(item)) {
+        } else if (item.equals(eq.getItemInOffHand())) {
             eq.setItemInOffHand(new ItemStack(Material.AIR));
         }
     }
 
-    private Boolean takeDurability(LivingEntity entity, ItemStack item, int takeDurability) {
+    /**
+     * 扣取物品耐久度
+     * @param player 玩家
+     * @param item 物品
+     * @param takeDurability 扣取值
+     * @return boolean 成功则true 否则false
+     */
+    private boolean takeDurability(Player player, ItemStack item, int takeDurability) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
             ItemMeta meta = item.getItemMeta();
             List<String> loreList = meta.getLore();
@@ -84,29 +102,15 @@ public class DurabilityCondition extends SubCondition implements Listener {
                             // 当耐久为0时物品消失 并取消属性
                             if (SXAttribute.getVersionSplit()[1] > 10) {
                                 item.setAmount(0);
-                                // 重新加载装备属性
-                                if (entity instanceof Player) {
-                                    ((Player) entity).playSound(entity.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
-                                }
+                                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
                             } else {
-                                clearItem(entity, item);
-                                if (entity instanceof Player) {
-                                    ((Player) entity).playSound(entity.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
-                                }
+                                clearItem(player, item);
+                                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1f, 1f);
                             }
+                            updateAllDataAndStats(player);
                             return true;
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                SXAttribute.getApi().updateEquipmentData(entity);
-                                if (entity instanceof Player) {
-                                    SXAttribute.getApi().updateRPGInventoryData((Player) entity);
-                                }
-                                SXAttribute.getApi().updateHandData(entity);
-                                SXAttribute.getApi().updateStats(entity);
-                            }
-                        }.runTaskAsynchronously(getPlugin());
+                        updateAllDataAndStats(player);
                     }
                     // 设定耐久条
                     if (item.getType().getMaxDurability() != 0 && !getUnbreakable(meta)) {
@@ -119,7 +123,22 @@ public class DurabilityCondition extends SubCondition implements Listener {
             }
         }
         return false;
+    }
 
+    /**
+     * 在物品损坏时，更新玩家所有数据
+     * @param player Player
+     */
+    private void updateAllDataAndStats(Player player) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                SXAttribute.getApi().updateEquipmentData(player);
+                SXAttribute.getApi().updateRPGInventoryData(player);
+                SXAttribute.getApi().updateHandData(player);
+                SXAttribute.getApi().updateStats(player);
+            }
+        }.runTaskAsynchronously(getPlugin());
     }
 
     @EventHandler

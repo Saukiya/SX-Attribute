@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 防御
+ * 防御力
  *
  * @author Saukiya
  */

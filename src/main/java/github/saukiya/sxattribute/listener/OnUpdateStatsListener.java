@@ -27,12 +27,12 @@ public class OnUpdateStatsListener implements Listener {
      * @param player   Player
      * @param itemList ItemStack[]
      */
-    public void updateHandData(Player player, ItemStack... itemList) {
+    private void updateHandData(Player player, ItemStack... itemList) {
         if (itemList.length > 0) {
             int i = 0;
             for (ItemStack item : itemList) {
                 if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
-                    i++;
+                    i = i+1;
                 }
             }
             if (i == itemList.length) return;
@@ -51,7 +51,7 @@ public class OnUpdateStatsListener implements Listener {
      *
      * @param player Player
      */
-    public void updateEquipmentData(Player player) {
+    private void updateEquipmentData(Player player) {
         new BukkitRunnable() {
             @Override
             public void run() {

@@ -88,7 +88,7 @@ public class DamageEventData extends EventData {
      * @return Double[]
      */
     public double[] getDamagerAttributeDoubles(String attributeName) {
-        SubAttribute attribute = entityData.getSubAttribute(attributeName);
+        SubAttribute attribute = damagerData.getSubAttribute(attributeName);
         return attribute != null ? attribute.getAttributes() : new double[]{0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D};
     }
 

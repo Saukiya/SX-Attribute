@@ -15,10 +15,6 @@ public class SXConditionReturnType {
      */
     public static final SXConditionReturnType ITEM = new SXConditionReturnType(Type.ITEM);
     /**
-     * 自定义返回类型
-     */
-    public static final SXConditionReturnType OTHER = new SXConditionReturnType(Type.OTHER);
-    /**
      * 跳过此次判断
      */
     public static final SXConditionReturnType NULL = new SXConditionReturnType(Type.NULL);
@@ -57,7 +53,6 @@ public class SXConditionReturnType {
     public enum Type {
         LORE("Lore"),
         ITEM("Item"),
-        OTHER("Other"),
         NULL("Null");
 
         @Getter
