@@ -8,11 +8,11 @@
 <a href="#config">指令配置</a>&nbsp;&nbsp;
 <a href="#tags">标签介绍</a>&nbsp;&nbsp;
 <a href="#tutorial">详细教程</a>&nbsp;&nbsp;
-<a href="#downloads">下载</a>&nbsp;&nbsp;
-<a href="#development">开发</a>&nbsp;&nbsp;
-[JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)&nbsp;&nbsp;
+<a href="#downloads">下载链接</a>&nbsp;&nbsp;
+<a href="#development">开发文档</a>&nbsp;&nbsp;
 <a href="#license">开源条款</a>
 </h5>
+  <h5 align="center">修改日期: 2018/09/04</h5>
   <br>
   <br>
   <br>
@@ -24,8 +24,10 @@
 插件简介
 --------
 
-* SX-Attribute是一款强大的 RPG属性插件，它可以为你的服务器提供 34+属性标签，并且支持外部扩展属性、条件标签，通过随机算法而诞生的品质系统、物品关联职业系统是本插件最大特色。
-* 其次，可以设置每个武器的攻击速度，配合1.9新特性，战斗中可显示触发效果面板，能让玩家感受到更多的战斗乐趣。并且可以通过权限(职业)、主副手来限制使用它，异步计算属性数据以减少主线程负担，长期的改善减少了大量的bug，并且支持 RPGInventory 装备识别、 Mythicmobs 穿戴及掉落。希望你会喜欢。
+* SX-Attribute是一款强大的 RPG属性插件，它可以为你的服务器提供 34+属性标签，通过随机算法而诞生的品质系统、物品关联职业系统是本插件最大特色。
+* 其次，可以设置每个武器的攻击速度，配合1.9新特性，战斗中可显示触发效果面板，能让玩家感受到更多的战斗乐趣。并且可以通过权限(职业)、主副手来限制使用它，异步计算属性数据以减少主线程负担，长期的改善减少了大量的bug，并且支持 RPGInventory 装备识别、 Mythicmobs 穿戴及掉落、SkillAPI血量兼容。希望你会喜欢。
+* 重制后的SX-Attribute 可以外部注册新属性以及新规则标签，并且处理每个标签的优先级，并且能设计出大量的附属。
+(宝石/耐久/排行/魔法/天赋/等等)
 * [MCBBS](http://www.mcbbs.net/thread-793362-1-1.html)
 
 <br>
@@ -34,7 +36,7 @@
 插件特点
 --------
 
-* 多达 34种属性标签，可直接在任何物品lore内生效
+* 多达 34+种属性标签，可直接在任何物品lore内生效
 * 可以将 全部属性 计算为战斗点数，所有属性支持PlaceholderAPI变量
 * 支持主手/副手、职业判定、等级限制使用！
 * 属性同时对怪物生效，可以将设置在Myticmobs怪物的装备中
@@ -60,35 +62,32 @@
 <br>
 
 <a name="config"></a>
-指令配置
+基本信息 Essential Information
 --------
 
-#### 指令:
+#### 指令 (Command): 
+* /sx stats    : 查看属性
+* /sx sell     : 打开售出界面
+* /sx repair   : 打开修理界面
+* /sx give <itemName> [entity] [amount]  : 给予玩家RPG物品
+* /sx save <itemName> : 保存当前的物品到配置文件
+* /sx reload   : 重新加载这个插件的配置
 
-```yml
-/sx stats    : 查看属性
-/sx sell     : 打开售出界面
-/sx repair   : 打开修理界面
-/sx give <itemName> [entity] [amount]  : 给予玩家RPG物品
-/sx save <itemName> : 保存当前的物品到配置文件
-/sx reload   : 重新加载这个插件的配置
+#### 权限(Permissions):
+* 基本权限: sx-attribute.use
+* 指令权限: sx-attribute.子指令 (例:sx-attribute.stats)
 
-使用权限: sx-attribute.use
-指令权限: sx-attribute.子指令 (例:sx-attribute.give)
-```
+#### 配置 (Config): [点这里查看配置](./markdown/config.md)
 
-#### 配置 (config.yml): [点这里查看配置](./markdown/config.md)
-
-#### 消息配置 (messages.yml): [点这里查看消息配置](./markdown/messages.md)
-
+#### 消息配置 (Messages): [点这里查看消息配置](./markdown/messages.md)
 
 <br>
 
 <a name="tags"></a>
-标签介绍
+标签介绍 Tags
 --------
 
-#### 属性标签:
+#### 属性标签: Attribute
 
 * 攻击力 - 基础伤害，包括弓1、剑等，支持最小-最大伤害 例: 攻击力: 200-500 [不支持负数]3
 * PVP攻击力 - 只针对玩家的伤害，支持最小-最大PVP伤害 [不支持负数]
@@ -126,7 +125,7 @@
 * 经验加成 - 提高每次获得的经验值百分比
 * 速度 - 提高移动速度
 
-#### 规则标签:
+#### 规则标签: Contidion
 
 * 主手/副手 - 当装备lore中写了只支持主手时，装在副手无法使属性生效
 * 攻击速度 - 主手武器属性 例: 攻击速度: +50% 根据不同武器的默认攻击速度而调整增幅
@@ -142,14 +141,14 @@
 
 #### 注释:
 
-1. ~~使用弓近战不会使弓的属性生效，副手持弓射箭不会使主手的属性生效，如需增加关闭设置，请在下方回复。~~
+1. 使用弓近战不会使弓的属性生效。
 2. 已造成的意思是攻击-暴击-破甲/防御-反射-格挡后剩余的伤害值。
 3. 除了攻击力、防御力不支持负数以外，其余都支持。在所有属性计算完毕后，最终属性为负数的将会被自动纠正为零。
 
 <br>
 
 <a name="tutorial"></a>
-详细教程
+详细教程 Tutorial
 --------
 
 #### 随机字符串: [点这里查看随机字符串教程](./markdown/tutorial/random.md)
@@ -165,22 +164,29 @@
 <br>
 
 <a name="downloads"></a>
-下载
+下载链接 Downloads
 --------
 
-* 插件下载: SX-Attribute -> [SX-Attribute-1.3.6.jar (231.27 KB, 从上次更新README到现在的下载次数: 1260) ](http://www.mcbbs.net/forum.php?mod=attachment&aid=MTIwNzg2M3w4M2QxNjA0Y3wxNTI5MzYxMTkxfDE1NjE4ODN8NzkzMzYy)
-* 插件版本: V1.3.6 - 2018/08/24 10:42
-* 可选前置: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) / [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays) / [MythicMobs](https://www.spigotmc.org/resources/%E2%9A%94-mythicmobs-%E2%96%BAthe-1-custom-mob-creator%E2%97%84.5702/) / [RPGInventory](https://www.spigotmc.org/resources/rpg-inventory-premium-now-without-bugs-d-1-7-10-1-12-x.12498/)
+* 插件下载: SX-Attribute -> [SX-Attribute-1.3.6.jar (241.2 KB, 下载记录: 1435 - 18/9/4 ](http://www.mcbbs.net/forum.php?mod=attachment&aid=MTIwNzg2M3w4M2QxNjA0Y3wxNTI5MzYxMTkxfDE1NjE4ODN8NzkzMzYy)
+* 插件版本: V1.3.8 - 18/8/30 18:50
+* 可选前置: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) / [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays) / [MythicMobs](https://www.spigotmc.org/resources/%E2%9A%94-mythicmobs-%E2%96%BAthe-1-custom-mob-creator%E2%97%84.5702/) / [RPGInventory](https://www.spigotmc.org/resources/rpg-inventory-premium-now-without-bugs-d-1-7-10-1-12-x.12498/) / [SkillAPI](https://www.spigotmc.org/resources/skillapi.4824/)
 * 插件作者: [Saukiya](https://github.com/Saukiya)
-* 插件源码: [Github](https://github.com/Saukiya/SX-Attribute) GPLv3
-
+* 相关附属: 
+ * [SX-Level](http://www.mcbbs.net/thread-801326-1-1.html) - 一个等级控制系统插件，可以根据权限控制玩家的最大等级
+ * [SX-Resource](http://www.mcbbs.net/thread-810267-1-1.html) - RPG额外材质包，只需要高清修复mod，即可修改武器饰品外观
+* 相关资料: 
+ * [暗黑机制模板](http://www.mcbbs.net/thread-816644-1-1.html) - 参考暗黑破坏神装备生成机制编写的随机物品模板
 <br>
 
 <a name="development"></a>
-开发
+开发文档 Development
 --------
-
-* 开发文档暂时还没有_(:з」∠)_
+ * [开发总览](./markdown/api/overview.md)
+ * [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)
+ * [注册属性](./markdown/api/attribute.md)
+ * [注册条件](./markdown/api/condition.md)
+ * [事件监听](./markdown/api/events.md)
+ * [API使用](./markdown/api/api.md)
 
 <br>
 
