@@ -1,16 +1,11 @@
 ## SX-Attribute 开发 - 开发总览
 
-<br>
-<br>
- 
-### 目录
-
-* [开发总览](./overview.md)
-* [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html) - [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
-* [注册属性](./attribute.md)
-* [注册条件](./condition.md)
-* [事件监听](./events.md)
-* [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+ [开发总览](./overview.md)&nbsp;&nbsp;
+ [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)&nbsp;&nbsp; 
+ [注册属性](./attribute.md)&nbsp;&nbsp; 
+ [注册条件](./condition.md)&nbsp;&nbsp; 
+ [事件监听](./events.md)&nbsp;&nbsp; 
+ [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 <br>
 
