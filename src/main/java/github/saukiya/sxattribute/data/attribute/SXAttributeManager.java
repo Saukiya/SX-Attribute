@@ -10,7 +10,6 @@ import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
-import github.saukiya.sxattribute.event.StatsUpdateType;
 import github.saukiya.sxattribute.event.UpdateStatsEvent;
 import github.saukiya.sxattribute.util.Config;
 import lombok.Getter;
@@ -312,10 +311,12 @@ public class SXAttributeManager {
                         if (item != null && item.getItemMeta().hasLore()) itemList.add(item);
                     }
                 }
-                SXAttributeData data = getItemData(player, SXConditionType.RPG_INVENTORY, itemList.toArray(new ItemStack[0]));
-                Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.RPG_INVENTORY, player, data, itemList.toArray(new ItemStack[0])));
-                if (data != null) {
-                    rpgInventoryMap.put(player.getUniqueId(), data);
+                ItemStack[] items = itemList.toArray(new ItemStack[0]);
+                SXAttributeData attributeData = getItemData(player, SXConditionType.RPG_INVENTORY, items);
+                UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.RPG_INVENTORY, player, attributeData, items);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.getAttributeData() != null) {
+                    rpgInventoryMap.put(player.getUniqueId(), event.getAttributeData());
                 } else {
                     rpgInventoryMap.remove(player.getUniqueId());
                 }
@@ -335,11 +336,12 @@ public class SXAttributeManager {
             }
         }
         // 装备更新
-        ItemStack[] itemList = entity.getEquipment().getArmorContents();
-        SXAttributeData attributeData = getItemData(entity, SXConditionType.EQUIPMENT, itemList);
-        Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.EQUIPMENT, entity, attributeData, itemList));
-        if (attributeData != null) {
-            equipmentMap.put(entity.getUniqueId(), attributeData);
+        ItemStack[] items = entity.getEquipment().getArmorContents();
+        SXAttributeData attributeData = getItemData(entity, SXConditionType.EQUIPMENT, items);
+        UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.EQUIPMENT, entity, attributeData, items);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.getAttributeData() != null) {
+            equipmentMap.put(entity.getUniqueId(), event.getAttributeData());
         } else {
             equipmentMap.remove(entity.getUniqueId());
         }
@@ -364,9 +366,10 @@ public class SXAttributeManager {
             });
             ItemStack[] items = itemList.toArray(new ItemStack[0]);
             SXAttributeData attributeData = getItemData(player, SXConditionType.SLOT, items);
-            Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.SLOT, player, attributeData, items));
-            if (attributeData != null) {
-                slotMap.put(player.getUniqueId(), attributeData);
+            UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.SLOT, player, attributeData, items);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.getAttributeData() != null) {
+                slotMap.put(player.getUniqueId(), event.getAttributeData());
             } else {
                 slotMap.remove(player.getUniqueId());
             }
@@ -384,13 +387,15 @@ public class SXAttributeManager {
         ItemStack offItem = entity.getEquipment().getItemInOffHand();
         ItemStack[] itemArray = {mainItem, null};
         SXAttributeData attributeData = getItemData(entity, SXConditionType.MAIN_HAND, itemArray);
+        mainItem = itemArray[0];
         itemArray[0] = null;
         itemArray[1] = offItem;
         attributeData = attributeData != null ? attributeData.add(getItemData(entity, SXConditionType.OFF_HAND, itemArray)) : getItemData(entity, SXConditionType.OFF_HAND, itemArray);
-        itemArray[1] = mainItem;
-        Bukkit.getPluginManager().callEvent(new UpdateStatsEvent(StatsUpdateType.HAND, entity, attributeData, itemArray));
-        if (attributeData != null) {
-            handMap.put(entity.getUniqueId(), attributeData);
+        itemArray[0] = mainItem;
+        UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.HAND, entity, attributeData, itemArray);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.getAttributeData() != null) {
+            handMap.put(entity.getUniqueId(), event.getAttributeData());
         } else {
             handMap.remove(entity.getUniqueId());
         }

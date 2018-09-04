@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.event;
 
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
+import github.saukiya.sxattribute.data.condition.SXConditionType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.LivingEntity;
@@ -20,7 +21,7 @@ public class UpdateStatsEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     @Getter
-    private final StatsUpdateType type;
+    private final SXConditionType type;
     @Getter
     private final LivingEntity entity;
     @Setter
@@ -30,7 +31,7 @@ public class UpdateStatsEvent extends Event {
     @Getter
     private ItemStack[] items;
 
-    public UpdateStatsEvent(StatsUpdateType type, LivingEntity entity, SXAttributeData attributeData, ItemStack... items) {
+    public UpdateStatsEvent(SXConditionType type, LivingEntity entity, SXAttributeData attributeData, ItemStack... items) {
         this.type = type;
         this.entity = entity;
         this.attributeData = attributeData;
