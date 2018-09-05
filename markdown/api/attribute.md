@@ -180,5 +180,3 @@ public class Plugin extends JavaPlugin implements Listener{
 #### 具体使用方法，可参考SX属性源码:   [Attribute](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
 
 <br>
-<br>
-<br>
