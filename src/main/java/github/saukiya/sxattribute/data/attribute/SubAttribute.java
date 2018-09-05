@@ -77,7 +77,7 @@ public abstract class SubAttribute {
     }
 
     public final boolean containsType(SXAttributeType attributeType) {
-        return Arrays.stream(getAttributes()).anyMatch(d -> d != 0) && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
+        return Arrays.stream(doubles).anyMatch(d -> d != 0) && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
     }
 
     /**

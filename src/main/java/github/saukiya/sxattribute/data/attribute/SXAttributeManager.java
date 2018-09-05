@@ -90,12 +90,7 @@ public class SXAttributeManager {
     }
 
     public void onAttributeEnable() {
-        attributeMap.values().forEach(subAttribute -> {
-            subAttribute.onEnable();
-            if (subAttribute.getAttributes().length == 0) {
-                attributeMap.remove(subAttribute.getPriority());
-            }
-        });
+        attributeMap.values().forEach(SubAttribute::onEnable);
     }
 
 
