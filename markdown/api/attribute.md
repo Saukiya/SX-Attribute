@@ -158,7 +158,9 @@ public class TestAttribute extends SubAttribute {
     }
 }
 ```
+
 * ##### 属性注册方法 - Plugin.java 
+
 ```java
 import org.bukkit.plugin.java.JavaPlugin;
 
