@@ -12,9 +12,9 @@
 ### 基础介绍
 
 * 属性总数据 - [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 所有属性都存储于此处
-* 属性标签 - [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)
-  * 属性类型枚举 - [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html)
-  * 属性执行事件 - [伤害事件(DamageEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html) / [更新事件(UpdateEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html)
+  * 属性标签 - [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)
+    * 属性类型枚举 - [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html)
+    * 属性执行事件 - [伤害事件(DamageEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html) / [更新事件(UpdateEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html)
 * 条件标签 - [SubCondition](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)
   * 条件类型枚举 - [SXConditionType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html)
 
