@@ -11,13 +11,17 @@
 
 ### 介绍
 
-每个属性都会成为
-
+* 每个 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html) 都会成为 [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 的内部对象
+* [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 交给 [SXAttributeManager](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java) 管理
+* 只需要把属性视为单独对象
 
 <br>
 
 ### 创建一个属性类
-首先我们创建一个属性类，测试类为 `TestAttribute` ，然后让他继承 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)，默认需要编写一个构造器和五个方法，你也可以覆盖其他方法
+
+* 首先我们创建一个属性类，测试类为 `TestAttribute` ，然后让他继承 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)，
+* 默认需要编写一个构造器和五个方法，你也可以覆盖其他方法
+* 下面我们进行详细的介绍
 
 #### 属性构造器
 
@@ -32,27 +36,32 @@
     * `SXAttributeType.OTHER` 自定义属性，可以不存数据，也不参与SX内部事件，例如 [MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)
     
 #### 需编写的五个方法
-* eventMethod(EventData eventData) - 事件执行方法:
+
+* `eventMethod(EventData eventData)` - 事件执行方法:
   * EventData 是个抽象类 分为 DamageEventData 和 UpdateEventData
-* getPlaceholder(Player player, String string) - placeholder变量转换方法:
+* `getPlaceholder(Player player, String string)` - placeholder变量转换方法:
   * 检测string并提供相应的变量，无变量则返回null
-* getPlaceholders() - 提供该属性placeholder列表:
-  * 提供你当前的属性变量，可在/sx attributeList 指令中显示
-* loadAttribute(String lore) - 从lore中读取属性:
+* `getPlaceholders()` - 提供该属性placeholder列表:
+  * 提供你当前的属性变量，可在 `/sx attributeList` 指令中显示
+* `loadAttribute(String lore)` - 从lore中读取属性:
   * 判断lore是否为你插件的字符串，是则修改属性并存储
-* getValue() - 将属性转为战斗点数:
+* `getValue()` - 将属性转为战斗点数:
   * 返回属性double数据所转为的战斗点数
   
 #### 可覆盖的各个方法
+
 * onEnable() - 属性注册后<abbr title="代表属性有优先级，并且没被其他属性覆盖">加载成功</abbr>时执行的启动方法
 * onDisable() - SX关闭时执行属性的结束方法
 * correct() - 纠正错误的属性，默认为每个属性的**最终数据**不得低于零
 * introduction() - 简述这个属性的作用，可在/sx attributeList 指令中显示
 
+#### 不可覆盖的方法
+* 
+
 <br>
 
 #### 下面具体代码示范
-* ##### TestAttribute.java 属性实现类
+* ##### 属性实现类 - TestAttribute.java
 
 ```java
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
@@ -122,8 +131,10 @@ public class TestAttribute extends SubAttribute {
     }
 }
 ```
-* ##### 属性注册方法
+* ##### 属性注册方法 - Plugin.java 
 ```java
+import org.bukkit.plugin.java.JavaPlugin;
+
 public class Plugin extends JavaPlugin implements Listener{
     
     // 只允许在插件的onLoad方法中注册及调整属性

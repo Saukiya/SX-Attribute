@@ -11,9 +11,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/markdown/api/attribute.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/api/attribute.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/markdown/api/overview.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/api/overview.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,24 +48,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overview.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="overview.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/markdown/api/overview.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="291">
-                <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+              <first_editor relative-caret-position="320">
+                <caret line="25" column="10" lean-forward="true" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
               </first_editor>
               <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="attribute.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UpdateStatsEvent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="18" column="29" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attribute.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/markdown/api/attribute.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="551">
-                <caret line="128" column="30" lean-forward="true" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
+              <first_editor relative-caret-position="320">
+                <caret line="52" column="54" lean-forward="true" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="54" />
                 <folding>
                   <element signature="imports" expanded="true" />
                   <element signature="e#1110#1111#0" expanded="true" />
@@ -80,20 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SXAttribute.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="90" column="11" lean-forward="true" selection-start-line="90" selection-start-column="11" selection-end-line="90" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SubAttribute.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="88" column="39" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="39" />
+            <state relative-caret-position="320">
+              <caret line="151" column="39" selection-start-line="151" selection-start-column="39" selection-end-line="151" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -205,11 +202,11 @@
         <option value="$PROJECT_DIR$/markdown/documents/papi.md" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/listener/OnDamageListener.java" />
-        <option value="$PROJECT_DIR$/markdown/api/overview.md" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/sub/damage/LifeStealAttribute.java" />
         <option value="$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java" />
         <option value="$PROJECT_DIR$/markdown/api/attribute.md" />
+        <option value="$PROJECT_DIR$/markdown/api/overview.md" />
       </list>
     </option>
   </component>
@@ -748,12 +745,12 @@
       <workItem from="1536043834259" duration="12832000" />
       <workItem from="1536071903990" duration="9064000" />
       <workItem from="1536108005593" duration="8701000" />
-      <workItem from="1536122810736" duration="6902000" />
+      <workItem from="1536122810736" duration="9336000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174106000" />
+    <option name="totallyTimeSpent" value="176540000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -772,7 +769,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21748401" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.21748401" />
       <window_info anchor="right" id="Database" order="3" weight="0.32995737" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -878,13 +875,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="520">
           <caret line="40" selection-start-line="40" selection-end-line="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="33" column="43" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -1185,6 +1175,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="24" column="31" lean-forward="true" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1195,40 +1192,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/api/overview.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="291">
-            <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/SXAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="90" column="11" lean-forward="true" selection-start-line="90" selection-start-column="11" selection-end-line="90" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="88" column="39" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="39" />
+        <state relative-caret-position="320">
+          <caret line="151" column="39" selection-start-line="151" selection-start-column="39" selection-end-line="151" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/markdown/api/attribute.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="551">
-            <caret line="128" column="30" lean-forward="true" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
+          <first_editor relative-caret-position="320">
+            <caret line="52" column="54" lean-forward="true" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="54" />
             <folding>
               <element signature="imports" expanded="true" />
               <element signature="e#1110#1111#0" expanded="true" />
               <element signature="e#1159#1160#0" expanded="true" />
             </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="18" column="29" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markdown/api/overview.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="320">
+            <caret line="25" column="10" lean-forward="true" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
           </first_editor>
           <second_editor />
         </state>
