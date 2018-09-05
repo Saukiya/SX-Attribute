@@ -181,7 +181,7 @@ public abstract class SubAttribute {
      *
      * @param doubles 属性
      */
-    public final void setAttribute(Double... doubles) {
+    public final void setAttributes(Double... doubles) {
         IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] = doubles[i]);
     }
 
@@ -223,7 +223,7 @@ public abstract class SubAttribute {
         String[] args1 = attributeString.split("#");
         if (args1[0].equals(getName())) {
             List<String> list = args1[1].contains("/") ? Arrays.asList(args1[1].split("/")) : Collections.singletonList(args1[1]);
-            setAttribute(list.stream().filter(s -> s.length() > 0).map(Double::valueOf).toArray(Double[]::new));
+            setAttributes(list.stream().filter(s -> s.length() > 0).map(Double::valueOf).toArray(Double[]::new));
         }
     }
 
