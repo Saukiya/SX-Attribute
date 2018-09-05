@@ -15,15 +15,12 @@ import org.bukkit.inventory.ItemStack;
  */
 public class HandCondition extends SubCondition {
 
-    private final SXAttribute plugin;
-
-    public HandCondition(SXAttribute plugin) {
+    public HandCondition() {
         super("Hand", SXConditionType.HAND);
-        this.plugin = plugin;
     }
 
     @Override
     public SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore) {
-        return (Config.getConfig().getStringList(Config.NAME_ARMOR).stream().anyMatch(lore::contains) || !plugin.getRegisterSlotManager().getRegisterSlotMap().values().stream().noneMatch(registerSlot -> lore.contains(registerSlot.getName()))) ? SXConditionReturnType.ITEM : SXConditionReturnType.NULL;
+        return (Config.getConfig().getStringList(Config.NAME_ARMOR).stream().anyMatch(lore::contains) || SXAttribute.getApi().getRegisterSlotMapEntrySet().stream().anyMatch(entry -> lore.contains(entry.getValue().getName()))) ? SXConditionReturnType.ITEM : SXConditionReturnType.NULL;
     }
 }

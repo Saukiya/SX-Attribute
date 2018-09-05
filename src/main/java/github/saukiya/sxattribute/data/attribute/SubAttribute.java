@@ -44,6 +44,13 @@ public abstract class SubAttribute {
     private DecimalFormat df = SXAttribute.getDf();
 
 
+    /**
+     *实现一个属性类
+     *
+     * @param name String 属性名
+     * @param doublesLength int 数组长度
+     * @param attributeTypes SXAttributeType 属性类型
+     */
     public SubAttribute(String name, int doublesLength, SXAttributeType... attributeTypes) {
         this.name = name;
         this.attributeTypes = attributeTypes;
@@ -72,10 +79,21 @@ public abstract class SubAttribute {
         return str.length() == 0 || str.replaceAll("[^.]","").length() > 1 ? "0" : str;
     }
 
+    /**
+     *获取类型
+     *
+     * @return SXAttributeType[]
+     */
     public final SXAttributeType[] getType() {
         return attributeTypes.clone();
     }
 
+    /**
+     *判断属性类型
+     *
+     * @param attributeType SXAttributeType
+     * @return boolean
+     */
     public final boolean containsType(SXAttributeType attributeType) {
         return Arrays.stream(doubles).anyMatch(d -> d != 0) && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
     }

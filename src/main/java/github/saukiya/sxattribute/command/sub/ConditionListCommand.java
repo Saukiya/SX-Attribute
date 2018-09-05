@@ -5,6 +5,7 @@ import github.saukiya.sxattribute.command.SenderType;
 import github.saukiya.sxattribute.command.SubCommand;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.Message;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -36,7 +37,11 @@ public class ConditionListCommand extends SubCommand {
                     List<String> list = new ArrayList<>();
                     list.add("&bConditionType: ");
                     Arrays.stream(entry.getValue().getType()).map(type -> "&7- " + type.getType() + " &8(&7" + type.getName() + "&8)").forEach(list::add);
-                    ((Player) sender).spigot().sendMessage(Message.getTextComponent(message, null, list));
+                    TextComponent tc = Message.getTextComponent(message, null, list);
+                    if (entry.getValue().introduction().size() > 0){
+                        tc.addExtra(Message.getTextComponent("§7 - §8[§cIntroduction§8]", null, entry.getValue().introduction()));
+                    }
+                    ((Player) sender).spigot().sendMessage(tc);
                 } else {
                     sender.sendMessage(message);
                 }

@@ -31,7 +31,6 @@ public class SXAttributeType {
     @Getter
     private Type type;
 
-
     public SXAttributeType(Type type) {
         this.type = type;
         this.name = type.getName();

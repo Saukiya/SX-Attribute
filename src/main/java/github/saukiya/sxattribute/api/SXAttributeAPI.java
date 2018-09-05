@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.api;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.RandomStringManager;
+import github.saukiya.sxattribute.data.RegisterSlot;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
@@ -67,6 +68,16 @@ public class SXAttributeAPI {
      */
     public RandomStringManager getRandomStringManager() {
         return plugin.getRandomStringManager();
+    }
+
+    /**
+     * 获取 RegisterSlotManager 中
+     * map 的 entrySet
+     *
+     * @return RandomStringManager
+     */
+    public Set<Map.Entry<Integer,RegisterSlot>> getRegisterSlotMapEntrySet() {
+        return plugin.getRegisterSlotManager().getRegisterSlotMap().entrySet();
     }
 
     /**

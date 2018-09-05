@@ -43,4 +43,20 @@ public class ExpiryTimeCondition extends SubCondition {
         }
         return SXConditionReturnType.NULL;
     }
+
+    /**
+     * 获取lore内的时间
+     *
+     * @param lore String
+     * @return String
+     */
+    private String getTime(String lore) {
+        String str = lore.replace(Config.getConfig().getString(Config.NAME_EXPIRY_TIME), "").replaceAll("§+[a-z0-9]", "");
+        if (str.contains(": ") || str.contains("： ")) {
+            str = str.replace("： ", ": ");
+            str = str.replace(str.split(":")[0] + ": ", "");
+            return str;
+        }
+        return str;
+    }
 }

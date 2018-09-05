@@ -1,8 +1,8 @@
 package github.saukiya.sxattribute.data.condition;
 
-import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.condition.sub.*;
 import lombok.Getter;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * 条件管理器
@@ -14,10 +14,10 @@ public class SXConditionManager {
     @Getter
     private final ConditionMap conditionMap = SubCondition.conditionMap;
 
-    public SXConditionManager(SXAttribute plugin) {
+    public SXConditionManager(JavaPlugin plugin) {
         new MainHandCondition().registerCondition(plugin);
         new OffHandCondition().registerCondition(plugin);
-        new HandCondition(plugin).registerCondition(plugin);
+        new HandCondition().registerCondition(plugin);
         new LimitLevelCondition().registerCondition(plugin);
         new RoleCondition().registerCondition(plugin);
         new ExpiryTimeCondition().registerCondition(plugin);
@@ -28,7 +28,6 @@ public class SXConditionManager {
     public void onConditionEnable() {
         conditionMap.values().forEach(SubCondition::onEnable);
     }
-
 
     public void onConditionDisable() {
         conditionMap.values().forEach(SubCondition::onDisable);

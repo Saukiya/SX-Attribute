@@ -12,7 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 条件抽象类
@@ -23,7 +25,6 @@ public abstract class SubCondition {
 
     static final ConditionMap conditionMap = new ConditionMap();
 
-    @Getter
     private final String name;
 
     private JavaPlugin plugin = null;
@@ -33,8 +34,8 @@ public abstract class SubCondition {
     /**
      * 实现一个条件类
      *
-     * @param name 名称
-     * @param type 更新类型
+     * @param name String 条件名
+     * @param type SXConditionType[] 条件类型
      */
     public SubCondition(String name, SXConditionType... type) {
         this.name = name;
@@ -44,7 +45,7 @@ public abstract class SubCondition {
     /**
      * 实现一个条件类
      *
-     * @param name 名称
+     * @param name String 条件名
      */
     public SubCondition(String name) {
         this.name = name;
@@ -57,36 +58,14 @@ public abstract class SubCondition {
      * @return String
      */
     public static String getItemName(ItemStack item) {
-        if (item == null) {
-            return "N/A";
-        }
-        if (item.getItemMeta().hasDisplayName()) {
-            return item.getItemMeta().getDisplayName();
-        } else {
-            return item.getType().name();
-        }
-    }
-
-    /**
-     * 获取lore内的中文 (职业)
-     *
-     * @param lore String
-     * @return String
-     */
-    public static String getText(String lore) {
-        String str = lore.replaceAll("[^\u0391-\uFFE5]", "");
-        if (lore.contains(":") || lore.contains("：")) {
-            str = lore.replace("：", ":");
-            str = str.replace(str.split(":")[0] + ":", "").replaceAll("[^\u0391-\uFFE5]", "");
-        }
-        return str;
+        return item == null ? "N/A" : item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().name();
     }
 
     /**
      * 获取物品等级
      *
-     * @param item 物品
-     * @return 没有则为-1
+     * @param item ItemStack
+     * @return int 没有则为-1
      */
     public static int getItemLevel(ItemStack item) {
         if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -99,26 +78,10 @@ public abstract class SubCondition {
      * 获取生物等级
      *
      * @param entity LivingEntity
-     * @return int
+     * @return int 非玩家则为10000
      */
     public static int getLevel(LivingEntity entity) {
         return entity instanceof Player ? SXAttribute.isSxLevel() ? SXLevel.getApi().getPlayerData((Player) entity).getLevel() : ((Player) entity).getLevel() : 10000;
-    }
-
-    /**
-     * 获取lore内的时间
-     *
-     * @param lore String
-     * @return String
-     */
-    protected static String getTime(String lore) {
-        String str = lore.replace(Config.getConfig().getString(Config.NAME_EXPIRY_TIME), "").replaceAll("§+[a-z0-9]", "");
-        if (str.contains(": ") || str.contains("： ")) {
-            str = str.replace("： ", ": ");
-            str = str.replace(str.split(":")[0] + ": ", "");
-            return str;
-        }
-        return str;
     }
 
     /**
@@ -164,11 +127,20 @@ public abstract class SubCondition {
     }
 
     /**
+     * 获取条件名
+     *
+     * @return String
+     */
+    public final String getName() {
+        return name;
+    }
+
+    /**
      * 获取类型
      *
      * @return SXConditionType[]
      */
-    public SXConditionType[] getType() {
+    public final SXConditionType[] getType() {
         return updateTypes.clone();
     }
 
@@ -183,13 +155,13 @@ public abstract class SubCondition {
     public abstract SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore);
 
     /**
-     * 判断类型
+     * 判断条件类型
      *
      * @param type        目标类型
      * @param strContains 是否判断字符串
      * @return boolean
      */
-    public boolean containsType(SXConditionType type, boolean strContains) {
+    public final boolean containsType(SXConditionType type, boolean strContains) {
         return type != null && Arrays.stream(this.updateTypes).anyMatch(updateType -> updateType.equals(SXConditionType.ALL) || (strContains ? type.getName().contains(updateType.getName()) : updateType.equals(type)));
     }
 
@@ -231,11 +203,20 @@ public abstract class SubCondition {
     }
 
     /**
+     * 为条件添加介绍说明
+     *
+     * @return List
+     */
+    public List<String> introduction() {
+        return new ArrayList<>();
+    }
+
+    /**
      * 获取优先级
      *
      * @return int 优先值 -1为关闭
      */
-    public int getPriority() {
+    public final int getPriority() {
         return Config.getConfig().getInt("ConditionPriority." + getName(), -1);
     }
 
@@ -244,7 +225,7 @@ public abstract class SubCondition {
      *
      * @return JavaPlugin
      */
-    public JavaPlugin getPlugin() {
+    public final JavaPlugin getPlugin() {
         return plugin;
     }
 }

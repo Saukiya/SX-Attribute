@@ -161,23 +161,23 @@ public class SXAttributeManager {
     public SXAttributeData getListStats(LivingEntity entity, SXConditionType type, List<String> stringList) {
         SXAttributeData sxAttributeData = new SXAttributeData();
         for (String lore : stringList) {
-            if (lore.contains("§X")) {
-                continue;
-            }
-            for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
-                if (subCondition.containsType(type, true)) {
-                    SXConditionReturnType returnType = subCondition.determine(entity, null, lore);
-                    if (returnType.equals(SXConditionReturnType.ITEM)) {
-                        return null;
-                    } else if (returnType.equals(SXConditionReturnType.LORE)) {
-                        break;
+            lore = lore.split("§X")[0];
+            if (lore.length() > 0) {
+                for (SubCondition subCondition : plugin.getConditionManager().getConditionMap().values()) {
+                    if (subCondition.containsType(type, true)) {
+                        SXConditionReturnType returnType = subCondition.determine(entity, null, lore);
+                        if (returnType.equals(SXConditionReturnType.ITEM)) {
+                            return null;
+                        } else if (returnType.equals(SXConditionReturnType.LORE)) {
+                            break;
+                        }
                     }
                 }
-            }
-            for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
-                if (sxAttribute.loadAttribute(lore)) {
-                    sxAttributeData.valid();
-                    break;
+                for (SubAttribute sxAttribute : sxAttributeData.getAttributeMap().values()) {
+                    if (sxAttribute.loadAttribute(lore)) {
+                        sxAttributeData.valid();
+                        break;
+                    }
                 }
             }
         }

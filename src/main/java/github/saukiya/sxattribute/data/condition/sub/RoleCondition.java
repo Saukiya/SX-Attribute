@@ -28,4 +28,19 @@ public class RoleCondition extends SubCondition {
         }
         return SXConditionReturnType.NULL;
     }
+
+    /**
+     * 获取lore内的中文 (职业)
+     *
+     * @param lore String
+     * @return String 中文
+     */
+    private String getText(String lore) {
+        String str = lore.replaceAll("[^\u0391-\uFFE5]", "");
+        if (lore.contains(":") || lore.contains("：")) {
+            str = lore.replace("：", ":");
+            str = str.replace(str.split(":")[0] + ":", "").replaceAll("[^\u0391-\uFFE5]", "");
+        }
+        return str;
+    }
 }

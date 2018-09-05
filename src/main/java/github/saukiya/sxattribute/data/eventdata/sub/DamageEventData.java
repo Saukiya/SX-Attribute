@@ -71,25 +71,25 @@ public class DamageEventData extends EventData {
     }
 
     /**
-     * 获取被攻击方的属性值
+     * 获取防御方的属性值
      *
      * @param attributeName String
      * @return Double[]
      */
     public double[] getEntityAttributeDoubles(String attributeName) {
         SubAttribute attribute = entityData.getSubAttribute(attributeName);
-        return attribute != null ? attribute.getAttributes() : new double[]{0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D};
+        return attribute != null ? attribute.getAttributes() : new double[12];
     }
 
     /**
-     * 获取被攻击方的属性值
+     * 获取攻击方的属性值
      *
      * @param attributeName String
      * @return Double[]
      */
     public double[] getDamagerAttributeDoubles(String attributeName) {
         SubAttribute attribute = damagerData.getSubAttribute(attributeName);
-        return attribute != null ? attribute.getAttributes() : new double[]{0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D, 0D};
+        return attribute != null ? attribute.getAttributes() : new double[12];
     }
 
     /**
@@ -111,7 +111,7 @@ public class DamageEventData extends EventData {
     }
 
     /**
-     * 获取被攻击方
+     * 获取防御方
      *
      * @return LivingEntity
      */
@@ -129,7 +129,7 @@ public class DamageEventData extends EventData {
     }
 
     /**
-     * 获取被攻击方名字
+     * 获取防御方名字
      *
      * @return String
      */
@@ -166,7 +166,7 @@ public class DamageEventData extends EventData {
     }
 
     /**
-     * 取消该事件
+     * 取消该事件 剩下的属性不会执行方法
      *
      * @param cancelled boolean
      */
