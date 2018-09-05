@@ -4,22 +4,21 @@
  [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)&nbsp;&nbsp; 
  [注册属性](./attribute.md)&nbsp;&nbsp; 
  [注册条件](./condition.md)&nbsp;&nbsp; 
- [事件监听](./events.md)&nbsp;&nbsp; 
  [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 <br>
 
 ### 基础介绍
 
-* 属性管理器 - [SXAttributeManager](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeManager.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java))
-  * 属性数据 - [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java))
-    * 属性标签 - [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java))
-      * 属性类型枚举 - [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java))
-      * 属性执行事件 - <abbr title="伤害事件">[DamageEventData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java))</abbr> / <abbr title="更新事件">[UpdateEventData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java))</abbr>
-* 条件管理器 - [SXConditionManager](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionManager.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java))
-  * 条件标签 - [SubCondition](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java))
-    * 条件类型枚举 - [SXConditionType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java))
-* 属性更新事件 - [UpdateStatsEvent](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/event/UpdateStatsEvent.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java))
+* 属性管理器 - [SXAttributeManager](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeManager.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java))
+  * 属性数据 - [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java))
+    * 属性标签 - [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java))
+      * 属性类型枚举 - *[SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html)*([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java))
+      * 属性执行事件 - <abbr title="伤害事件">[DamageEventData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java))</abbr> / <abbr title="更新事件">[UpdateEventData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java))</abbr>
+* 条件管理器 - [SXConditionManager](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionManager.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java))
+  * 条件标签 - [SubCondition](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java))
+    * 条件类型枚举 - *[SXConditionType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html)*([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java))
+* 属性更新事件 - [UpdateStatsEvent](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/event/UpdateStatsEvent.html)([Code](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/event/UpdateStatsEvent.java))
 
 <br>
 

@@ -156,15 +156,15 @@
 <a name="tutorial"></a>
 ## 详细教程 Tutorial
 
-#### 随机字符串: [点这里查看随机字符串教程](./markdown/tutorial/random.md)
+#### 随机字符串: [点击查看](./markdown/tutorial/random.md)
 
-#### 物品配置: [点这里查看物品配置教程](./markdown/tutorial/idm.md)
+#### 物品配置: [点击查看](./markdown/tutorial/idm.md)
 
-#### MythicMobs 怪物掉落: [点这里查看MM怪物掉落配置教程](./markdown/tutorial/mmdrop.md)
+#### MythicMobs 怪物掉落: [点击查看](./markdown/tutorial/mmdrop.md)
 
-#### MythicMobs 怪物装备: [点这里查看MM怪物装备配置教程](./markdown/tutorial/mmequip.md)
+#### MythicMobs 怪物装备: [点击查看](./markdown/tutorial/mmequip.md)
 
-#### PlaceholderAPI 变量: [点这里查看PAPI变量列表](./markdown/documents/papi.md)
+#### PlaceholderAPI 变量: [点击查看](./markdown/documents/papi.md)
 
 <br>
 
@@ -186,10 +186,10 @@
 ## 开发文档 Development
 
 * [开发总览](./markdown/api/overview.md)
-* [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html) - [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+* [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)
 * [注册属性](./markdown/api/attribute.md)
 * [注册条件](./markdown/api/condition.md)
-* [事件监听](./markdown/api/events.md)
+* [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 
 <br>
