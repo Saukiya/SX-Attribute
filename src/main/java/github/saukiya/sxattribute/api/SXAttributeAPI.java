@@ -50,9 +50,9 @@ public class SXAttributeAPI {
         return attributeData;
     }
 
-    /**
-     * 获取 ItemUtil(NBT反射类)
-     * key值结构为:SX-Attribute-{key}
+        /**
+         * 获取 ItemUtil(NBT反射类)
+         * key值结构为:SX-Attribute-{key}
      *
      * @return ItemUtil
      */
