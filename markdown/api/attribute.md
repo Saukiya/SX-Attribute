@@ -13,11 +13,12 @@
 
 * 每个 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html) 都会成为 [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 的内部对象
 * [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 交给 [SXAttributeManager](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java) 管理
-* 只需要把属性视为单独对象
+* 注意，这不是属性管理器，只是一个单独的对象
+* [源码](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
 
 <br>
 
-### 创建一个属性类
+### 属性实现
 
 * 首先我们创建一个属性类，测试类为 `TestAttribute` ，然后让他继承 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)，
 * 默认需要编写一个构造器和五个方法，你也可以覆盖其他方法
@@ -56,17 +57,33 @@
 
 * `onEnable()` - 属性注册后<abbr title="代表属性有优先级，并且没被其他属性覆盖">加载成功</abbr>时执行的启动方法
 * `onDisable()` - SX关闭时执行属性的结束方法
-* `correct()` - 纠正错误的属性，默认为每个属性的**最终数据**不得低于零
+* `correct()` - 纠正错误的属性，默认为每个属性的<abbr title="代表集合了装备、手持、自定义槽、RPGInventory(如果开启)、API的数据">最终数据</abbr>不得低于零
 * `introduction()` - 简述这个属性的作用，可在 `/sx attributeList` 指令中显示
 
 #### 不可覆盖的方法
-* `getPriority` - 获取属性优先级
+
+* `getName()` - 获取属性名
+* `getPlugin()` - 获取注册该属性的 JavaPlugin
+* `getPriority()` - 获取属性优先级
 * `registerAttribute(JavaPlugin plugin)` - 注册属性，需要在插件的 `onLoad()` 方法中使用
 * `getAttributes()` - 获取属性数组，可以直接修改数值
 * `addAttribute(double[] doubles)` - 增加属性值
-* `setAttributes(Double... doubles)` - 设置物品属性值
-* `loadFromString(String attributeString)` - 从字符串中读取属性 (依据getAttributes())
-* `saveToString()` - 属性转为字符串 (依据getAttributes())
+* `setAttributes(Double... doubles)` - 设置物品属性值，`loadFromString(attributeString)` 用到了此方法
+* `loadFromString(String attributeString)` - 依据 `getAttributes()` 从字符串中读取属性
+* `saveToString()` - 依据 `getAttributes()` 将属性转为字符串
+
+#### 可用的工具方法
+
+* `getFirstPerson()` - 获取第一人称称呼，例如 "**你** 被 Saukiya 点燃了"
+* `probability(double d)`- 判断触发几率 d 如果为100 那么触发几率为100%
+* `getNumber(String lore)` - 获取lore中的有效数字
+* `getDf(String lore)` - 获取lore中的有效数字(唔 非线程安全 目前未收到报错)
+
+#### 属性优先级
+
+* 属性的优先级统一在SX的Config中读取，位于 `AttributePriority.属性名`
+* 属性的处理方式由 1 2 3 ... 根据TreeMap排序，数值越低优先处理
+* SX更新版本后，会替换Config文件并备份
 
 <br>
 
@@ -155,5 +172,11 @@ public class Plugin extends JavaPlugin implements Listener{
     }
     
 }
-
 ```
+<br>
+
+#### 具体使用方法，可参考SX属性源码:   [Attribute](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
+
+<br>
+<br>
+<br>
