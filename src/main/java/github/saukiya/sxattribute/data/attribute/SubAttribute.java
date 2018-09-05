@@ -72,7 +72,7 @@ public abstract class SubAttribute {
         return str.length() == 0 ? "0" : str;
     }
 
-    public SXAttributeType[] getType() {
+    public final SXAttributeType[] getType() {
         return attributeTypes.clone();
     }
 
@@ -181,7 +181,7 @@ public abstract class SubAttribute {
      *
      * @param doubles 属性
      */
-    public void setAttribute(Double... doubles) {
+    public final void setAttribute(Double... doubles) {
         IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] = doubles[i]);
     }
 
@@ -190,7 +190,7 @@ public abstract class SubAttribute {
      *
      * @return double[] 属性值组
      */
-    public double[] getAttributes() {
+    public final double[] getAttributes() {
         return doubles;
     }
 
@@ -199,7 +199,7 @@ public abstract class SubAttribute {
      *
      * @param doubles 属性组
      */
-    public void addAttribute(double[] doubles) {
+    public final void addAttribute(double[] doubles) {
         IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] += doubles[i]);
     }
 
@@ -219,7 +219,7 @@ public abstract class SubAttribute {
      *
      * @param attributeString 字符串
      */
-    public void loadFromString(String attributeString) {
+    public final void loadFromString(String attributeString) {
         String[] args1 = attributeString.split("#");
         if (args1[0].equals(getName())) {
             List<String> list = args1[1].contains("/") ? Arrays.asList(args1[1].split("/")) : Collections.singletonList(args1[1]);
@@ -235,7 +235,7 @@ public abstract class SubAttribute {
      *
      * @return String
      */
-    public String saveToString() {
+    public final String saveToString() {
         if (Arrays.stream(doubles, 0, doubles.length).anyMatch(aDouble -> aDouble != 0D)) {
             return getName() + "#" + IntStream.range(0, doubles.length).mapToObj(i -> String.valueOf(i == doubles.length - 1 ? doubles[i] : doubles[i] + "/")).collect(Collectors.joining());
         }

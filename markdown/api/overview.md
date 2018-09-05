@@ -11,12 +11,12 @@
 
 ### 基础介绍
 
-* 属性总数据 - [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 所有属性都存储于此处
-  * 属性标签 - [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)
-    * 属性类型枚举 - [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html)
-    * 属性执行事件 - [伤害事件(DamageEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html) / [更新事件(UpdateEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html)
-* 条件标签 - [SubCondition](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)
-  * 条件类型枚举 - [SXConditionType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html)
+* 属性总数据 - [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeData.java)) 所有属性都存储于此处
+  * 属性标签 - [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SubAttribute.java))
+    * 属性类型枚举 - [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeType.java))
+    * 属性执行事件 - [伤害事件(DamageEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/DamageEventData.java)) / [更新事件(UpdateEventData)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/eventdata/sub/UpdateEventData.java))
+* 条件标签 - [SubCondition](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java))
+  * 条件类型枚举 - [SXConditionType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SXConditionType.html)([Java](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionType.java))
 
 <br>
 
@@ -29,14 +29,10 @@
   * `SXConditionReturnType.LORE` 跳过当行lore属性读取，进行下一行lore识别
   * `SXConditionReturnType.ITEM` 该物品不符合要求，SXAttributeData 为 null
   * `SXConditionReturnType.NULL` 判断通过，进行下一个条件判断
-  
-  
 * 条件标签判断结束后，并且都为NULL或者空指针，那么遍历属性标签。
 * 执行属性标签的方法 [loadAttribute(String lore)](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html#loadAttribute-java.lang.String-) 会返回如下boolean:
   * `true` 当前lore符合你的属性读取，读取完毕后。修改当前AttributeData为**有效**属性，并进行下一行lore识别
   * `false` 当前lore不符合你的属性读取。进行其他属性标签的识别
-
-  
 * 当物品Lore遍历完后，当AttributeData为**有效**时，添加到总数据中，并使总数据为**有效**，然后遍历下一个物品Lore。
 * 当全部物品遍历完后，则执行事件[UpdateStatsEvent](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/event/UpdateStatsEvent.html)，注意事项:
   * 事件中的 SXAttributeData 初始值可以是 null，原因在于没有得到有效的属性，或者条件判断物品不符合要求
@@ -55,8 +51,6 @@
   * 在射箭后 SX会将攻击方当前的属性绑定到抛射物中
   * 防止攻击方射箭后切换成其他武器，造成微量BUG
   * 攻击方会调整为抛射物的所有者
-
-
 * 当一切数值获取正常后，根据优先级同时遍历双方的 AttributeData，并根据属性类型分配方法
 * 参与方法的只有两种类型: `攻击-SXAttributeType.DAMAGE / 防御-SXAttributeType.DEFENCE`
 * 为攻击方分配`DAMAGE`类型属性方法，为防御方分配`DEFENCE`类型属性方法

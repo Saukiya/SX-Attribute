@@ -27,6 +27,7 @@ public class SXAttributeType {
 
     @Getter
     private String name;
+
     @Getter
     private Type type;
 

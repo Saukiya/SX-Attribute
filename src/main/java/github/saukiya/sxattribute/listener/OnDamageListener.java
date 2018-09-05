@@ -27,9 +27,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Saukiya
@@ -113,6 +111,7 @@ public class OnDamageListener implements Listener {
         String damagerName = plugin.getOnHealthChangeDisplayListener().getEntityName(damager);
 
         DamageEventData damageEventData = new DamageEventData(entity, damager, entityName, damagerName, entityData, damagerData, event);
+
 
         //双Map迭代
         Iterator<SubAttribute> damagerIterator = damagerData.getAttributeMap().values().iterator();
