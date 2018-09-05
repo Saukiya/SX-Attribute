@@ -69,7 +69,7 @@ public abstract class SubAttribute {
      */
     public static String getNumber(String lore) {
         String str = lore.replaceAll("§+[a-z0-9]", "").replaceAll("[^-0-9.]", "");
-        return str.length() == 0 ? "0" : str;
+        return str.length() == 0 || str.replaceAll("[^.]","").length() > 1 ? "0" : str;
     }
 
     public final SXAttributeType[] getType() {
