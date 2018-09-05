@@ -28,17 +28,21 @@
 * `SubAttribute(String name, int doublesLength, SXAttributeType... attributeTypes)`
 * 构造器需要申明:
   * 属性名: 这个属性的简称
-  * 属性长度: 例如暴击(Crit) 内有暴击几率和暴击伤害，那么长度为2 可使用getAttributes()方法调出
+  * 属性长度: 例如 暴击(Crit) 内有暴击几率和暴击伤害，那么 `doublesLength` 为 2 可使用 `getAttributes()` 方法调出属性，默认为0
   * 属性类型: [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html) 具体分为以下四种，可以给属性分配多个 SXAttributeType 用于不同事件
-    * `SXAttributeType.DAMAGE` 攻击型属性，伤害事件中会执行攻击方的Attribute
-    * `SXAttributeType.DEFENCE` 防御型属性，伤害事件中会执行防御方的Attribute
-    * `SXAttributeType.UPDATE` 更新型属性，更新实体(或玩家)的各项数据
-    * `SXAttributeType.OTHER` 自定义属性，可以不存数据，也不参与SX内部事件，例如 [MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)
-    
+    * `SXAttributeType.DAMAGE` 攻击型属性，执行攻击方的 eventMethod - DamageEventData
+    * `SXAttributeType.DEFENCE` 防御型属性，执行防御方的 eventMethod - DamageEventData
+    * `SXAttributeType.UPDATE` 更新型属性，执行实体的 eventMethod - UpdateEventData
+    * `SXAttributeType.OTHER` 自定义属性，可以不存数据，也不参与SX内部事件，例如 <abbr title="一个内部控制 Mythicmobs 掉落的特殊属性">[MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)</abbr>
+* 构造器注意事项:
+  * SXAttributeData 会通过 `class.newInstance()` 的方式实例化一个新属性对象
+  * 所以属性构造器默认不能带成员变量 例如 `new TestAttribute() - 无参数`
+  * 请在构造内部直接用 `super(name, length, attributeType);`
+
 #### 需编写的五个方法
 
 * `eventMethod(EventData eventData)` - 事件执行方法:
-  * EventData 是个抽象类 分为 DamageEventData 和 UpdateEventData
+  * EventData 是个抽象类 分为 `DamageEventData` 和 `UpdateEventData`
 * `getPlaceholder(Player player, String string)` - placeholder变量转换方法:
   * 检测string并提供相应的变量，无变量则返回null
 * `getPlaceholders()` - 提供该属性placeholder列表:
@@ -50,13 +54,19 @@
   
 #### 可覆盖的各个方法
 
-* onEnable() - 属性注册后<abbr title="代表属性有优先级，并且没被其他属性覆盖">加载成功</abbr>时执行的启动方法
-* onDisable() - SX关闭时执行属性的结束方法
-* correct() - 纠正错误的属性，默认为每个属性的**最终数据**不得低于零
-* introduction() - 简述这个属性的作用，可在/sx attributeList 指令中显示
+* `onEnable()` - 属性注册后<abbr title="代表属性有优先级，并且没被其他属性覆盖">加载成功</abbr>时执行的启动方法
+* `onDisable()` - SX关闭时执行属性的结束方法
+* `correct()` - 纠正错误的属性，默认为每个属性的**最终数据**不得低于零
+* `introduction()` - 简述这个属性的作用，可在 `/sx attributeList` 指令中显示
 
 #### 不可覆盖的方法
-* 
+* `getPriority` - 获取属性优先级
+* `registerAttribute(JavaPlugin plugin)` - 注册属性，需要在插件的 `onLoad()` 方法中使用
+* `getAttributes()` - 获取属性数组，可以直接修改数值
+* `addAttribute(double[] doubles)` - 增加属性值
+* `setAttributes(Double... doubles)` - 设置物品属性值
+* `loadFromString(String attributeString)` - 从字符串中读取属性 (依据getAttributes())
+* `saveToString()` - 属性转为字符串 (依据getAttributes())
 
 <br>
 
