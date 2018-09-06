@@ -29,7 +29,7 @@ SubAttribute
 * `SubAttribute(String name, int doublesLength, SXAttributeType... attributeTypes)`
 * 构造器需要申明:
   * 属性名: 这个属性的简称
-  * 属性长度: 例如 暴击(Crit) 内有暴击几率和暴击伤害，那么 `doublesLength` 为 2 可使用 `getAttributes()` 方法调出属性，默认为0
+  * 属性长度: SubAttribute 内置了一个double数组，根据情况采用不同长度，例如暴击(几率/伤害)需要的长度为2
   * 属性类型: [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html) 具体分为以下四种，可以给属性分配多个 SXAttributeType 用于不同事件
     * `SXAttributeType.DAMAGE` 攻击型属性，执行攻击方的 eventMethod - DamageEventData
     * `SXAttributeType.DEFENCE` 防御型属性，执行防御方的 eventMethod - DamageEventData
@@ -117,33 +117,29 @@ public class TestAttribute extends SubAttribute {
         super("TestAttribute", 2, SXAttributeType.DAMAGE);
     }
     
-    //执行事件方法
     @Override
     public void eventMethod(EventData eventData) {
         // Method
     }
 
-    //提供的papi获取属性
     @Override
     public String getPlaceholder(Player player, String string) {
         return string.equalsIgnoreCase("Test1") ? getDf().format(getAttributes()[0]) : 
                 string.equalsIgnoreCase("Test2") ? getDf().format(getAttributes()[1]) : null;
     }
 
-    //提供变量列表 此处Placeholder调用方式为 %sx_Test1% %sx_Test2%
     @Override
     public List<String> getPlaceholders() {
-        return Arrays.as("Test1","Test2");
+        return Arrays.as("Test1","Test2");//此处Placeholder调用方式为 %sx_Test1% %sx_Test2%
     }
 
-    //从lore中加载属性
     @Override
     public boolean loadAttribute(String lore) {
-        if (lore.contains(设定好的检测字符串)) {
+        if (lore.contains(设定好的检测字符串1)) {
             getAttributes()[0] += Double.valueOf(getNumber(lore));
         }
-        else if (lore.contains(设定好的检测字符串)) {
-            getAttributes()[0] += Double.valueOf(getNumber(lore));
+        else if (lore.contains(设定好的检测字符串2)) {
+            getAttributes()[1] += Double.valueOf(getNumber(lore));
         }
         else {
             return false;
@@ -151,11 +147,10 @@ public class TestAttribute extends SubAttribute {
         return true;
     }
 
-    //属性转成战斗点数
     @Override
     public double getValue() {
-        return getAttributes()[0] * (设定好的转换值)
-                + getAttributes()[1] * (设定好的转换值);
+        return getAttributes()[0] * (设定好的转换值1)
+                + getAttributes()[1] * (设定好的转换值2);
     }
     
 }
@@ -165,6 +160,7 @@ public class TestAttribute extends SubAttribute {
 
 ```java
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.Listener;
 
 public class Plugin extends JavaPlugin implements Listener{
     

@@ -88,16 +88,14 @@ import org.bukkit.inventory.ItemStack;
 
 public class TestCondition extends SubCondition {
 
-    //构造器
     public TestCondition() {
         super("Test",SXConditionType.HAND);
     }
 
-
     @Override
     public SXConditionReturnType determine(LivingEntity entity, ItemStack item, String lore) {
         if (判断lore是否符合条件){
-            if (item != null){ /* entity.sendMessage(getItemName(item) + " No Use"); */}
+            if (item != null && entity != null){ /* entity.sendMessage(getItemName(item) + " No Use"); */}
             return SXConditionReturnType.ITEM;
         }
         return SXConditionReturnType.NULL;
@@ -110,6 +108,7 @@ public class TestCondition extends SubCondition {
 
 ```java
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.Listener;
 
 public class Plugin extends JavaPlugin implements Listener{
     
