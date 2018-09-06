@@ -119,7 +119,9 @@ public class TestAttribute extends SubAttribute {
     
     @Override
     public void eventMethod(EventData eventData) {
-        // Method
+        if (eventData instanceof DamageEventData){
+            // Method
+        }
     }
 
     @Override
