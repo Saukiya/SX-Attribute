@@ -6,8 +6,6 @@ import github.saukiya.sxattribute.data.RegisterSlot;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
-import github.saukiya.sxattribute.inventory.RepairInventory;
-import github.saukiya.sxattribute.inventory.SellInventory;
 import github.saukiya.sxattribute.util.ItemUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -330,41 +328,5 @@ public class SXAttributeAPI {
      */
     public Set<String> getItemList() {
         return plugin.getItemDataManager().getItemList();
-    }
-
-    /**
-     * 打开属性界面
-     *
-     * @param player Player
-     */
-    public void openStatsInventory(Player player) {
-        plugin.getStatsInventory().openStatsInventory(player);
-    }
-
-    /**
-     * 打开修复界面
-     *
-     * @param player Player
-     */
-    public void openRepairInventory(Player player) {
-        RepairInventory.openRepairInventory(player);
-    }
-
-    /**
-     * 打开出售界面
-     *
-     * @param player Player
-     */
-    public void openSellInventory(Player player) {
-        SellInventory.openSellInventory(player);
-    }
-
-    /**
-     * 打开显示displaySlot界面
-     *
-     * @param player Player
-     */
-    public void openDisplaySlotInventory(Player player) {
-        plugin.getDisplaySlotInventory().openDisplaySlotInventory(player);
     }
 }

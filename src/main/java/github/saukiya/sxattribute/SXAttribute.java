@@ -10,8 +10,6 @@ import github.saukiya.sxattribute.data.RegisterSlotManager;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SXAttributeManager;
 import github.saukiya.sxattribute.data.condition.SXConditionManager;
-import github.saukiya.sxattribute.inventory.DisplaySlotInventory;
-import github.saukiya.sxattribute.inventory.StatsInventory;
 import github.saukiya.sxattribute.listener.*;
 import github.saukiya.sxattribute.util.*;
 import lombok.Getter;
@@ -50,6 +48,9 @@ public class SXAttribute extends JavaPlugin {
     private static SXAttributeAPI api;
 
     @Getter
+    private static boolean pluginEnabled = false;
+
+    @Getter
     private static boolean placeholder = false;
 
     @Getter
@@ -86,12 +87,6 @@ public class SXAttribute extends JavaPlugin {
     private RegisterSlotManager registerSlotManager;
 
     @Getter
-    private StatsInventory statsInventory;
-
-    @Getter
-    private DisplaySlotInventory displaySlotInventory;
-
-    @Getter
     private OnUpdateStatsListener onUpdateStatsListener;
 
     @Getter
@@ -115,13 +110,14 @@ public class SXAttribute extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cIO Error!");
         }
         sdf = new SimpleDateFormatUtils();
-        mainCommand = new MainCommand(this);
         attributeManager = new SXAttributeManager(this);
         conditionManager = new SXConditionManager(this);
+        mainCommand = new MainCommand(this);
     }
 
     @Override
     public void onEnable() {
+        pluginEnabled = true;
         Long oldTimes = System.currentTimeMillis();
         String version = Bukkit.getBukkitVersion().split("-")[0].replace(" ", "");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "ServerVersion: " + version);
@@ -201,19 +197,16 @@ public class SXAttribute extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + conditionManager.getConditionMap().size() + "§r Condition");
 
         registerSlotManager = new RegisterSlotManager(this);
-        statsInventory = new StatsInventory(this);
-        displaySlotInventory = new DisplaySlotInventory(this);
         onUpdateStatsListener = new OnUpdateStatsListener(this);
         onDamageListener = new OnDamageListener(this);
         onHealthChangeDisplayListener = new OnHealthChangeDisplayListener(this);
         Bukkit.getPluginManager().registerEvents(new OnBanShieldInteractListener(), this);
-        Bukkit.getPluginManager().registerEvents(new OnInventoryClickListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new OnInventoryCloseListener(), this);
         Bukkit.getPluginManager().registerEvents(onUpdateStatsListener, this);
         Bukkit.getPluginManager().registerEvents(onDamageListener, this);
         Bukkit.getPluginManager().registerEvents(onHealthChangeDisplayListener, this);
         Bukkit.getPluginManager().registerEvents(new OnItemSpawnListener(), this);
         mainCommand.setUp("sxAttribute");
+        mainCommand.onCommandEnable();
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load Time: §c" + (System.currentTimeMillis() - oldTimes) + "§r ms");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cAuthor: Saukiya QQ: 1940208750");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cThis plugin was first launched on www.mcbbs.net!");
@@ -224,6 +217,7 @@ public class SXAttribute extends JavaPlugin {
     public void onDisable() {
         attributeManager.onAttributeDisable();
         conditionManager.onConditionDisable();
+        mainCommand.onCommandDisable();
         if (SXAttribute.isHolographic() && onDamageListener.getHologramsList().size() > 0) {
             onDamageListener.getHologramsList().forEach(Hologram::delete);
         }

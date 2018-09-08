@@ -173,19 +173,20 @@ public abstract class SubCondition {
      */
     public final void registerCondition(JavaPlugin plugin) {
         if (plugin == null) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubCondition >> §4" + this.getName() + " §cNull Plugin!");
-            return;
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cCondition >> §4" + this.getName() + " §cNull Plugin!");
         } else if (this.getPriority() < 0) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§8SubCondition >> Disable §4" + this.getName() + " §8!");
-            return;
-        }
-        this.plugin = plugin;
-        if (!conditionMap.containsKey(this.getPriority())) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubCondition >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
+            Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §8Condition >> Disable §4" + this.getName() + " §8!");
+        } else if (SXAttribute.isPluginEnabled()) {
+            Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §cCondition >> §cSXAttribute is Enabled §4" + this.getName() + "§r !");
         } else {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubCondition >> §cThe §4" + this.getName() + " §cCover To §4" + conditionMap.get(this.getPriority()).getName() + "§c !");
+            this.plugin = plugin;
+            SubCondition condition = conditionMap.put(this.getPriority(), this);
+            if (condition == null) {
+                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Condition >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
+            } else {
+                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Condition >> §cThe §4" + this.getName() + " §cCover To §4" + condition.getName() + " §7[§c"+condition.getPlugin().getName()+"§7]§r !");
+            }
         }
-        conditionMap.put(this.getPriority(), this);
     }
 
     /**

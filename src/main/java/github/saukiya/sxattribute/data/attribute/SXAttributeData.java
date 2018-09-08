@@ -75,7 +75,10 @@ public class SXAttributeData {
      */
     public double calculationValue() {
         this.value = 0D;
-        getAttributeMap().values().forEach(attribute -> this.value += attribute.getValue());
+        getAttributeMap().values().forEach(attribute -> {
+            Double temp = attribute.getValue();
+            if (temp != null) this.value += temp;
+        });
         return this.value;
     }
 

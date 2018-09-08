@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.command;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.sub.*;
+import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -45,6 +46,15 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         plugin.getCommand(command).setTabCompleter(this);
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Load §c" + subCommands.size() + "§r Commands");
     }
+
+    public void onCommandEnable() {
+        subCommands.toCollection().forEach(SubCommand::onEnable);
+    }
+
+    public void onCommandDisable() {
+        subCommands.toCollection().forEach(SubCommand::onDisable);
+    }
+
 
     private SenderType getType(CommandSender sender) {
         if (sender instanceof Player) {

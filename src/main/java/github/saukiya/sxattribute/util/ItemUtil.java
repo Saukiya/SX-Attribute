@@ -382,7 +382,7 @@ public class ItemUtil {
      * @param key  String
      * @return Boolean
      */
-    public Boolean isNBT(ItemStack item, String key) {
+    public boolean isNBT(ItemStack item, String key) {
         try {
             Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
             Object itemTag = ((Boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
@@ -391,5 +391,28 @@ public class ItemUtil {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    /**
+     * 清除指定 SX设置的nbt
+     *
+     * @param item ItemStack
+     * @param key String
+     * @return boolean
+     */
+    public boolean removeNBT(ItemStack item, String key) {
+        try {
+            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
+            Object itemTag = ((Boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
+            if ((boolean) xHasKey.invoke(itemTag, plugin.getName() + "-" + key)) {
+                xRemove.invoke(itemTag, plugin.getName() + "-" + key);
+                xSetTag.invoke(nmsItem, itemTag);
+                item.setItemMeta(((ItemStack) xAsBukkitCopy.invoke(xCraftItemStack, nmsItem)).getItemMeta());
+            }
+            return true;
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+            return false;
+        }
     }
 }

@@ -106,23 +106,24 @@ public abstract class SubAttribute {
      */
     public final void registerAttribute(JavaPlugin plugin) {
         if (plugin == null) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubAttribute >> §4" + this.getName() + " §cNull Plugin!");
-            return;
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cAttribute >> §4" + this.getName() + " §cNull Plugin!");
         } else if (this.getPriority() < 0) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§8SubAttribute >> §4" + this.getName() + " §8Disable!");
-            return;
+            Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §8Attribute >> §4" + this.getName() + " §8Disable!");
         } else if (attributeTypes.length == 0) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cSubAttribute >> §4" + this.getName() + " §cNo SXAttributeType!");
-            return;
+            Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §cAttribute >> §4" + this.getName() + " §cNo SXAttributeType!");
+        } else if (SXAttribute.isPluginEnabled()) {
+            Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §cAttribute >> §cSXAttribute is Enabled §4" + this.getName() + "§r !");
+        }else {
+            this.plugin = plugin;
+            SubAttribute attribute = attributeMap.put(this.getPriority(), this);
+            if (attribute == null) {
+                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Attribute >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
+            } else {
+                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Attribute >> The §c" + this.getName() + " §rCover To §c" + attribute.getName() + " §7[§c"+attribute.getPlugin().getName()+"§7]§r !");
+            }
+            attributeMap.put(this.getPriority(), this);
         }
 
-        this.plugin = plugin;
-        if (!attributeMap.containsKey(this.getPriority())) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubAttribute >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
-        } else {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "SubAttribute >> The §c" + this.getName() + " §rCover To §c" + attributeMap.get(this.getPriority()).getName() + "§r !");
-        }
-        attributeMap.put(this.getPriority(), this);
     }
 
     /**
@@ -157,6 +158,7 @@ public abstract class SubAttribute {
         try {
             return this.getClass().newInstance().setPlugin(plugin);
         } catch (InstantiationException | IllegalAccessException e) {
+            Bukkit.getConsoleSender().sendMessage("§r[§c" + plugin.getName() + "§r] Attribute >> §4" + this.getName() + " §cConstructors Error §r!");
             return null;
         }
     }

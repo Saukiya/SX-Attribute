@@ -1,5 +1,9 @@
 package github.saukiya.sxattribute.command;
 
+import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.util.Message;
+import org.bukkit.Bukkit;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,6 +17,7 @@ public class CommandList {
     public void add(SubCommand subCommand) {
         for (Map.Entry<Integer, SubCommand> entry : subCommands.entrySet()) {
             if (entry.getValue().cmd().equalsIgnoreCase(subCommand.cmd())) {
+                Bukkit.getConsoleSender().sendMessage("[" + subCommand.getPlugin().getName() + "] Command>> The §c" + subCommand.cmd() + " §rCover To §c" + entry.getValue().cmd() + " §7[§c"+entry.getValue().getPlugin()+"§7]§r !");
                 subCommands.put(entry.getKey(), subCommand);
                 return;
             }
@@ -22,6 +27,10 @@ public class CommandList {
 
     public int size() {
         return subCommands.size();
+    }
+
+    public boolean contains(SubCommand subCommand){
+        return subCommands.values().stream().anyMatch(cmd -> cmd.cmd().contains(subCommand.cmd()));
     }
 
     public Collection<SubCommand> toCollection() {

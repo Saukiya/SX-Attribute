@@ -3,6 +3,7 @@ package github.saukiya.sxattribute.command;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Message;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,7 +22,7 @@ public abstract class SubCommand {
     static final CommandList subCommands = new CommandList();
 
     @Getter
-    private String pluginName;
+    private JavaPlugin plugin;
 
     private String cmd, arg = "";
 
@@ -75,10 +76,16 @@ public abstract class SubCommand {
      * @param plugin JavaPlugin
      */
     public final void registerCommand(JavaPlugin plugin) {
-        if (plugin != null) {
-            this.pluginName = plugin.getName();
-            subCommands.add(this);
+        if (plugin == null) {
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cCommand >> §4" + this.cmd() + " §cNull Plugin!");
+            return;
         }
+        if (SXAttribute.isPluginEnabled()) {
+            Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §cCommand >> §cSXAttribute is Enabled §4" + this.cmd() + "§r !");
+            return;
+        }
+        this.plugin = plugin;
+        subCommands.add(this);
     }
 
     public String cmd() {
@@ -94,7 +101,7 @@ public abstract class SubCommand {
     }
 
     private String permission() {
-        return pluginName + "." + cmd;
+        return plugin + "." + cmd;
     }
 
     /**
@@ -105,6 +112,21 @@ public abstract class SubCommand {
      * @param args   String[]
      */
     public abstract void onCommand(SXAttribute plugin, CommandSender sender, String[] args);
+
+
+    /**
+     * 指令注册成功后启动时执行的方法
+     */
+    public void onEnable() {
+
+    }
+
+    /**
+     * 指令关闭时执行的方法
+     */
+    public void onDisable() {
+
+    }
 
     /**
      * TAB执行方法
