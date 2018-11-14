@@ -2,11 +2,15 @@ package github.saukiya.sxattribute.util;
 
 import github.saukiya.sxattribute.SXAttribute;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -398,7 +402,7 @@ public class ItemUtil {
      * 清除指定 SX设置的nbt
      *
      * @param item ItemStack
-     * @param key String
+     * @param key  String
      * @return boolean
      */
     public boolean removeNBT(ItemStack item, String key) {
@@ -414,5 +418,77 @@ public class ItemUtil {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
             return false;
         }
+    }
+
+    /**
+     * 快速生成物品
+     *
+     * @param itemName     String
+     * @param id           String
+     * @param itemLore     List
+     * @param itemFlagList List
+     * @param unbreakable  Boolean
+     * @param color        String
+     * @param skullName    String
+     * @return ItemStack
+     */
+    @SuppressWarnings("deprecation")
+    public ItemStack getItemStack(String itemName, String id, List<String> itemLore, List<String> itemFlagList, Boolean unbreakable, String color, String skullName) {
+        int itemMaterial = 0;
+        int itemDurability = 0;
+        if (id != null) {
+            if (id.contains(":") && id.split(":")[0].replaceAll("[^0-9]", "").length() > 0) {
+                String[] idSplit = id.split(":");
+                if (idSplit[0].replaceAll("[^0-9]", "").length() > 0 && idSplit[1].replaceAll("[^0-9]", "").length() > 0) {
+                    itemMaterial = Integer.valueOf(idSplit[0].replaceAll("[^0-9]", ""));
+                    itemDurability = Integer.valueOf(idSplit[1].replaceAll("[^0-9]", ""));
+                }
+            } else if (id.replaceAll("[^0-9]", "").length() > 0) {
+                itemMaterial = Integer.valueOf(id.replaceAll("[^0-9]", ""));
+            }
+        }
+        ItemStack item = new ItemStack(itemMaterial, 1, (short) itemDurability);
+        if (item.getType().name().equals(Material.AIR.name())) {
+            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cItem §4" + itemName + "§c ID Error: §4'" + id + "'§c!");
+            return null;
+        }
+        ItemMeta meta = item.getItemMeta();
+        if (itemName != null) {
+            meta.setDisplayName(itemName.replace("&", "§"));
+        }
+        if (itemLore != null) {
+            for (int i = 0; i < itemLore.size(); i++) {
+                itemLore.set(i, itemLore.get(i).replace("&", "§"));
+            }
+            meta.setLore(itemLore);
+        }
+        if (itemFlagList != null && itemFlagList.size() > 0) {
+            for (String flagName : itemFlagList) {
+                try {
+                    ItemFlag itemFlag = ItemFlag.valueOf(flagName);
+                    meta.addItemFlags(itemFlag);
+                } catch (NullPointerException | IllegalArgumentException e) {
+                    Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c物品: §4" + itemName + " §c的Flag: §4" + flagName + "§c 不是正常的Flag名称！");
+                }
+            }
+        }
+        if (unbreakable != null) {
+            if (SXAttribute.getVersionSplit()[1] >= 11) {
+                //1.11.2方法
+                meta.setUnbreakable(unbreakable);
+            } else {
+                //1.9.0方法
+                meta.spigot().setUnbreakable(unbreakable);
+            }
+        }
+        if (color != null && meta instanceof LeatherArmorMeta) {
+            Color c = Color.fromRGB(Integer.valueOf(color.split(",")[0]), Integer.valueOf(color.split(",")[1]), Integer.valueOf(color.split(",")[2]));
+            ((LeatherArmorMeta) meta).setColor(c);
+        }
+        if (skullName != null && meta instanceof SkullMeta) {
+            ((SkullMeta) meta).setOwner(skullName);
+        }
+        item.setItemMeta(meta);
+        return item;
     }
 }

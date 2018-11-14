@@ -2,7 +2,6 @@ package github.saukiya.sxattribute.command;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.sub.*;
-import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

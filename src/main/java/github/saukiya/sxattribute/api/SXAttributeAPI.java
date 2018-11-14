@@ -1,5 +1,6 @@
 package github.saukiya.sxattribute.api;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.RandomStringManager;
 import github.saukiya.sxattribute.data.RegisterSlot;
@@ -49,9 +50,9 @@ public class SXAttributeAPI {
         return attributeData;
     }
 
-        /**
-         * 获取 ItemUtil(NBT反射类)
-         * key值结构为:SX-Attribute-{key}
+    /**
+     * 获取 ItemUtil(NBT反射类)
+     * key值结构为:SX-Attribute-{key}
      *
      * @return ItemUtil
      */
@@ -74,7 +75,7 @@ public class SXAttributeAPI {
      *
      * @return RandomStringManager
      */
-    public Set<Map.Entry<Integer,RegisterSlot>> getRegisterSlotMapEntrySet() {
+    public Set<Map.Entry<Integer, RegisterSlot>> getRegisterSlotMapEntrySet() {
         return plugin.getRegisterSlotManager().getRegisterSlotMap().entrySet();
     }
 
@@ -328,5 +329,14 @@ public class SXAttributeAPI {
      */
     public Set<String> getItemList() {
         return plugin.getItemDataManager().getItemList();
+    }
+
+    /**
+     * 获取全息列表 全息插件无运行时返回null
+     *
+     * @return Hologram / null
+     */
+    public List<Hologram> getHologramsList() {
+        return plugin.getOnDamageListener().getHologramsList();
     }
 }

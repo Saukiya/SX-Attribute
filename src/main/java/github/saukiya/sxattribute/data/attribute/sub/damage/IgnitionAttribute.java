@@ -33,8 +33,8 @@ public class IgnitionAttribute extends SubAttribute {
             if (getAttributes()[0] > 0 && probability(getAttributes()[0] - damageEventData.getEntityAttributeDoubles("Toughness")[0])) {
                 damageEventData.getEntity().setFireTicks(40 + SXAttribute.getRandom().nextInt(60));
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__IGNITION, getDf().format(damageEventData.getEntity().getFireTicks() / 20D)));
-                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__IGNITION, damageEventData.getEntityName(), getFirstPerson());
-                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__IGNITION, getFirstPerson(), damageEventData.getDamagerName());
+                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__IGNITION, damageEventData.getEntityName(), getFirstPerson(), getDf().format(damageEventData.getEntity().getFireTicks() / 20D));
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__IGNITION, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(damageEventData.getEntity().getFireTicks() / 20D));
             }
         }
     }

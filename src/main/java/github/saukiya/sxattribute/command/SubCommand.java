@@ -101,7 +101,7 @@ public abstract class SubCommand {
     }
 
     private String permission() {
-        return plugin + "." + cmd;
+        return plugin.getName() + "." + cmd;
     }
 
     /**

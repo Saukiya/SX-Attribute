@@ -42,7 +42,7 @@ public class DurabilityCondition extends SubCondition implements Listener {
      * 低版本清理物品的方式
      *
      * @param player Player
-     * @param item ItemStack
+     * @param item   ItemStack
      */
     private void clearItem(Player player, ItemStack item) {
         EntityEquipment eq = player.getEquipment();
@@ -63,8 +63,9 @@ public class DurabilityCondition extends SubCondition implements Listener {
 
     /**
      * 扣取物品耐久度
-     * @param player 玩家
-     * @param item 物品
+     *
+     * @param player         玩家
+     * @param item           物品
      * @param takeDurability 扣取值
      * @return boolean 成功则true 否则false
      */
@@ -127,6 +128,7 @@ public class DurabilityCondition extends SubCondition implements Listener {
 
     /**
      * 在物品损坏时，更新玩家所有数据
+     *
      * @param player Player
      */
     private void updateAllDataAndStats(Player player) {

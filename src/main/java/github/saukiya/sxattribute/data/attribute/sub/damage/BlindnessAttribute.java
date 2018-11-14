@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,21 +36,10 @@ public class BlindnessAttribute extends SubAttribute {
                 int tick = 40 + SXAttribute.getRandom().nextInt(60);
                 damageEventData.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, tick, SXAttribute.getRandom().nextInt(2) + 1));
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__BLINDNESS, getDf().format(tick / 20D)));
-                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__BLINDNESS, damageEventData.getEntityName(), getFirstPerson());
-                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__BLINDNESS, getFirstPerson(), damageEventData.getDamagerName());
+                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__BLINDNESS, damageEventData.getEntityName(), getFirstPerson(), getDf().format(tick / 20D));
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__BLINDNESS, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(tick / 20D));
             }
         }
-    }
-
-    @Override
-    public List<String> introduction() {
-        return Arrays.asList(
-                "Chinese: 失明几率",
-                "造成2-5秒的失明效果",
-                "",
-                "English: Blindness",
-                "Causing 2-5 seconds of blindness"
-        );
     }
 
     @Override

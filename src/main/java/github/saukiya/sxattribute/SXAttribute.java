@@ -12,15 +12,16 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeManager;
 import github.saukiya.sxattribute.data.condition.SXConditionManager;
 import github.saukiya.sxattribute.listener.*;
 import github.saukiya.sxattribute.util.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -44,6 +45,7 @@ public class SXAttribute extends JavaPlugin {
     @Getter
     @Setter
     private static SimpleDateFormatUtils sdf;
+
     @Getter
     private static SXAttributeAPI api;
 
@@ -118,7 +120,7 @@ public class SXAttribute extends JavaPlugin {
     @Override
     public void onEnable() {
         pluginEnabled = true;
-        Long oldTimes = System.currentTimeMillis();
+        long oldTimes = System.currentTimeMillis();
         String version = Bukkit.getBukkitVersion().split("-")[0].replace(" ", "");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "ServerVersion: " + version);
         String[] strSplit = version.split("[.]");
@@ -211,6 +213,13 @@ public class SXAttribute extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cAuthor: Saukiya QQ: 1940208750");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cThis plugin was first launched on www.mcbbs.net!");
         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§4Reprint is prohibited without permission!");
+        Bukkit.getConsoleSender().sendMessage("§c");
+        Bukkit.getConsoleSender().sendMessage("§c   ______  __             ___   __  __       _ __          __");
+        Bukkit.getConsoleSender().sendMessage("§c  / ___/ |/ /            /   | / /_/ /______(_) /_  __  __/ /____");
+        Bukkit.getConsoleSender().sendMessage("§c  \\__ \\|   /   ______   / /| |/ __/ __/ ___/ / __ \\/ / / / __/ _ \\");
+        Bukkit.getConsoleSender().sendMessage("§c ___/ /   |   /_____/  / ___ / /_/ /_/ /  / / /_/ / /_/ / /_/  __/");
+        Bukkit.getConsoleSender().sendMessage("§c/____/_/|_|           /_/  |_\\__/\\__/_/  /_/_.___/\\__,_/\\__/\\___/");
+        Bukkit.getConsoleSender().sendMessage("§c");
     }
 
     @Override

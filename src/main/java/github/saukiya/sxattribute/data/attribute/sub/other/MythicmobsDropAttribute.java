@@ -73,10 +73,12 @@ public class MythicmobsDropAttribute extends SubAttribute implements Listener {
 
     @Override
     public void onEnable() {
-        if (Bukkit.getPluginManager().getPlugin("SX-Seal") != null) {
-            sxSeal = true;
+        if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
+            if (Bukkit.getPluginManager().getPlugin("SX-Seal") != null) {
+                sxSeal = true;
+            }
+            Bukkit.getPluginManager().registerEvents(this, getPlugin());
         }
-        Bukkit.getPluginManager().registerEvents(this, getPlugin());
     }
 
     @Override

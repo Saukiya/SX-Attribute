@@ -45,10 +45,10 @@ public abstract class SubAttribute {
 
 
     /**
-     *实现一个属性类
+     * 实现一个属性类
      *
-     * @param name String 属性名
-     * @param doublesLength int 数组长度
+     * @param name           String 属性名
+     * @param doublesLength  int 数组长度
      * @param attributeTypes SXAttributeType 属性类型
      */
     public SubAttribute(String name, int doublesLength, SXAttributeType... attributeTypes) {
@@ -76,11 +76,11 @@ public abstract class SubAttribute {
      */
     public static String getNumber(String lore) {
         String str = lore.replaceAll("§+[a-z0-9]", "").replaceAll("[^-0-9.]", "");
-        return str.length() == 0 || str.replaceAll("[^.]","").length() > 1 ? "0" : str;
+        return str.length() == 0 || str.replaceAll("[^.]", "").length() > 1 ? "0" : str;
     }
 
     /**
-     *获取类型
+     * 获取类型
      *
      * @return SXAttributeType[]
      */
@@ -89,13 +89,13 @@ public abstract class SubAttribute {
     }
 
     /**
-     *判断属性类型
+     * 判断属性类型 以及是否有效
      *
      * @param attributeType SXAttributeType
      * @return boolean
      */
     public final boolean containsType(SXAttributeType attributeType) {
-        return Arrays.stream(doubles).anyMatch(d -> d != 0) && Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
+        return Arrays.stream(attributeTypes).anyMatch(type -> type.equals(attributeType));
     }
 
     /**
@@ -113,13 +113,13 @@ public abstract class SubAttribute {
             Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §cAttribute >> §4" + this.getName() + " §cNo SXAttributeType!");
         } else if (SXAttribute.isPluginEnabled()) {
             Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] §cAttribute >> §cSXAttribute is Enabled §4" + this.getName() + "§r !");
-        }else {
+        } else {
             this.plugin = plugin;
             SubAttribute attribute = attributeMap.put(this.getPriority(), this);
             if (attribute == null) {
                 Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Attribute >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
             } else {
-                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Attribute >> The §c" + this.getName() + " §rCover To §c" + attribute.getName() + " §7[§c"+attribute.getPlugin().getName()+"§7]§r !");
+                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Attribute >> The §c" + this.getName() + " §rCover To §c" + attribute.getName() + " §7[§c" + attribute.getPlugin() + "§7]§r !");
             }
             attributeMap.put(this.getPriority(), this);
         }
@@ -197,21 +197,21 @@ public abstract class SubAttribute {
     }
 
     /**
-     * 设置属性
-     *
-     * @param doubles 属性
-     */
-    public final void setAttributes(Double... doubles) {
-        IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] = doubles[i]);
-    }
-
-    /**
      * 获取准确的属性
      *
      * @return double[] 属性值组
      */
     public final double[] getAttributes() {
         return doubles;
+    }
+
+    /**
+     * 设置属性
+     *
+     * @param doubles 属性
+     */
+    public final void setAttributes(Double... doubles) {
+        IntStream.range(0, this.doubles.length).forEach(i -> this.doubles[i] = doubles[i]);
     }
 
     /**

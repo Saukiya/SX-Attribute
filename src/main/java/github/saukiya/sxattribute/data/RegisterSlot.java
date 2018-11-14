@@ -11,12 +11,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * @author Saukiya
  */
+@Getter
 public class RegisterSlot {
-    @Getter
+
     private String name;
-    @Getter
+
     private ItemStack item;
-    @Getter
+
     private int slot;
 
     @SuppressWarnings("deprecation")

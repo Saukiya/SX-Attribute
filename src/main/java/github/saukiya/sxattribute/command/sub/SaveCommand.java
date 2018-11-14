@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class SaveCommand extends SubCommand {
     public SaveCommand() {
-        super("save", " <ItemName>", SenderType.PLAYER);
+        super("save", " <ItemName> ", SenderType.PLAYER);
     }
 
     @Override
@@ -41,7 +41,11 @@ public class SaveCommand extends SubCommand {
             return;
         }
         try {
-            plugin.getItemDataManager().saveItem(itemName, itemStack);
+            if (args.length > 2 && args[2].equalsIgnoreCase("-a")) {
+                plugin.getItemDataManager().importItem(itemName, itemStack);
+            } else {
+                plugin.getItemDataManager().saveItem(itemName, itemStack);
+            }
             sender.sendMessage(Message.getMsg(Message.ADMIN__SAVE_ITEM, itemStack.getItemMeta().hasDisplayName() ? itemStack.getItemMeta().getDisplayName() : itemStack.getType().name(), args[1]));
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();

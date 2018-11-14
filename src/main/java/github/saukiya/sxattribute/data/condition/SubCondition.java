@@ -4,7 +4,6 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxlevel.SXLevel;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -184,7 +183,7 @@ public abstract class SubCondition {
             if (condition == null) {
                 Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Condition >> Register §c" + this.getName() + " §rTo Priority §c" + this.getPriority() + " §r!");
             } else {
-                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Condition >> §cThe §4" + this.getName() + " §cCover To §4" + condition.getName() + " §7[§c"+condition.getPlugin().getName()+"§7]§r !");
+                Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] Condition >> §cThe §4" + this.getName() + " §cCover To §4" + condition.getName() + " §7[§c" + condition.getPlugin() + "§7]§r !");
             }
         }
     }

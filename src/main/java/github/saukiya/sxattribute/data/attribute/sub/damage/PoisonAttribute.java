@@ -36,8 +36,8 @@ public class PoisonAttribute extends SubAttribute {
                 int tick = 40 + SXAttribute.getRandom().nextInt(60);
                 damageEventData.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.POISON, tick, SXAttribute.getRandom().nextInt(2) + 1));
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__POISON, getDf().format(tick / 20D)));
-                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__POISON, damageEventData.getEntityName(), getFirstPerson());
-                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__POISON, getFirstPerson(), damageEventData.getDamagerName());
+                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__POISON, damageEventData.getEntityName(), getFirstPerson(), getDf().format(tick / 20D));
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__POISON, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(tick / 20D));
             }
         }
     }

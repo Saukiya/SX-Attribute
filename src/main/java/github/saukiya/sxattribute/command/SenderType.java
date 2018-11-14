@@ -20,5 +20,6 @@ public enum SenderType {
     /**
      * 全部
      */
-    ALL
+    ALL;
+
 }

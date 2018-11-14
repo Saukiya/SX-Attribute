@@ -36,8 +36,8 @@ public class BlockAttribute extends SubAttribute {
                     double blockDamage = damageEventData.getDamage() * getAttributes()[1] / 100;
                     damageEventData.setDamage(damageEventData.getDamage() - blockDamage);
                     damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__BLOCK, getDf().format(blockDamage)));
-                    Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__BLOCK, damageEventData.getEntityName(), getFirstPerson());
-                    Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__BLOCK, getFirstPerson(), damageEventData.getDamagerName());
+                    Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__BLOCK, damageEventData.getEntityName(), getFirstPerson(), getDf().format(blockDamage));
+                    Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__BLOCK, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(blockDamage));
                 }
             }
         }

@@ -229,7 +229,7 @@ public enum Message {
         messages.set(PLAYER__HOLOGRAPHIC__POISON.toString(), "&5&o中毒: &b&o{0}s");
         messages.set(PLAYER__HOLOGRAPHIC__BLINDNESS.toString(), "&8&o致盲: &b&o{0}s");
         messages.set(PLAYER__HOLOGRAPHIC__SLOWNESS.toString(), "&b&o减速: &b&o{0}s");
-        messages.set(PLAYER__HOLOGRAPHIC__LIGHTNING.toString(), "&e&o雷霆: &b{0}");
+        messages.set(PLAYER__HOLOGRAPHIC__LIGHTNING.toString(), "&e&o雷霆: &b&o{0}");
         messages.set(PLAYER__HOLOGRAPHIC__REAL.toString(), "&c&o破甲");
         messages.set(PLAYER__HOLOGRAPHIC__TEARING.toString(), "&c&o撕裂: &b{0}");
         messages.set(PLAYER__HOLOGRAPHIC__REFLECTION.toString(), "&6&o反伤: &b&o{0}");
@@ -257,7 +257,7 @@ public enum Message {
         messages.set(COMMAND__SELL.toString(), "打开出售界面");
         messages.set(COMMAND__REPAIR.toString(), "打开修理界面");
         messages.set(COMMAND__GIVE.toString(), "给予玩家RPG物品");
-        messages.set(COMMAND__SAVE.toString(), "保存当前的物品到配置文件");
+        messages.set(COMMAND__SAVE.toString(), "保存当前的物品到配置文件 加[-a]完全保存");
         messages.set(COMMAND__NBT.toString(), "查看当前手持物品的NBT数据");
         messages.set(COMMAND__DISPLAYSLOT.toString(), "显示可装载物品的槽位");
         messages.set(COMMAND__ATTRIBUTELIST.toString(), "查看当前属性列表");

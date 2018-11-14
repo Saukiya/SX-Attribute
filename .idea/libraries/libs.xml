@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/RPGInventory-2.1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/PlaceholderAPI-2.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/SS.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/Vault.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spigot-1.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/SkillAPI.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/MythicArtifacts.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/HolographicDisplays.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/MythicMobs-4.3.2-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spigot-1.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spigot-1.9.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/SL.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

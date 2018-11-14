@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
 import github.saukiya.sxattribute.listener.OnHealthChangeDisplayListener;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -38,14 +39,15 @@ public class LifeStealAttribute extends SubAttribute {
                 double maxHealth = OnHealthChangeDisplayListener.getMaxHealth(damager);
                 double lifeHealth = damageEventData.getDamage() * getAttributes()[1] / 100;
                 EntityRegainHealthEvent event = new EntityRegainHealthEvent(damager, lifeHealth, EntityRegainHealthEvent.RegainReason.CUSTOM);
+                Bukkit.getPluginManager().callEvent(event);
                 if (event.isCancelled()) {
                     return;
                 }
                 lifeHealth = (maxHealth < damager.getHealth() + event.getAmount()) ? (maxHealth - damager.getHealth()) : event.getAmount();
                 damager.setHealth(damager.getHealth() + lifeHealth);
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__LIFE_STEAL, getDf().format(lifeHealth)));
-                Message.send(damager, Message.PLAYER__BATTLE__LIFE_STEAL, damageEventData.getEntityName(), getFirstPerson());
-                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__LIFE_STEAL, getFirstPerson(), damageEventData.getDamagerName());
+                Message.send(damager, Message.PLAYER__BATTLE__LIFE_STEAL, damageEventData.getEntityName(), getFirstPerson(), getDf().format(lifeHealth));
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__LIFE_STEAL, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(lifeHealth));
             }
         }
     }

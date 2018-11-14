@@ -125,6 +125,7 @@ public class Config {
     private static final String PRIORITY_SLOWNESS = "AttributePriority.Slowness";
     private static final String PRIORITY_LIGHTNING = "AttributePriority.Lightning";
     private static final String PRIORITY_TEARING = "AttributePriority.Tearing";
+    private static final String PRIORITY_EVENT_MESSAGE = "AttributePriority.EventMessage";
 
     private static final String PRIORITY_DURABILITY = "ConditionPriority.Durability";
     private static final String PRIORITY_ATTACK_SPEED = "ConditionPriority.AttackSpeed";
@@ -351,6 +352,7 @@ public class Config {
         config.set(PRIORITY_EXP_ADDITION, 240);
         config.set(PRIORITY_SPEED, 250);
         config.set(PRIORITY_MYTHICMOBS_DROP, 260);
+        config.set(PRIORITY_EVENT_MESSAGE, 270);
 
         config.set(PRIORITY_HAND, 10);
         config.set(PRIORITY_MAIN_HAND, 20);

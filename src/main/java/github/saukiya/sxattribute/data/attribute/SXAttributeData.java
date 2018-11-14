@@ -2,10 +2,7 @@ package github.saukiya.sxattribute.data.attribute;
 
 import lombok.Getter;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -56,7 +53,11 @@ public class SXAttributeData {
     public SXAttributeData add(SXAttributeData attributeData) {
         if (attributeData != null && attributeData.isValid()) {
             valid();
-            getAttributeMap().values().forEach(attribute -> attributeData.getAttributeMap().values().stream().filter(subAttribute -> attribute.getName().equals(subAttribute.getName())).findFirst().ifPresent(subAttribute -> attribute.addAttribute(subAttribute.getAttributes())));
+            Iterator<SubAttribute> iterator = getAttributeMap().values().iterator();
+            Iterator<SubAttribute> addIterator = attributeData.getAttributeMap().values().iterator();
+            while (iterator.hasNext() && addIterator.hasNext()) {
+                iterator.next().addAttribute(addIterator.next().getAttributes());
+            }
         }
         return this;
     }
@@ -75,15 +76,13 @@ public class SXAttributeData {
      */
     public double calculationValue() {
         this.value = 0D;
-        getAttributeMap().values().forEach(attribute -> {
-            Double temp = attribute.getValue();
-            if (temp != null) this.value += temp;
-        });
+        getAttributeMap().values().forEach(attribute -> this.value += attribute.getValue());
         return this.value;
     }
 
     /**
      * 返回战斗点数
+     *
      * @return double
      */
     public double getValue() {

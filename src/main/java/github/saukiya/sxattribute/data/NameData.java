@@ -7,18 +7,15 @@ import org.bukkit.entity.LivingEntity;
 /**
  * @author Saukiya
  */
+@Getter
 public class NameData {
 
-    @Getter
     private String name;
 
-    @Getter
     private LivingEntity entity;
 
-    @Getter
     private boolean visible;
 
-    @Getter
     private Long tick;
 
     private int updateTick = Config.getConfig().getInt(Config.HEALTH_NAME_VISIBLE_DISPLAY_TIME);

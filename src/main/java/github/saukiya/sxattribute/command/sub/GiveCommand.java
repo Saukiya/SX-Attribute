@@ -30,7 +30,7 @@ public class GiveCommand extends SubCommand {
             return;
         }
         Player player = null;
-        if (plugin.getItemDataManager().getItem(args[1]) == null) {
+        if (plugin.getItemDataManager().getItem(args[1], null) == null) {
             plugin.getItemDataManager().sendItemMapToPlayer(sender, args[1]);
             return;
         }

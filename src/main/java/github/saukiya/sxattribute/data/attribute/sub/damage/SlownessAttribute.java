@@ -36,8 +36,8 @@ public class SlownessAttribute extends SubAttribute {
                 int tick = 40 + SXAttribute.getRandom().nextInt(60);
                 damageEventData.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, tick, SXAttribute.getRandom().nextInt(2) + 1));
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__SLOWNESS, getDf().format(tick / 20D)));
-                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__SLOWNESS, damageEventData.getEntityName(), getFirstPerson());
-                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__SLOWNESS, getFirstPerson(), damageEventData.getDamagerName());
+                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__SLOWNESS, damageEventData.getEntityName(), getFirstPerson(), getDf().format(tick / 20D));
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__SLOWNESS, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(tick / 20D));
             }
         }
     }

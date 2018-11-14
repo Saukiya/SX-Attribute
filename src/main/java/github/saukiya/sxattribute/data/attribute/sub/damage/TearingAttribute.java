@@ -61,8 +61,8 @@ public class TearingAttribute extends SubAttribute {
                     }
                 }.runTaskTimer(getPlugin(), 5, size);
                 damageEventData.sendHolo(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__TEARING, getDf().format(tearingDamage * 12 / size)));
-                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__TEARING, damageEventData.getEntityName(), getFirstPerson());
-                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__TEARING, getFirstPerson(), damageEventData.getDamagerName());
+                Message.send(damageEventData.getDamager(), Message.PLAYER__BATTLE__TEARING, damageEventData.getEntityName(), getFirstPerson(), getDf().format(tearingDamage * 12 / size));
+                Message.send(damageEventData.getEntity(), Message.PLAYER__BATTLE__TEARING, getFirstPerson(), damageEventData.getDamagerName(), getDf().format(tearingDamage * 12 / size));
             }
         }
     }

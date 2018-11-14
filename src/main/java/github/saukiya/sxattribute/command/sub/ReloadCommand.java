@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.command.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.SubCommand;
+import github.saukiya.sxattribute.event.SXReloadEvent;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
@@ -77,8 +78,9 @@ public class ReloadCommand extends SubCommand {
         if (size > 0) {
             sender.sendMessage(Message.getMsg(Message.ADMIN__CLEAR_ENTITY_DATA, String.valueOf(size)));
         }
-        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Reloading Time: §c" + (System.currentTimeMillis() - oldTimes) + "§7 ms");
         sender.sendMessage(Message.getMsg(Message.ADMIN__PLUGIN_RELOAD));
+        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "Reloading Time: §c" + (System.currentTimeMillis() - oldTimes) + "§7 ms");
+        Bukkit.getPluginManager().callEvent(new SXReloadEvent(sender));
     }
 
     @Override

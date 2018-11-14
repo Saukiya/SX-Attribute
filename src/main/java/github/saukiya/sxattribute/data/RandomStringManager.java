@@ -72,12 +72,23 @@ public class RandomStringManager {
                 }
             }
             // 数字随机
-            List<String> replaceNumberList = getStringList("<r:", ">", string);
-            for (String str : replaceNumberList) {
-                if (str.contains("_") && str.split("_").length > 1) {
-                    int i1 = Integer.valueOf(str.split("_")[0].replace("[^0-9]", ""));
-                    int i2 = Integer.valueOf(str.split("_")[1].replace("[^0-9]", "")) + 1;
+            List<String> replaceIntList = getStringList("<r:", ">", string);
+            for (String str : replaceIntList) {
+                String[] strSplit = str.split("_");
+                if (strSplit.length > 1) {
+                    int i1 = Integer.valueOf(strSplit[0].replaceAll("[^0-9]", ""));
+                    int i2 = Integer.valueOf(strSplit[1].replaceAll("[^0-9]", "")) + 1;
                     string = string.replaceFirst("<r:" + str + ">", String.valueOf(SXAttribute.getRandom().nextInt((i2 - i1) < 1 ? 1 : (i2 - i1)) + i1));
+                }
+            }
+            // 小数随机
+            List<String> replaceDoubleList = getStringList("<d:", ">", string);
+            for (String str : replaceDoubleList) {
+                String[] strSplit = str.split("_");
+                if (strSplit.length > 1) {
+                    double d1 = Double.valueOf(strSplit[0].replaceAll("[^.0-9]", ""));
+                    double d2 = Double.valueOf(strSplit[1].replaceAll("[^.0-9]", "")) + 1;
+                    string = string.replaceFirst("<d:" + str + ">", SXAttribute.getDf().format(SXAttribute.getRandom().nextDouble() * (d2 - d1) + d1));
                 }
             }
             // 日期随机
@@ -85,7 +96,7 @@ public class RandomStringManager {
             if (replaceTimeList.size() > 0) {
                 SimpleDateFormatUtils ft = SXAttribute.getSdf();
                 for (String str : replaceTimeList) {
-                    String addTime = str.replace("[^0-9]", "") + "000";
+                    String addTime = str.replaceAll("[^0-9]", "") + "000";
                     long time = System.currentTimeMillis() + Long.valueOf(addTime);
                     string = string.replaceFirst("<t:" + str + ">", ft.format(time));
                 }
@@ -145,7 +156,7 @@ public class RandomStringManager {
      * @param string 被读取的字符串
      * @return 被前后缀包围的列表 (不包括前后缀)
      */
-    private List<String> getStringList(String prefix, String suffix, String string) {
+    public List<String> getStringList(String prefix, String suffix, String string) {
         List<String> stringList = new ArrayList<>();
         if (string.contains(prefix)) {
             String[] args = string.split(prefix);

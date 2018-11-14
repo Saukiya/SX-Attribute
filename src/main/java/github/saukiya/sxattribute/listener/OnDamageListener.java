@@ -1,19 +1,17 @@
 package github.saukiya.sxattribute.listener;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageEventData;
+import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxattribute.util.Message;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -25,9 +23,11 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Saukiya
@@ -120,9 +120,9 @@ public class OnDamageListener implements Listener {
         while (damagerIterator.hasNext() && entityIterator.hasNext()) {
             SubAttribute damageAttribute = damagerIterator.next();
             SubAttribute entityAttribute = entityIterator.next();
-            if (damageAttribute.containsType(SXAttributeType.DAMAGE)) {
+            if (damageAttribute.containsType(SXAttributeType.DAMAGE) && Arrays.stream(damageAttribute.getAttributes()).anyMatch(d -> d != 0)) {
                 damageAttribute.eventMethod(damageEventData);
-            } else if (entityAttribute.containsType(SXAttributeType.DEFENCE)) {
+            } else if (entityAttribute.containsType(SXAttributeType.DEFENCE) && Arrays.stream(entityAttribute.getAttributes()).anyMatch(d -> d != 0)) {
                 entityAttribute.eventMethod(damageEventData);
             }
             if (damageEventData.isCancelled() || damageEventData.getDamage() <= 0) {
@@ -134,26 +134,10 @@ public class OnDamageListener implements Listener {
 
         event.setDamage(damageEventData.getDamage());
 
-        if (!event.isCancelled()) {
-            damageEventData.sendHolo(Message.getMsg(damageEventData.isCrit() && event.getDamage() > 0 ? Message.PLAYER__HOLOGRAPHIC__CRIT : Message.PLAYER__HOLOGRAPHIC__DAMAGE, SXAttribute.getDf().format(event.getFinalDamage())));
-        }
-
-        if (Config.isHolographic() && SXAttribute.isHolographic() && !Config.getHolographicBlackList().contains(event.getCause().name())) {
-            Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() / 2, 0);
-            loc.setYaw(damager.getLocation().getYaw() + 90);
-            loc.add(loc.getDirection().multiply(0.8D));
-            Hologram hologram = HologramsAPI.createHologram(plugin, loc);
-            for (String message : damageEventData.getHoloList()) {
-                hologram.appendTextLine(message);
-            }
-            hologramsList.add(hologram);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    hologram.delete();
-                    hologramsList.remove(hologram);
-                }
-            }.runTaskLater(plugin, Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME));
-        }
+        /**
+         * 事件处理Event消息
+         * 发送一个事件 内部存储DamageEventData
+         */
+        Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageEventData));
     }
 }

@@ -3,6 +3,7 @@ package github.saukiya.sxattribute.data.attribute;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.damage.*;
 import github.saukiya.sxattribute.data.attribute.sub.defence.*;
+import github.saukiya.sxattribute.data.attribute.sub.other.EventMessageAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.other.ExpAdditionAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.other.MythicmobsDropAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.update.SpeedAttribute;
@@ -10,10 +11,9 @@ import github.saukiya.sxattribute.data.condition.SXConditionReturnType;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateEventData;
-import github.saukiya.sxattribute.event.UpdateStatsEvent;
+import github.saukiya.sxattribute.event.SXLoadItemDataEvent;
 import github.saukiya.sxattribute.util.Config;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -68,6 +68,7 @@ public class SXAttributeManager {
         new ReflectionAttribute().registerAttribute(plugin);
         new ToughnessAttribute().registerAttribute(plugin);
 
+        new EventMessageAttribute().registerAttribute(plugin);
         new ExpAdditionAttribute().registerAttribute(plugin);
         new MythicmobsDropAttribute().registerAttribute(plugin);
         new HealthRegenAttribute().registerAttribute(plugin);
@@ -143,7 +144,9 @@ public class SXAttributeManager {
                         }
                     }
                 }
-                sxAttributeDataList.add(sxAttributeData);
+                if (sxAttributeData != null) {
+                    sxAttributeDataList.add(sxAttributeData);
+                }
             }
         }
         return sxAttributeDataList.isValid() ? sxAttributeDataList : null;
@@ -293,8 +296,8 @@ public class SXAttributeManager {
 
     // 加载生物装备槽的数据
     public void loadRPGInventoryData(Player player) {
-        if (SXAttribute.isRpgInventory()) {
-            Inventory inv = InventoryManager.getInventory(player);
+        if (SXAttribute.isRpgInventory() && player.isOnline()) {
+            Inventory inv = InventoryManager.get(player).getInventory();
             if (inv != null) {
                 List<ItemStack> itemList = new ArrayList<>();
                 List<Integer> whiteSlotList = Config.getConfig().getIntegerList(Config.PRG_INVENTORY__WHITE_SLOT);
@@ -306,8 +309,7 @@ public class SXAttributeManager {
                 }
                 ItemStack[] items = itemList.toArray(new ItemStack[0]);
                 SXAttributeData attributeData = getItemData(player, SXConditionType.RPG_INVENTORY, items);
-                UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.RPG_INVENTORY, player, attributeData, items);
-                Bukkit.getPluginManager().callEvent(event);
+                SXLoadItemDataEvent event = new SXLoadItemDataEvent(SXConditionType.RPG_INVENTORY, player, attributeData, items);
                 if (event.getAttributeData() != null) {
                     rpgInventoryMap.put(player.getUniqueId(), event.getAttributeData());
                 } else {
@@ -331,8 +333,7 @@ public class SXAttributeManager {
         // 装备更新
         ItemStack[] items = entity.getEquipment().getArmorContents();
         SXAttributeData attributeData = getItemData(entity, SXConditionType.EQUIPMENT, items);
-        UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.EQUIPMENT, entity, attributeData, items);
-        Bukkit.getPluginManager().callEvent(event);
+        SXLoadItemDataEvent event = new SXLoadItemDataEvent(SXConditionType.EQUIPMENT, entity, attributeData, items);
         if (event.getAttributeData() != null) {
             equipmentMap.put(entity.getUniqueId(), event.getAttributeData());
         } else {
@@ -359,8 +360,7 @@ public class SXAttributeManager {
             });
             ItemStack[] items = itemList.toArray(new ItemStack[0]);
             SXAttributeData attributeData = getItemData(player, SXConditionType.SLOT, items);
-            UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.SLOT, player, attributeData, items);
-            Bukkit.getPluginManager().callEvent(event);
+            SXLoadItemDataEvent event = new SXLoadItemDataEvent(SXConditionType.SLOT, player, attributeData, items);
             if (event.getAttributeData() != null) {
                 slotMap.put(player.getUniqueId(), event.getAttributeData());
             } else {
@@ -385,8 +385,7 @@ public class SXAttributeManager {
         itemArray[1] = offItem;
         attributeData = attributeData != null ? attributeData.add(getItemData(entity, SXConditionType.OFF_HAND, itemArray)) : getItemData(entity, SXConditionType.OFF_HAND, itemArray);
         itemArray[0] = mainItem;
-        UpdateStatsEvent event = new UpdateStatsEvent(SXConditionType.HAND, entity, attributeData, itemArray);
-        Bukkit.getPluginManager().callEvent(event);
+        SXLoadItemDataEvent event = new SXLoadItemDataEvent(SXConditionType.HAND, entity, attributeData, itemArray);
         if (event.getAttributeData() != null) {
             handMap.put(entity.getUniqueId(), event.getAttributeData());
         } else {

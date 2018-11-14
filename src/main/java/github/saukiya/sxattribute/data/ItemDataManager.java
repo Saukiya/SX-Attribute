@@ -5,6 +5,7 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.condition.sub.DurabilityCondition;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.ItemUtil;
 import github.saukiya.sxattribute.util.Message;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -35,6 +36,7 @@ public class ItemDataManager {
 
     private final File itemFiles = new File(SXAttribute.getPluginFile(), "Item");
     private final File itemDefaultFile = new File(itemFiles, "Default" + File.separator + "Default.yml");
+    private final File itemImportFile = new File(itemFiles, "ImportItem.yml");
     private final Map<String, ItemData> itemMap = new HashMap<>();
     private final SXAttribute plugin;
 
@@ -87,78 +89,6 @@ public class ItemDataManager {
     }
 
     /**
-     * 快速生成物品
-     *
-     * @param itemName     String
-     * @param id           String
-     * @param itemLore     List
-     * @param itemFlagList List
-     * @param unbreakable  Boolean
-     * @param color        String
-     * @param skullName    String
-     * @return ItemStack
-     */
-    @SuppressWarnings("deprecation")
-    private static ItemStack getItemStack(String itemName, String id, List<String> itemLore, List<String> itemFlagList, Boolean unbreakable, String color, String skullName) {
-        int itemMaterial = 0;
-        int itemDurability = 0;
-        if (id != null) {
-            if (id.contains(":") && id.split(":")[0].replaceAll("[^0-9]", "").length() > 0) {
-                String[] idSplit = id.split(":");
-                if (idSplit[0].replaceAll("[^0-9]", "").length() > 0 && idSplit[1].replaceAll("[^0-9]", "").length() > 0) {
-                    itemMaterial = Integer.valueOf(idSplit[0].replaceAll("[^0-9]", ""));
-                    itemDurability = Integer.valueOf(idSplit[1].replaceAll("[^0-9]", ""));
-                }
-            } else if (id.replaceAll("[^0-9]", "").length() > 0) {
-                itemMaterial = Integer.valueOf(id.replaceAll("[^0-9]", ""));
-            }
-        }
-        ItemStack item = new ItemStack(itemMaterial, 1, (short) itemDurability);
-        if (item.getType().name().equals(Material.AIR.name())) {
-            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cItem §4" + itemName + "§c ID Error: §4'" + id + "'§c!");
-            return null;
-        }
-        ItemMeta meta = item.getItemMeta();
-        if (itemName != null) {
-            meta.setDisplayName(itemName.replace("&", "§"));
-        }
-        if (itemLore != null) {
-            for (int i = 0; i < itemLore.size(); i++) {
-                itemLore.set(i, itemLore.get(i).replace("&", "§"));
-            }
-            meta.setLore(itemLore);
-        }
-        if (itemFlagList != null && itemFlagList.size() > 0) {
-            for (String flagName : itemFlagList) {
-                try {
-                    ItemFlag itemFlag = ItemFlag.valueOf(flagName);
-                    meta.addItemFlags(itemFlag);
-                } catch (NullPointerException | IllegalArgumentException e) {
-                    Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c物品: §4" + itemName + " §c的Flag: §4" + flagName + "§c 不是正常的Flag名称！");
-                }
-            }
-        }
-        if (unbreakable != null) {
-            if (SXAttribute.getVersionSplit()[1] >= 11) {
-                //1.11.2方法
-                meta.setUnbreakable(unbreakable);
-            } else {
-                //1.9.0方法
-                meta.spigot().setUnbreakable(unbreakable);
-            }
-        }
-        if (color != null && meta instanceof LeatherArmorMeta) {
-            Color c = Color.fromRGB(Integer.valueOf(color.split(",")[0]), Integer.valueOf(color.split(",")[1]), Integer.valueOf(color.split(",")[2]));
-            ((LeatherArmorMeta) meta).setColor(c);
-        }
-        if (skullName != null && meta instanceof SkullMeta) {
-            ((SkullMeta) meta).setOwner(skullName);
-        }
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
      * 读取物品数据
      *
      * @throws IOException                   IOException
@@ -200,15 +130,16 @@ public class ItemDataManager {
      * @throws InvalidConfigurationException InvalidConfigurationException
      */
     private void loadItem(File files) throws IOException, InvalidConfigurationException {
-        for (File file : Objects.requireNonNull(files.listFiles()))
+        for (File file : Objects.requireNonNull(files.listFiles())) {
             if (file.isDirectory()) {
                 loadItem(file);
-            } else {
+            } else if (!file.getName().equals(itemImportFile.getName())) {
                 YamlConfiguration itemYml = new YamlConfiguration();
                 itemYml.load(file);
                 for (String name : itemYml.getKeys(false)) {
                     if (itemMap.containsKey(name)) {
                         Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cDon't Repeat Item Name: §4" + file.getName() + File.separator + name + " §c!");
+                        continue;
                     }
                     String itemName = itemYml.getString(name + ".Name");
                     List<String> ids = new ArrayList<>();
@@ -230,7 +161,7 @@ public class ItemDataManager {
                     String colorStr = itemYml.getString(name + ".Color");
                     String skullName = itemYml.getString(name + ".SkullName");
 
-                    ItemStack item = getItemStack(itemName, id, itemLore, itemFlagList, unbreakable, colorStr, skullName);
+                    ItemStack item = plugin.getItemUtil().getItemStack(itemName, id, itemLore, itemFlagList, unbreakable, colorStr, skullName);
                     if (item == null) {
                         continue;
                     }
@@ -266,9 +197,23 @@ public class ItemDataManager {
                         item = plugin.getItemUtil().setNBT(plugin.getItemUtil().setNBT(item, "Name", name), "HasCode", String.valueOf(hashCode));
                     }
 
-                    itemMap.put(name, new ItemData(item, ids, enchantList));
+                    itemMap.put(name, new ItemData(name, item, false, ids, enchantList, hashCode));
+                }
+            } else {
+                YamlConfiguration itemYml = new YamlConfiguration();
+                itemYml.load(file);
+                for (String name : itemYml.getKeys(false)) {
+                    if (itemMap.containsKey(name)) {
+                        Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cDon't Repeat Item Name: §4" + file.getName() + File.separator + name + " §c!");
+                        continue;
+                    }
+                    ItemStack item = itemYml.getItemStack(name);
+                    if (item != null) {
+                        itemMap.put(name, new ItemData(name, item, true, Collections.singletonList(String.valueOf(item.getTypeId())), null, 0));
+                    }
                 }
             }
+        }
     }
 
     /**
@@ -331,111 +276,14 @@ public class ItemDataManager {
      * 获取物品
      *
      * @param itemName String
-     * @param players  Player
+     * @param player  Player
      * @return ItemStack
      */
     @SuppressWarnings("deprecation")
-    public ItemStack getItem(String itemName, Player... players) {
-        if (itemMap.containsKey(itemName)) {
-            ItemData itemData = itemMap.get(itemName);
-            ItemStack item = itemData.getItem().clone();
-            Map<String, String> lockRandomMap = new HashMap<>();
-            String id = plugin.getRandomStringManager().processRandomString(itemName, itemData.getIds().get(SXAttribute.getRandom().nextInt(itemData.getIds().size())), lockRandomMap);
-            int itemMaterial = 260, itemDurability = 0;
-            if (id != null) {
-                if (id.contains(":")) {
-                    String[] idSplit = id.split(":");
-                    itemMaterial = Integer.valueOf(idSplit[0]);
-                    itemDurability = Integer.valueOf(idSplit[1]);
-                } else {
-                    itemMaterial = Integer.valueOf(id);
-                }
-            }
-            item.setTypeId(itemMaterial);
-            item.setDurability((short) itemDurability);
-            if (item.getType().name().equals(Material.AIR.name())) {
-                Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§cItem §4" + itemName + "§c Error ID! Please Check ID: §4" + id + "§c!");
-                return null;
-            }
-            ItemMeta meta = item.getItemMeta();
-            if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-                if (meta.hasDisplayName()) {
-                    String name = plugin.getRandomStringManager().processRandomString(itemName, meta.getDisplayName(), lockRandomMap);
-                    meta.setDisplayName(name.replace("&", "§").replace("%DeleteLore%", ""));
-                }
-                List<String> loreList = meta.getLore();
-                for (int i = loreList.size() - 1; i >= 0; i--) {
-                    String lore = plugin.getRandomStringManager().processRandomString(itemName, loreList.get(i), lockRandomMap);
-                    // 计算耐久值
-                    if (lore.contains(Config.getConfig().getString(Config.NAME_DURABILITY))) {
-                        // 识别物品是否为工具
-                        if (item.getType().getMaxDurability() > 0) {
-                            if (!SubCondition.getUnbreakable(meta)) {
-                                Repairable repairable = (Repairable) meta;
-                                repairable.setRepairCost(999);
-                                meta = (ItemMeta) repairable;
-                                int durability = SubCondition.getDurability(lore);
-                                int maxDurability = SubCondition.getMaxDurability(lore);
-                                int maxDefaultDurability = item.getType().getMaxDurability();
-                                int defaultDurability = (int) (((double) durability / maxDurability) * maxDefaultDurability);
-                                item.setDurability((short) (maxDefaultDurability - defaultDurability));
-                            }
-                        }
-                    }
-                    if (lore.contains("%DeleteLore%")) {
-                        loreList.remove(i);
-                    } else {
-                        lore = lore.replace("&", "§");
-                        if (lore.contains("\n") || lore.contains("/n")) {
-                            loreList.remove(i);
-                            loreList.addAll(i, Arrays.asList(lore.replace("/n", "\n").split("\n")));
-                        } else {
-                            loreList.set(i, lore);
-                        }
-                    }
-                }
-                if (SXAttribute.isPlaceholder() && players.length > 0 && players[0] != null) {
-                    loreList = PlaceholderAPI.setPlaceholders(players[0], loreList);
-                }
-                meta.setLore(loreList);
-                item.setItemMeta(meta);
-            }
-            if (itemData.getEnchantList() != null && itemData.getEnchantList().size() > 0) {
-                List<String> enchantList = new ArrayList<>();
-                for (String enchantName : itemData.getEnchantList()) {
-                    enchantName = plugin.getRandomStringManager().processRandomString(itemName, enchantName, lockRandomMap);
-                    if (enchantName.contains("\n") || enchantName.contains("/n")) {
-                        enchantList.addAll(Arrays.asList(enchantName.replace("/n", "\n").split("\n")));
-                    } else {
-                        enchantList.add(enchantName);
-                    }
-                }
-                for (String enchantName : enchantList) {
-                    if (enchantName.contains(":") && enchantName.split(":").length > 1) {
-                        Enchantment enchant = Enchantment.getByName(enchantName.split(":")[0]);
-                        int level = Integer.valueOf(enchantName.split(":")[1].replaceAll("[^0-9]", ""));
-                        if (enchant != null) {
-                            if (level > 0) {
-                                meta.addEnchant(enchant, level, true);
-                            }
-                        } else {
-                            Bukkit.getConsoleSender().sendMessage(Message.getMessagePrefix() + "§c物品: §4" + itemName + " §c的附魔: §4" + enchantName.split(":")[0] + "§c 不是正常的附魔名称！");
-                        }
-                    }
-                }
-            }
-            item.setItemMeta(meta);
-            // 存储lockRandomMap
-            if (lockRandomMap.size() > 0) {
-                List<String> list = new ArrayList<>();
-                lockRandomMap.forEach((key, value) -> list.add(key + "§e§l§k|§e§r" + value));
-                plugin.getItemUtil().setNBTList(item, "LockRandomMap", list);
-            }
-            if (Config.isDamageGauges()) {
-                return plugin.getItemUtil().setAttackSpeed(item);
-            } else {
-                return item;
-            }
+    public ItemStack getItem(String itemName, Player player) {
+        ItemData itemData = itemMap.get(itemName);
+        if (itemData != null) {
+            return itemData.getItem(plugin,player);
         } else {
             return null;
         }
@@ -452,14 +300,15 @@ public class ItemDataManager {
         if (item != null && plugin.getItemUtil().isNBT(item, "Name")) {
             String dataName = plugin.getItemUtil().getNBT(item, "Name");
             // 判断配置内的名称是否相同
-            if (isItem(dataName)) {
+            ItemData itemData = itemMap.get(dataName);
+            if (itemData != null && !itemData.isImportItem()) {
                 // 获取物品的HashCode
                 int hasCode = Integer.valueOf(Objects.requireNonNull(plugin.getItemUtil().getNBT(item, "HasCode")));
-                ItemStack dataItem = getItem(dataName, player);
+                ItemStack dataItem = itemData.getItem(plugin, player);
                 assert dataItem != null;
                 ItemMeta dataMeta = dataItem.getItemMeta();
                 // 获取ItemMap物品的HashCode
-                int dataHasCode = Integer.valueOf(Objects.requireNonNull(plugin.getItemUtil().getNBT(dataItem, "HasCode")));
+                int dataHasCode = itemData.getHashCode();
                 // 如果两者的原始Lore数据相同
                 if (dataHasCode != hasCode) {
                     // 将物品的HasCode更新到现在的版本
@@ -499,6 +348,17 @@ public class ItemDataManager {
                 }
             }
         }
+    }
+
+
+    public void importItem(String itemName, ItemStack itemStack) throws IOException, InvalidConfigurationException {
+        YamlConfiguration itemData = new YamlConfiguration();
+        if (itemImportFile.exists() && !itemImportFile.isDirectory()) {
+            itemData.load(itemImportFile);
+        }
+        itemData.set(itemName,itemStack);
+        itemData.save(itemImportFile);
+        itemMap.put(itemName, new ItemData(itemName, itemStack, true, Collections.singletonList(String.valueOf(itemStack.getTypeId())), null, 0));
     }
 
     /**
@@ -593,7 +453,7 @@ public class ItemDataManager {
                 itemName = itemMeta.getDisplayName();
             }
             //搜索功能！
-            String str = "§b" + z + " - §a" + key + " §7(" + itemName + "§7)";
+            String str = "§b" + z + " - §a" + key + " §7(" + itemName + "§7)" + (itemData.isImportItem() ? " §8[§cImportItem§8]" : "");
             if (!str.contains(search)) {
                 continue;
             }

@@ -32,7 +32,7 @@ public class OnUpdateStatsListener implements Listener {
             int i = 0;
             for (ItemStack item : itemList) {
                 if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
-                    i = i+1;
+                    i = i + 1;
                 }
             }
             if (i == itemList.length) return;
@@ -92,6 +92,7 @@ public class OnUpdateStatsListener implements Listener {
         Player player = (Player) event.getPlayer();
         Inventory inv = event.getInventory();
         if (SXAttribute.isRpgInventory()) {
+            updateEquipmentData(player);
         } else {
             if (inv.getName().contains("container") || inv.getName().contains("Repair")) {
                 updateEquipmentData(player);
@@ -125,13 +126,14 @@ public class OnUpdateStatsListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        if ((event.getAction() + "").contains("RIGHT"))
+        if ((event.getAction() + "").contains("RIGHT")) {
             if (event.getItem() != null) {
                 String name = event.getItem().getType().toString();
                 if (name.contains("HELMET") || name.contains("CHESTPLATE") || name.contains("LEGGINGS") || name.contains("BOOTS")) {
                     updateEquipmentData(player);
                 }
             }
+        }
     }
 
     @EventHandler

@@ -31,7 +31,7 @@ import java.util.UUID;
  *
  * @author Saukiya
  */
-public class StatsCommand extends SubCommand implements Listener{
+public class StatsCommand extends SubCommand implements Listener {
 
     @Getter
     private final List<UUID> hideList = new ArrayList<>();
@@ -43,7 +43,7 @@ public class StatsCommand extends SubCommand implements Listener{
     @Override
     public void onEnable() {
         super.onEnable();
-        Bukkit.getPluginManager().registerEvents(this,getPlugin());
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
     }
 
     @Override
@@ -85,12 +85,7 @@ public class StatsCommand extends SubCommand implements Listener{
         }
         skullmeta.setLore(skullLoreList);
         skullmeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
-        // 1.12.2 以上的方法
-        if (SXAttribute.getVersionSplit()[1] >= 12) {
-            ((SkullMeta) skullmeta).setOwningPlayer(player);
-        } else if (SXAttribute.getVersionSplit()[1] >= 9) {
-            ((SkullMeta) skullmeta).setOwner(player.getName());
-        }
+        ((SkullMeta) skullmeta).setOwner(player.getName());
         skull.setItemMeta(skullmeta);
         for (int i = 0; i < 9; i++) {
             if (i == 4) {

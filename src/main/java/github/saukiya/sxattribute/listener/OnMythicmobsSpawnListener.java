@@ -52,7 +52,7 @@ public class OnMythicmobsSpawnListener implements Listener {
                         if (strSplitReplaceAll.length() == 1) {
                             position = Integer.valueOf(strSplitReplaceAll);
                         }
-                        ItemStack item = plugin.getItemDataManager().getItem(args2[1]);
+                        ItemStack item = plugin.getItemDataManager().getItem(args2[1], null);
                         if (item != null) {
                             if (position >= -1 && position < 5) {
                                 switch (position) {

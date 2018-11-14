@@ -34,31 +34,6 @@ public class SellCommand extends SubCommand implements Listener {
         super("sell", SenderType.PLAYER);
     }
 
-    @Override
-    public void onEnable() {
-        super.onEnable();
-        Bukkit.getPluginManager().registerEvents(this,getPlugin());
-    }
-
-    @Override
-    public void onCommand(SXAttribute plugin, CommandSender sender, String[] args) {
-        if (SXAttribute.isVault()) {
-            openSellInventory((Player) sender);
-        } else {
-            sender.sendMessage(Message.getMsg(Message.PLAYER__NO_VAULT));
-        }
-    }
-
-    @Override
-    public boolean hide() {
-        return !SXAttribute.isVault();
-    }
-
-    @Override
-    public List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args) {
-        return null;
-    }
-
     /**
      * 打开出售界面
      *
@@ -83,6 +58,31 @@ public class SellCommand extends SubCommand implements Listener {
         inv.setItem(22, enterItem);
 
         player.openInventory(inv);
+    }
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
+    }
+
+    @Override
+    public void onCommand(SXAttribute plugin, CommandSender sender, String[] args) {
+        if (SXAttribute.isVault()) {
+            openSellInventory((Player) sender);
+        } else {
+            sender.sendMessage(Message.getMsg(Message.PLAYER__NO_VAULT));
+        }
+    }
+
+    @Override
+    public boolean hide() {
+        return !SXAttribute.isVault();
+    }
+
+    @Override
+    public List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args) {
+        return null;
     }
 
     @EventHandler
@@ -163,6 +163,7 @@ public class SellCommand extends SubCommand implements Listener {
                     player.getInventory().addItem(item);
                 }
             }
+            inv.clear();
         }
     }
 }

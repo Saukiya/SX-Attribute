@@ -58,7 +58,7 @@ public class HealthAttribute extends SubAttribute {
 
     @Override
     public void onEnable() {
-        if (Bukkit.getPluginManager().getPlugin("SKillAPI") != null) {
+        if (Bukkit.getPluginManager().getPlugin("SkillAPI") != null) {
             skillAPI = true;
         }
     }

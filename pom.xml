@@ -6,7 +6,7 @@
 
     <groupId>github.saukiya</groupId>
     <artifactId>SX-Attribute</artifactId>
-    <version>1.3.8</version>
+    <version>2.0.2</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -26,18 +26,20 @@
     </repositories>
 
     <dependencies>
-        <!-- Lombok -->
+
+        <!-- lombok API-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
+            <groupId>local</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.18</version>
-            <scope>provided</scope>
+            <version>1.11.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/lombok.jar</systemPath>
         </dependency>
 
-        <!--Spigot API-->
+        <!-- Spigot API-->
         <dependency>
-            <groupId>org.local</groupId>
-            <artifactId>spigot</artifactId>
+            <groupId>local</groupId>
+            <artifactId>Spigot</artifactId>
             <version>1.11.2</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/spigot-1.12.2.jar</systemPath>
@@ -61,7 +63,7 @@
             <systemPath>${basedir}/libs/HolographicDisplays.jar</systemPath>
         </dependency>
 
-        <!-- Vault v1.6 -->
+        <!-- SkillAPI v3.108 -->
         <dependency>
             <groupId>local</groupId>
             <artifactId>SkillAPI</artifactId>
@@ -97,13 +99,13 @@
             <systemPath>${basedir}/libs/MythicArtifacts.jar</systemPath>
         </dependency>
 
-        <!-- RPGInventory v1.0.6 -->
+        <!-- RPGInventory v2.1.7 -->
         <dependency>
             <groupId>local</groupId>
             <artifactId>RPGInventory</artifactId>
-            <version>1.0.6</version>
+            <version>2.1.7</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/RPGInventory-1.0.6.jar</systemPath>
+            <systemPath>${basedir}/libs/RPGInventory-2.1.7.jar</systemPath>
         </dependency>
 
         <!-- SX-Seal v1.0.0 -->

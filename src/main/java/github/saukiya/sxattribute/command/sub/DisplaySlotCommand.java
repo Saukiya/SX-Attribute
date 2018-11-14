@@ -31,7 +31,7 @@ public class DisplaySlotCommand extends SubCommand implements Listener {
     @Override
     public void onEnable() {
         super.onEnable();
-        Bukkit.getPluginManager().registerEvents(this,getPlugin());
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
     }
 
     @Override

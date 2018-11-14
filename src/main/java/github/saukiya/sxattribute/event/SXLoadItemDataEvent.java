@@ -4,6 +4,7 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.condition.SXConditionType;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -16,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Saukiya
  */
 
-public class UpdateStatsEvent extends Event {
+public class SXLoadItemDataEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     @Getter
@@ -30,11 +31,12 @@ public class UpdateStatsEvent extends Event {
     @Getter
     private ItemStack[] items;
 
-    public UpdateStatsEvent(SXConditionType type, LivingEntity entity, SXAttributeData attributeData, ItemStack... items) {
+    public SXLoadItemDataEvent(SXConditionType type, LivingEntity entity, SXAttributeData attributeData, ItemStack... items) {
         this.type = type;
         this.entity = entity;
         this.attributeData = attributeData;
         this.items = items;
+        Bukkit.getPluginManager().callEvent(this);
     }
 
     public static HandlerList getHandlerList() {

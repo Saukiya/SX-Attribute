@@ -35,31 +35,6 @@ public class RepairCommand extends SubCommand implements Listener {
         super("repair", SenderType.PLAYER);
     }
 
-    @Override
-    public void onEnable() {
-        super.onEnable();
-        Bukkit.getPluginManager().registerEvents(this,getPlugin());
-    }
-
-    @Override
-    public void onCommand(SXAttribute plugin, CommandSender sender, String[] args) {
-        if (SXAttribute.isVault()) {
-            openRepairInventory((Player) sender);
-        } else {
-            sender.sendMessage(Message.getMsg(Message.PLAYER__NO_VAULT));
-        }
-    }
-
-    @Override
-    public boolean hide() {
-        return !SXAttribute.isVault();
-    }
-
-    @Override
-    public List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args) {
-        return null;
-    }
-
     /**
      * 打开修复界面
      *
@@ -109,6 +84,31 @@ public class RepairCommand extends SubCommand implements Listener {
         inv.setItem(25, enterItem);
 
         player.openInventory(inv);
+    }
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
+    }
+
+    @Override
+    public void onCommand(SXAttribute plugin, CommandSender sender, String[] args) {
+        if (SXAttribute.isVault()) {
+            openRepairInventory((Player) sender);
+        } else {
+            sender.sendMessage(Message.getMsg(Message.PLAYER__NO_VAULT));
+        }
+    }
+
+    @Override
+    public boolean hide() {
+        return !SXAttribute.isVault();
+    }
+
+    @Override
+    public List<String> onTabComplete(SXAttribute plugin, CommandSender sender, String[] args) {
+        return null;
     }
 
     @EventHandler
@@ -194,6 +194,7 @@ public class RepairCommand extends SubCommand implements Listener {
             if (item != null && !item.getType().equals(Material.AIR)) {
                 player.getInventory().addItem(item);
             }
+            inv.clear();
         }
     }
 }

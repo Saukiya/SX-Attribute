@@ -43,8 +43,10 @@ public class AttributeListCommand extends SubCommand {
                         list.add("&7- " + type.getType() + " &8(&7" + type.getName() + "&8)");
                     }
                     list.add("&bPlaceholders: ");
-                    for (String placeName : entry.getValue().getPlaceholders()) {
-                        list.add("&7- %sx_" + placeName + "% : " + entry.getValue().getPlaceholder((Player) sender, placeName));
+                    if (entry.getValue().getPlaceholders() != null) {
+                        for (String placeName : entry.getValue().getPlaceholders()) {
+                            list.add("&7- %sx_" + placeName + "% : " + entry.getValue().getPlaceholder((Player) sender, placeName));
+                        }
                     }
                     list.add("&bValue: " + entry.getValue().getValue());
                     TextComponent tc = Message.getTextComponent(message, null, list);
