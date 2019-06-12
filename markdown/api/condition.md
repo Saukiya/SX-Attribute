@@ -1,25 +1,25 @@
 ## SX-Attribute 开发 - 注册条件
 
  [开发总览](./overview.md)&nbsp;&nbsp;
- [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)&nbsp;&nbsp; 
+ [JavaDoc](https://saukiya.github.io/SX-Attribute-backup/javadoc/index.html)&nbsp;&nbsp; 
  [注册属性](./attribute.md)&nbsp;&nbsp; 
  [注册条件](./condition.md)&nbsp;&nbsp; 
- [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+ [API](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 <br>
 
 SubCondition 介绍
 --
 
-* [SubCondition](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java) 只是单个对象，存储于 [SXConditionManager](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java) 并管理
-* 比较特殊的 Condition 标签 - [DurabilityCondition](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/sub/DurabilityCondition.java)
+* [SubCondition](https://github.com/Saukiya/SX-Attribute-backup/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SubCondition.java) 只是单个对象，存储于 [SXConditionManager](https://github.com/Saukiya/SX-Attribute-backup/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/SXConditionManager.java) 并管理
+* 比较特殊的 Condition 标签 - [DurabilityCondition](https://github.com/Saukiya/SX-Attribute-backup/blob/master/src/main/java/github/saukiya/sxattribute/data/condition/sub/DurabilityCondition.java)
 * SubCondition 不存储于 SXAttributeData
-* [Code](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/condition)
+* [Code](https://github.com/Saukiya/SX-Attribute-backup/tree/master/src/main/java/github/saukiya/sxattribute/data/condition)
 
 SubCondition 实现
 --
 
-* 首先我们创建一个实现类，测试类为 `TestCondition` ，然后让他继承 [SubCondition](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)，
+* 首先我们创建一个实现类，测试类为 `TestCondition` ，然后让他继承 [SubCondition](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/data/condition/SubCondition.html)，
 * 默认需要编写一个构造器和一个方法，你也可以覆盖其他三个方法
 * 下面我们进行详细的介绍&nbsp;&nbsp;~~人生赢家复读机~~
 
@@ -123,6 +123,6 @@ public class Plugin extends JavaPlugin implements Listener{
 ```
 
 
-#### 具体使用方法，可参考SX条件源码:   [Condition](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/condition)
+#### 具体使用方法，可参考SX条件源码:   [Condition](https://github.com/Saukiya/SX-Attribute-backup/tree/master/src/main/java/github/saukiya/sxattribute/data/condition)
 
 <br>

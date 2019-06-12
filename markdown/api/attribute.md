@@ -1,26 +1,26 @@
 ## SX-Attribute 开发 - 注册属性
 
  [开发总览](./overview.md)&nbsp;&nbsp;
- [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)&nbsp;&nbsp; 
+ [JavaDoc](https://saukiya.github.io/SX-Attribute-backup/javadoc/index.html)&nbsp;&nbsp; 
  [注册属性](./attribute.md)&nbsp;&nbsp; 
  [注册条件](./condition.md)&nbsp;&nbsp; 
- [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+ [API](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 <br>
 
 SubAttribute
 --
 
-* 每个 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html) 都会成为 [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 的内部对象
-* [SXAttributeData](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 交给 [SXAttributeManager](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java) 管理
+* 每个 [SubAttribute](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html) 都会成为 [SXAttributeData](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 的内部对象
+* [SXAttributeData](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeData.html) 交给 [SXAttributeManager](https://github.com/Saukiya/SX-Attribute-backup/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/SXAttributeManager.java) 管理
 * 注意，这不是属性管理器，只是一个单独的对象
-* 比较特别的属性示范 - [MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)
-* [Code](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
+* 比较特别的属性示范 - [MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute-backup/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)
+* [Code](https://github.com/Saukiya/SX-Attribute-backup/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
 
 属性实现
 --
 
-* 首先我们创建一个实现类，测试类为 `TestAttribute` ，然后让他继承 [SubAttribute](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)，
+* 首先我们创建一个实现类，测试类为 `TestAttribute` ，然后让他继承 [SubAttribute](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/data/attribute/SubAttribute.html)，
 * 默认需要编写一个构造器和五个方法，你也可以覆盖其他方法
 * 下面我们进行详细的介绍
 
@@ -30,11 +30,11 @@ SubAttribute
 * 构造器需要申明:
   * 属性名: 这个属性的简称
   * 属性长度: SubAttribute 内置了一个double数组，根据情况采用不同长度，例如暴击(几率/伤害)需要的长度为2
-  * 属性类型: [SXAttributeType](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html) 具体分为以下四种，可以给属性分配多个 SXAttributeType 用于不同事件
+  * 属性类型: [SXAttributeType](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/data/attribute/SXAttributeType.html) 具体分为以下四种，可以给属性分配多个 SXAttributeType 用于不同事件
     * `SXAttributeType.DAMAGE` 攻击型属性，执行攻击方的 eventMethod - DamageEventData
     * `SXAttributeType.DEFENCE` 防御型属性，执行防御方的 eventMethod - DamageEventData
     * `SXAttributeType.UPDATE` 更新型属性，执行实体的 eventMethod - UpdateEventData
-    * `SXAttributeType.OTHER` 自定义属性，可以不存数据，也不参与SX内部事件，例如 <abbr title="一个内部控制 Mythicmobs 掉落的特殊属性">[MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)</abbr>
+    * `SXAttributeType.OTHER` 自定义属性，可以不存数据，也不参与SX内部事件，例如 <abbr title="一个内部控制 Mythicmobs 掉落的特殊属性">[MythicmobsDropAttribute](https://github.com/Saukiya/SX-Attribute-backup/blob/master/src/main/java/github/saukiya/sxattribute/data/attribute/sub/other/MythicmobsDropAttribute.java)</abbr>
 * 构造器注意事项:
   * SXAttributeData 会通过 `class.newInstance()` 的方式实例化一个新属性对象
   * 所以属性构造器默认不能带成员变量 例如 `new TestAttribute() - 无参数`
@@ -177,6 +177,6 @@ public class Plugin extends JavaPlugin implements Listener{
 ```
 
 
-#### 具体使用方法，可参考SX属性源码:   [Attribute](https://github.com/Saukiya/SX-Attribute/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
+#### 具体使用方法，可参考SX属性源码:   [Attribute](https://github.com/Saukiya/SX-Attribute-backup/tree/master/src/main/java/github/saukiya/sxattribute/data/attribute)
 
 <br>

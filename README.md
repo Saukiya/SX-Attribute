@@ -12,7 +12,7 @@
 <a href="#development">开发文档</a>&nbsp;&nbsp;
 <a href="#license">开源条款</a>
 </h5>
-  <h5 align="center">修改日期: 2018/09/04</h5>
+  <h5 align="center">该版本已过时 (Version 2.0.2)</h5>
   <br>
   <br>
   <br>
@@ -186,10 +186,10 @@
 ## 开发文档 Development
 
 * [开发总览](./markdown/api/overview.md)
-* [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)
+* [JavaDoc](https://saukiya.github.io/SX-Attribute-backup/javadoc/index.html)
 * [注册属性](./markdown/api/attribute.md)
 * [注册条件](./markdown/api/condition.md)
-* [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+* [API](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 
 <br>

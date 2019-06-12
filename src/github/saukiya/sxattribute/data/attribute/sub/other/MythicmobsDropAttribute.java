@@ -5,7 +5,6 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.util.Message;
-import github.saukiya.sxseal.SXSeal;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import io.lumine.xikage.mythicmobs.mobs.MythicMob;
 import org.bukkit.Bukkit;
@@ -57,9 +56,6 @@ public class MythicmobsDropAttribute extends SubAttribute implements Listener {
                         }
                         ItemStack item = SXAttribute.getApi().getItem(args[1], (Player) event.getKiller());
                         if (item != null) {
-                            if (str.contains("seal") && sxSeal) {
-                                SXSeal.getApi().sealItem(item);
-                            }
                             item.setAmount(amount);
                             drops.add(item.clone());
                         } else {

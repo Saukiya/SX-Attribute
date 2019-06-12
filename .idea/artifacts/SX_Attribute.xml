@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="SX-Attribute">
-    <output-path>$PROJECT_DIR$/../../../服务端/Foxcraft/plugins</output-path>
-    <root id="archive" name="SX-Attribute.jar">
-      <element id="module-output" name="SX-Attribute" />
-    </root>
-  </artifact>
-</component>
