@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'com.rabbitown'
+version '2.0.3'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url 'https://repo.codemc.io/repository/maven-public/' }
+    maven { url 'https://mvn.lumine.io/repository/maven-public/' }
+    maven { url 'http://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    implementation 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.3'
+    implementation 'io.lumine.xikage:MythicMobs:4.9.2'
+    implementation 'me.clip:placeholderapi:2.10.6'
+    implementation 'com.github.MilkBowl:VaultAPI:1.7'
+    implementation fileTree('libs')
+
+    implementation 'com.google.code.findbugs:annotations:3.0.1'
+    implementation 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include 'plugin.yml' expand 'version': project.version
+    }
+}
