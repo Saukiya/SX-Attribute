@@ -1,0 +1,28 @@
+name: SX-Attribute
+main: github.saukiya.sxattribute.SXAttribute
+version: $version
+author: Saukiya
+api-version: 1.13
+
+depend:
+- SX-Item
+
+softdepend:
+- HolographicDisplays
+- PlaceholderAPI
+- RPGInventory
+- MythicMobs
+- TabooLib
+- SkillAPI
+- Vault
+
+commands:
+  sxattribute:
+    aliases:
+    - sx
+
+permissions:
+  sx-attribute.use:
+    default: true
+  sx-attribute.stats:
+    default: true
