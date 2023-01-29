@@ -1,14 +1,14 @@
 package github.saukiya.sxattribute.command.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.command.SenderType;
-import github.saukiya.sxattribute.command.SubCommand;
+import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.PlaceholderUtil;
+import github.saukiya.sxitem.command.SenderType;
+import github.saukiya.sxitem.data.item.ItemManager;
 import lombok.Getter;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,13 +32,15 @@ import java.util.UUID;
  *
  * @author Saukiya
  */
-public class StatsCommand extends SubCommand implements Listener {
+public class StatsCommand extends SXAttributeCommand implements Listener {
+
+    private static final InventoryHolder holder = () -> null;
 
     @Getter
     private final List<UUID> hideList = new ArrayList<>();
 
     public StatsCommand() {
-        super("stats");
+        super("stats", 0);
         setType(SenderType.PLAYER);
     }
 
@@ -56,12 +59,12 @@ public class StatsCommand extends SubCommand implements Listener {
 
     public void openStatsInventory(Player player, Player... openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
-        Inventory inv = Bukkit.createInventory(null, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
-        ItemStack stainedGlass = new ItemStack(Material.STAINED_GLASS_PANE);
+        Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
+        ItemStack stainedGlass = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§c");
         stainedGlass.setItemMeta(glassMeta);
-        ItemStack skull = new ItemStack(Material.SKULL_ITEM);
+        ItemStack skull = new ItemStack(ItemManager.getMaterial("397"));
         ItemMeta skullMeta = skull.getItemMeta();
         List<String> skullLoreList = new ArrayList<>();
         if (hideList.contains(player.getUniqueId())) {
@@ -70,10 +73,7 @@ public class StatsCommand extends SubCommand implements Listener {
             skullLoreList.add(Message.getMsg(Message.INVENTORY__STATS__HIDE_ON));
         }
         skullLoreList.addAll(process(player, attributeData, Message.getStringList(Message.INVENTORY__STATS__SKULL_LORE)));
-        if (SXAttribute.isPlaceholder()) {
-            skullLoreList = PlaceholderAPI.setPlaceholders(player, skullLoreList);
-        }
-        skullMeta.setLore(skullLoreList);
+        skullMeta.setLore(PlaceholderUtil.setPlaceholders(player, skullLoreList));
         skullMeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
         if (Config.isCommandStatsDisplaySkullSkin()) {
             ((SkullMeta) skullMeta).setOwner(player.getName());
@@ -142,9 +142,7 @@ public class StatsCommand extends SubCommand implements Listener {
             }
             list.set(i, lore);
         }
-        if (SXAttribute.isPlaceholder()) {
-            list = PlaceholderAPI.setPlaceholders(player, list);
-        }
+        list = PlaceholderUtil.setPlaceholders(player, list);
         if (!hideList.contains(player.getUniqueId())) {
             for (int i = list.size() - 1; i >= 0; i--) {
                 String lore = list.get(i).replaceAll("§+[0-9]", "");
@@ -159,7 +157,7 @@ public class StatsCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryClickStatsEvent(InventoryClickEvent event) {
-        if (!event.isCancelled() && Message.getMsg(Message.INVENTORY__STATS__NAME).equals(event.getInventory().getName())) {
+        if (!event.isCancelled() && event.getInventory().getHolder().equals(holder)) {
             if (event.getRawSlot() < 0) {
                 event.getView().getPlayer().closeInventory();
                 return;

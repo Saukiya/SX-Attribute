@@ -3,16 +3,14 @@ package github.saukiya.sxattribute.util;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.sxitem.SXItem;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlaceholderUtil {
@@ -23,12 +21,32 @@ public class PlaceholderUtil {
 
     public static void setup() {
         Bukkit.getScheduler().runTaskTimer(SXAttribute.getInst(), ()-> dataMap.clear(), 15, 15);
-        try {
-            new Placeholder().register();
-        } catch (Exception e) {
-            SXItem.getInst().getLogger().warning("Placeholder Error");
-            enabled = false;
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            try {
+                new Placeholder().register();
+                enabled = true;
+            } catch (Exception e) {
+                SXAttribute.getInst().getLogger().warning("Placeholder error");
+                enabled = false;
+            }
+            SXAttribute.getInst().getLogger().info("PlaceholderHelper Enabled");
+        } else {
+            SXAttribute.getInst().getLogger().info("PlaceholderHelper Disable");
         }
+    }
+
+    public static List<String> setPlaceholders(Player player, List<String> list) {
+        if (list == null) return null;
+        if (!enabled || player == null) return new ArrayList<>(list);
+
+        return PlaceholderAPI.setPlaceholders(player, list);
+    }
+
+    public static String setPlaceholders(Player player, String text) {
+        if (text == null) return null;
+        if (!enabled || player == null) return text;
+
+        return PlaceholderAPI.setPlaceholders(player, text);
     }
 
     public static String onPlaceholderRequest(Player player, String string, SXAttributeData attributeData) {

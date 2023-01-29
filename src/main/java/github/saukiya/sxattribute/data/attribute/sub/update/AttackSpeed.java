@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxitem.data.item.IGenerator;
 import github.saukiya.sxitem.event.SXItemSpawnEvent;
 import github.saukiya.sxitem.util.ItemUtil;
+import github.saukiya.sxitem.util.NMS;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -68,7 +69,7 @@ public class AttackSpeed extends SubAttribute implements Listener {
         if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player) {
             Player player = (Player) ((UpdateData) eventData).getEntity();
 
-            if (SXAttribute.getVersionSplit()[1] > 8) {
+            if (NMS.compareTo(1,9,0) >= 0) {
                 player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(getConfig().getDouble("AttackSpeed.Default") * (100 + values[0]) / 100);
             } else {
                 player.setWalkSpeed((float) (values[0] / 500.0D));

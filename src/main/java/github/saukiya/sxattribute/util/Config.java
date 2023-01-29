@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.util;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxitem.util.NMS;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -9,7 +10,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class Config {
-    public static final String QAQ = "装逼启动信息";
     public static final String COMMAND_STATS_DISPLAY_SKULL_SKIN = "CommandStatsDisplaySkullSkin";
     public static final String DECIMAL_FORMAT = "DecimalFormat";
 
@@ -113,7 +113,7 @@ public class Config {
         SXAttribute.setDf(new DecimalFormat(config.getString(DECIMAL_FORMAT)));
         commandStatsDisplaySkullSkin = config.getBoolean(COMMAND_STATS_DISPLAY_SKULL_SKIN);
         healthNameVisible = config.getBoolean(HEALTH_NAME_ENABLED);
-        healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED) && SXAttribute.getVersionSplit()[1] >= 9;
+        healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED) && NMS.compareTo(1,9,0) >= 0;
         bossBarBlackCauseList = config.getStringList(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST);
         holographic = config.getBoolean(HOLOGRAPHIC_ENABLED);
         holographicBlackList = config.getStringList(HOLOGRAPHIC_BLACK_CAUSE_LIST);

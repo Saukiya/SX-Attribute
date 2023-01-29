@@ -4,10 +4,10 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.openjdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import javax.script.*;
 import java.io.File;
@@ -162,7 +162,7 @@ public class JSAttribute extends SubAttribute {
     @Override
     public double calculationCombatPower(double[] values) {
         try {
-            return Double.valueOf(invocable.invokeFunction("calculationCombatPower", values).toString());
+            return Double.parseDouble(invocable.invokeFunction("calculationCombatPower", values).toString());
         } catch (ScriptException | NoSuchMethodException e) {
             if (Boolean.TRUE.equals(script.get("calculationCombatPower_debug"))) {
                 e.printStackTrace();

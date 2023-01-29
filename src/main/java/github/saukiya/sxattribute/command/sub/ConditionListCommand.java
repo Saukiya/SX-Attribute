@@ -1,11 +1,9 @@
 package github.saukiya.sxattribute.command.sub;
 
-import github.saukiya.sxattribute.command.SubCommand;
+import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
-import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxitem.util.MessageUtil;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -13,10 +11,10 @@ import org.bukkit.command.CommandSender;
  *
  * @author Saukiya
  */
-public class ConditionListCommand extends SubCommand {
+public class ConditionListCommand extends SXAttributeCommand {
 
     public ConditionListCommand() {
-        super("conditionList");
+        super("conditionList", 90);
     }
 
     @Override

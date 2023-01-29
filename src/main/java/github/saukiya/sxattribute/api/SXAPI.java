@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxitem.SXItem;
+import github.saukiya.sxitem.util.NMS;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -226,7 +227,7 @@ public class SXAPI {
     }
 
     public double getMaxHealth(LivingEntity entity) {
-        return SXAttribute.getVersionSplit()[1] > 8 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
+        return NMS.compareTo(1,9,0) >= 0 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
     }
 
     /**

@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxitem.util.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -67,7 +68,7 @@ public class ListenerDamage implements Listener {
         attackData = attackData != null ? attackData : SXAttribute.getAttributeManager().getEntityData(attackEntity);
 
         EntityEquipment eq = attackEntity.getEquipment();
-        ItemStack mainHand = SXAttribute.getVersionSplit()[1] > 8 ? eq.getItemInMainHand() : eq.getItemInHand();
+        ItemStack mainHand = NMS.compareTo(1,9,0) >= 0 ? eq.getItemInMainHand() : eq.getItemInHand();
         if (mainHand != null) {
             if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                 if (attackEntity instanceof Player && !((HumanEntity) attackEntity).getGameMode().equals(GameMode.CREATIVE)) {

@@ -15,7 +15,6 @@ import java.util.List;
  *
  * @author Saukiya
  */
-@AllArgsConstructor
 @Getter
 @ToString
 public class SXPreLoadItemEvent extends Event {
@@ -25,6 +24,12 @@ public class SXPreLoadItemEvent extends Event {
     private LivingEntity entity;
 
     private List<PreLoadItem> itemList;
+
+    public SXPreLoadItemEvent(LivingEntity entity, List<PreLoadItem> itemList) {
+        super(true);
+        this.entity = entity;
+        this.itemList = itemList;
+    }
 
     public HandlerList getHandlers() {
         return handlers;

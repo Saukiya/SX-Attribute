@@ -1,7 +1,7 @@
 package github.saukiya.sxattribute.command.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.command.SubCommand;
+import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.event.SXReloadEvent;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
@@ -19,10 +19,10 @@ import java.util.UUID;
  *
  * @author Saukiya
  */
-public class ReloadCommand extends SubCommand {
+public class ReloadCommand extends SXAttributeCommand {
 
     public ReloadCommand() {
-        super("reload");
+        super("reload", 100);
     }
 
     @Override

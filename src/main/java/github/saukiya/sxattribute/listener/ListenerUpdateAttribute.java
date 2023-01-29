@@ -1,6 +1,9 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.command.sub.RepairCommand;
+import github.saukiya.sxattribute.command.sub.SellCommand;
+import github.saukiya.sxitem.util.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Arrow;
@@ -21,7 +24,7 @@ import java.util.Arrays;
 public class ListenerUpdateAttribute implements Listener {
 
     public ListenerUpdateAttribute() {
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (NMS.compareTo(1,9,0) >= 0) {
             Bukkit.getPluginManager().registerEvents(new VersionListener(), SXAttribute.getInst());
         }
     }
@@ -69,7 +72,7 @@ public class ListenerUpdateAttribute implements Listener {
         if (SXAttribute.isRpgInventory()) {
             updateEquipmentData(player);
         } else {
-            if (inv.getName().contains("container") || inv.getName().contains("Repair")) {
+            if (inv.getHolder().equals(player) || inv.getHolder().equals(RepairCommand.holder) || inv.getHolder().equals(SellCommand.holder)) {
                 updateEquipmentData(player);
             }
         }
@@ -116,21 +119,18 @@ public class ListenerUpdateAttribute implements Listener {
     void onEntitySpawnEvent(CreatureSpawnEvent event) {
         LivingEntity entity = event.getEntity();
 
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (NMS.compareTo(1,9,0) >= 0) {
             entity.setInvulnerable(true);
         }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (entity != null && !entity.isDead()) {
-                    SXAttribute.getAttributeManager().loadEntityData(entity);
-                    SXAttribute.getAttributeManager().attributeUpdateEvent(entity);
-                    if (SXAttribute.getVersionSplit()[1] > 8) {
-                        entity.setInvulnerable(false);
-                    }
+        Bukkit.getScheduler().runTaskLaterAsynchronously(SXAttribute.getInst(), () -> {
+            if (entity != null && !entity.isDead()) {
+                SXAttribute.getAttributeManager().loadEntityData(entity);
+                SXAttribute.getAttributeManager().attributeUpdateEvent(entity);
+                if (NMS.compareTo(1,9,0) >= 0) {
+                    entity.setInvulnerable(false);
                 }
             }
-        }.runTaskLaterAsynchronously(SXAttribute.getInst(), 16);
+        }, 10);
     }
 
     @EventHandler

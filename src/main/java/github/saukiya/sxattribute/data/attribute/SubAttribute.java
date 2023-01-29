@@ -160,7 +160,7 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
             int index = IntStream.range(0, attributes.size()).filter(i -> attributes.get(i).priority == this.getPriority()).findFirst().orElse(-1);
             if (index < 0) {
                 attributes.add(this);
-                SXAttribute.getInst().getLogger().info("Attribute >> Register [" + getPlugin().getName() + "|" + getName() + "] To Priority " + this.getPriority() + " !");
+                SXAttribute.getInst().getLogger().config("Attribute >> Register [" + getPlugin().getName() + "|" + getName() + "] To Priority " + this.getPriority() + " !");
             } else {
                 SubAttribute sub = attributes.set(index, this);
                 SXAttribute.getInst().getLogger().info("Attribute >> The [" + getPlugin().getName() + "|" + getName() + "] Cover To [" + sub.getPlugin().getName() + "|" + sub.getName() + "] !");

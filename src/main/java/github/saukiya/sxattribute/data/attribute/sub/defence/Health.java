@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
+import github.saukiya.sxitem.util.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -55,7 +56,7 @@ public class Health extends SubAttribute {
             }
             double maxHealth = values[0] + getSkillAPIHealth(player);
             if (player.getHealth() > maxHealth) player.setHealth(maxHealth);
-            if (SXAttribute.getVersionSplit()[1] > 8) {
+            if (NMS.compareTo(1,9,0) >= 0) {
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
             } else {
                 player.setMaxHealth(maxHealth);

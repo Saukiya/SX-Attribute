@@ -5,7 +5,7 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
-import me.clip.placeholderapi.PlaceholderAPI;
+import github.saukiya.sxattribute.util.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,7 +27,7 @@ public class Command extends SubAttribute implements Listener {
 
     private CommandRunnable[] commandRunnables;
 
-    private CommandSender sxSender = new SXSender();
+    private CommandSender sxSender = new SXCommandSender();
 
     public Command() {
         super(SXAttribute.getInst(), 0, AttributeType.UPDATE);
@@ -178,7 +178,7 @@ public class Command extends SubAttribute implements Listener {
                 if (command.startsWith("delay ")) {
                     delay = Integer.parseInt(command.substring(6));
                 } else {
-                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sxSender, (SXAttribute.isPlaceholder() ? PlaceholderAPI.setPlaceholders(player, command) : command).replace("%player%", player.getName())), delay);
+                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sxSender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName()))), delay);
                 }
             }
         }
@@ -193,7 +193,7 @@ public class Command extends SubAttribute implements Listener {
                         for (String playerName : players) {
                             Player player = Bukkit.getPlayerExact(playerName);
                             if (player != null) {
-                                Bukkit.dispatchCommand(sxSender, (SXAttribute.isPlaceholder() ? PlaceholderAPI.setPlaceholders(player, command) : command).replace("%player%", player.getName()));
+                                Bukkit.dispatchCommand(sxSender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName())));
                             }
                         }
                     }, delay);

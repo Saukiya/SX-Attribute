@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.data.condition;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxitem.util.NMS;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
@@ -106,7 +107,7 @@ public abstract class SubCondition implements Comparable<SubCondition> {
             int index = IntStream.range(0, conditions.size()).filter(i -> conditions.get(i).priority == this.getPriority()).findFirst().orElse(-1);
             if (index < 0) {
                 conditions.add(this);
-                SXAttribute.getInst().getLogger().info("Condition >> Register [" + getPlugin().getName() + "|" + getName() + "] To Priority " + getPriority() + " !");
+                SXAttribute.getInst().getLogger().config("Condition >> Register [" + getPlugin().getName() + "|" + getName() + "] To Priority " + getPriority() + " !");
             } else {
                 SubCondition sub = conditions.set(index, this);
                 SXAttribute.getInst().getLogger().info("Condition >> The [" + getPlugin().getName() + "|" + getName() + "] Cover To [" + sub.getPlugin().getName() + "|" + sub.getName() + "] !");
@@ -195,6 +196,6 @@ public abstract class SubCondition implements Comparable<SubCondition> {
      * @return boolean
      */
     public static boolean isUnbreakable(ItemMeta meta) {
-        return SXAttribute.getVersionSplit()[1] >= 11 ? meta.isUnbreakable() : meta.spigot().isUnbreakable();
+        return NMS.compareTo(1,11,0) >= 0 ? meta.isUnbreakable() : meta.spigot().isUnbreakable();
     }
 }

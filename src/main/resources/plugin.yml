@@ -7,6 +7,9 @@ api-version: 1.13
 depend:
 - SX-Item
 
+libraries:
+- org.openjdk.nashorn:nashorn-core:15.3
+
 softdepend:
 - HolographicDisplays
 - PlaceholderAPI
@@ -17,7 +20,7 @@ softdepend:
 - Vault
 
 commands:
-  sxattribute:
+  SxAttribute:
     aliases:
     - sx
 

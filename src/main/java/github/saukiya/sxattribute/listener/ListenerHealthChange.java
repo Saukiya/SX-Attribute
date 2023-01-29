@@ -5,6 +5,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxitem.util.NMS;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import lombok.Getter;
@@ -150,7 +151,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
             }
             if (damager != null) {
                 // BossBar
-                if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.getVersionSplit()[1] > 9 && !Config.getBossBarBlackCauseList().contains(event.getCause().name()) && !isMythicBossBar(entity)) {
+                if (Config.isHealthBossBar() && damager instanceof Player && NMS.compareTo(1,9,0) >= 0 && !Config.getBossBarBlackCauseList().contains(event.getCause().name()) && !isMythicBossBar(entity)) {
                     if (bossBarData == null) {
                         bossBarData = new BossBarData(entity, name, maxHealth, progress);
                         bossBarData.setProgress(progress);
@@ -242,10 +243,11 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
     }
 
     public boolean isMythicBossBar(LivingEntity entity) {
-        if (SXAttribute.isMythicMobs()) {
-            ActiveMob activeMob;
-            return (activeMob = MythicMobs.inst().getMobManager().getMythicMobInstance(entity)) != null && activeMob.getType().usesBossBar();
-        }
+        // TODO 对接SX-Item还是自己接？ (预计未来是要自己接的捏)
+//        if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
+//            ActiveMob activeMob;
+//            return (activeMob = MythicMobs.inst().getMobManager().getMythicMobInstance(entity)) != null && activeMob.getType().usesBossBar();
+//        }
         return false;
     }
 

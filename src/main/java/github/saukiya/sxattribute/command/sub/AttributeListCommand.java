@@ -1,14 +1,12 @@
 package github.saukiya.sxattribute.command.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.command.SubCommand;
+import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxitem.util.ComponentBuilder;
 import github.saukiya.sxitem.util.MessageUtil;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -20,10 +18,10 @@ import java.util.List;
  *
  * @author Saukiya
  */
-public class AttributeListCommand extends SubCommand {
+public class AttributeListCommand extends SXAttributeCommand {
 
     public AttributeListCommand() {
-        super("attributeList");
+        super("attributeList", 80);
     }
 
     @Override

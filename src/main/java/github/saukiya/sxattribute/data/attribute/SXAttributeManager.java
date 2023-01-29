@@ -10,6 +10,7 @@ import github.saukiya.sxattribute.event.SXLoadAttributeEvent;
 import github.saukiya.sxattribute.event.SXPreLoadItemEvent;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxitem.SXItem;
+import github.saukiya.sxitem.util.NMS;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -220,7 +221,7 @@ public class SXAttributeManager implements Listener {
         if (entity.getEquipment().getItemInHand() != null && !entity.getEquipment().getItemInHand().getType().equals(Material.AIR)) {
             preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, entity.getEquipment().getItemInHand()));
         }
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (NMS.compareTo(1,9,0) >= 0) {
             if (entity.getEquipment().getItemInOffHand() != null && !entity.getEquipment().getItemInOffHand().getType().equals(Material.AIR)) {
                 preItemList.add(new PreLoadItem(EquipmentType.OFF_HAND, entity.getEquipment().getItemInOffHand()));
             }

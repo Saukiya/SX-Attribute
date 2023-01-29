@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxitem.event.SXItemSpawnEvent;
 import github.saukiya.sxitem.event.SXItemUpdateEvent;
+import github.saukiya.sxitem.util.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -96,7 +97,7 @@ public class Durability extends SubCondition implements Listener {
                         if (Config.isClearItemDurability()) {
                             Bukkit.getPluginManager().callEvent(new PlayerItemBreakEvent(player, item));
                             // 当耐久为0时物品消失 并取消属性
-                            if (SXAttribute.getVersionSplit()[1] > 10) {
+                            if (NMS.compareTo(1,10,0) >= 0) {
                                 item.setAmount(0);
                             } else {
                                 clearItem(player, item);

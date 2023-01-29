@@ -11,6 +11,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxitem.util.NMS;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -27,7 +28,6 @@ import org.spigotmc.SpigotConfig;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 /**
  * 伤害
@@ -83,12 +83,12 @@ public class Damage extends SubAttribute {
 
             if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 EntityEquipment eq = attackEntity.getEquipment();
-                ItemStack mainHand = SXAttribute.getVersionSplit()[1] > 8 ? eq.getItemInMainHand() : eq.getItemInHand();
+                ItemStack mainHand = NMS.compareTo(1,9,0) >= 0 ? eq.getItemInMainHand() : eq.getItemInHand();
                 if (mainHand != null) {
                     if (Material.BOW.equals(mainHand.getType()) && !Config.isBowCloseRangeAttack()) {
                         SXAttributeData sxAttributeData = SXAttribute.getApi().loadItemData(attackEntity, new PreLoadItem(EquipmentType.MAIN_HAND, mainHand));
 
-                        if (SXAttribute.getVersionSplit()[1] > 8) {
+                        if (NMS.compareTo(1,9,0) >= 0) {
                             damageData.setDamage(event.getDamage() - (values[0] / event.getDamage() * sxAttributeData.getValues(getClass().getSimpleName())[0]));
                         }
                         values = damageData.getAttackerData().take(sxAttributeData).getValues(getClass().getSimpleName());
@@ -97,11 +97,11 @@ public class Damage extends SubAttribute {
             }
 
 
-            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || SXAttribute.getVersionSplit()[1] < 9 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
+            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || NMS.compareTo(1,9,0) < 0 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
 
             damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVE : TYPE_PVP));
             // 如果该事件更新事件，并且更新目标为玩家
-        } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && SXAttribute.getVersionSplit()[1] > 8) {
+        } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && NMS.compareTo(1,9,0) >= 0) {
             ((UpdateData) eventData).getEntity().getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);
         }
     }

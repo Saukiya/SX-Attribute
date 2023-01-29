@@ -1,10 +1,10 @@
 package github.saukiya.sxattribute.command.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.command.SenderType;
-import github.saukiya.sxattribute.command.SubCommand;
+import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
+import github.saukiya.sxitem.command.SenderType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -28,12 +28,12 @@ import java.util.List;
  *
  * @author Saukiya
  */
-public class SellCommand extends SubCommand implements Listener {
+public class SellCommand extends SXAttributeCommand implements Listener {
 
-    private static final InventoryHolder holder = () -> null;
+    public static final InventoryHolder holder = () -> null;
 
     public SellCommand() {
-        super("sell");
+        super("sell", 70);
         setType(SenderType.PLAYER);
     }
 
@@ -44,7 +44,7 @@ public class SellCommand extends SubCommand implements Listener {
      */
     public static void openSellInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
-        ItemStack stainedGlass = new ItemStack(Material.STAINED_GLASS_PANE);//BLACK
+        ItemStack stainedGlass = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);//BLACK
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§r");
         stainedGlass.setItemMeta(glassMeta);
@@ -52,7 +52,7 @@ public class SellCommand extends SubCommand implements Listener {
             inv.setItem(i, stainedGlass);
         }
 
-        ItemStack enterItem = new ItemStack(Material.STAINED_GLASS_PANE);//YELLOW
+        ItemStack enterItem = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);//YELLOW
         ItemMeta enterMeta = enterItem.getItemMeta();
         enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
         enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
