@@ -44,7 +44,7 @@ public class SellCommand extends SXAttributeCommand implements Listener {
      */
     public static void openSellInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
-        ItemStack stainedGlass = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);//BLACK
+        ItemStack stainedGlass = new ItemStack(Material.STAINED_GLASS_PANE);//BLACK
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§r");
         stainedGlass.setItemMeta(glassMeta);
@@ -52,7 +52,7 @@ public class SellCommand extends SXAttributeCommand implements Listener {
             inv.setItem(i, stainedGlass);
         }
 
-        ItemStack enterItem = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);//YELLOW
+        ItemStack enterItem = new ItemStack(Material.STAINED_GLASS_PANE);//YELLOW
         ItemMeta enterMeta = enterItem.getItemMeta();
         enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
         enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));

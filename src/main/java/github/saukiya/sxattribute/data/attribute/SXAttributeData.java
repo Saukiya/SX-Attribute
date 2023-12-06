@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.data.attribute;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.stream.IntStream;
 
@@ -9,13 +10,12 @@ import java.util.stream.IntStream;
  *
  * @author Saukiya
  */
+@Getter
 public class SXAttributeData {
 
-    @Getter
     private double combatPower = 0D;
 
-    @Getter
-    private double[][] values = new double[SubAttribute.getAttributes().size()][];
+    private final double[][] values = new double[SubAttribute.getAttributes().size()][];
 
     public SXAttributeData() {
         for (SubAttribute attribute : SubAttribute.getAttributes()) {

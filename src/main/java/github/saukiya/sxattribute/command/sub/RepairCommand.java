@@ -51,7 +51,7 @@ public class RepairCommand extends SXAttributeCommand implements Listener {
      */
     public static void openRepairInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
-        ItemStack glassItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE); //BLACK_STAINED_GLASS_PANE
+        ItemStack glassItem = new ItemStack(Material.STAINED_GLASS_PANE); //BLACK_STAINED_GLASS_PANE
         ItemMeta glassMeta = glassItem.getItemMeta();
         glassMeta.setDisplayName("§r");
         glassItem.setItemMeta(glassMeta);
@@ -62,22 +62,22 @@ public class RepairCommand extends SXAttributeCommand implements Listener {
         glassItem.setDurability((short) 9);
         for (int i = 0; i < 5; i++) {
             if (i == 2) continue;
-            inv.setItem(9 + i, glassItem);
-            inv.setItem(18 + i, glassItem);
-            inv.setItem(27 + i, glassItem);
+            inv.setItem(9 + i, glassItem.clone());
+            inv.setItem(18 + i, glassItem.clone());
+            inv.setItem(27 + i, glassItem.clone());
         }
         glassItem.setDurability((short) 7);
         for (int i = 6; i < 9; i++) {
-            inv.setItem(9 + i, glassItem);
-            inv.setItem(18 + i, glassItem);
-            inv.setItem(27 + i, glassItem);
+            inv.setItem(9 + i, glassItem.clone());
+            inv.setItem(18 + i, glassItem.clone());
+            inv.setItem(27 + i, glassItem.clone());
         }
         glassItem.setDurability((short) 0);
-        glassItem.setType(Material.IRON_BARS);
+        glassItem.setType(Material.IRON_SWORD);
         for (int i = 1; i < 4; i++) {
-            inv.setItem(5 + (i * 9), glassItem);
+            inv.setItem(5 + (i * 9), glassItem.clone());
         }
-        glassItem.setType(Material.BLACK_STAINED_GLASS_PANE);
+        glassItem.setType(Material.STAINED_GLASS_PANE);
         glassMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__GUIDE));
         glassItem.setItemMeta(glassMeta);
         inv.setItem(11, glassItem);

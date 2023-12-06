@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute;
 
 import github.saukiya.sxattribute.api.SXAPI;
+import github.saukiya.sxattribute.api.TempAttributeAPI;
 import github.saukiya.sxattribute.command.sub.*;
 import github.saukiya.sxattribute.data.SlotDataManager;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
@@ -243,6 +244,9 @@ public class SXAttribute extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ListenerDamage(), this);
         Bukkit.getPluginManager().registerEvents(listenerHealthChange, this);
         Bukkit.getPluginManager().registerEvents(new ListenerItemSpawn(), this);
+
+        TempAttributeAPI.startUpdate();
+
         mainCommand.onEnable("SxAttribute");
         getLogger().info("Loading Time: " + (System.currentTimeMillis() - oldTimes) + " ms");
         getLogger().info("Author: " + getDescription().getAuthors());

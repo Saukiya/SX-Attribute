@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.data.attribute;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.api.TempAttributeAPI;
 import github.saukiya.sxattribute.data.PreLoadItem;
 import github.saukiya.sxattribute.data.SlotData;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
@@ -118,7 +119,7 @@ public class SXAttributeManager implements Listener {
      */
     public SXAttributeData loadListData(List<String> list) {
         SXAttributeData sxAttributeData = new SXAttributeData();
-        list.stream().map(str -> str.split("§X")[0]).filter(s -> s.length() > 0).forEach(s -> {
+        list.stream().map(str -> str.split("§X")[0]).filter(s -> !s.isEmpty()).forEach(s -> {
             for (SubAttribute attribute : SubAttribute.getAttributes()) {
                 attribute.loadAttribute(sxAttributeData.getValues()[attribute.getPriority()], s);
             }
@@ -159,6 +160,7 @@ public class SXAttributeManager implements Listener {
         data.add(SXAttribute.getApi().getAPIAttribute(entity.getUniqueId()));
         data.calculationCombatPower();
         data.add(defaultAttributeData);
+        data.add(TempAttributeAPI.getCache(entity.getUniqueId()));
         SXGetAttributeEvent event = new SXGetAttributeEvent(entity, data);
         Bukkit.getPluginManager().callEvent(event);
         data.correct();
@@ -173,6 +175,7 @@ public class SXAttributeManager implements Listener {
     public void clearEntityData(UUID uuid) {
         getEntityDataMap().remove(uuid);
         SXAttribute.getApi().removeEntityAllPluginData(uuid);
+        TempAttributeAPI.removeCache(uuid);
     }
 
     /**
@@ -221,7 +224,7 @@ public class SXAttributeManager implements Listener {
         if (entity.getEquipment().getItemInHand() != null && !entity.getEquipment().getItemInHand().getType().equals(Material.AIR)) {
             preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, entity.getEquipment().getItemInHand()));
         }
-        if (NMS.compareTo(1,9,0) >= 0) {
+        if (NMS.compareTo(1, 9, 0) >= 0) {
             if (entity.getEquipment().getItemInOffHand() != null && !entity.getEquipment().getItemInOffHand().getType().equals(Material.AIR)) {
                 preItemList.add(new PreLoadItem(EquipmentType.OFF_HAND, entity.getEquipment().getItemInOffHand()));
             }

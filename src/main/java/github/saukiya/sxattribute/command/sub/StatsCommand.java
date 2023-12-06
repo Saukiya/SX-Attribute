@@ -60,7 +60,7 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
     public void openStatsInventory(Player player, Player... openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
-        ItemStack stainedGlass = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemStack stainedGlass = new ItemStack(Material.STAINED_GLASS_PANE);
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§c");
         stainedGlass.setItemMeta(glassMeta);

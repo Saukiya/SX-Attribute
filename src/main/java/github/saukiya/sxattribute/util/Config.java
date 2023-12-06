@@ -3,7 +3,11 @@ package github.saukiya.sxattribute.util;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxitem.util.NMS;
 import lombok.Getter;
+import org.bukkit.Material;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -42,7 +46,13 @@ public class Config {
     public static final String CLEAR_DEFAULT_ATTRIBUTE = "ClearDefaultAttribute";
 
     public static final String PRG_INVENTORY_SLOT = "RPGInventorySlot";
-    public static final String REPAIR_ITEM_VALUE = "RepairItemValue";
+    public static final String REPAIR_ITEM_VALUE = "Repair.ItemValue";
+
+    public static final String REPAIR_ITEM_BOARD = "Repair.ItemBoard";
+
+    //GlassItem
+    public static final String REPAIR_ITEM_GLASS = "Repair.ItemGlass";
+
     public static final String REGISTER_SLOTS_ENABLED = "RegisterSlots.Enabled";
     public static final String REGISTER_SLOTS_LIST = "RegisterSlots.List";
     public static final String DEFAULT_ATTRIBUTE = "DefaultAttribute";
@@ -100,6 +110,8 @@ public class Config {
     @Getter
     private static boolean clearItemDurability;
 
+    public static ItemStack RepairBoardItem;
+
     /**
      * 加载Config类
      */
@@ -113,7 +125,7 @@ public class Config {
         SXAttribute.setDf(new DecimalFormat(config.getString(DECIMAL_FORMAT)));
         commandStatsDisplaySkullSkin = config.getBoolean(COMMAND_STATS_DISPLAY_SKULL_SKIN);
         healthNameVisible = config.getBoolean(HEALTH_NAME_ENABLED);
-        healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED) && NMS.compareTo(1,9,0) >= 0;
+        healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED) && NMS.compareTo(1, 9, 0) >= 0;
         bossBarBlackCauseList = config.getStringList(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST);
         holographic = config.getBoolean(HOLOGRAPHIC_ENABLED);
         holographicBlackList = config.getStringList(HOLOGRAPHIC_BLACK_CAUSE_LIST);
@@ -129,5 +141,21 @@ public class Config {
         registerSlot = config.getBoolean(REGISTER_SLOTS_ENABLED);
         minimumDamage = config.getDouble(MINIMUM_DAMAGE);
         clearItemDurability = config.getBoolean(CLEAR_ITEM_DURABILITY, true);
+        RepairBoardItem = buildItemStack(config, REPAIR_ITEM_BOARD);
+
+    }
+
+    private static ItemStack buildItemStack(Configuration configuration, String path) {
+        Material material = Material.getMaterial(configuration.getString(path + ".Type"));
+        if (material == null) {
+            return null;
+        }
+        ItemStack itemStack = new ItemStack(material);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(configuration.getString(path + ".Name"));
+        itemMeta.setLore(configuration.getStringList(path + ".Lore"));
+        itemStack.setItemMeta(itemMeta);
+        itemStack.setDurability((short) configuration.getInt(path + ".Durability"));
+        return itemStack;
     }
 }

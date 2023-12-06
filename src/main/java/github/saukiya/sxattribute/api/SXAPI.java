@@ -3,8 +3,10 @@ package github.saukiya.sxattribute.api;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.PreLoadItem;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
+import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
+import github.saukiya.sxattribute.data.eventdata.sub.DamageTempData;
 import github.saukiya.sxitem.SXItem;
 import github.saukiya.sxitem.util.NMS;
 import org.bukkit.attribute.Attribute;
@@ -22,11 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SXAPI {
 
-    private static Map<UUID, Map<Class<?>, SXAttributeData>> map = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<UUID, ConcurrentHashMap<Class<?>, SXAttributeData>> map = new ConcurrentHashMap<>();
 
     public SXAttributeData getAPIAttribute(UUID uuid) {
         SXAttributeData attributeData = new SXAttributeData();
-        for (SXAttributeData data : map.getOrDefault(uuid, new HashMap<>()).values()) {
+        for (SXAttributeData data : map.getOrDefault(uuid, new ConcurrentHashMap<>()).values()) {
             attributeData.add(data);
         }
         return attributeData;
@@ -96,7 +98,7 @@ public class SXAPI {
      * @param attributeData SXAttributeData
      */
     public void setEntityAPIData(Class<?> c, UUID uuid, SXAttributeData attributeData) {
-        map.computeIfAbsent(uuid, k -> new HashMap<>()).put(c, attributeData);
+        map.computeIfAbsent(uuid, k -> new ConcurrentHashMap<>()).put(c, attributeData);
     }
 
     /**
@@ -227,7 +229,7 @@ public class SXAPI {
     }
 
     public double getMaxHealth(LivingEntity entity) {
-        return NMS.compareTo(1,9,0) >= 0 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
+        return NMS.compareTo(1, 9, 0) >= 0 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
     }
 
     /**
@@ -247,5 +249,23 @@ public class SXAPI {
      */
     public Set<String> getItemList() {
         return SXItem.getItemManager().getItemList();
+    }
+
+    /**
+     * 造成一次自定义属性的攻击
+     */
+
+    public void attack(LivingEntity attacker, LivingEntity defender, SXAttributeData attribute) {
+        try {
+            DamageTempData damageTempData = new DamageTempData();
+            damageTempData.setDamager(attacker);
+            damageTempData.setDefender(defender);
+            damageTempData.setAttributes(attribute);
+
+            DamageAPI.addDamageData(defender.getUniqueId(), damageTempData);
+            defender.damage(1);
+        } catch (Exception ignored) {
+
+        }
     }
 }

@@ -19,12 +19,12 @@ HealthDisplays:
     Format: '&a&l{0}:&8&l[&a&l{1}&7&l/&c&l{2}&8&l]'
     DisplayTime: 4
     BlackCauseList:
-    - CUSTOM
+      - CUSTOM
 ItemDisplayName: true
 DamageEvent:
   Priority: HIGH
   BlackCauseList:
-  - CUSTOM
+    - CUSTOM
   DamageCalculationToEVE: false
   DamageGauges: true
   BanShieldDefense: false
@@ -32,37 +32,38 @@ DamageEvent:
   MinimumDamage: 1.0
 ClearDefaultAttribute: true
 RPGInventorySlot:
-- 4
-- 10
-- 13
-- 14
-- 19
-- 22
-- 28
-- 31
-- 47
-- 48
-- 49
-- 50
-- 51
-RepairItemValue: 3.5
+  - 4
+  - 10
+  - 13
+  - 14
+  - 19
+  - 22
+  - 28
+  - 31
+  - 47
+  - 48
+  - 49
+  - 50
+  - 51
+Repair:
+  ItemValue: 3.5
 RegisterSlots:
   Enabled: true
   List:
-  - 17#宝藏
-  - 26#戒指
-  - 35#项链
+    - 17#宝藏
+    - 26#戒指
+    - 35#项链
 DefaultAttribute:
-- '生命上限: 20'
+  - '生命上限: 20'
 Condition:
   Hand:
     MainName: 主武器
     OffName: 副武器
   Armor:
-  - 头盔
-  - 盔甲
-  - 护腿
-  - 靴子
+    - 头盔
+    - 盔甲
+    - 护腿
+    - 靴子
   Role:
     Name: 限制职业
   LimitLevel:
@@ -76,34 +77,34 @@ Condition:
     Name: 到期时间
     Format: yyyy/MM/dd HH:mm
 AttributePriority:
-- JSAttribute
-- Dodge#SX-Attribute
-- Damage
-- Crit
-- Real
-- Defense
-- Reflection
-- Block
-- LifeSteal
-- Ignition
-- AttackPotion
-- Lightning
-- Tearing
-- Toughness
-- Health
-- HealthRegen
-- HitRate
-- ExpAddition
-- Command
-- WalkSpeed
-- AttackSpeed
-- MythicMobsDrop
-- EventMessage
+  - JSAttribute
+  - Dodge#SX-Attribute
+  - Damage
+  - Crit
+  - Real
+  - Defense
+  - Reflection
+  - Block
+  - LifeSteal
+  - Ignition
+  - AttackPotion
+  - Lightning
+  - Tearing
+  - Toughness
+  - Health
+  - HealthRegen
+  - HitRate
+  - ExpAddition
+  - Command
+  - WalkSpeed
+  - AttackSpeed
+  - MythicMobsDrop
+  - EventMessage
 ConditionPriority:
-- Hand
-- MainHand
-- OffHand
-- LimitLevel
-- Role
-- ExpiryTime
-- Durability
+  - Hand
+  - MainHand
+  - OffHand
+  - LimitLevel
+  - Role
+  - ExpiryTime
+  - Durability

@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.api.DamageAPI;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
@@ -21,6 +22,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 /**
  * @author Saukiya
@@ -68,7 +71,7 @@ public class ListenerDamage implements Listener {
         attackData = attackData != null ? attackData : SXAttribute.getAttributeManager().getEntityData(attackEntity);
 
         EntityEquipment eq = attackEntity.getEquipment();
-        ItemStack mainHand = NMS.compareTo(1,9,0) >= 0 ? eq.getItemInMainHand() : eq.getItemInHand();
+        ItemStack mainHand = NMS.compareTo(1, 9, 0) >= 0 ? eq.getItemInMainHand() : eq.getItemInHand();
         if (mainHand != null) {
             if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                 if (attackEntity instanceof Player && !((HumanEntity) attackEntity).getGameMode().equals(GameMode.CREATIVE)) {
@@ -80,9 +83,16 @@ public class ListenerDamage implements Listener {
         }
 
         String defenseName = SXAttribute.getListenerHealthChange().getEntityName(defenseEntity);
+        UUID defenseUUID = defenseEntity.getUniqueId();
         String attackName = SXAttribute.getListenerHealthChange().getEntityName(attackEntity);
+        UUID attackUUID = attackEntity.getUniqueId();
 
         DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
+
+        SXAttributeData damageData1 = DamageAPI.getDamageData(attackUUID, defenseUUID);
+        if (damageData1 != null) {
+            attackData = damageData1;
+        }
 
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
             if (attribute.containsType(AttributeType.ATTACK) && attackData.isValid(attribute)) {
@@ -98,5 +108,6 @@ public class ListenerDamage implements Listener {
         }
         damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage());
         Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageData));
+        DamageAPI.removeDamageData(defenseUUID);
     }
 }

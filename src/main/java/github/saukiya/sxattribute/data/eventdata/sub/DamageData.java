@@ -15,43 +15,32 @@ import java.util.List;
  *
  * @author Saukiya
  */
+@Getter
 public class DamageData implements EventData {
 
-    @Getter
     private final LivingEntity defender;
 
-    @Getter
     private final LivingEntity attacker;
 
-    @Getter
     private final String defenderName;
 
-    @Getter
     private final String attackerName;
 
-    @Getter
     private final SXAttributeData defenderData;
 
-    @Getter
     private final SXAttributeData attackerData;
 
-    @Getter
     private final EntityDamageByEntityEvent event;
 
-    @Getter
     private final List<String> effectiveAttributeList = new ArrayList<>();
 
-    @Getter
     private final List<String> holoList = new ArrayList<>();
 
-    @Getter
     private double damage;
 
-    @Getter
     @Setter
     private boolean crit;
 
-    @Getter
     private boolean cancelled = false;
 
     public DamageData(LivingEntity defender, LivingEntity attacker, String defenderName, String attackerName, SXAttributeData defenderData, SXAttributeData attackerData, EntityDamageByEntityEvent event) {
