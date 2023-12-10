@@ -3,7 +3,6 @@ package github.saukiya.sxattribute.api;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.PreLoadItem;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
-import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageTempData;
@@ -258,12 +257,12 @@ public class SXAPI {
     public void attack(LivingEntity attacker, LivingEntity defender, SXAttributeData attribute) {
         try {
             DamageTempData damageTempData = new DamageTempData();
-            damageTempData.setDamager(attacker);
-            damageTempData.setDefender(defender);
+            damageTempData.setDamager(attacker.getUniqueId());
+            damageTempData.setDefender(defender.getUniqueId());
             damageTempData.setAttributes(attribute);
 
             DamageAPI.addDamageData(defender.getUniqueId(), damageTempData);
-            defender.damage(1);
+            defender.damage(1, attacker);
         } catch (Exception ignored) {
 
         }

@@ -1,26 +1,23 @@
 package github.saukiya.sxattribute.data.eventdata.sub;
 
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
-import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import lombok.*;
-import org.bukkit.entity.LivingEntity;
 
-import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class DamageTempData {
 
     private String source;
 
-    private LivingEntity damager;
+    private UUID damager;
 
-    private LivingEntity defender;
-
-    private double damage;
+    private UUID defender;
 
     private SXAttributeData attributes;
 

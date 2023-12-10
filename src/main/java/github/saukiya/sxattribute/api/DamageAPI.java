@@ -17,6 +17,7 @@ public class DamageAPI {
 
     public static void addDamageData(UUID uuid, DamageTempData damageData) {
         victim.computeIfAbsent(uuid, k -> new ArrayList<>()).add(damageData);
+        System.out.println("DamageAPI.addDamageData: " + uuid + " " + damageData);
     }
 
     public static SXAttributeData getDamageData(UUID caster, UUID target) {
@@ -25,14 +26,23 @@ public class DamageAPI {
             return null;
         }
         for (DamageTempData data : victim.get(target)) {
-            if (data.getDamager().getUniqueId().equals(caster)) {
+            if (data.getDamager().equals(caster)) {
                 attributeData.add(data.getAttributes());
             }
         }
+        System.out.println("DamageAPI.getDamageData: " + caster + " " + target + " " + attributeData);
         return attributeData;
     }
 
     public static void removeDamageData(UUID uuid) {
         victim.remove(uuid);
+        System.out.println("DamageAPI.removeDamageData: " + uuid);
+    }
+
+    public static void removeByCaster(UUID caster) {
+        for (List<DamageTempData> list : victim.values()) {
+            list.removeIf(data -> data.getDamager().equals(caster));
+        }
+        System.out.println("DamageAPI.removeByCaster: " + caster);
     }
 }

@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.data.attribute;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.stream.IntStream;
 
@@ -11,6 +12,7 @@ import java.util.stream.IntStream;
  * @author Saukiya
  */
 @Getter
+@ToString
 public class SXAttributeData {
 
     private double combatPower = 0D;

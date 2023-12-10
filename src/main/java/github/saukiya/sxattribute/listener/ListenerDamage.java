@@ -89,9 +89,9 @@ public class ListenerDamage implements Listener {
 
         DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
 
-        SXAttributeData damageData1 = DamageAPI.getDamageData(attackUUID, defenseUUID);
-        if (damageData1 != null) {
-            attackData = damageData1;
+        SXAttributeData apiDamageAttribute = DamageAPI.getDamageData(attackUUID, defenseUUID);
+        if (apiDamageAttribute != null) {
+            attackData = apiDamageAttribute;
         }
 
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
@@ -108,6 +108,7 @@ public class ListenerDamage implements Listener {
         }
         damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage());
         Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageData));
-        DamageAPI.removeDamageData(defenseUUID);
+        System.out.println(damageData.getDamage());
+        DamageAPI.removeByCaster(attackUUID);
     }
 }
