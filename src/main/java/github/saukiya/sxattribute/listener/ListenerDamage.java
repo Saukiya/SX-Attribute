@@ -87,12 +87,13 @@ public class ListenerDamage implements Listener {
         String attackName = SXAttribute.getListenerHealthChange().getEntityName(attackEntity);
         UUID attackUUID = attackEntity.getUniqueId();
 
-        DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
 
         SXAttributeData apiDamageAttribute = DamageAPI.getDamageData(attackUUID, defenseUUID);
         if (apiDamageAttribute != null) {
             attackData = apiDamageAttribute;
         }
+
+        DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
 
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
             if (attribute.containsType(AttributeType.ATTACK) && attackData.isValid(attribute)) {

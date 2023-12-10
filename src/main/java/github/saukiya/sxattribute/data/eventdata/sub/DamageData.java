@@ -28,6 +28,7 @@ public class DamageData implements EventData {
 
     private final SXAttributeData defenderData;
 
+    @Setter
     private final SXAttributeData attackerData;
 
     private final EntityDamageByEntityEvent event;
