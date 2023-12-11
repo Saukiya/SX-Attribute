@@ -83,12 +83,11 @@ public class Damage extends SubAttribute {
 
             if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 EntityEquipment eq = attackEntity.getEquipment();
-                ItemStack mainHand = NMS.compareTo(1,9,0) >= 0 ? eq.getItemInMainHand() : eq.getItemInHand();
+                ItemStack mainHand = NMS.compareTo(1, 9, 0) >= 0 ? eq.getItemInMainHand() : eq.getItemInHand();
                 if (mainHand != null) {
                     if (Material.BOW.equals(mainHand.getType()) && !Config.isBowCloseRangeAttack()) {
                         SXAttributeData sxAttributeData = SXAttribute.getApi().loadItemData(attackEntity, new PreLoadItem(EquipmentType.MAIN_HAND, mainHand));
-
-                        if (NMS.compareTo(1,9,0) >= 0) {
+                        if (NMS.compareTo(1, 9, 0) >= 0) {
                             damageData.setDamage(event.getDamage() - (values[0] / event.getDamage() * sxAttributeData.getValues(getClass().getSimpleName())[0]));
                         }
                         values = damageData.getAttackerData().take(sxAttributeData).getValues(getClass().getSimpleName());
@@ -96,12 +95,16 @@ public class Damage extends SubAttribute {
                 }
             }
 
-
-            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || NMS.compareTo(1,9,0) < 0 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
-
+            System.out.println("Debug: " + Arrays.toString(values));
+//            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || NMS.compareTo(1,9,0) < 0 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
+            if (((!Config.isDamageGauges() || damageData.isFromAPI()) || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player) || NMS.compareTo(1, 9, 0) < 0) {
+                damageData.addDamage(getAttribute(values, TYPE_DEFAULT));
+            } else {
+                damageData.addDamage(getAttribute(values, TYPE_DEFAULT) - values[0]);
+            }
             damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVE : TYPE_PVP));
             // 如果该事件更新事件，并且更新目标为玩家
-        } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && NMS.compareTo(1,9,0) >= 0) {
+        } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && NMS.compareTo(1, 9, 0) >= 0) {
             ((UpdateData) eventData).getEntity().getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);
         }
     }

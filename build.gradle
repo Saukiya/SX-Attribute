@@ -46,9 +46,10 @@ shadowJar {
 
 //构建并拷贝
 task buildLastJar(type: Copy) {
+    dependsOn clean
     dependsOn shadowJar
     from shadowJar.archiveFile.get().asFile.path
-    into("$rootDir").rename { "${project.name}-Latest.jar" }
+    into("$rootDir").rename { "build/out/${project.name}-Latest.jar" }
 }
 
 //gradle 需要对文件中含有的'$'进行转义: $ -> \$

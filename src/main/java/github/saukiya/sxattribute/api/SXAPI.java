@@ -253,18 +253,13 @@ public class SXAPI {
     /**
      * 造成一次自定义属性的攻击
      */
-
     public void attack(LivingEntity attacker, LivingEntity defender, SXAttributeData attribute) {
-        try {
-            DamageTempData damageTempData = new DamageTempData();
-            damageTempData.setDamager(attacker.getUniqueId());
-            damageTempData.setDefender(defender.getUniqueId());
-            damageTempData.setAttributes(attribute);
+        DamageTempData damageTempData = new DamageTempData();
+        damageTempData.setDamager(attacker.getUniqueId());
+        damageTempData.setDefender(defender.getUniqueId());
+        damageTempData.setAttributes(attribute);
 
-            DamageAPI.addDamageData(defender.getUniqueId(), damageTempData);
-            defender.damage(1, attacker);
-        } catch (Exception ignored) {
-
-        }
+        DamageAPI.addDamageData(defender.getUniqueId(), damageTempData);
+        defender.damage(1, attacker);
     }
 }

@@ -89,11 +89,16 @@ public class ListenerDamage implements Listener {
 
 
         SXAttributeData apiDamageAttribute = DamageAPI.getDamageData(attackUUID, defenseUUID);
+        boolean apiDamage = false;
         if (apiDamageAttribute != null) {
             attackData = apiDamageAttribute;
+            apiDamage = true;
         }
 
         DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
+
+        // 如果造成伤害来自于API 则会进行判断豁免
+        damageData.setFromAPI(apiDamage);
 
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
             if (attribute.containsType(AttributeType.ATTACK) && attackData.isValid(attribute)) {
@@ -109,7 +114,12 @@ public class ListenerDamage implements Listener {
         }
         damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage());
         Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageData));
-        System.out.println(damageData.getDamage());
-        DamageAPI.removeByCaster(attackUUID);
+
+        if (apiDamage) {
+            // 将伤害属性修正回来 触发需要一次伤害 减少一点即可
+            damageData.setDamage(damageData.getDamage() - 1.0);
+            // 清空伤害属性
+            DamageAPI.removeByCaster(attackUUID);
+        }
     }
 }

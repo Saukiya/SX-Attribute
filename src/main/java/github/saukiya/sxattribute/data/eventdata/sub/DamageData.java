@@ -29,7 +29,7 @@ public class DamageData implements EventData {
     private final SXAttributeData defenderData;
 
     @Setter
-    private final SXAttributeData attackerData;
+    private SXAttributeData attackerData;
 
     private final EntityDamageByEntityEvent event;
 
@@ -43,6 +43,9 @@ public class DamageData implements EventData {
     private boolean crit;
 
     private boolean cancelled = false;
+
+    @Setter
+    private boolean fromAPI = false;
 
     public DamageData(LivingEntity defender, LivingEntity attacker, String defenderName, String attackerName, SXAttributeData defenderData, SXAttributeData attackerData, EntityDamageByEntityEvent event) {
         this.defender = defender;
