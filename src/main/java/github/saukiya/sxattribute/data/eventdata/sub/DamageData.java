@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class DamageData implements EventData {
 
     private final List<String> holoList = new ArrayList<>();
 
-    private double damage;
+    private final HashMap<String, Double> damages = new HashMap<>();
 
     @Setter
     private boolean crit;
@@ -55,7 +56,7 @@ public class DamageData implements EventData {
         this.defenderData = defenderData;
         this.attackerData = attackerData;
         this.event = event;
-        this.damage = event.getDamage();
+        setDamage(event.getDamage());
     }
 
     /**
@@ -69,13 +70,21 @@ public class DamageData implements EventData {
         }
     }
 
+    public double getDamage() {
+        return damages.values().stream().filter(d -> d >= 0).reduce(0D, Double::sum);
+    }
+
     /**
      * 设置伤害值
      *
-     * @param addDamage double
+     * @param damage double
      */
-    public void setDamage(double addDamage) {
-        damage = addDamage;
+    public void setDamage(double damage) {
+        setDamage(damage, "Default");
+    }
+
+    public void setDamage(double damage, String type) {
+        damages.put(type, damage);
         event.setDamage(getDamage());
     }
 
@@ -85,7 +94,11 @@ public class DamageData implements EventData {
      * @param addDamage double
      */
     public void addDamage(double addDamage) {
-        damage += addDamage;
+        addDamage(addDamage, "Default");
+    }
+
+    public void addDamage(double addDamage, String type) {
+        damages.put(type, damages.getOrDefault(type, 0D) + addDamage);
         event.setDamage(getDamage());
     }
 
@@ -95,7 +108,11 @@ public class DamageData implements EventData {
      * @param takeDamage double
      */
     public void takeDamage(double takeDamage) {
-        damage -= takeDamage;
+        takeDamage(takeDamage, "Default");
+    }
+
+    public void takeDamage(double takeDamage, String type) {
+        damages.put(type, damages.getOrDefault(type, 0D) - takeDamage);
         event.setDamage(getDamage());
     }
 
