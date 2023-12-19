@@ -115,6 +115,8 @@ public class SXAttribute extends JavaPlugin {
         new Real().registerAttribute();
         new Tearing().registerAttribute();
 
+        new AttackElement().registerAttribute();
+
         new Block().registerAttribute();
         new Defense().registerAttribute();
         new Dodge().registerAttribute();
