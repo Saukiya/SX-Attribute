@@ -9,6 +9,7 @@ import github.saukiya.sxattribute.util.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -94,7 +95,7 @@ public class Command extends SubAttribute implements Listener {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         for (int i = 0; i < commandRunnables.length; i++) {
             if (string.equals(commandRunnables[i].name)) {
                 return values[i];

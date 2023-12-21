@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class Defense extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         switch (string) {
             case "MinDefense":
                 return values[0];

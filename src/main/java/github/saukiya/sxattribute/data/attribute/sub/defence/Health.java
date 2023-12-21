@@ -11,6 +11,7 @@ import github.saukiya.sxitem.util.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.spigotmc.SpigotConfig;
 
@@ -88,7 +89,7 @@ public class Health extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         switch (string) {
             case "MaxHealth":
                 return SXAttribute.getApi().getMaxHealth(player);

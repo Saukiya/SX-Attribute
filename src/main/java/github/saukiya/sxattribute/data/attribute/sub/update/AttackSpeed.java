@@ -11,12 +11,12 @@ import github.saukiya.sxitem.util.ItemUtil;
 import github.saukiya.sxitem.util.NMS;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -78,7 +78,7 @@ public class AttackSpeed extends SubAttribute implements Listener {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         return string.equals(getName()) ? values[0] : null;
     }
 

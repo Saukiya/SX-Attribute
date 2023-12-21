@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -131,7 +131,7 @@ public class AttackPotion extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         for (int i = 0; i < dataList.length; i++) {
             if (string.equals(dataList[i].name)) {
                 return values[i];

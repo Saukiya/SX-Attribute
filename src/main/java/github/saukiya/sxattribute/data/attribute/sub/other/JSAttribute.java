@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.openjdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import javax.script.*;
@@ -100,7 +100,7 @@ public class JSAttribute extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         try {
             return invocable.invokeFunction("getPlaceholder", values, player, string);
         } catch (ScriptException | NoSuchMethodException e) {

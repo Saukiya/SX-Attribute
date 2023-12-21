@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -203,7 +203,7 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
      * @param player Player
      * @return Object / null
      */
-    public abstract Object getPlaceholder(double[] values, Player player, String string);
+    public abstract Object getPlaceholder(double[] values, LivingEntity player, String string);
 
     /**
      * 获取placeholder变量列表

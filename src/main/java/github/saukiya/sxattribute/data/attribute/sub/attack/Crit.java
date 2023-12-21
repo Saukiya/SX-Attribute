@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -64,7 +64,7 @@ public class Crit extends SubAttribute implements Listener {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         switch (string) {
             case "CritRate":
                 return values[0];

@@ -11,7 +11,7 @@ import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
 import lombok.Getter;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -78,7 +78,7 @@ public class EventMessage extends SubAttribute implements Listener {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         return null;
     }
 

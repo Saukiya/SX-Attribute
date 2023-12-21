@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -44,7 +45,7 @@ public class WalkSpeed extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         return string.equals(getName()) ? values[0] : null;
     }
 

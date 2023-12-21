@@ -80,6 +80,11 @@ public class PlaceholderUtil {
         }
 
         @Override
+        public boolean persist() {
+            return true;
+        }
+
+        @Override
         public String onPlaceholderRequest(Player player, String string) {
             return PlaceholderUtil.onPlaceholderRequest(player, string, dataMap.computeIfAbsent(player.getUniqueId(), k -> SXAttribute.getAttributeManager().getEntityData(player)));
         }

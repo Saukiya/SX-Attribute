@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +55,7 @@ public class Block extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         switch (string) {
             case "BlockRate":
                 return values[0];

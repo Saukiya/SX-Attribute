@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +53,7 @@ public class Dodge extends SubAttribute {
     }
 
     @Override
-    public Object getPlaceholder(double[] values, Player player, String string) {
+    public Object getPlaceholder(double[] values, LivingEntity player, String string) {
         return string.equals(getName()) ? values[0] : null;
     }
 
