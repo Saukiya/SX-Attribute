@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 伤害事件统计
@@ -71,7 +72,21 @@ public class DamageData implements EventData {
     }
 
     public double getDamage() {
-        return damages.values().stream().filter(d -> d >= 0).reduce(0D, Double::sum);
+        AtomicReference<Double> all = new AtomicReference<>(0D);
+//        Double reduce = damages.values().stream().filter(d -> d >= 0).reduce(0D, Double::sum);
+//        System.out.println("getDamage: " + all + ", " + reduce);
+//        System.out.println(damages);
+//        if (reduce + all.get() < 0) {
+//            return 0;
+//        }
+        damages.forEach((k, v) -> {
+            if (!k.equalsIgnoreCase("All") && v > 0) {
+                all.updateAndGet(v1 -> v1 + v);
+            }
+        });
+        all.updateAndGet(v1 -> v1 + damages.getOrDefault("All", 0.0));
+        System.out.println(damages);
+        return all.get() < 0.0 ? 0.0 : all.get();
     }
 
     /**

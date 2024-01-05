@@ -112,12 +112,12 @@ public class ListenerDamage implements Listener {
                 break;
             }
         }
-        damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage());
+//        damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage(), "All");
         Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageData));
 
         if (apiDamage) {
             // 将伤害属性修正回来 触发需要一次伤害 减少一点即可
-            damageData.setDamage(damageData.getDamage() - 1.0);
+            damageData.setDamage(damageData.getDamage() - 1.0, "All");
             // 清空伤害属性
             DamageAPI.removeByCaster(attackUUID);
         }

@@ -5,18 +5,18 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
+import github.saukiya.sxattribute.event.SXElementDamageEvent;
 import github.saukiya.sxattribute.util.CalculatorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +69,8 @@ public class AttackElement extends SubAttribute {
         config.set("风属性.DiscernName", "风攻击");
         config.set("风属性.Group", "风元素");
         config.set("风属性.CombatPower", 1);
+        config.set("风属性.ProbabilityTag", "风概率");
+        config.set("风属性.Probability", 0.5D);
         config.set("风属性.AttackFormula", "<a:风攻击>");
         config.set("风属性.Info", "也可以不走公式直接运行");
         //风防御
@@ -76,9 +78,14 @@ public class AttackElement extends SubAttribute {
         config.set("风防御.DiscernName", "风防御");
         config.set("风防御.Group", "风元素");
         config.set("风防御.CombatPower", 1);
+        config.set("风防御.Priority", 1);
         config.set("风防御.AttackFormula", "<d:风防御>");
         config.set("风防御.Info", "会减少攻击方造成的攻击");
         return config;
+    }
+
+    public ConfigurationSection getElementConfig(String key) {
+        return getConfig().getConfigurationSection(key);
     }
 
     @Override
@@ -90,7 +97,14 @@ public class AttackElement extends SubAttribute {
             int combatPower = getConfig().getInt(key + ".CombatPower");
             String attackFormula = getConfig().getString(key + ".AttackFormula");
             String group = getConfig().getString(key + ".Group");
-            dataHashMap.put(discernName, new ElementData(type, group, discernName, combatPower, attackFormula, new int[]{index, index + 1}));
+            int priority = getConfig().getInt(key + ".Priority", 0);
+            String probabilityTag = getConfig().getString(key + ".ProbabilityTag");
+            double probability = getConfig().getDouble(key + ".Probability", 1.0D);
+            dataHashMap.put(discernName, new ElementData(
+                    type, group, discernName, combatPower, attackFormula, priority,
+                    new int[]{index, index + 1,},
+                    probabilityTag, probability
+            ));
             index += 2;
             SXAttribute.getInst().getLogger().info("Attribute >>  [AttackElement] LoadSubElementAttribute " + discernName + " (" + type + ":" + group + ")");
         }
@@ -110,6 +124,9 @@ public class AttackElement extends SubAttribute {
                 values[data.index[0]] += getNumber(loreSplit[0]);
                 values[data.index[1]] += getNumber(loreSplit[loreSplit.length > 1 ? 1 : 0]);
             }
+            if (data.probabilityTag != null && lore.contains(data.probabilityTag)) {
+                data.probability = getNumber(lore);
+            }
         }
     }
 
@@ -117,12 +134,19 @@ public class AttackElement extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
             DamageData damageData = (DamageData) eventData;
-            for (ElementData data : dataHashMap.values()) {
-                if (data.type.equals("Attack")) {
-                    damageData.addDamage(getValue(data.attackFormula, damageData, data), data.group);
-                }
-                if (data.type.equals("Defence")) {
-                    damageData.takeDamage(getValue(data.attackFormula, damageData, data), data.group);
+            ArrayList<ElementData> elementData = new ArrayList<>(dataHashMap.values());
+            Comparator<ElementData> ageComparator = Comparator.comparingInt(ElementData::getPriority);
+            elementData.sort(ageComparator);
+            for (ElementData data : elementData) {
+                if (data.probability < 1.0 && probability(data.probability)) {
+                    SXElementDamageEvent event = new SXElementDamageEvent(damageData, data);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (data.type.equalsIgnoreCase("Attack")) {
+                        damageData.addDamage(getValue(event.getElementData().attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                    }
+                    if (data.type.equalsIgnoreCase("Defence")) {
+                        damageData.takeDamage(getValue(data.attackFormula, damageData, data), data.group);
+                    }
                 }
             }
         }
@@ -201,13 +225,22 @@ public class AttackElement extends SubAttribute {
             if (string.equals(data.discernName)) {
                 return values[data.index[0]] == values[data.index[1]] ? values[data.index[0]] : (getDf().format(values[data.index[0]]) + " - " + getDf().format(values[data.index[1]]));
             }
+            if (string.equals(data.probabilityTag)) {
+                return data.probability;
+            }
         }
         return null;
     }
 
     @Override
     public List<String> getPlaceholders() {
-        return new ArrayList<>(dataHashMap.keySet());
+        ArrayList<String> strings = new ArrayList<>(dataHashMap.keySet());
+        for (ElementData data : dataHashMap.values()) {
+            if (data.probabilityTag != null) {
+                strings.add(data.probabilityTag);
+            }
+        }
+        return strings;
     }
 
     @Data
@@ -224,8 +257,15 @@ public class AttackElement extends SubAttribute {
         private int combatPower;
         // 伤害公式
         private String attackFormula;
+        // 优先级
+        private int priority;
         // 索引
         private int[] index;
+        // 触发概率标签
+        private String probabilityTag;
+        // 触发概率
+        private double probability;
+
     }
 
 }
