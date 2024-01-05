@@ -6,16 +6,17 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.util.CalculatorUtil;
-import github.saukiya.sxattribute.util.PlaceholderUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,7 @@ import java.util.regex.Pattern;
 public class AttackElement extends SubAttribute {
 
     @Getter
-    private HashMap<String,ElementData> dataHashMap = new HashMap<>();
+    private HashMap<String, ElementData> dataHashMap = new HashMap<>();
 
     public AttackElement() {
         super(SXAttribute.getInst(), 40, AttributeType.ATTACK);
@@ -61,7 +62,7 @@ public class AttackElement extends SubAttribute {
         config.set("火抗性.Group", "火元素");
         config.set("火抗性.CombatPower", 1);
         config.set("火抗性.AttackFormula", "<d:火抗性> * 0.5");
-        config.set("火抗性.Info", "会减少攻击方造成的攻击");
+        config.set("火抗性.Info", "会减少攻击方造成的攻击 damage:Group是某个组已经计算的伤害 damage 是所有Group的伤害");
 
         // 风属性
         config.set("风属性.Type", "Attack");
@@ -89,9 +90,9 @@ public class AttackElement extends SubAttribute {
             int combatPower = getConfig().getInt(key + ".CombatPower");
             String attackFormula = getConfig().getString(key + ".AttackFormula");
             String group = getConfig().getString(key + ".Group");
-            dataHashMap.put(discernName,new ElementData(type, group, discernName, combatPower, attackFormula, new int[]{index, index + 1}));
+            dataHashMap.put(discernName, new ElementData(type, group, discernName, combatPower, attackFormula, new int[]{index, index + 1}));
             index += 2;
-            SXAttribute.getInst().getLogger().info("Attribute >>  [AttackElement] LoadSubElementAttribute " + discernName+" ("+type+":"+group+")");
+            SXAttribute.getInst().getLogger().info("Attribute >>  [AttackElement] LoadSubElementAttribute " + discernName + " (" + type + ":" + group + ")");
         }
         setLength(dataHashMap.size() * 2);
     }
@@ -135,11 +136,11 @@ public class AttackElement extends SubAttribute {
             String key = entry.getKey();
             List<String> value = entry.getValue();
             switch (key) {
-                case "a":{
+                case "a": {
                     double[] attackElements = damageData.getAttackerData().getValues(this);
                     for (String s : value) {
                         String randomValue = "0";
-                        if (dataHashMap.containsKey(s)){
+                        if (dataHashMap.containsKey(s)) {
                             ElementData elementData = dataHashMap.get(s);
                             randomValue = String.valueOf(getRandomValue(attackElements[elementData.index[0]], attackElements[elementData.index[1]]));
                         }
@@ -147,19 +148,23 @@ public class AttackElement extends SubAttribute {
                     }
                     break;
                 }
-                case "d":{
+                case "d": {
                     double[] attackElements = damageData.getDefenderData().getValues(this);
                     for (String s : value) {
                         String randomValue = "0";
-                        if (dataHashMap.containsKey(s)){
+                        if (dataHashMap.containsKey(s)) {
                             ElementData elementData = dataHashMap.get(s);
                             randomValue = String.valueOf(getRandomValue(attackElements[elementData.index[0]], attackElements[elementData.index[1]]));
                         }
-                        baseString = baseString.replace("<d:" + s + ">", String.valueOf(randomValue));
+                        baseString = baseString.replace("<d:" + s + ">", randomValue);
                     }
                     break;
                 }
             }
+        }
+        baseString = baseString.replace("<damage>", String.valueOf(damageData.getDamage()));
+        for (String s : damageData.getDamages().keySet()) {
+            baseString = baseString.replace("<damage:" + s + ">", String.valueOf(damageData.getDamages().get(s)));
         }
         // 计算公式
         try {
@@ -170,7 +175,7 @@ public class AttackElement extends SubAttribute {
 
     }
 
-    private double getRandomValue(double valueA,double valueB) {
+    private double getRandomValue(double valueA, double valueB) {
         return valueA + SXAttribute.getRandom().nextDouble() * (valueA - valueB);
     }
 

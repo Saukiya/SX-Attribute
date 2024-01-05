@@ -17,11 +17,15 @@ import github.saukiya.sxattribute.data.attribute.sub.update.WalkSpeed;
 import github.saukiya.sxattribute.data.condition.SXConditionManager;
 import github.saukiya.sxattribute.data.condition.sub.*;
 import github.saukiya.sxattribute.listener.*;
-import github.saukiya.sxattribute.util.*;
+import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxattribute.util.MoneyUtil;
+import github.saukiya.sxattribute.util.PlaceholderUtil;
 import github.saukiya.sxitem.command.MainCommand;
 import github.saukiya.sxitem.util.LogUtil;
 import github.saukiya.sxitem.util.NMS;
-import jdk.dynalink.beans.StaticClass;
+import jdk.internal.dynalink.beans.StaticClass;
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
 import lombok.Setter;
 import org.bstats.bukkit.Metrics;
@@ -29,7 +33,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
@@ -129,13 +132,13 @@ public class SXAttribute extends JavaPlugin {
 
         new Health().registerAttribute();
         new WalkSpeed().registerAttribute();
-        if (NMS.compareTo(1,9,0) >= 0) {
+        if (NMS.compareTo(1, 9, 0) >= 0) {
             new AttackSpeed().registerAttribute();
         }
         new Command().registerAttribute();
 
         File jsAttributeFiles = new File(getDataFolder(), "Attribute" + File.separator + "JavaScript");
-        if (!jsAttributeFiles.exists() && NMS.compareTo(1,9,0) >= 0) {
+        if (!jsAttributeFiles.exists() && NMS.compareTo(1, 9, 0) >= 0) {
             saveResource("Attribute/JavaScript/JSAttribute.js", true);
             saveResource("Attribute/SX-Attribute/JSAttribute_JS.yml", true);
         }
@@ -168,7 +171,7 @@ public class SXAttribute extends JavaPlugin {
             }
         }
 
-        if (NMS.compareTo(1,9,0) >= 0) {
+        if (NMS.compareTo(1, 9, 0) >= 0) {
             new MainHand().registerCondition();
             new OffHand().registerCondition();
         }

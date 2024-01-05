@@ -78,6 +78,7 @@ Condition:
     Format: yyyy/MM/dd HH:mm
 AttributePriority:
   - JSAttribute
+  - AttackElement
   - Dodge#SX-Attribute
   - Damage
   - Crit

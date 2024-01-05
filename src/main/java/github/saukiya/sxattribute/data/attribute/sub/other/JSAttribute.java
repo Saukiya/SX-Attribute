@@ -4,10 +4,10 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
-import org.openjdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import javax.script.*;
 import java.io.File;

@@ -23,7 +23,7 @@ repositories {
 dependencies {
     compileOnly fileTree('libs')
     compileOnly fileTree('lib')
-    compileOnly 'org.openjdk.nashorn:nashorn-core:15.3'
+//    implementation 'org.openjdk.nashorn:nashorn-core:15.3'
     compileOnly 'io.lumine.xikage:MythicMobs:4.9.1'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
