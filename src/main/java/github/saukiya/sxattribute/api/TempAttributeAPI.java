@@ -17,17 +17,14 @@ public class TempAttributeAPI {
         Bukkit.getScheduler().runTaskTimerAsynchronously(SXAttribute.getInst(), TempAttributeAPI::update, 0L, 20L);
     }
 
-    public static void update() {
-        HashMap<UUID, ConcurrentHashMap<String, Pair<SXAttributeData, Long>>> cloneMap = new HashMap<>(cache);
-        cloneMap.forEach((uuid, map) -> map.forEach((name, pair) -> {
-            if (pair.getLast() < System.currentTimeMillis()) {
-                cache.getOrDefault(uuid, new ConcurrentHashMap<>()).remove(name);
-            }
-        }));
+    private static void update() {
+        long currentTime = System.currentTimeMillis();
+        cache.forEach((uuid, attributes) -> attributes.entrySet().removeIf(entry -> entry.getValue().getLast() < currentTime));
     }
 
-    public static void setCache(UUID uuid, String name, SXAttributeData attributeData, long time) {
-        cache.computeIfAbsent(uuid, k -> new ConcurrentHashMap<>()).put(name, new Pair<>(attributeData, System.currentTimeMillis() + time));
+    public static void setCache(UUID uuid, String name, SXAttributeData attributeData, long durationMillis) {
+        long expiryTime = System.currentTimeMillis() + durationMillis;
+        cache.computeIfAbsent(uuid, k -> new ConcurrentHashMap<>()).put(name, new Pair<>(attributeData, expiryTime));
     }
 
     public static SXAttributeData getCache(UUID uuid, String name) {
@@ -40,19 +37,22 @@ public class TempAttributeAPI {
 
     public static SXAttributeData getCache(UUID uuid) {
         SXAttributeData attributeData = new SXAttributeData();
-        HashMap<UUID, ConcurrentHashMap<String, Pair<SXAttributeData, Long>>> cloneMap = new HashMap<>(cache);
-        cloneMap.getOrDefault(uuid, new ConcurrentHashMap<>()).forEach((name, pair) -> {
+        ConcurrentHashMap<String, Pair<SXAttributeData, Long>> attrs = cache.getOrDefault(uuid, new ConcurrentHashMap<>());
+        attrs.forEach((name, pair) -> {
             if (pair.getLast() > System.currentTimeMillis()) {
                 attributeData.add(pair.getFirst());
             } else {
-                cache.getOrDefault(uuid, new ConcurrentHashMap<>()).remove(name);
+                attrs.remove(name);
             }
         });
         return attributeData;
     }
 
     public static void removeCache(UUID uuid, String name) {
-        cache.getOrDefault(uuid, new ConcurrentHashMap<>()).remove(name);
+        ConcurrentHashMap<String, Pair<SXAttributeData, Long>> userCache = cache.get(uuid);
+        if (userCache != null) {
+            userCache.remove(name);
+        }
     }
 
     public static void removeCache(UUID uuid) {

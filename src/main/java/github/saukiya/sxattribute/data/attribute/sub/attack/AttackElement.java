@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
 /**
  * 元素伤害/元素防御 最多40个
  */
+@Getter
 public class AttackElement extends SubAttribute {
 
-    @Getter
-    private HashMap<String, ElementData> dataHashMap = new HashMap<>();
+    private final HashMap<String, ElementData> dataHashMap = new HashMap<>();
 
     public AttackElement() {
         super(SXAttribute.getInst(), 40, AttributeType.ATTACK);

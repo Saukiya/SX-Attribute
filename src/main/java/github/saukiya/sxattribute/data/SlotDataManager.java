@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * @author Saukiya
  */
+@Getter
 public class SlotDataManager {
 
-    @Getter
     private final List<SlotData> slotList = new ArrayList<>();
 
     public SlotDataManager() {
@@ -22,12 +22,12 @@ public class SlotDataManager {
     public void loadData() {
         slotList.clear();
         List<String> registerSlotList = Config.getConfig().getStringList(Config.REGISTER_SLOTS_LIST);
-        if (Config.isRegisterSlot() && registerSlotList.size() > 0) {
+        if (Config.isRegisterSlot() && !registerSlotList.isEmpty()) {
             for (String str : registerSlotList) {
                 if (str.contains("#") && str.split("#").length > 1) {
                     String[] args = str.split("#");
                     String name = args[1];
-                    int slot = Integer.valueOf(args[0].replaceAll("[^0-9]", ""));
+                    int slot = Integer.parseInt(args[0].replaceAll("[^0-9]", ""));
                     this.slotList.add(new SlotData(name, slot));
                 }
             }

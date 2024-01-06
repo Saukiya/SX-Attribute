@@ -190,7 +190,7 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
      * 根据属性枚举执行相应方法
      * 伤害事件
      *
-     * @param values 属性数据
+     * @param values    属性数据
      * @param eventData 事件数据
      */
     public abstract void eventMethod(double[] values, EventData eventData);
@@ -205,6 +205,15 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
      */
     public abstract Object getPlaceholder(double[] values, LivingEntity player, String string);
 
+    public Double getValue(double[] values, LivingEntity player, String string) {
+        String placeholder = getPlaceholder(values, player, string).toString();
+        if (placeholder.contains(" - ")) {
+            String[] split = placeholder.split(" - ");
+            return SXAttribute.getRandom().nextDouble() * (Double.parseDouble(split[1]) - Double.parseDouble(split[0])) + Double.parseDouble(split[0]);
+        }
+        return Double.parseDouble(placeholder);
+    }
+
     /**
      * 获取placeholder变量列表
      *
@@ -216,7 +225,7 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
      * 读取属性方法
      *
      * @param values 属性数据
-     * @param lore 物品lore
+     * @param lore   物品lore
      */
     public abstract void loadAttribute(double[] values, String lore);
 
@@ -269,8 +278,8 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
      * @return String
      */
     public static double getNumber(String lore) {
-        String str = lore.replaceAll("\u00a7+[a-z0-9]", "").replaceAll("[^-0-9.]", "");
-        return str.length() == 0 || str.replaceAll("[^.]", "").length() > 1 ? 0D : Double.valueOf(str);
+        String str = lore.replaceAll("§+[a-z0-9]", "").replaceAll("[^-0-9.]", "");
+        return str.isEmpty() || str.replaceAll("[^.]", "").length() > 1 ? 0D : Double.parseDouble(str);
     }
 
     /**

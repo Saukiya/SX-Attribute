@@ -7,38 +7,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DamageAPI {
 
     /**
      * 受攻击者伤害数据索引
      */
-    private static final ConcurrentHashMap<UUID, List<DamageTempData>> victim = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<UUID, List<DamageTempData>> victimCache = new ConcurrentHashMap<>();
 
     public static void addDamageData(UUID uuid, DamageTempData damageData) {
-        victim.computeIfAbsent(uuid, k -> new ArrayList<>()).add(damageData);
+        victimCache.computeIfAbsent(uuid, k -> new CopyOnWriteArrayList<>()).add(damageData);
     }
 
     public static SXAttributeData getDamageData(UUID caster, UUID target) {
-        SXAttributeData attributeData = new SXAttributeData();
-        if (!victim.containsKey(target)) {
+        List<DamageTempData> dataList = victimCache.get(target);
+        if (dataList == null || dataList.isEmpty()) {
             return null;
         }
-        for (DamageTempData data : victim.get(target)) {
-            if (data.getDamager().equals(caster)) {
-                attributeData.add(data.getAttributes());
-            }
-        }
+
+        SXAttributeData attributeData = new SXAttributeData();
+        dataList.stream()
+                .filter(data -> data.getDamager().equals(caster))
+                .forEach(data -> attributeData.add(data.getAttributes()));
+
         return attributeData;
     }
 
     public static void removeDamageData(UUID uuid) {
-        victim.remove(uuid);
+        victimCache.remove(uuid);
     }
 
     public static void removeByCaster(UUID caster) {
-        for (List<DamageTempData> list : victim.values()) {
-            list.removeIf(data -> data.getDamager().equals(caster));
-        }
+        victimCache.values().forEach(list -> list.removeIf(data -> data.getDamager().equals(caster)));
     }
 }
