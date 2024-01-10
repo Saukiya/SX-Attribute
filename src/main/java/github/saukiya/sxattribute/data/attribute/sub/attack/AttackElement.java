@@ -41,15 +41,13 @@ public class AttackElement extends SubAttribute {
      */
     @Override
     protected YamlConfiguration defaultConfig(YamlConfiguration config) {
-        config.set("火属性.Type", "Attack");
         config.set("火属性.DiscernName", "火攻击");
         config.set("火属性.Group", "火元素");
         config.set("火属性.CombatPower", 1);
-        config.set("火属性.AttackFormula", "(<a:火攻击> * 1.5) - <d:火防御>");
+        config.set("火属性.AttackFormula", "+ (<a:火攻击> * 1.5) - <d:火防御>");
         config.set("火属性.Info", "可以利用公式定义伤害 a是攻击者 d是防御者 只可以是本文件内的属性");
 
         // 火防御
-        config.set("火防御.Type", "Other");
         config.set("火防御.DiscernName", "火防御");
         config.set("火防御.Group", "火元素");
         config.set("火防御.CombatPower", 1);
@@ -57,29 +55,26 @@ public class AttackElement extends SubAttribute {
         config.set("火防御.Info", "Other类型是占位属性用于其他元素属性进行判断");
 
         // 火抗性
-            config.set("火抗性.Type", "Defence");
         config.set("火抗性.DiscernName", "火抗性");
         config.set("火抗性.Group", "火元素");
         config.set("火抗性.CombatPower", 1);
-        config.set("火抗性.AttackFormula", "<d:火抗性> * 0.5");
+        config.set("火抗性.AttackFormula", "- <d:火抗性> * 0.5");
         config.set("火抗性.Info", "会减少攻击方造成的攻击 damage:Group是某个组已经计算的伤害 damage 是所有Group的伤害");
 
         // 风属性
-        config.set("风属性.Type", "Attack");
         config.set("风属性.DiscernName", "风攻击");
         config.set("风属性.Group", "风元素");
         config.set("风属性.CombatPower", 1);
         config.set("风属性.ProbabilityTag", "风概率");
         config.set("风属性.Probability", "0.5 + 0.1");
-        config.set("风属性.AttackFormula", "<a:风攻击>");
+        config.set("风属性.AttackFormula", "+ <a:风攻击>");
         config.set("风属性.Info", "也可以不走公式直接运行");
         //风防御
-        config.set("风防御.Type", "Defence");
         config.set("风防御.DiscernName", "风防御");
         config.set("风防御.Group", "风元素");
         config.set("风防御.CombatPower", 1);
         config.set("风防御.Priority", 1);
-        config.set("风防御.AttackFormula", "<d:风防御>");
+        config.set("风防御.AttackFormula", "- <d:风防御>");
         config.set("风防御.Info", "会减少攻击方造成的攻击");
         return config;
     }
@@ -92,7 +87,6 @@ public class AttackElement extends SubAttribute {
     public void onEnable() {
         int index = 0;
         for (String key : getConfig().getKeys(false)) {
-            String type = getConfig().getString(key + ".Type");
             String discernName = getConfig().getString(key + ".DiscernName");
             int combatPower = getConfig().getInt(key + ".CombatPower");
             String attackFormula = getConfig().getString(key + ".AttackFormula");
@@ -101,14 +95,26 @@ public class AttackElement extends SubAttribute {
             String probabilityTag = getConfig().getString(key + ".ProbabilityTag");
             String probability = getConfig().getString(key + ".Probability", "");
             dataHashMap.put(discernName, new ElementData(
-                    type, group, discernName, combatPower, attackFormula, priority,
+                    group, discernName, combatPower, attackFormula, priority,
                     new int[]{index, index + 1,},
                     probabilityTag, probability
             ));
             index += 2;
-            SXAttribute.getInst().getLogger().info("Attribute >>  [AttackElement] LoadSubElementAttribute " + discernName + " (" + type + ":" + group + ")");
+            SXAttribute.getInst().getLogger().info("Attribute >>  [AttackElement] LoadSubElementAttribute " + discernName + " (" + ":" + group + ")");
         }
         setLength(dataHashMap.size() * 2);
+        SXAttribute.getInst().getLogger().info("Attribute >> Load " + dataHashMap.size() + " AttackElement");
+        // 按照优先级进行输出
+        ArrayList<ElementData> z = new ArrayList<>(dataHashMap.values());
+        Comparator<ElementData> ageComparator = Comparator.comparingInt(ElementData::getPriority);
+        z.sort(ageComparator);
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        for (ElementData data : z) {
+            i++;
+            sb.append(i).append(": ").append(data.discernName).append(" > ");
+        }
+        SXAttribute.getInst().getLogger().info("Attribute >> Load AttackElement Priority " + sb);
     }
 
     @Override
@@ -138,11 +144,24 @@ public class AttackElement extends SubAttribute {
                 if (data.probability.isEmpty() && probability(data.getParsedProbability(this, damageData))) {
                     SXElementDamageEvent event = new SXElementDamageEvent(damageData, data);
                     Bukkit.getPluginManager().callEvent(event);
-                    if (data.type.equalsIgnoreCase("Attack")) {
-                        damageData.addDamage(getValue(event.getElementData().attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                    String attackFormula = event.getElementData().attackFormula;
+                    String first = !attackFormula.isEmpty() ? attackFormula.substring(0, 1) : "#";
+                    if (!attackFormula.isEmpty()) {
+                        attackFormula = attackFormula.substring(1);
                     }
-                    if (data.type.equalsIgnoreCase("Defence")) {
-                        damageData.takeDamage(getValue(data.attackFormula, damageData, data), data.group);
+                    switch (first) {
+                        case "+":
+                            damageData.addDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                            break;
+                        case "-":
+                            damageData.takeDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                            break;
+                        case "=":
+                            damageData.setDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                            break;
+                        case "#":
+                        default:
+                            break;
                     }
                 }
             }
@@ -181,12 +200,20 @@ public class AttackElement extends SubAttribute {
                     }
                     break;
                 }
+                case "p": {
+                    HashMap<String, Double> damages = damageData.getDamages();
+                    for (String s : value) {
+                        String randomValue = "0";
+                        if (damages.containsKey(s)) {
+                            randomValue = String.valueOf(damages.get(s));
+                        }
+                        baseString = baseString.replace("<p:" + s + ">", randomValue);
+                    }
+                    break;
+                }
             }
         }
         baseString = baseString.replace("<damage>", String.valueOf(damageData.getDamage()));
-        for (String s : damageData.getDamages().keySet()) {
-            baseString = baseString.replace("<damage:" + s + ">", String.valueOf(damageData.getDamages().get(s)));
-        }
         // 计算公式
         try {
             return CalculatorUtil.getResult(baseString).doubleValue();
@@ -201,7 +228,7 @@ public class AttackElement extends SubAttribute {
     }
 
     public static Map<String, List<String>> convertStringToMap(String text) {
-        Pattern pattern = Pattern.compile("<([ad]):([^>]+)>"); // 正则表达式匹配 {d:攻击力} 或 {t:防御力}
+        Pattern pattern = Pattern.compile("<([adp]):([^>]+)>"); // 正则表达式匹配 {d:攻击力} 或 {t:防御力}
         Matcher matcher = pattern.matcher(text);
         Map<String, List<String>> map = new HashMap<>();
         while (matcher.find()) {
@@ -244,8 +271,6 @@ public class AttackElement extends SubAttribute {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ElementData {
-        // Attack / Defence
-        private String type;
         // Group伤害组
         private String group;
         // 识别名
