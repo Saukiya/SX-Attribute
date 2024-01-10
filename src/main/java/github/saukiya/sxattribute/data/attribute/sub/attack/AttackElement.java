@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 元素伤害/元素防御 最多40个
+ * 元素伤害/元素防御
  */
 @Getter
 public class AttackElement extends SubAttribute {
@@ -57,7 +57,7 @@ public class AttackElement extends SubAttribute {
         config.set("火防御.Info", "Other类型是占位属性用于其他元素属性进行判断");
 
         // 火抗性
-        config.set("火抗性.Type", "Defence");
+            config.set("火抗性.Type", "Defence");
         config.set("火抗性.DiscernName", "火抗性");
         config.set("火抗性.Group", "火元素");
         config.set("火抗性.CombatPower", 1);
@@ -70,7 +70,7 @@ public class AttackElement extends SubAttribute {
         config.set("风属性.Group", "风元素");
         config.set("风属性.CombatPower", 1);
         config.set("风属性.ProbabilityTag", "风概率");
-        config.set("风属性.Probability", 0.5D);
+        config.set("风属性.Probability", "0.5 + 0.1");
         config.set("风属性.AttackFormula", "<a:风攻击>");
         config.set("风属性.Info", "也可以不走公式直接运行");
         //风防御
@@ -99,7 +99,7 @@ public class AttackElement extends SubAttribute {
             String group = getConfig().getString(key + ".Group");
             int priority = getConfig().getInt(key + ".Priority", 0);
             String probabilityTag = getConfig().getString(key + ".ProbabilityTag");
-            double probability = getConfig().getDouble(key + ".Probability", 1.0D);
+            String probability = getConfig().getString(key + ".Probability", "");
             dataHashMap.put(discernName, new ElementData(
                     type, group, discernName, combatPower, attackFormula, priority,
                     new int[]{index, index + 1,},
@@ -124,9 +124,6 @@ public class AttackElement extends SubAttribute {
                 values[data.index[0]] += getNumber(loreSplit[0]);
                 values[data.index[1]] += getNumber(loreSplit[loreSplit.length > 1 ? 1 : 0]);
             }
-            if (data.probabilityTag != null && lore.contains(data.probabilityTag)) {
-                data.probability = getNumber(lore);
-            }
         }
     }
 
@@ -138,7 +135,7 @@ public class AttackElement extends SubAttribute {
             Comparator<ElementData> ageComparator = Comparator.comparingInt(ElementData::getPriority);
             elementData.sort(ageComparator);
             for (ElementData data : elementData) {
-                if (data.probability < 1.0 && probability(data.probability)) {
+                if (data.probability.isEmpty() && probability(data.getParsedProbability(this, damageData))) {
                     SXElementDamageEvent event = new SXElementDamageEvent(damageData, data);
                     Bukkit.getPluginManager().callEvent(event);
                     if (data.type.equalsIgnoreCase("Attack")) {
@@ -152,7 +149,7 @@ public class AttackElement extends SubAttribute {
         }
     }
 
-    private double getValue(String formatString, DamageData damageData, ElementData data) {
+    public double getValue(String formatString, DamageData damageData, ElementData data) {
         // 解析 <a:攻击者属性> <d:防御者属性>
         String baseString = formatString;
         Map<String, List<String>> map = convertStringToMap(formatString);
@@ -263,8 +260,13 @@ public class AttackElement extends SubAttribute {
         private int[] index;
         // 触发概率标签
         private String probabilityTag;
-        // 触发概率
-        private double probability;
+        // 触发概率 公式
+        private String probability;
+
+        public double getParsedProbability(AttackElement attackElement, DamageData damageData) {
+            double value = attackElement.getValue(probability, damageData, this);
+            return value < 0 ? 0 : value;
+        }
 
     }
 
