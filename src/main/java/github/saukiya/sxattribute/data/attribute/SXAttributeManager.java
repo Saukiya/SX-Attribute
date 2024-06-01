@@ -163,8 +163,8 @@ public class SXAttributeManager implements Listener {
         data.add(TempAttributeAPI.getCache(entity.getUniqueId()));
         SXGetAttributeEvent event = new SXGetAttributeEvent(entity, data);
         Bukkit.getPluginManager().callEvent(event);
-        data.correct();
-        return data;
+        event.getData().correct();
+        return event.getData();
     }
 
     /**

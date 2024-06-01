@@ -89,10 +89,10 @@ public class AttackElement extends SubAttribute {
         for (String key : getConfig().getKeys(false)) {
             String discernName = getConfig().getString(key + ".DiscernName");
             int combatPower = getConfig().getInt(key + ".CombatPower");
-            String attackFormula = getConfig().getString(key + ".AttackFormula");
-            String group = getConfig().getString(key + ".Group");
+            String attackFormula = getConfig().getString(key + ".AttackFormula", "");
+            String group = getConfig().getString(key + ".Group", "");
             int priority = getConfig().getInt(key + ".Priority", 0);
-            String probabilityTag = getConfig().getString(key + ".ProbabilityTag");
+            String probabilityTag = getConfig().getString(key + ".ProbabilityTag", "");
             String probability = getConfig().getString(key + ".Probability", "");
             dataHashMap.put(discernName, new ElementData(
                     group, discernName, combatPower, attackFormula, priority,
@@ -135,13 +135,20 @@ public class AttackElement extends SubAttribute {
 
     @Override
     public void eventMethod(double[] values, EventData eventData) {
+        System.out.println("开始运行");
         if (eventData instanceof DamageData) {
+            System.out.println(" >DamageData");
             DamageData damageData = (DamageData) eventData;
             ArrayList<ElementData> elementData = new ArrayList<>(dataHashMap.values());
             Comparator<ElementData> ageComparator = Comparator.comparingInt(ElementData::getPriority);
             elementData.sort(ageComparator);
+            System.out.println(" >ElementData:" + elementData.size());
             for (ElementData data : elementData) {
-                if (data.probability.isEmpty() && probability(data.getParsedProbability(this, damageData))) {
+                double parsedProbability = data.getParsedProbability(this, damageData);
+                boolean probability = probability(parsedProbability);
+                System.out.println(" >" + data.discernName + " Probability: " + parsedProbability + "value: " + probability);
+                if (data.probabilityTag.isEmpty() || probability) {
+                    System.out.println("> 开始计算: " + data.discernName);
                     SXElementDamageEvent event = new SXElementDamageEvent(damageData, data);
                     Bukkit.getPluginManager().callEvent(event);
                     String attackFormula = event.getElementData().attackFormula;
@@ -149,28 +156,76 @@ public class AttackElement extends SubAttribute {
                     if (!attackFormula.isEmpty()) {
                         attackFormula = attackFormula.substring(1);
                     }
+                    // 对全部的组进行编辑
+                    if (event.getElementData().group.equals("Each")) {
+                        HashMap<String, Double> damages = damageData.getDamages();
+                        for (String dz : damages.keySet()) {
+                            String temp = attackFormula.replace("<each>", damages.getOrDefault(dz, 0D).toString());
+                            switch (first) {
+                                case "+":
+                                    damageData.addDamage(getValue(temp, event.getData(), event.getElementData()), dz);
+                                    System.out.println(" R>Add " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
+                                    break;
+                                case "-":
+                                    damageData.takeDamage(getValue(temp, event.getData(), event.getElementData()), dz);
+                                    System.out.println(" R>Take " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
+                                    break;
+                                case "=":
+                                    damageData.setDamage(getValue(temp, event.getData(), event.getElementData()), dz);
+                                    System.out.println(" R>Set " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
+                                    break;
+                                case "#":
+                                default:
+                                    System.out.println(" R>Break" + dz + " No Formula");
+                                    break;
+                            }
+                        }
+                        continue;
+                    }
+                    // 通用公式
                     switch (first) {
                         case "+":
                             damageData.addDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                            System.out.println(" >Add " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
                             break;
                         case "-":
                             damageData.takeDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                            System.out.println(" >Take " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
                             break;
                         case "=":
                             damageData.setDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
+                            System.out.println(" >Set " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
                             break;
+                        case "@":
+                            double value = getValue(attackFormula, event.getData(), event.getElementData());
+                            // 把All伤害当作唯一值 取消掉其他的值
+//                            damageData.setDamage(getValue(attackFormula, event.getData(), event.getElementData()), "All");
+//                            System.out.println(" >Save " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
+//                            // 移除非All类型的值
+//                            damageData.getDamages().keySet().stream().filter(s -> !s.equals("All")).forEach(damageData.getDamages()::remove);
+                            damageData.getDamages().clear();
+                            damageData.addDamage(value, "All");
                         case "#":
                         default:
+                            System.out.println(" >Break" + event.getElementData().discernName + " No Formula");
                             break;
                     }
+                    System.out.println("当前伤害: " + damageData.getDamages());
                 }
+                System.out.println("------------------------------------------------");
             }
         }
     }
 
     public double getValue(String formatString, DamageData damageData, ElementData data) {
+        return getValue(formatString, damageData);
+    }
+
+    public double getValue(String formatString, DamageData damageData) {
         // 解析 <a:攻击者属性> <d:防御者属性>
         String baseString = formatString;
+//        System.out.println(data.discernName + " 原始公式: " + baseString);
+        baseString = baseString.replace("<damage>", String.valueOf(damageData.getDamage()));
         Map<String, List<String>> map = convertStringToMap(formatString);
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             String key = entry.getKey();
@@ -213,14 +268,16 @@ public class AttackElement extends SubAttribute {
                 }
             }
         }
-        baseString = baseString.replace("<damage>", String.valueOf(damageData.getDamage()));
+//        System.out.println(data.discernName + " 运算过程: " + baseString);
+        double result = 0.0;
         // 计算公式
         try {
-            return CalculatorUtil.getResult(baseString).doubleValue();
+            result = CalculatorUtil.getResult(baseString).doubleValue();
         } catch (Exception e) {
-            return 0;
+            result = 0.0;
         }
-
+//        System.out.println(data.discernName + " 运算结果: " + result);
+        return result;
     }
 
     private double getRandomValue(double valueA, double valueB) {

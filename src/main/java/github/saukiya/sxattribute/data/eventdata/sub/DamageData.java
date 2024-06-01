@@ -57,7 +57,29 @@ public class DamageData implements EventData {
         this.defenderData = defenderData;
         this.attackerData = attackerData;
         this.event = event;
-        setDamage(event.getDamage());
+        if (event != null){
+            setDamage(event.getDamage());
+        }
+    }
+
+    public DamageData(LivingEntity defender, LivingEntity attacker, String defenderName, String attackerName, SXAttributeData defenderData, SXAttributeData attackerData) {
+        this.defender = defender;
+        this.attacker = attacker;
+        this.defenderName = defenderName;
+        this.attackerName = attackerName;
+        this.defenderData = defenderData;
+        this.attackerData = attackerData;
+        this.event = null;
+    }
+
+    public DamageData(LivingEntity defender, LivingEntity attacker, SXAttributeData defenderData, SXAttributeData attackerData) {
+        this.defender = defender;
+        this.attacker = attacker;
+        this.defenderName = defender.getName();
+        this.attackerName = attacker.getName();
+        this.defenderData = defenderData;
+        this.attackerData = attackerData;
+        this.event = null;
     }
 
     /**
@@ -86,6 +108,7 @@ public class DamageData implements EventData {
         });
         all.updateAndGet(v1 -> v1 + damages.getOrDefault("All", 0.0));
         System.out.println(damages);
+        System.out.println("最终结果:" + all.get());
         return all.get() < 0.0 ? 0.0 : all.get();
     }
 
@@ -100,7 +123,9 @@ public class DamageData implements EventData {
 
     public void setDamage(double damage, String type) {
         damages.put(type, damage);
-        event.setDamage(getDamage());
+        if (event != null){
+            event.setDamage(getDamage());
+        }
     }
 
     /**
@@ -114,7 +139,9 @@ public class DamageData implements EventData {
 
     public void addDamage(double addDamage, String type) {
         damages.put(type, damages.getOrDefault(type, 0D) + addDamage);
-        event.setDamage(getDamage());
+        if (event != null){
+            event.setDamage(getDamage());
+        }
     }
 
     /**
@@ -128,11 +155,15 @@ public class DamageData implements EventData {
 
     public void takeDamage(double takeDamage, String type) {
         damages.put(type, damages.getOrDefault(type, 0D) - takeDamage);
-        event.setDamage(getDamage());
+        if (event != null){
+            event.setDamage(getDamage());
+        }
     }
 
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
-        event.setCancelled(cancelled);
+        if (event != null){
+            event.setCancelled(cancelled);
+        }
     }
 }

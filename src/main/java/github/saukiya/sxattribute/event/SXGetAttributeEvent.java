@@ -12,14 +12,13 @@ import org.bukkit.event.HandlerList;
  *
  * @author Saukiya
  */
+@Getter
 public class SXGetAttributeEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    @Getter
     private final LivingEntity entity;
 
-    @Getter
     @Setter
     private SXAttributeData data;
 
