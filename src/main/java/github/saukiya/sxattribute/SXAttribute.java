@@ -24,29 +24,27 @@ import github.saukiya.sxattribute.util.PlaceholderUtil;
 import github.saukiya.sxitem.command.MainCommand;
 import github.saukiya.sxitem.util.LogUtil;
 import github.saukiya.sxitem.util.NMS;
-import jdk.internal.dynalink.beans.StaticClass;
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Map;
@@ -93,6 +91,7 @@ public class SXAttribute extends JavaPlugin {
 
     private static LogUtil logUtil;
 
+    @SneakyThrows
     @Override
     public void onLoad() {
         super.onLoad();
@@ -144,22 +143,28 @@ public class SXAttribute extends JavaPlugin {
         }
         if (jsAttributeFiles.exists() && jsAttributeFiles.isDirectory()) {
             ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-            scriptEngineManager.registerEngineName("JavaScript", new NashornScriptEngineFactory());
-            getLogger().info(scriptEngineManager.getEngineFactories().stream().map(ScriptEngineFactory::getEngineName).collect(Collectors.joining(",")));
-            StaticClass arrays = StaticClass.forClass(Arrays.class);
-            StaticClass sxAttributeType = StaticClass.forClass(AttributeType.class);
-            StaticClass sxAttribute = StaticClass.forClass(SXAttribute.class);
-            StaticClass bukkit = StaticClass.forClass(Bukkit.class);
+            if (scriptEngineManager.getEngineByName("js") == null) {
+                scriptEngineManager.registerEngineName("js", new NashornScriptEngineFactory());
+            }
+
+            Class<?> clazz = Class.forName(System.getProperty("java.class.version").startsWith("52") ?
+                    "jdk.internal.dynalink.beans.StaticClass" :
+                    "jdk.dynalink.beans.StaticClass");
+            Method method = clazz.getMethod("forClass", Class.class);
+            Object arrays = method.invoke(null, Arrays.class);
+            Object sxAttributeType = method.invoke(null, AttributeType.class);
+            Object sxAttribute = method.invoke(null, SXAttribute.class);
+            Object bukkit = method.invoke(null, Bukkit.class);
             for (File jsFile : jsAttributeFiles.listFiles()) {
                 if (jsFile.getName().endsWith(".js")) {
-                    ScriptEngine engine = scriptEngineManager.getEngineByName("JavaScript");
+                    ScriptEngine engine = scriptEngineManager.getEngineByName("js");
                     engine.put("Arrays", arrays);
                     engine.put("SXAttributeType", sxAttributeType);
                     engine.put("SXAttribute", sxAttribute);
                     engine.put("Bukkit", bukkit);
                     engine.put("API", api);
                     try {
-                        engine.eval(new InputStreamReader(new FileInputStream(jsFile), StandardCharsets.UTF_8));
+                        engine.eval(new FileReader(jsFile));
                         new JSAttribute(jsFile.getName().replace(".js", ""), engine).registerAttribute();
                     } catch (ScriptException | FileNotFoundException e) {
                         getLogger().info("========================================================");

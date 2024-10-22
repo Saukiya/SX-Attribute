@@ -3,50 +3,38 @@ package github.saukiya.sxattribute.util;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
+import github.saukiya.util.helper.PlaceholderHelper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import me.clip.placeholderapi.PlaceholderAPI;
-import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PlaceholderUtil {
-
-    static boolean enabled;
+public class PlaceholderUtil implements PlaceholderHelper.PlaceholderRequest {
+    
+    private static PlaceholderUtil inst = new PlaceholderUtil();
 
     static Map<UUID, SXAttributeData> dataMap = new HashMap<>();
+    
+    static BukkitTask task;
 
     public static void setup() {
-        Bukkit.getScheduler().runTaskTimer(SXAttribute.getInst(), ()-> dataMap.clear(), 15, 15);
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            try {
-                new Placeholder().register();
-                enabled = true;
-            } catch (Exception e) {
-                SXAttribute.getInst().getLogger().warning("Placeholder error");
-                enabled = false;
-            }
-            SXAttribute.getInst().getLogger().info("PlaceholderHelper Enabled");
-        } else {
-            SXAttribute.getInst().getLogger().info("PlaceholderHelper Disable");
+        PlaceholderHelper.setup(SXAttribute.getInst(), "sx", inst);
+        if (task != null) {
+            Bukkit.getScheduler().cancelTask(task.getTaskId());
         }
+        task = Bukkit.getScheduler().runTaskTimer(SXAttribute.getInst(), ()-> dataMap.clear(), 20, 20);
     }
 
     public static List<String> setPlaceholders(Player player, List<String> list) {
-        if (list == null) return null;
-        if (!enabled || player == null) return new ArrayList<>(list);
-
-        return PlaceholderAPI.setPlaceholders(player, list);
+        return PlaceholderHelper.setPlaceholders(player, list);
     }
 
     public static String setPlaceholders(Player player, String text) {
-        if (text == null) return null;
-        if (!enabled || player == null) return text;
-
-        return PlaceholderAPI.setPlaceholders(player, text);
+        return PlaceholderHelper.setPlaceholders(player, text);
     }
 
     public static String onPlaceholderRequest(Player player, String string, SXAttributeData attributeData) {
@@ -62,31 +50,8 @@ public class PlaceholderUtil {
         return "§cN/A - " + string;
     }
 
-    static class Placeholder extends PlaceholderExpansion {
-
-        @Override
-        public String getIdentifier() {
-            return "sx";
-        }
-
-        @Override
-        public String getAuthor() {
-            return SXAttribute.getInst().getDescription().getAuthors().toString();
-        }
-
-        @Override
-        public String getVersion() {
-            return SXAttribute.getInst().getDescription().getVersion();
-        }
-
-        @Override
-        public boolean persist() {
-            return true;
-        }
-
-        @Override
-        public String onPlaceholderRequest(Player player, String string) {
-            return PlaceholderUtil.onPlaceholderRequest(player, string, dataMap.computeIfAbsent(player.getUniqueId(), k -> SXAttribute.getAttributeManager().getEntityData(player)));
-        }
+    @Override
+    public String onPlaceholderRequest(Player player, String string) {
+        return onPlaceholderRequest(player, string, dataMap.computeIfAbsent(player.getUniqueId(), k -> SXAttribute.getAttributeManager().getEntityData(player)));
     }
 }

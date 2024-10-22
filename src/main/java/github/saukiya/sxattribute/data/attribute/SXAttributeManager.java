@@ -205,7 +205,7 @@ public class SXAttributeManager implements Listener {
                 Inventory inv = player.getInventory();
                 for (SlotData slotData : SXAttribute.getSlotDataManager().getSlotList()) {
                     ItemStack item = inv.getItem(slotData.getSlot());
-                    SXItem.getItemManager().updateItem((Player) entity, item);
+//                    SXItem.getItemManager().updateItem((Player) entity, item);
                     if (item != null && !item.getType().equals(Material.AIR) && item.getItemMeta().hasLore() && item.getItemMeta().getLore().stream().anyMatch(lore -> lore.contains(slotData.getName()))) {
                         preItemList.add(new PreLoadItem(EquipmentType.SLOT, item));
                     }

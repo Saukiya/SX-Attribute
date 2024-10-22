@@ -1,40 +1,47 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '4.0.0' + '-SNAPSHOT'
+version '4.0.0'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
+    mavenLocal()
     mavenCentral()
 
-    //Github Project
-    maven { url "https://jitpack.io" }
-    //MythicMobs
+    // Minecraft Api
+    maven { url 'https://libraries.minecraft.net'}
+    // MythicMobs
     maven { url "https://mvn.lumine.io/repository/maven-public/" }
-    //bStats-bukkit
+    // bStats-bukkit
     maven { url "https://repo.codemc.io/repository/maven-public" }
+    // CraftBukkit
+    maven { url 'https://repo.codemc.io/repository/nms/' }
+    // Github Project
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    compileOnly fileTree('libs')
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
     compileOnly fileTree('lib')
-//    implementation 'org.openjdk.nashorn:nashorn-core:15.3'
+
+    compileOnly 'org.spigotmc:spigot:1.12.1-R0.1-SNAPSHOT'
+//    compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
+    implementation 'org.openjdk.nashorn:nashorn-core:15.4'
+    compileOnly 'com.github.Saukiya:SX-Item:4.2.1'
     compileOnly 'io.lumine.xikage:MythicMobs:4.9.1'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
-    compileOnly 'com.github.PlaceholderAPI:PlaceholderAPI:2.10.9'
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    implementation 'org.bstats:bstats-bukkit:2.2.1'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
     testCompileOnly fileTree('libs/spigot-1.14')
-    testImplementation 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.projectlombok:lombok:1.18.34'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 }
 
 shadowJar {
@@ -44,15 +51,21 @@ shadowJar {
     relocate('org.bstats', 'github.saukiya.sxitem.bstats')
 }
 
-//构建并拷贝
-task buildLastJar(type: Copy) {
-    dependsOn clean
-    dependsOn shadowJar
-    from shadowJar.archiveFile.get().asFile.path
-    into("$rootDir").rename { "build/out/${project.name}-Latest.jar" }
-}
-
 //gradle 需要对文件中含有的'$'进行转义: $ -> \$
-processResources {
-    expand(version: version)
+processResources.expand(version: version)
+tasks.build.finalizedBy shadowJar
+buildCopyTask('buildLatestJar', "$rootDir\\build", "Latest")
+
+assemble.group = buildDependents.group = buildNeeded.group = jar.group = classes.group = testClasses.group = "build other"
+
+def buildCopyTask(String taskName, String destinationDir, String jarSuffix) {
+    tasks.register(taskName, Copy) {
+        group = "build"
+        dependsOn shadowJar
+        from shadowJar.archiveFile.get().asFile.path
+        into(destinationDir).rename { "${project.name}-${jarSuffix}.jar" }
+        doLast {
+            println "OutputPath: " + destinationDir
+        }
+    }
 }

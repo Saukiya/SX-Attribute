@@ -4,7 +4,6 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
@@ -118,12 +117,11 @@ public class JSAttribute extends SubAttribute {
             Object object = invocable.invokeFunction("getPlaceholders");
             if (object instanceof List) {
                 return (List<String>) object;
-            } else if (object instanceof ScriptObjectMirror) {
-                ScriptObjectMirror som = (ScriptObjectMirror) object;
+            } else if (object instanceof Bindings) {
+                Bindings bindings = (Bindings) object;
                 List<String> list = new ArrayList<>();
-                int i = 0;
-                while (som.get(String.valueOf(i)) != null) {
-                    list.add(som.get(String.valueOf(i++)).toString());
+                for (Object value : bindings.values()) {
+                    list.add(value.toString());
                 }
                 return list;
             }
