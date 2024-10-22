@@ -9,7 +9,7 @@ import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -23,7 +23,6 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -103,10 +102,8 @@ public class ListenerDamage implements Listener {
 
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
             if (attribute.containsType(AttributeType.ATTACK) && attackData.isValid(attribute)) {
-                System.out.println("Join-A: " + attribute.getName() + ", " + Arrays.toString(attackData.getValues(attribute)) + ", " + damageData);
                 attribute.eventMethod(attackData.getValues(attribute), damageData);
             } else if (attribute.containsType(AttributeType.DEFENCE) && defenseData.isValid(attribute)) {
-                System.out.println("Join-D: " + attribute.getName() + ", " + Arrays.toString(defenseData.getValues(attribute)) + ", " + damageData);
                 attribute.eventMethod(defenseData.getValues(attribute), damageData);
             }
 

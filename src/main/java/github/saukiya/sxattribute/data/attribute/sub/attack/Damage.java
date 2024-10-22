@@ -11,7 +11,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;

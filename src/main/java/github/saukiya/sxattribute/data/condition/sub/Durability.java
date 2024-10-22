@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxitem.event.SXItemSpawnEvent;
 import github.saukiya.sxitem.event.SXItemUpdateEvent;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;

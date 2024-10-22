@@ -26,12 +26,12 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.openjdk.nashorn:nashorn-core:15.3'
     implementation 'org.bstats:bstats-bukkit:2.2.1'
     compileOnly fileTree('lib')
 
-    compileOnly 'org.spigotmc:spigot:1.12.1-R0.1-SNAPSHOT'
-//    compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
-    implementation 'org.openjdk.nashorn:nashorn-core:15.4'
+//    compileOnly 'org.spigotmc:spigot:1.12.1-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
     compileOnly 'com.github.Saukiya:SX-Item:4.2.1'
     compileOnly 'io.lumine.xikage:MythicMobs:4.9.1'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9'

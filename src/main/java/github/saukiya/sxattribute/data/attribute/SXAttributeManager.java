@@ -11,7 +11,7 @@ import github.saukiya.sxattribute.event.SXLoadAttributeEvent;
 import github.saukiya.sxattribute.event.SXPreLoadItemEvent;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxitem.SXItem;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -81,7 +81,7 @@ public class SXAttributeManager implements Listener {
      * @param preItemList 预加载物品
      * @return SXAttribute
      */
-    public SXAttributeData loadItemData(LivingEntity entity, List<PreLoadItem> preItemList) {
+    public SXAttributeData loadItemData(LivingEntity entity, List<PreLoadItem> preItemList, boolean isAsync) {
         Iterator<PreLoadItem> iterator = preItemList.iterator();
         while (iterator.hasNext()) {
             PreLoadItem preLoadItem = iterator.next();
@@ -95,7 +95,7 @@ public class SXAttributeManager implements Listener {
         }
 
         //CallEvent
-        Bukkit.getPluginManager().callEvent(new SXPreLoadItemEvent(entity, preItemList));
+        Bukkit.getPluginManager().callEvent(new SXPreLoadItemEvent(entity, preItemList, isAsync));
 
         SXAttributeData attributeData = new SXAttributeData();
         // LoadAttribute
@@ -106,7 +106,7 @@ public class SXAttributeManager implements Listener {
         }
 
         //CallEvent
-        Bukkit.getPluginManager().callEvent(new SXLoadAttributeEvent(entity, preItemList, attributeData));
+        Bukkit.getPluginManager().callEvent(new SXLoadAttributeEvent(entity, preItemList, attributeData, isAsync));
         return attributeData;
     }
 
@@ -205,7 +205,6 @@ public class SXAttributeManager implements Listener {
                 Inventory inv = player.getInventory();
                 for (SlotData slotData : SXAttribute.getSlotDataManager().getSlotList()) {
                     ItemStack item = inv.getItem(slotData.getSlot());
-//                    SXItem.getItemManager().updateItem((Player) entity, item);
                     if (item != null && !item.getType().equals(Material.AIR) && item.getItemMeta().hasLore() && item.getItemMeta().getLore().stream().anyMatch(lore -> lore.contains(slotData.getName()))) {
                         preItemList.add(new PreLoadItem(EquipmentType.SLOT, item));
                     }
@@ -233,11 +232,11 @@ public class SXAttributeManager implements Listener {
         // Update Items
         if (player != null) {
             for (PreLoadItem preLoadItem : preItemList) {
-                SXItem.getItemManager().updateItem(player, preLoadItem.getItem());
+                SXItem.getItemManager().checkUpdateItem(player, preLoadItem.getItem());
             }
         }
 
-        SXAttributeData attributeData = loadItemData(entity, preItemList);
+        SXAttributeData attributeData = loadItemData(entity, preItemList, true);
 
         if (attributeData.isValid()) {
             entityDataMap.put(entity.getUniqueId(), attributeData);

@@ -3,7 +3,7 @@ package github.saukiya.sxattribute.listener;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.sub.RepairCommand;
 import github.saukiya.sxattribute.command.sub.SellCommand;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Arrow;

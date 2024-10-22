@@ -2,18 +2,10 @@ package github.saukiya.sxattribute.util;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.sxitem.util.MessageUtil;
+import github.saukiya.util.nms.MessageUtil;
 import lombok.Getter;
-import lombok.Setter;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.text.MessageFormat;

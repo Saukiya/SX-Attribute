@@ -5,8 +5,8 @@ import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.sxitem.util.ComponentBuilder;
-import github.saukiya.sxitem.util.MessageUtil;
+import github.saukiya.util.nms.MessageUtil;
+import lombok.val;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -43,7 +43,7 @@ public class AttributeListCommand extends SXAttributeCommand {
                 }
                 str.append("\n§bValue: ").append(attribute.calculationCombatPower(attributeData.getValues(attribute)));
 
-                ComponentBuilder builder = MessageUtil.getInst().componentBuilder().add(message).show(str.toString());
+                val builder = MessageUtil.getInst().builder().add(message).show(str.toString());
                 if (attribute.getConfig() != null) {
                     builder.add("§r §7- §r").add("§8[§cConfig§8]").show(attribute.getConfig().saveToString());
                 }

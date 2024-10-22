@@ -1,7 +1,6 @@
 package github.saukiya.sxattribute.event;
 
 import github.saukiya.sxattribute.data.PreLoadItem;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.bukkit.entity.LivingEntity;
@@ -26,7 +25,11 @@ public class SXPreLoadItemEvent extends Event {
     private List<PreLoadItem> itemList;
 
     public SXPreLoadItemEvent(LivingEntity entity, List<PreLoadItem> itemList) {
-        super(true);
+        this(entity, itemList, false);
+    }
+
+    public SXPreLoadItemEvent(LivingEntity entity, List<PreLoadItem> itemList, boolean isAsync) {
+        super(isAsync);
         this.entity = entity;
         this.itemList = itemList;
     }

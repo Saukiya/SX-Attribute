@@ -25,6 +25,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * 修复物品指令
@@ -50,49 +51,7 @@ public class RepairCommand extends SXAttributeCommand implements Listener {
      * @param player Player
      */
     public static void openRepairInventory(Player player) {
-        Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
-        ItemStack glassItem = new ItemStack(Material.STAINED_GLASS_PANE); //BLACK_STAINED_GLASS_PANE
-        ItemMeta glassMeta = glassItem.getItemMeta();
-        glassMeta.setDisplayName("§r");
-        glassItem.setItemMeta(glassMeta);
-        for (int i = 0; i < 9; i++) {
-            inv.setItem(i, glassItem);
-            inv.setItem(36 + i, glassItem);
-        }
-        glassItem.setDurability((short) 9);
-        for (int i = 0; i < 5; i++) {
-            if (i == 2) continue;
-            inv.setItem(9 + i, glassItem.clone());
-            inv.setItem(18 + i, glassItem.clone());
-            inv.setItem(27 + i, glassItem.clone());
-        }
-        glassItem.setDurability((short) 7);
-        for (int i = 6; i < 9; i++) {
-            inv.setItem(9 + i, glassItem.clone());
-            inv.setItem(18 + i, glassItem.clone());
-            inv.setItem(27 + i, glassItem.clone());
-        }
-        glassItem.setDurability((short) 0);
-        glassItem.setType(Material.IRON_SWORD);
-        for (int i = 1; i < 4; i++) {
-            inv.setItem(5 + (i * 9), glassItem.clone());
-        }
-        glassItem.setType(Material.STAINED_GLASS_PANE);
-        glassMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__GUIDE));
-        glassItem.setItemMeta(glassMeta);
-        inv.setItem(11, glassItem);
-        inv.setItem(19, glassItem);
-        inv.setItem(21, glassItem);
-        inv.setItem(29, glassItem);
-        ItemStack enterItem = new ItemStack(Material.ANVIL);
-        ItemMeta enterMeta = enterItem.getItemMeta();
-        enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__ENTER));
-        enterMeta.setLore(Message.getStringList(Message.INVENTORY__REPAIR__LORE__ENTER, Config.getConfig().getDouble(Config.REPAIR_ITEM_VALUE)));
-        enterMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        enterItem.setItemMeta(enterMeta);
-        inv.setItem(25, enterItem);
-
-        player.openInventory(inv);
+        player.openInventory(InventoryCreator.getInventory());
     }
 
     @Override
@@ -218,5 +177,76 @@ public class RepairCommand extends SXAttributeCommand implements Listener {
             lore = lore.replace(COLOR_REPLACE_LIST.get(i), COLOR_LIST.get(i));
         }
         return lore;
+    }
+
+    public static class InventoryCreator {
+        static ItemStack[] items;
+
+        static {
+            items = new ItemStack[45];
+            ItemStack whiteGlass, grayGlass, blueGlass;
+            whiteGlass = createItem("STAINED_GLASS_PANE", 0, () -> Material.WHITE_STAINED_GLASS_PANE);
+            grayGlass = createItem("STAINED_GLASS_PANE", 7, () -> Material.GRAY_STAINED_GLASS_PANE);
+            blueGlass = createItem("STAINED_GLASS_PANE", 9, () -> Material.BLUE_STAINED_GLASS_PANE);
+            for (int i = 0; i < 9; i++) {
+                items[i] = whiteGlass;
+                items[36 + i] = whiteGlass;
+            }
+            for (int i = 0; i < 5; i++) {
+                if (i == 2) continue;
+                items[9 + i] = blueGlass;
+                items[18 + i] = blueGlass;
+                items[27 + i] = blueGlass;
+            }
+            for (int i = 6; i < 9; i++) {
+                items[9 + i] = grayGlass;
+                items[18 + i] = grayGlass;
+                items[27 + i] = grayGlass;
+            }
+            ItemStack item = new ItemStack(Material.IRON_SWORD);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("§r");
+            item.setItemMeta(meta);
+            for (int i = 0; i < 3; i++) {
+                items[14 + (i * 9)] = item;
+            }
+        }
+
+        static Inventory getInventory() {
+            Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
+            inv.setContents(items);
+            ItemStack whiteGlass = createItem("STAINED_GLASS_PANE", 0, () -> Material.WHITE_STAINED_GLASS_PANE);
+            ItemMeta glassMeta = whiteGlass.getItemMeta();
+            glassMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__GUIDE));
+            whiteGlass.setItemMeta(glassMeta);
+            inv.setItem(11, whiteGlass);
+            inv.setItem(19, whiteGlass);
+            inv.setItem(21, whiteGlass);
+            inv.setItem(29, whiteGlass);
+
+            ItemStack enterItem = new ItemStack(Material.ANVIL);
+            ItemMeta enterMeta = enterItem.getItemMeta();
+            enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__ENTER));
+            enterMeta.setLore(Message.getStringList(Message.INVENTORY__REPAIR__LORE__ENTER, Config.getConfig().getDouble(Config.REPAIR_ITEM_VALUE)));
+            enterMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            enterItem.setItemMeta(enterMeta);
+            inv.setItem(25, enterItem);
+
+            return inv;
+        }
+
+        private static ItemStack createItem(String oldName, int oldSubId, Supplier<Material> newMaterial) {
+            Material material = Material.getMaterial(oldName);
+            ItemStack item;
+            if (material != null) {
+                item = new ItemStack(material, 1, (short) oldSubId);
+            } else {
+                item = new ItemStack(newMaterial.get());
+            }
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("§r");
+            item.setItemMeta(meta);
+            return item;
+        }
     }
 }

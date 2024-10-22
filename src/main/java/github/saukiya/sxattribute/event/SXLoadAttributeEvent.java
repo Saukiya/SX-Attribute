@@ -2,7 +2,6 @@ package github.saukiya.sxattribute.event;
 
 import github.saukiya.sxattribute.data.PreLoadItem;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.bukkit.entity.LivingEntity;
@@ -29,7 +28,11 @@ public class SXLoadAttributeEvent extends Event {
     private SXAttributeData attributeData;
 
     public SXLoadAttributeEvent(LivingEntity entity, List<PreLoadItem> itemList, SXAttributeData attributeData) {
-        super(true);
+        this(entity, itemList, attributeData, false);
+    }
+
+    public SXLoadAttributeEvent(LivingEntity entity, List<PreLoadItem> itemList, SXAttributeData attributeData, boolean isAsync) {
+        super(isAsync);
         this.entity = entity;
         this.itemList = itemList;
         this.attributeData = attributeData;

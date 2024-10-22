@@ -269,7 +269,6 @@ public abstract class SubAttribute implements Comparable<SubAttribute>, Message.
      */
     public static boolean probability(double value) {
         boolean b = value > 0 && value / 100D > SXAttribute.getRandom().nextDouble();
-        System.out.println("开始随机计算：" + value + " " +b);
         return b;
     }
 

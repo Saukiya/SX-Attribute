@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageTempData;
 import github.saukiya.sxitem.SXItem;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -168,7 +168,7 @@ public class SXAPI {
      * @return SXAttributeData
      */
     public SXAttributeData loadItemData(LivingEntity entity, PreLoadItem... preLoadItems) {
-        return SXAttribute.getAttributeManager().loadItemData(entity, Arrays.asList(preLoadItems));
+        return SXAttribute.getAttributeManager().loadItemData(entity, Arrays.asList(preLoadItems), false);
     }
 
     @Deprecated

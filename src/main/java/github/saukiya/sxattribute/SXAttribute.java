@@ -21,9 +21,9 @@ import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
 import github.saukiya.sxattribute.util.PlaceholderUtil;
-import github.saukiya.sxitem.command.MainCommand;
-import github.saukiya.sxitem.util.LogUtil;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.command.MainCommand;
+import github.saukiya.util.common.LogUtil;
+import github.saukiya.util.nms.NMS;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -32,24 +32,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * SX-Attribute
@@ -141,10 +138,12 @@ public class SXAttribute extends JavaPlugin {
             saveResource("Attribute/JavaScript/JSAttribute.js", true);
             saveResource("Attribute/SX-Attribute/JSAttribute_JS.yml", true);
         }
-        if (jsAttributeFiles.exists() && jsAttributeFiles.isDirectory()) {
+        if (jsAttributeFiles.exists() && jsAttributeFiles.isDirectory() && false) { // 暂时不起作用
             ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
             if (scriptEngineManager.getEngineByName("js") == null) {
-                scriptEngineManager.registerEngineName("js", new NashornScriptEngineFactory());
+                if (NMS.hasClass("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory")) {
+                    scriptEngineManager.registerEngineName("js", new org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory());
+                }
             }
 
             Class<?> clazz = Class.forName(System.getProperty("java.class.version").startsWith("52") ?

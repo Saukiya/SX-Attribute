@@ -5,7 +5,7 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
-import github.saukiya.sxitem.util.NMS;
+import github.saukiya.util.nms.NMS;
 import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
 import org.bukkit.configuration.file.YamlConfiguration;

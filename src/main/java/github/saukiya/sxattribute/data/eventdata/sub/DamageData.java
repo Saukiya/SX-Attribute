@@ -107,8 +107,6 @@ public class DamageData implements EventData {
             }
         });
         all.updateAndGet(v1 -> v1 + damages.getOrDefault("All", 0.0));
-        System.out.println(damages);
-        System.out.println("最终结果:" + all.get());
         return all.get() < 0.0 ? 0.0 : all.get();
     }
 

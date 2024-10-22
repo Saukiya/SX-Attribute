@@ -3,7 +3,7 @@ package github.saukiya.sxattribute.command.sub;
 import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
-import github.saukiya.sxitem.util.MessageUtil;
+import github.saukiya.util.nms.MessageUtil;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -25,7 +25,7 @@ public class ConditionListCommand extends SXAttributeCommand {
             for (EquipmentType type : condition.getTypes()) {
                 str.append("\n&7- ").append(type.name());
             }
-            MessageUtil.getInst().componentBuilder().add(message).show(str.toString()).send(sender);
+            MessageUtil.getInst().builder().add(message).show(str.toString()).send(sender);
         }
     }
 }

@@ -22,6 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * 出售物品指令
@@ -43,24 +44,7 @@ public class SellCommand extends SXAttributeCommand implements Listener {
      * @param player Player
      */
     public static void openSellInventory(Player player) {
-        Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
-        ItemStack stainedGlass = new ItemStack(Material.STAINED_GLASS_PANE);//BLACK
-        ItemMeta glassMeta = stainedGlass.getItemMeta();
-        glassMeta.setDisplayName("§r");
-        stainedGlass.setItemMeta(glassMeta);
-        for (int i = 18; i < 27; i++) {
-            inv.setItem(i, stainedGlass);
-        }
-
-        ItemStack enterItem = new ItemStack(Material.STAINED_GLASS_PANE);//YELLOW
-        ItemMeta enterMeta = enterItem.getItemMeta();
-        enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
-        enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
-        enterMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        enterItem.setItemMeta(enterMeta);
-        inv.setItem(22, enterItem);
-
-        player.openInventory(inv);
+        player.openInventory(InventoryCreator.getInventory());
     }
 
     @Override
@@ -157,6 +141,46 @@ public class SellCommand extends SXAttributeCommand implements Listener {
                 }
             }
             inv.clear();
+        }
+    }
+
+    public static class InventoryCreator {
+        static ItemStack[] items;
+
+        static {
+            items = new ItemStack[27];
+            ItemStack blackGlass = createItem("STAINED_GLASS_PANE", 15, () -> Material.BLACK_STAINED_GLASS_PANE);
+            for (int i = 18; i < 27; i++) {
+                items[i] = blackGlass;
+            }
+        }
+
+        static Inventory getInventory() {
+            Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
+            inv.setContents(items);
+            ItemStack enterItem = createItem("STAINED_GLASS_PANE", 4, () -> Material.YELLOW_STAINED_GLASS_PANE);
+            ItemMeta enterMeta = enterItem.getItemMeta();
+            enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
+            enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
+            enterMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            enterItem.setItemMeta(enterMeta);
+            inv.setItem(22, enterItem);
+
+            return inv;
+        }
+
+        private static ItemStack createItem(String oldName, int oldSubId, Supplier<Material> newMaterial) {
+            Material material = Material.getMaterial(oldName);
+            ItemStack item;
+            if (material != null) {
+                item = new ItemStack(material, 1, (short) oldSubId);
+            } else {
+                item = new ItemStack(newMaterial.get());
+            }
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("§r");
+            item.setItemMeta(meta);
+            return item;
         }
     }
 }

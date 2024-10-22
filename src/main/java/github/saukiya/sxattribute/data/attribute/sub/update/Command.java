@@ -28,7 +28,7 @@ public class Command extends SubAttribute implements Listener {
 
     private CommandRunnable[] commandRunnables;
 
-    private CommandSender sxSender = new SXCommandSender();
+    private CommandSender sender = Bukkit.getConsoleSender();
 
     public Command() {
         super(SXAttribute.getInst(), 0, AttributeType.UPDATE);
@@ -179,7 +179,7 @@ public class Command extends SubAttribute implements Listener {
                 if (command.startsWith("delay ")) {
                     delay = Integer.parseInt(command.substring(6));
                 } else {
-                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sxSender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName()))), delay);
+                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName()))), delay);
                 }
             }
         }
@@ -194,7 +194,7 @@ public class Command extends SubAttribute implements Listener {
                         for (String playerName : players) {
                             Player player = Bukkit.getPlayerExact(playerName);
                             if (player != null) {
-                                Bukkit.dispatchCommand(sxSender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName())));
+                                Bukkit.dispatchCommand(sender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName())));
                             }
                         }
                     }, delay);

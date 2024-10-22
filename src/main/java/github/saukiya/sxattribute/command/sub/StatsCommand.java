@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.PlaceholderUtil;
 import github.saukiya.sxitem.command.SenderType;
 import github.saukiya.sxitem.data.item.ItemManager;
+import github.saukiya.util.nms.ItemUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,11 +22,11 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 /**
  * 查询属性指令
@@ -57,13 +58,14 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
         openStatsInventory((Player) sender);
     }
 
-    public void openStatsInventory(Player player, Player... openInvPlayer) {
+    public void openStatsInventory(Player player) {
+        openStatsInventory(player, player);
+    }
+
+    public void openStatsInventory(Player player, Player openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
-        ItemStack stainedGlass = new ItemStack(Material.STAINED_GLASS_PANE);
-        ItemMeta glassMeta = stainedGlass.getItemMeta();
-        glassMeta.setDisplayName("§c");
-        stainedGlass.setItemMeta(glassMeta);
+        ItemStack stainedGlass = createItem("STAINED_GLASS_PANE", 15, () -> Material.BLACK_STAINED_GLASS_PANE);
         ItemStack skull = new ItemStack(ItemManager.getMaterial("397"));
         ItemMeta skullMeta = skull.getItemMeta();
         List<String> skullLoreList = new ArrayList<>();
@@ -76,7 +78,7 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
         skullMeta.setLore(PlaceholderUtil.setPlaceholders(player, skullLoreList));
         skullMeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
         if (Config.isCommandStatsDisplaySkullSkin()) {
-            ((SkullMeta) skullMeta).setOwner(player.getName());
+            ItemUtil.getInst().setSkull(skullMeta, player.getName());
         }
         skull.setItemMeta(skullMeta);
         for (int i = 0; i < 9; i++) {
@@ -92,7 +94,7 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
         inv.setItem(10, getAttackUI(player, attributeData));
         inv.setItem(13, getDefenseUI(player, attributeData));
         inv.setItem(16, getBaseUI(player, attributeData));
-        (openInvPlayer.length > 0 ? openInvPlayer[0] : player).openInventory(inv);
+        openInvPlayer.openInventory(inv);
     }
 
     private ItemStack getAttackUI(Player player, SXAttributeData data) {
@@ -173,5 +175,19 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
                 openStatsInventory(player);
             }
         }
+    }
+
+    private static ItemStack createItem(String oldName, int oldSubId, Supplier<Material> newMaterial) {
+        Material material = Material.getMaterial(oldName);
+        ItemStack item;
+        if (material != null) {
+            item = new ItemStack(material, 1, (short) oldSubId);
+        } else {
+            item = new ItemStack(newMaterial.get());
+        }
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§r");
+        item.setItemMeta(meta);
+        return item;
     }
 }
