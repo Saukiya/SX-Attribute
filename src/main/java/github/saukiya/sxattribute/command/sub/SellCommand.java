@@ -4,7 +4,8 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
-import github.saukiya.sxitem.command.SenderType;
+import github.saukiya.sxattribute.util.ReMaterial;
+import github.saukiya.util.command.SenderType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -22,7 +23,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * 出售物品指令
@@ -149,7 +149,10 @@ public class SellCommand extends SXAttributeCommand implements Listener {
 
         static {
             items = new ItemStack[27];
-            ItemStack blackGlass = createItem("STAINED_GLASS_PANE", 15, () -> Material.BLACK_STAINED_GLASS_PANE);
+            ItemStack blackGlass = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
+            ItemMeta meta = blackGlass.getItemMeta();
+            meta.setDisplayName("§r");
+            blackGlass.setItemMeta(meta);
             for (int i = 18; i < 27; i++) {
                 items[i] = blackGlass;
             }
@@ -158,7 +161,7 @@ public class SellCommand extends SXAttributeCommand implements Listener {
         static Inventory getInventory() {
             Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
             inv.setContents(items);
-            ItemStack enterItem = createItem("STAINED_GLASS_PANE", 4, () -> Material.YELLOW_STAINED_GLASS_PANE);
+            ItemStack enterItem = ReMaterial.YELLOW_STAINED_GLASS_PANE.item();
             ItemMeta enterMeta = enterItem.getItemMeta();
             enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
             enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
@@ -167,20 +170,6 @@ public class SellCommand extends SXAttributeCommand implements Listener {
             inv.setItem(22, enterItem);
 
             return inv;
-        }
-
-        private static ItemStack createItem(String oldName, int oldSubId, Supplier<Material> newMaterial) {
-            Material material = Material.getMaterial(oldName);
-            ItemStack item;
-            if (material != null) {
-                item = new ItemStack(material, 1, (short) oldSubId);
-            } else {
-                item = new ItemStack(newMaterial.get());
-            }
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName("§r");
-            item.setItemMeta(meta);
-            return item;
         }
     }
 }

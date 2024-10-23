@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.condition.sub.Durability;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
+import github.saukiya.sxattribute.util.ReMaterial;
 import github.saukiya.sxitem.command.SenderType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -184,24 +185,26 @@ public class RepairCommand extends SXAttributeCommand implements Listener {
 
         static {
             items = new ItemStack[45];
-            ItemStack whiteGlass, grayGlass, blueGlass;
-            whiteGlass = createItem("STAINED_GLASS_PANE", 0, () -> Material.WHITE_STAINED_GLASS_PANE);
-            grayGlass = createItem("STAINED_GLASS_PANE", 7, () -> Material.GRAY_STAINED_GLASS_PANE);
-            blueGlass = createItem("STAINED_GLASS_PANE", 9, () -> Material.BLUE_STAINED_GLASS_PANE);
+            ItemStack glass = ReMaterial.WHITE_STAINED_GLASS_PANE.item();
+            ItemMeta glassMeta = glass.getItemMeta();
+            glassMeta.setDisplayName("§r");
+            glass.setItemMeta(glassMeta);
             for (int i = 0; i < 9; i++) {
-                items[i] = whiteGlass;
-                items[36 + i] = whiteGlass;
+                items[i] = glass;
+                items[36 + i] = glass;
             }
+            ReMaterial.BLUE_STAINED_GLASS_PANE.setType(glass);
             for (int i = 0; i < 5; i++) {
                 if (i == 2) continue;
-                items[9 + i] = blueGlass;
-                items[18 + i] = blueGlass;
-                items[27 + i] = blueGlass;
+                items[9 + i] = glass;
+                items[18 + i] = glass;
+                items[27 + i] = glass;
             }
+            ReMaterial.GRAY_STAINED_GLASS_PANE.setType(glass);
             for (int i = 6; i < 9; i++) {
-                items[9 + i] = grayGlass;
-                items[18 + i] = grayGlass;
-                items[27 + i] = grayGlass;
+                items[9 + i] = glass;
+                items[18 + i] = glass;
+                items[27 + i] = glass;
             }
             ItemStack item = new ItemStack(Material.IRON_SWORD);
             ItemMeta meta = item.getItemMeta();
@@ -215,7 +218,7 @@ public class RepairCommand extends SXAttributeCommand implements Listener {
         static Inventory getInventory() {
             Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
             inv.setContents(items);
-            ItemStack whiteGlass = createItem("STAINED_GLASS_PANE", 0, () -> Material.WHITE_STAINED_GLASS_PANE);
+            ItemStack whiteGlass = ReMaterial.WHITE_STAINED_GLASS_PANE.item();
             ItemMeta glassMeta = whiteGlass.getItemMeta();
             glassMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__GUIDE));
             whiteGlass.setItemMeta(glassMeta);

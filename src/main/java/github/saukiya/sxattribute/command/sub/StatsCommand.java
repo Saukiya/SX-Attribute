@@ -6,8 +6,8 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.PlaceholderUtil;
+import github.saukiya.sxattribute.util.ReMaterial;
 import github.saukiya.sxitem.command.SenderType;
-import github.saukiya.sxitem.data.item.ItemManager;
 import github.saukiya.util.nms.ItemUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -26,7 +26,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 /**
  * 查询属性指令
@@ -65,8 +64,10 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
     public void openStatsInventory(Player player, Player openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
-        ItemStack stainedGlass = createItem("STAINED_GLASS_PANE", 15, () -> Material.BLACK_STAINED_GLASS_PANE);
-        ItemStack skull = new ItemStack(ItemManager.getMaterial("397"));
+        ItemStack stainedGlass = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
+        ItemMeta glassMeta = stainedGlass.getItemMeta();
+        glassMeta.setDisplayName("§r");
+        ItemStack skull = ReMaterial.PLAYER_HEAD.item();
         ItemMeta skullMeta = skull.getItemMeta();
         List<String> skullLoreList = new ArrayList<>();
         if (hideList.contains(player.getUniqueId())) {
@@ -175,19 +176,5 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
                 openStatsInventory(player);
             }
         }
-    }
-
-    private static ItemStack createItem(String oldName, int oldSubId, Supplier<Material> newMaterial) {
-        Material material = Material.getMaterial(oldName);
-        ItemStack item;
-        if (material != null) {
-            item = new ItemStack(material, 1, (short) oldSubId);
-        } else {
-            item = new ItemStack(newMaterial.get());
-        }
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§r");
-        item.setItemMeta(meta);
-        return item;
     }
 }
