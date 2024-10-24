@@ -5,7 +5,7 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
-import github.saukiya.sxattribute.util.PlaceholderUtil;
+import github.saukiya.util.helper.PlaceholderHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -179,7 +179,7 @@ public class Command extends SubAttribute implements Listener {
                 if (command.startsWith("delay ")) {
                     delay = Integer.parseInt(command.substring(6));
                 } else {
-                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName()))), delay);
+                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sender, PlaceholderHelper.setPlaceholders(player, command.replace("%player%", player.getName()))), delay);
                 }
             }
         }
@@ -194,7 +194,7 @@ public class Command extends SubAttribute implements Listener {
                         for (String playerName : players) {
                             Player player = Bukkit.getPlayerExact(playerName);
                             if (player != null) {
-                                Bukkit.dispatchCommand(sender, PlaceholderUtil.setPlaceholders(player, command.replace("%player%", player.getName())));
+                                Bukkit.dispatchCommand(sender, PlaceholderHelper.setPlaceholders(player, command.replace("%player%", player.getName())));
                             }
                         }
                     }, delay);

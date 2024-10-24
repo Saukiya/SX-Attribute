@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.PlaceholderUtil;
 import github.saukiya.sxattribute.util.ReMaterial;
 import github.saukiya.sxitem.command.SenderType;
+import github.saukiya.util.helper.PlaceholderHelper;
 import github.saukiya.util.nms.ItemUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -76,7 +77,7 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
             skullLoreList.add(Message.getMsg(Message.INVENTORY__STATS__HIDE_ON));
         }
         skullLoreList.addAll(process(player, attributeData, Message.getStringList(Message.INVENTORY__STATS__SKULL_LORE)));
-        skullMeta.setLore(PlaceholderUtil.setPlaceholders(player, skullLoreList));
+        skullMeta.setLore(PlaceholderHelper.setPlaceholders(player, skullLoreList));
         skullMeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
         if (Config.isCommandStatsDisplaySkullSkin()) {
             ItemUtil.getInst().setSkull(skullMeta, player.getName());
@@ -145,7 +146,7 @@ public class StatsCommand extends SXAttributeCommand implements Listener {
             }
             list.set(i, lore);
         }
-        list = PlaceholderUtil.setPlaceholders(player, list);
+        list = PlaceholderHelper.setPlaceholders(player, list);
         if (!hideList.contains(player.getUniqueId())) {
             for (int i = list.size() - 1; i >= 0; i--) {
                 String lore = list.get(i).replaceAll("§+[0-9]", "");
