@@ -71,6 +71,10 @@ public class SXAttributeManager implements Listener {
         }
     }
 
+    public SXAttributeData loadItemData(LivingEntity entity, List<PreLoadItem> preItemList) {
+        return loadItemData(entity, preItemList, false);
+    }
+
     /**
      * 获取物品的属性
      *
@@ -78,7 +82,7 @@ public class SXAttributeManager implements Listener {
      * @param preItemList 预加载物品
      * @return SXAttribute
      */
-    public SXAttributeData loadItemData(LivingEntity entity, List<PreLoadItem> preItemList) {
+    public SXAttributeData loadItemData(LivingEntity entity, List<PreLoadItem> preItemList, boolean isAsync) {
         Iterator<PreLoadItem> iterator = preItemList.iterator();
         while (iterator.hasNext()) {
             PreLoadItem preLoadItem = iterator.next();
@@ -92,7 +96,7 @@ public class SXAttributeManager implements Listener {
         }
 
         //CallEvent
-        Bukkit.getPluginManager().callEvent(new SXPreLoadItemEvent(entity, preItemList));
+        Bukkit.getPluginManager().callEvent(new SXPreLoadItemEvent(entity, preItemList, isAsync));
 
         SXAttributeData attributeData = new SXAttributeData();
         // LoadAttribute
@@ -103,7 +107,7 @@ public class SXAttributeManager implements Listener {
         }
 
         //CallEvent
-        Bukkit.getPluginManager().callEvent(new SXLoadAttributeEvent(entity, preItemList, attributeData));
+        Bukkit.getPluginManager().callEvent(new SXLoadAttributeEvent(entity, preItemList, attributeData, isAsync));
         return attributeData;
     }
 
@@ -173,12 +177,16 @@ public class SXAttributeManager implements Listener {
         SXAttribute.getApi().removeEntityAllPluginData(uuid);
     }
 
+    public void loadEntityData(LivingEntity entity) {
+        loadEntityData(entity, false);
+    }
+
     /**
      * 加载生物数据
      *
      * @param entity LivingEntity
      */
-    public void loadEntityData(LivingEntity entity) {
+    public void loadEntityData(LivingEntity entity, boolean isAsync) {
         Player player = entity instanceof Player ? (Player) entity : null;
         List<PreLoadItem> preItemList = new ArrayList<>();
 
@@ -236,7 +244,7 @@ public class SXAttributeManager implements Listener {
             }
         }
 
-        SXAttributeData attributeData = loadItemData(entity, preItemList);
+        SXAttributeData attributeData = loadItemData(entity, preItemList, isAsync);
 
         if (attributeData.isValid()) {
             entityDataMap.put(entity.getUniqueId(), attributeData);

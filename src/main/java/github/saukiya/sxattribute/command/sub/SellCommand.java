@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class SellCommand extends SubCommand implements Listener {
 
-    private static final InventoryHolder holder = () -> null;
+    public static final InventoryHolder holder = () -> null;
 
     public SellCommand() {
         super("sell");

@@ -27,7 +27,7 @@ public class Command extends SubAttribute implements Listener {
 
     private CommandRunnable[] commandRunnables;
 
-    private CommandSender sxSender = new SXSender();
+    private CommandSender sxSender = Bukkit.getConsoleSender();
 
     public Command() {
         super(SXAttribute.getInst(), 0, AttributeType.UPDATE);

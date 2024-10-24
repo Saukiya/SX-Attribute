@@ -239,14 +239,7 @@ public class SXAttribute extends JavaPlugin {
             SXAttribute.getInst().getLogger().warning("No Find RPGInventory!");
         }
 
-        try {
-            nbtUtil = new NbtUtil();
-        } catch (NoSuchMethodException | ClassNotFoundException e) {
-            e.printStackTrace();
-            SXAttribute.getInst().getLogger().warning("Reflection Error!");
-            this.setEnabled(false);
-            return;
-        }
+        nbtUtil = new NbtUtil();
 
         randomStringManager = new RandomStringManager();
         itemDataManager = new ItemDataManager();

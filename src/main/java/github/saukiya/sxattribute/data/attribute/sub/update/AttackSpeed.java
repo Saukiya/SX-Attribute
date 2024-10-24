@@ -8,6 +8,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxattribute.data.itemdata.IGenerator;
 import github.saukiya.sxattribute.event.SXItemSpawnEvent;
 import github.saukiya.sxattribute.util.NbtUtil;
+import github.saukiya.util.nms.ItemUtil;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -15,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -145,25 +145,11 @@ public class AttackSpeed extends SubAttribute implements Listener {
      */
     public ItemStack setAttackSpeed(ItemStack item, double speed) {
         if (item != null && !item.getType().name().equals("AIR")) {
-            try {
-                Object nmsItem = nbtUtil.getXAsNMSCopay().invoke(nbtUtil.getXCraftItemStack(), item);
-                Object compound = ((Boolean) nbtUtil.getXHasTag().invoke(nmsItem)) ? nbtUtil.getXGetTag().invoke(nmsItem) : nbtUtil.getXNBTTagCompound().newInstance();
-                Object modifiers = nbtUtil.getXNBTTagList().newInstance();
-                Object attackSpeed = nbtUtil.getXNBTTagCompound().newInstance();
-                nbtUtil.getXSet().invoke(attackSpeed, "AttributeName", nbtUtil.getXNewNBTTagString().newInstance("generic.attackSpeed"));
-                nbtUtil.getXSet().invoke(attackSpeed, "Name", nbtUtil.getXNewNBTTagString().newInstance("AttackSpeed"));
-                nbtUtil.getXSet().invoke(attackSpeed, "Amount", nbtUtil.getXNewNBTTagDouble().newInstance(speed));
-                nbtUtil.getXSet().invoke(attackSpeed, "Operation", nbtUtil.getXNewNBTTagInt().newInstance(0));
-                nbtUtil.getXSet().invoke(attackSpeed, "UUIDLeast", nbtUtil.getXNewNBTTagInt().newInstance(20000));
-                nbtUtil.getXSet().invoke(attackSpeed, "UUIDMost", nbtUtil.getXNewNBTTagInt().newInstance(1000));
-                nbtUtil.getXSet().invoke(attackSpeed, "Slot", nbtUtil.getXNewNBTTagString().newInstance("mainhand"));
-                nbtUtil.getXAdd().invoke(modifiers, attackSpeed);
-                nbtUtil.getXSet().invoke(compound, "AttributeModifiers", modifiers);
-                nbtUtil.getXSetTag().invoke(nmsItem, compound);
-                item.setItemMeta(((ItemStack) nbtUtil.getXAsBukkitCopy().invoke(nbtUtil.getXCraftItemStack(), nmsItem)).getItemMeta());
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
-                e.printStackTrace();
-            }
+            ItemUtil.getInst().addAttribute(item, new ItemUtil.AttributeData()
+                    .setAttrName("GENERIC_ATTACK_SPEED")
+                    .setAmount(speed)
+                    .setName(SXAttribute.getInst().getName())
+                    .setSlot("HAND"));
         }
         return item;
     }

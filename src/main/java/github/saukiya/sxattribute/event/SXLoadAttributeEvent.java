@@ -29,6 +29,13 @@ public class SXLoadAttributeEvent extends Event {
 
     private SXAttributeData attributeData;
 
+    public SXLoadAttributeEvent(LivingEntity entity, List<PreLoadItem> itemList, SXAttributeData attributeData, boolean isAsync) {
+        super(isAsync);
+        this.entity = entity;
+        this.itemList = itemList;
+        this.attributeData = attributeData;
+    }
+
     public HandlerList getHandlers() {
         return handlers;
     }

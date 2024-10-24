@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,6 +33,8 @@ import java.util.UUID;
  * @author Saukiya
  */
 public class StatsCommand extends SubCommand implements Listener {
+
+    private static final InventoryHolder holder = () -> null;
 
     @Getter
     private final List<UUID> hideList = new ArrayList<>();
@@ -56,7 +59,7 @@ public class StatsCommand extends SubCommand implements Listener {
 
     public void openStatsInventory(Player player, Player... openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
-        Inventory inv = Bukkit.createInventory(null, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
+        Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
         ItemStack stainedGlass = MaterialControl.BLACK_STAINED_GLASS_PANE.parseItem();
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§c");
@@ -159,7 +162,7 @@ public class StatsCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryClickStatsEvent(InventoryClickEvent event) {
-        if (!event.isCancelled() && Message.getMsg(Message.INVENTORY__STATS__NAME).equals(event.getInventory().getName())) {
+        if (!event.isCancelled() && event.getInventory().getHolder().equals(holder)) {
             if (event.getRawSlot() < 0) {
                 event.getView().getPlayer().closeInventory();
                 return;

@@ -1,6 +1,8 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.command.sub.RepairCommand;
+import github.saukiya.sxattribute.command.sub.SellCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Arrow;
@@ -48,7 +50,7 @@ public class ListenerUpdateAttribute implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                SXAttribute.getAttributeManager().loadEntityData(player);
+                SXAttribute.getAttributeManager().loadEntityData(player, true);
                 SXAttribute.getAttributeManager().attributeUpdateEvent(player);
             }
         }.runTaskAsynchronously(SXAttribute.getInst());
@@ -69,7 +71,7 @@ public class ListenerUpdateAttribute implements Listener {
         if (SXAttribute.isRpgInventory()) {
             updateEquipmentData(player);
         } else {
-            if (inv.getName().contains("container") || inv.getName().contains("Repair")) {
+            if (inv.getHolder().equals(player) || inv.getHolder().equals(RepairCommand.holder) || inv.getHolder().equals(SellCommand.holder)) {
                 updateEquipmentData(player);
             }
         }
@@ -123,7 +125,7 @@ public class ListenerUpdateAttribute implements Listener {
             @Override
             public void run() {
                 if (entity != null && !entity.isDead()) {
-                    SXAttribute.getAttributeManager().loadEntityData(entity);
+                    SXAttribute.getAttributeManager().loadEntityData(entity, true);
                     SXAttribute.getAttributeManager().attributeUpdateEvent(entity);
                     if (SXAttribute.getVersionSplit()[1] > 8) {
                         entity.setInvulnerable(false);

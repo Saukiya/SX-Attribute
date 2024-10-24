@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,6 +32,8 @@ import java.util.List;
  * @author Saukiya
  */
 public class RepairCommand extends SubCommand implements Listener {
+
+    public static final InventoryHolder holder = () -> null;
 
     private final List<String> COLOR_LIST = Arrays.asList("§0", "§1", "§2", "§3", "§4", "§5", "§6", "§7", "§8", "§9");
 
@@ -47,7 +50,7 @@ public class RepairCommand extends SubCommand implements Listener {
      * @param player Player
      */
     public static void openRepairInventory(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
+        Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
         ItemStack glassItem = MaterialControl.BLACK_STAINED_GLASS_PANE.parseItem();
         ItemMeta glassMeta = glassItem.getItemMeta();
         glassMeta.setDisplayName("§r");
@@ -108,7 +111,7 @@ public class RepairCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryClickRepairEvent(InventoryClickEvent event) {
-        if (!event.isCancelled() && Message.getMsg(Message.INVENTORY__REPAIR__NAME).equals(event.getInventory().getName())) {
+        if (!event.isCancelled() && event.getInventory().getHolder().equals(holder)) {
             if (event.getRawSlot() < 0) {
                 event.getView().getPlayer().closeInventory();
                 return;
@@ -180,7 +183,7 @@ public class RepairCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryCloseRepairEvent(InventoryCloseEvent event) {
-        if (Message.getMsg(Message.INVENTORY__REPAIR__NAME).equals(event.getInventory().getName())) {
+        if (event.getInventory().getHolder().equals(holder)) {
             Player player = (Player) event.getView().getPlayer();
             Inventory inv = event.getInventory();
             ItemStack item = inv.getItem(20);

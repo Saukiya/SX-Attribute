@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.itemdata.IUpdate;
 import github.saukiya.sxattribute.util.CalculatorUtil;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.verision.MaterialControl;
+import github.saukiya.util.nms.ItemUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Color;
 import org.bukkit.configuration.ConfigurationSection;
@@ -219,11 +220,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
             }
         }
 
-        if (SXAttribute.getVersionSplit()[1] >= 11) {
-            meta.setUnbreakable(unbreakable);
-        } else {
-            meta.spigot().setUnbreakable(unbreakable);
-        }
+        ItemUtil.getInst().setUnbreakable(meta, unbreakable);
 
         if (color != null && meta instanceof LeatherArmorMeta) {
             ((LeatherArmorMeta) meta).setColor(color);

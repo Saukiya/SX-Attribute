@@ -1,14 +1,13 @@
 package github.saukiya.sxattribute.util;
 
+import github.saukiya.util.nms.ItemUtil;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import static github.saukiya.util.nms.NbtUtil.getInst;
 
 /**
  * @author Saukiya
@@ -16,66 +15,6 @@ import java.util.List;
 
 @Getter
 public class NbtUtil {
-
-    private Class<?> xCraftItemStack;
-    private Class<?> xNBTTagCompound;
-    private Class<?> xNBTTagList;
-    private Constructor<?> xNewNBTTagString;
-    private Constructor<?> xNewNBTTagDouble;
-    private Constructor<?> xNewNBTTagInt;
-
-    private Method xAsNMSCopay;
-    private Method xGetTag;
-    private Method xHasTag;
-    private Method xSet;
-    private Method xAdd;
-    private Method xRemove;
-    private Method xSetTag;
-    private Method xAsBukkitCopy;
-
-    private Method xHasKey;
-    private Method xGet;
-    private Method xGetString;
-    private Method xGetListString;
-    private Method xSize;
-
-    /**
-     * 加载NBT反射类
-     * 此类所附加的nbt均带有插件名
-     *
-     * @throws NoSuchMethodException  NoSuchMethodException
-     * @throws ClassNotFoundException ClassNotFoundException
-     */
-    public NbtUtil() throws NoSuchMethodException, ClassNotFoundException {
-        String packet = Bukkit.getServer().getClass().getPackage().getName();
-        String nmsName = "net.minecraft.server." + packet.substring(packet.lastIndexOf('.') + 1);
-        xCraftItemStack = Class.forName(packet + ".inventory.CraftItemStack");
-        Class<?> xNMSItemStack = Class.forName(nmsName + ".ItemStack");
-        xNBTTagCompound = Class.forName(nmsName + ".NBTTagCompound");
-        Class<?> xNBTTagString = Class.forName(nmsName + ".NBTTagString");
-        Class<?> xNBTTagDouble = Class.forName(nmsName + ".NBTTagDouble");
-        Class<?> xNBTTagInt = Class.forName(nmsName + ".NBTTagInt");
-        xNBTTagList = Class.forName(nmsName + ".NBTTagList");
-        Class<?> xNBTBase = Class.forName(nmsName + ".NBTBase");
-        xNewNBTTagString = xNBTTagString.getConstructor(String.class);
-        xNewNBTTagDouble = xNBTTagDouble.getConstructor(double.class);
-        xNewNBTTagInt = xNBTTagInt.getConstructor(int.class);
-
-        xAsNMSCopay = xCraftItemStack.getDeclaredMethod("asNMSCopy", ItemStack.class);
-        xGetTag = xNMSItemStack.getDeclaredMethod("getTag");
-        xHasTag = xNMSItemStack.getDeclaredMethod("hasTag");
-        xSet = xNBTTagCompound.getDeclaredMethod("set", String.class, xNBTBase);
-        xAdd = xNBTTagList.getDeclaredMethod("add", xNBTBase);
-        xRemove = xNBTTagCompound.getDeclaredMethod("remove", String.class);
-        xSetTag = xNMSItemStack.getDeclaredMethod("setTag", xNBTTagCompound);
-        xAsBukkitCopy = xCraftItemStack.getDeclaredMethod("asBukkitCopy", xNMSItemStack);
-
-        xHasKey = xNBTTagCompound.getDeclaredMethod("hasKey", String.class);
-        xGet = xNBTTagCompound.getDeclaredMethod("get", String.class);
-        xGetString = xNBTTagCompound.getDeclaredMethod("getString", String.class);
-        xGetListString = xNBTTagList.getDeclaredMethod("getString", int.class);
-        xSize = xNBTTagList.getDeclaredMethod("size");
-    }
 
     public boolean isEquipment(ItemStack item) {
         switch (item.getType().name()) {
@@ -136,20 +75,7 @@ public class NbtUtil {
      * @param item ItemStack
      */
     public ItemStack clearAttribute(ItemStack item) {
-        if (item != null) {
-            try {
-                Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-                if (nmsItem != null) {
-                    Object compound = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                    Object modifiers = xNBTTagList.newInstance();
-                    xSet.invoke(compound, "AttributeModifiers", modifiers);
-                    xSetTag.invoke(nmsItem, compound);
-                    item.setItemMeta(((ItemStack) xAsBukkitCopy.invoke(xCraftItemStack, nmsItem)).getItemMeta());
-                }
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
+        ItemUtil.getInst().clearAttribute(item);
         return item;
     }
 
@@ -161,15 +87,15 @@ public class NbtUtil {
      */
     public String getAllNBT(ItemStack item) {
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
+            Object nmsItem = getInst().getNMSItem(item);
             if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                return "§c[" + item.getType().name() + ":" + item.getDurability() + "-" + item.hashCode() + "]§7 " + itemTag.toString().replace("§", "&");
+                return "§c[" + item.getType().name() + ":" + item.getDurability() + "-" + item.hashCode() + "]§7 " + getInst().getNMSItemNBT(nmsItem).toString().replace("§", "&");
             }
             return "§c[" + item.getType().name() + ":" + item.getDurability() + "-" + item.hashCode() + "]§7 §cNULL";
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+        } catch (Exception e) {
             return null;
         }
+
     }
 
     /**
@@ -182,15 +108,8 @@ public class NbtUtil {
      */
     public ItemStack setNBT(ItemStack item, String key, Object value) {
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-            if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                Object tagString = xNewNBTTagString.newInstance(value.toString());
-                xSet.invoke(itemTag, key, tagString);
-                xSetTag.invoke(nmsItem, itemTag);
-                item.setItemMeta(((ItemStack) xAsBukkitCopy.invoke(xCraftItemStack, nmsItem)).getItemMeta());
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+            getInst().getItemTagWrapper(item).builder().set(key, value).save();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return item;
@@ -206,18 +125,8 @@ public class NbtUtil {
      */
     public ItemStack setNBTList(ItemStack item, String key, List<String> list) {
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-            if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                Object tagList = xNBTTagList.newInstance();
-                for (String str : list) {
-                    xAdd.invoke(tagList, xNewNBTTagString.newInstance(str));
-                }
-                xSet.invoke(itemTag, key, tagList);
-                xSetTag.invoke(nmsItem, itemTag);
-                item.setItemMeta(((ItemStack) xAsBukkitCopy.invoke(xCraftItemStack, nmsItem)).getItemMeta());
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+            getInst().getItemTagWrapper(item).builder().set(key, list).save();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return item;
@@ -232,14 +141,11 @@ public class NbtUtil {
      */
     public String getNBT(ItemStack item, String key) {
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-            if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                if ((boolean) xHasKey.invoke(itemTag, key)) {
-                    return (String) xGetString.invoke(itemTag, key);
-                }
+            Object result = getInst().getItemTagWrapper(item).get(key);
+            if (result != null) {
+                return String.valueOf(result);
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -256,15 +162,14 @@ public class NbtUtil {
     public List<String> getNBTList(ItemStack item, String key) {
         List<String> list = new ArrayList<>();
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-            if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                Object tagList = (boolean) xHasKey.invoke(itemTag, key) ? xGet.invoke(itemTag, key) : xNBTTagList.newInstance();
-                for (int i = 0; i < (Integer) xSize.invoke(tagList); i++) {
-                    list.add((String) xGetListString.invoke(tagList, i));
+            Object result = getInst().getItemTagWrapper(item).get(key);
+            if (result instanceof List) {
+                for (Object o : (List) result) {
+                    list.add(o.toString());
                 }
+                return list;
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -279,12 +184,8 @@ public class NbtUtil {
      */
     public boolean hasNBT(ItemStack item, String key) {
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-            if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                if ((boolean) xHasKey.invoke(itemTag, key)) return true;
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+            return getInst().getItemTagWrapper(item).get(key) != null;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -300,18 +201,9 @@ public class NbtUtil {
      */
     public boolean removeNBT(ItemStack item, String key) {
         try {
-            Object nmsItem = xAsNMSCopay.invoke(xCraftItemStack, item);
-            if (nmsItem != null) {
-                Object itemTag = ((boolean) xHasTag.invoke(nmsItem)) ? xGetTag.invoke(nmsItem) : xNBTTagCompound.newInstance();
-                if ((boolean) xHasKey.invoke(itemTag, key)) {
-                    xRemove.invoke(itemTag, key);
-                    xSetTag.invoke(nmsItem, itemTag);
-                    item.setItemMeta(((ItemStack) xAsBukkitCopy.invoke(xCraftItemStack, nmsItem)).getItemMeta());
-                }
-                return true;
-            }
-            return false;
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+            Object result = getInst().getItemTagWrapper(item).set(key, null);
+            return result != null;
+        } catch (Exception e) {
             return false;
         }
     }

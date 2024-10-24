@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.data.condition;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.util.nms.ItemUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
@@ -195,6 +196,6 @@ public abstract class SubCondition implements Comparable<SubCondition> {
      * @return boolean
      */
     public static boolean isUnbreakable(ItemMeta meta) {
-        return SXAttribute.getVersionSplit()[1] >= 11 ? meta.isUnbreakable() : meta.spigot().isUnbreakable();
+        return ItemUtil.getInst().isUnbreakable(meta);
     }
 }

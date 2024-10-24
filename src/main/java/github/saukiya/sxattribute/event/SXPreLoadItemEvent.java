@@ -26,6 +26,12 @@ public class SXPreLoadItemEvent extends Event {
 
     private List<PreLoadItem> itemList;
 
+    public SXPreLoadItemEvent(LivingEntity entity, List<PreLoadItem> itemList, boolean isAsync) {
+        super(isAsync);
+        this.entity = entity;
+        this.itemList = itemList;
+    }
+
     public HandlerList getHandlers() {
         return handlers;
     }
