@@ -279,7 +279,7 @@ public class SXAttribute extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(listenerHealthChange, this);
         Bukkit.getPluginManager().registerEvents(new ListenerItemSpawn(), this);
         mainCommand.setup("sxAttribute");
-        SXAttribute.getInst().getLogger().info("Author: Saukiya");
+        SXAttribute.getInst().getLogger().info("Author: Saukiya Q群:830192024");
         if (Config.getConfig().getBoolean(Config.QAQ)) {
             Bukkit.getConsoleSender().sendMessage("");
             Bukkit.getConsoleSender().sendMessage("§c   ______  __             ___   __  __       _ __          __");
