@@ -236,7 +236,7 @@ public class ItemDataManager {
         sender.sendMessage("");
         int filterSize = 0, size = 0;
         if (search.length > 0 && search[0].equals("")) {
-            Message.Tool.sendTextComponent(sender, Message.Tool.getTextComponent("§eDirectoryList§8 - §7ClickOpen", "/sxAttribute give |", "§8§o§lTo ItemList"));
+            Message.Tool.sendTextComponent(sender, Message.Tool.getTextComponent("§eDirectoryList§8 - §7ClickOpen", "/sxattribute give |", "§8§o§lTo ItemList"));
 
             Map<String, String> map = new HashMap<>();
             for (IGenerator ig : itemMap.values()) {
@@ -244,13 +244,13 @@ public class ItemDataManager {
                 map.put(ig.getPathName(), str + "§b" + (str.replaceAll("[^\n]", "").length() + 1) + " - §a" + ig.getKey() + " §8[§7" + ig.getName() + "§8]§7 - §8[§cType:" + ig.getType() + "§8]\n");
             }
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                String key = entry.getKey(), value = entry.getValue(), command = "/sxAttribute give |" + key + "<";
+                String key = entry.getKey(), value = entry.getValue(), command = "/sxattribute give |" + key + "<";
                 TextComponent tc = Message.Tool.getTextComponent(" §8[§c" + key.replace(">", "§b>§c") + "§8]", command, null);
                 tc.addExtra(Message.Tool.getTextComponent("§7 - Has §c" + value.split("\n").length + "§7 Item", command, value.substring(0, value.length() - 1)));
                 Message.Tool.sendTextComponent(sender, tc);
             }
         } else {
-            Message.Tool.sendTextComponent(sender, Message.Tool.getTextComponent("§eItemList§8 - " + (sender instanceof Player ? "§7ClickGet" + (search.length > 0 && search[0].matches("\\|.+<") ? " §8[§c" + search[0].substring(1, search[0].length() - 1).replace(">", "§b>§c") + "§8]" : "") : ""), "/sxAttribute give", "§8§o§lTo DirectoryList"));
+            Message.Tool.sendTextComponent(sender, Message.Tool.getTextComponent("§eItemList§8 - " + (sender instanceof Player ? "§7ClickGet" + (search.length > 0 && search[0].matches("\\|.+<") ? " §8[§c" + search[0].substring(1, search[0].length() - 1).replace(">", "§b>§c") + "§8]" : "") : ""), "/sxattribute give", "§8§o§lTo DirectoryList"));
             for (IGenerator ig : itemMap.values()) {
                 String itemName = ig.getName();
                 String str = " §b" + (size + 1) + " - §a" + ig.getKey() + " §8[§7" + itemName + "§8]§7 - §8[§cType:" + ig.getType() + "§8]";
@@ -262,7 +262,7 @@ public class ItemDataManager {
                 if (sender instanceof Player) {
                     YamlConfiguration yaml = new YamlConfiguration();
                     ig.getConfig().getValues(false).forEach(yaml::set);
-                    Message.Tool.sendTextComponent(sender, Message.Tool.getTextComponent(str, "/sxAttribute give " + ig.getKey(), "§7" + yaml.saveToString() + "§8§o§lPath: " + ig.getPathName()));
+                    Message.Tool.sendTextComponent(sender, Message.Tool.getTextComponent(str, "/sxattribute give " + ig.getKey(), "§7" + yaml.saveToString() + "§8§o§lPath: " + ig.getPathName()));
                 } else {
                     sender.sendMessage(str);
                 }

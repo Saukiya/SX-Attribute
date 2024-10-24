@@ -6,8 +6,8 @@ import github.saukiya.sxattribute.event.SXItemSpawnEvent;
 import github.saukiya.sxattribute.event.SXItemUpdateEvent;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
-import github.saukiya.sxattribute.verision.MaterialControl;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -47,7 +47,7 @@ public class Durability extends SubCondition implements Listener {
      */
     private static void clearItem(Player player, ItemStack item) {
         EntityEquipment eq = player.getEquipment();
-        ItemStack itemAir = MaterialControl.AIR.parseItem();
+        ItemStack itemAir = new ItemStack(Material.AIR);
         if (item.equals(eq.getBoots())) {
             eq.setBoots(itemAir);
         } else if (item.equals(eq.getChestplate())) {

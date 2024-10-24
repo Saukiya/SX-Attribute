@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.data.itemdata.IGenerator;
 import github.saukiya.sxattribute.data.itemdata.IUpdate;
 import github.saukiya.sxattribute.util.CalculatorUtil;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxattribute.verision.MaterialControl;
+import github.saukiya.sxitem.data.item.ItemManager;
 import github.saukiya.util.nms.ItemUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Color;
@@ -141,9 +141,9 @@ public class GeneratorSX implements IGenerator, IUpdate {
         List<String> enchantList = new ArrayList<>();
         for (String enchant : this.enchantList) {
             enchant = SXAttribute.getRandomStringManager().processRandomString(enchant, lockRandomMap);
-            if (!enchant.contains("%DeleteLore%")) {
-                enchantList.addAll(Arrays.asList(enchant.split("//n|\n")));
-            }
+            if (enchant.contains("%DeleteLore%")) continue;
+            enchant = enchant.replace("/n", "\n");
+            enchantList.addAll(Arrays.asList(enchant.split("\n")));
         }
 
         ItemStack item = getItemStack(displayName, id, loreList, enchantList, itemFlagList, unbreakable, color, skullName);
@@ -188,9 +188,8 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
 
     public ItemStack getItemStack(String itemName, String id, List<String> loreList, List<String> enchantList, List<String> itemFlagList, boolean unbreakable, Color color, String skullName) {
-
-        ItemStack item = MaterialControl.fromString(id).parseItem();
         String[] idSplit = id.split(":");
+        ItemStack item = new ItemStack(ItemManager.getMaterial(idSplit[0]));
         if (item.getType().getMaxDurability() != 0 && idSplit.length > 1) {
             item.setDurability(Short.parseShort(idSplit[1]));
         }
@@ -198,10 +197,10 @@ public class GeneratorSX implements IGenerator, IUpdate {
         ItemMeta meta = item.getItemMeta();
 
         if (itemName != null) {
-            meta.setDisplayName(itemName.replace("&", "§"));
+            meta.setDisplayName(itemName.replace('&', '§'));
         }
         for (int i = 0; i < loreList.size(); i++) {
-            loreList.set(i, loreList.get(i).replace("&", "§"));
+            loreList.set(i, loreList.get(i).replace('&', '§'));
         }
         meta.setLore(loreList);
 
@@ -227,7 +226,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
         }
 
         if (skullName != null && meta instanceof SkullMeta) {
-            ((SkullMeta) meta).setOwner(skullName);
+            ItemUtil.getInst().setSkull(meta, skullName);
         }
 
         item.setItemMeta(meta);

@@ -262,7 +262,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
         for (int i = size; i < maxSize; i++) {
             healthName.append(loss);
         }
-        return healthName.append(Config.getConfig().getString(Config.HEALTH_NAME_SUFFIX)).toString().replace("&", "§");
+        return healthName.append(Config.getConfig().getString(Config.HEALTH_NAME_SUFFIX)).toString().replace('&', '§');
     }
 
 
@@ -277,7 +277,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
         if (str != null && Message.getMessages().contains(Message.REPLACE_LIST.toString())) {
             for (String replaceName : Message.getMessages().getConfigurationSection(Message.REPLACE_LIST.toString()).getKeys(false)) {
                 if (str.equals(replaceName)) {
-                    return Message.getMessages().getString(Message.REPLACE_LIST.toString() + "." + replaceName).replace("&", "§");
+                    return Message.getMessages().getString(Message.REPLACE_LIST.toString() + "." + replaceName).replace('&', '§');
                 }
             }
         }
@@ -357,7 +357,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
         }
 
         private String getTitle(double progress) {
-            return MessageFormat.format(titleFormat, name, SXAttribute.getDf().format(progress * maxHealth), SXAttribute.getDf().format(maxHealth)).replace("&", "§");
+            return MessageFormat.format(titleFormat, name, SXAttribute.getDf().format(progress * maxHealth), SXAttribute.getDf().format(maxHealth)).replace('&', '§');
         }
 
         public void addPlayer(Player player) {

@@ -8,9 +8,9 @@ import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxattribute.verision.MaterialControl;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -69,7 +69,7 @@ public class ListenerDamage implements Listener {
         EntityEquipment eq = attackEntity.getEquipment();
         ItemStack mainHand = SXAttribute.getVersionSplit()[1] > 8 ? eq.getItemInMainHand() : eq.getItemInHand();
         if (mainHand != null) {
-            if (!MaterialControl.AIR.parse().equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
+            if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                 if (attackEntity instanceof Player && !((HumanEntity) attackEntity).getGameMode().equals(GameMode.CREATIVE)) {
                     if (mainHand.getType().getMaxDurability() == 0 || SubCondition.isUnbreakable(mainHand.getItemMeta())) {
                         Bukkit.getPluginManager().callEvent(new PlayerItemDamageEvent((Player) attackEntity, mainHand, 1));

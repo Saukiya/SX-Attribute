@@ -8,8 +8,9 @@ import github.saukiya.sxattribute.data.condition.sub.Durability;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
-import github.saukiya.sxattribute.verision.MaterialControl;
+import github.saukiya.sxattribute.util.ReMaterial;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -51,7 +52,7 @@ public class RepairCommand extends SubCommand implements Listener {
      */
     public static void openRepairInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
-        ItemStack glassItem = MaterialControl.BLACK_STAINED_GLASS_PANE.parseItem();
+        ItemStack glassItem = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
         ItemMeta glassMeta = glassItem.getItemMeta();
         glassMeta.setDisplayName("§r");
         glassItem.setItemMeta(glassMeta);
@@ -73,18 +74,18 @@ public class RepairCommand extends SubCommand implements Listener {
             inv.setItem(27 + i, glassItem);
         }
         glassItem.setDurability((short) 0);
-        glassItem.setType(MaterialControl.IRON_BARS.parse());
+        glassItem.setType(Material.IRON_BARS);
         for (int i = 1; i < 4; i++) {
             inv.setItem(5 + (i * 9), glassItem);
         }
-        glassItem.setType(MaterialControl.GLASS_PANE.parse());
+        glassItem = ReMaterial.WHITE_STAINED_GLASS_PANE.item();
         glassMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__GUIDE));
         glassItem.setItemMeta(glassMeta);
         inv.setItem(11, glassItem);
         inv.setItem(19, glassItem);
         inv.setItem(21, glassItem);
         inv.setItem(29, glassItem);
-        ItemStack enterItem = MaterialControl.ANVIL.parseItem();
+        ItemStack enterItem = new ItemStack(Material.ANVIL);
         ItemMeta enterMeta = enterItem.getItemMeta();
         enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__ENTER));
         enterMeta.setLore(Message.getStringList(Message.INVENTORY__REPAIR__LORE__ENTER, Config.getConfig().getDouble(Config.REPAIR_ITEM_VALUE)));
@@ -125,7 +126,7 @@ public class RepairCommand extends SubCommand implements Listener {
                 event.setCancelled(true);
                 if (event.getRawSlot() == 25) {
                     ItemStack item = inv.getItem(20);
-                    if (item != null && !item.getType().equals(MaterialControl.AIR.parse()) && item.getItemMeta().hasLore() && item.getAmount() == 1) {
+                    if (item != null && !item.getType().equals(Material.AIR) && item.getItemMeta().hasLore() && item.getAmount() == 1) {
                         ItemMeta itemMeta = item.getItemMeta();
                         List<String> loreList = itemMeta.getLore();
                         for (int i = 0; i < loreList.size(); i++) {
@@ -187,7 +188,7 @@ public class RepairCommand extends SubCommand implements Listener {
             Player player = (Player) event.getView().getPlayer();
             Inventory inv = event.getInventory();
             ItemStack item = inv.getItem(20);
-            if (item != null && !item.getType().equals(MaterialControl.AIR.parse())) {
+            if (item != null && !item.getType().equals(Material.AIR)) {
                 player.getInventory().addItem(item);
             }
             inv.clear();

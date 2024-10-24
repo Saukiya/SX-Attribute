@@ -11,8 +11,8 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxattribute.verision.MaterialControl;
 import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
@@ -84,7 +84,7 @@ public class Damage extends SubAttribute {
                 EntityEquipment eq = attackEntity.getEquipment();
                 ItemStack mainHand = SXAttribute.getVersionSplit()[1] > 8 ? eq.getItemInMainHand() : eq.getItemInHand();
                 if (mainHand != null) {
-                    if (MaterialControl.BOW.parse().equals(mainHand.getType()) && !Config.isBowCloseRangeAttack()) {
+                    if (Material.BOW.equals(mainHand.getType()) && !Config.isBowCloseRangeAttack()) {
                         SXAttributeData sxAttributeData = SXAttribute.getApi().loadItemData(attackEntity, new PreLoadItem(EquipmentType.MAIN_HAND, mainHand));
 
                         if (SXAttribute.getVersionSplit()[1] > 8) {

@@ -9,9 +9,9 @@ import github.saukiya.sxattribute.event.SXGetAttributeEvent;
 import github.saukiya.sxattribute.event.SXLoadAttributeEvent;
 import github.saukiya.sxattribute.event.SXPreLoadItemEvent;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.sxattribute.verision.MaterialControl;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -196,7 +196,7 @@ public class SXAttributeManager implements Listener {
             if (inv != null) {
                 for (Integer index : Config.getRpgInvSlotList()) {
                     ItemStack item = inv.getItem(index);
-                    if (item != null && !item.getType().equals(MaterialControl.AIR.parse())) {
+                    if (item != null && !item.getType().equals(Material.AIR)) {
                         preItemList.add(new PreLoadItem(EquipmentType.RPG_INVENTORY, item));
                     }
                 }
@@ -209,7 +209,7 @@ public class SXAttributeManager implements Listener {
                 for (SlotData slotData : SXAttribute.getSlotDataManager().getSlotList()) {
                     ItemStack item = inv.getItem(slotData.getSlot());
                     SXAttribute.getItemDataManager().updateItem(item, (Player) entity);
-                    if (item != null && !item.getType().equals(MaterialControl.AIR.parse()) && item.getItemMeta().hasLore() && item.getItemMeta().getLore().stream().anyMatch(lore -> lore.contains(slotData.getName()))) {
+                    if (item != null && !item.getType().equals(Material.AIR) && item.getItemMeta().hasLore() && item.getItemMeta().getLore().stream().anyMatch(lore -> lore.contains(slotData.getName()))) {
                         preItemList.add(new PreLoadItem(EquipmentType.SLOT, item));
                     }
                 }
@@ -217,7 +217,7 @@ public class SXAttributeManager implements Listener {
 
             // Equipment Load
             for (ItemStack item : entity.getEquipment().getArmorContents()) {
-                if (item != null && !item.getType().equals(MaterialControl.AIR.parse())) {
+                if (item != null && !item.getType().equals(Material.AIR)) {
                     preItemList.add(new PreLoadItem(EquipmentType.EQUIPMENT, item));
                 }
             }
@@ -225,14 +225,14 @@ public class SXAttributeManager implements Listener {
 
         // Hand Load
         if (SXAttribute.getVersionSplit()[1] > 8) {
-            if (entity.getEquipment().getItemInMainHand() != null && !entity.getEquipment().getItemInMainHand().getType().equals(MaterialControl.AIR.parse())) {
+            if (entity.getEquipment().getItemInMainHand() != null && !entity.getEquipment().getItemInMainHand().getType().equals(Material.AIR)) {
                 preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, entity.getEquipment().getItemInMainHand()));
             }
-            if (entity.getEquipment().getItemInOffHand() != null && !entity.getEquipment().getItemInOffHand().getType().equals(MaterialControl.AIR.parse())) {
+            if (entity.getEquipment().getItemInOffHand() != null && !entity.getEquipment().getItemInOffHand().getType().equals(Material.AIR)) {
                 preItemList.add(new PreLoadItem(EquipmentType.OFF_HAND, entity.getEquipment().getItemInOffHand()));
             }
         } else {
-            if (entity.getEquipment().getItemInHand() != null && !entity.getEquipment().getItemInHand().getType().equals(MaterialControl.AIR.parse())) {
+            if (entity.getEquipment().getItemInHand() != null && !entity.getEquipment().getItemInHand().getType().equals(Material.AIR)) {
                 preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, entity.getEquipment().getItemInHand()));
             }
         }

@@ -6,8 +6,9 @@ import github.saukiya.sxattribute.command.SubCommand;
 import github.saukiya.sxattribute.data.itemdata.ItemDataManager;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
-import github.saukiya.sxattribute.verision.MaterialControl;
+import github.saukiya.sxattribute.util.ReMaterial;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class SellCommand extends SubCommand implements Listener {
      */
     public static void openSellInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
-        ItemStack stainedGlass = MaterialControl.BLACK_STAINED_GLASS_PANE.parseItem();
+        ItemStack stainedGlass = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§r");
         stainedGlass.setItemMeta(glassMeta);
@@ -53,7 +54,7 @@ public class SellCommand extends SubCommand implements Listener {
             inv.setItem(i, stainedGlass);
         }
 
-        ItemStack enterItem = MaterialControl.YELLOW_STAINED_GLASS_PANE.parseItem();
+        ItemStack enterItem = ReMaterial.YELLOW_STAINED_GLASS_PANE.item();
         ItemMeta enterMeta = enterItem.getItemMeta();
         enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
         enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
@@ -97,7 +98,7 @@ public class SellCommand extends SubCommand implements Listener {
                     List<String> loreList = new ArrayList<>();
                     for (int i = 0; i < 18; i++) {
                         ItemStack item = inv.getItem(i);
-                        if (item != null && !item.getType().equals(MaterialControl.AIR.parse()) && item.getItemMeta().hasLore()) {
+                        if (item != null && !item.getType().equals(Material.AIR) && item.getItemMeta().hasLore()) {
                             double value = ItemDataManager.getSellValue(item) * item.getAmount();
                             sell += value;
                             if (!enterMeta.hasEnchants()) {
@@ -152,7 +153,7 @@ public class SellCommand extends SubCommand implements Listener {
             Inventory inv = event.getInventory();
             for (int i = 0; i < 18; i++) {
                 ItemStack item = inv.getItem(i);
-                if (item != null && !item.getType().equals(MaterialControl.AIR.parse())) {
+                if (item != null && !item.getType().equals(Material.AIR)) {
                     player.getInventory().addItem(item);
                 }
             }

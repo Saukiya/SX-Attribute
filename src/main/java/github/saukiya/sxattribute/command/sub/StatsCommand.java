@@ -7,10 +7,12 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.Placeholders;
-import github.saukiya.sxattribute.verision.MaterialControl;
+import github.saukiya.sxattribute.util.ReMaterial;
+import github.saukiya.util.nms.ItemUtil;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +23,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +61,11 @@ public class StatsCommand extends SubCommand implements Listener {
     public void openStatsInventory(Player player, Player... openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
-        ItemStack stainedGlass = MaterialControl.BLACK_STAINED_GLASS_PANE.parseItem();
+        ItemStack stainedGlass = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§c");
         stainedGlass.setItemMeta(glassMeta);
-        ItemStack skull = MaterialControl.PLAYER_HEAD.parseItem();
+        ItemStack skull = ReMaterial.PLAYER_HEAD.item();
         ItemMeta skullMeta = skull.getItemMeta();
         List<String> skullLoreList = new ArrayList<>();
         if (hideList.contains(player.getUniqueId())) {
@@ -79,7 +80,7 @@ public class StatsCommand extends SubCommand implements Listener {
         skullMeta.setLore(skullLoreList);
         skullMeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
         if (Config.isCommandStatsDisplaySkullSkin()) {
-            ((SkullMeta) skullMeta).setOwner(player.getName());
+            ItemUtil.getInst().setSkull(skullMeta, player.getName());
         }
         skull.setItemMeta(skullMeta);
         for (int i = 0; i < 9; i++) {
@@ -99,7 +100,7 @@ public class StatsCommand extends SubCommand implements Listener {
     }
 
     private ItemStack getAttackUI(Player player, SXAttributeData data) {
-        ItemStack item = MaterialControl.DIAMOND_SWORD.parseItem();
+        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__ATTACK));
@@ -110,7 +111,7 @@ public class StatsCommand extends SubCommand implements Listener {
     }
 
     private ItemStack getDefenseUI(Player player, SXAttributeData data) {
-        ItemStack item = MaterialControl.DIAMOND_CHESTPLATE.parseItem();
+        ItemStack item = new ItemStack(Material.DIAMOND_CHESTPLATE);
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__DEFENSE));
@@ -121,7 +122,7 @@ public class StatsCommand extends SubCommand implements Listener {
     }
 
     private ItemStack getBaseUI(Player player, SXAttributeData data) {
-        ItemStack item = MaterialControl.BOOK.parseItem();
+        ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__BASE));
         List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__BASE_LORE));
