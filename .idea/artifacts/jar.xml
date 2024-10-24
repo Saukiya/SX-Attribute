@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="jar">
-    <output-path>$PROJECT_DIR$/</output-path>
-    <root id="archive" name="SX-Attribute.jar">
-      <element id="module-output" name="SX-Attribute-backup" />
-    </root>
-  </artifact>
-</component>
