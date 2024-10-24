@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXElementDamageEvent;
-import github.saukiya.sxattribute.util.CalculatorUtil;
+import github.saukiya.util.common.CalculatorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -272,7 +272,7 @@ public class AttackElement extends SubAttribute {
         double result = 0.0;
         // 计算公式
         try {
-            result = CalculatorUtil.getResult(baseString).doubleValue();
+            result = CalculatorUtil.calculator(baseString);
         } catch (Exception e) {
             result = 0.0;
         }
