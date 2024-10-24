@@ -26,7 +26,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.openjdk.nashorn:nashorn-core:15.3'
     implementation 'org.bstats:bstats-bukkit:2.2.1'
     compileOnly fileTree('lib')
 
