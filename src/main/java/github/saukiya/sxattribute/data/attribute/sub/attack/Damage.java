@@ -95,7 +95,7 @@ public class Damage extends SubAttribute{
                 }
             }
 
-//            System.out.println("Debug: " + Arrays.toString(values));
+//            Debug.info("Debug: " + Arrays.toString(values));
 //            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || NMS.compareTo(1,9,0) < 0 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
             if (((!Config.isDamageGauges() || damageData.isFromAPI()) || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player) || NMS.compareTo(1, 9, 0) < 0) {
                 damageData.addDamage(getAttribute(values, TYPE_DEFAULT));

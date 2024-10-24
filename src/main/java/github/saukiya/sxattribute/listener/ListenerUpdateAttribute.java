@@ -3,6 +3,7 @@ package github.saukiya.sxattribute.listener;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.sub.RepairCommand;
 import github.saukiya.sxattribute.command.sub.SellCommand;
+import github.saukiya.sxattribute.util.Util;
 import github.saukiya.util.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -135,11 +136,10 @@ public class ListenerUpdateAttribute implements Listener {
 
     @EventHandler
     void onEntityDeathEvent(EntityDeathEvent event) {
-        //TODO 记得删除
         if (event.getEntity() instanceof Arrow) {
-            System.out.println(" >The Arrow is Death");
+            Util.info(" >The Arrow is Death");
             if (SXAttribute.getAttributeManager().getEntityDataMap().containsKey(event.getEntity().getUniqueId())) {
-                System.out.println("  >this has Attribute");
+                Util.info("  >this has Attribute");
                 YamlConfiguration yaml;
             }
         }

@@ -6,6 +6,7 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXElementDamageEvent;
+import github.saukiya.sxattribute.util.Util;
 import github.saukiya.util.common.CalculatorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -135,20 +136,20 @@ public class AttackElement extends SubAttribute {
 
     @Override
     public void eventMethod(double[] values, EventData eventData) {
-        System.out.println("开始运行");
+        Util.info("开始运行");
         if (eventData instanceof DamageData) {
-            System.out.println(" >DamageData");
+            Util.info(" >DamageData");
             DamageData damageData = (DamageData) eventData;
             ArrayList<ElementData> elementData = new ArrayList<>(dataHashMap.values());
             Comparator<ElementData> ageComparator = Comparator.comparingInt(ElementData::getPriority);
             elementData.sort(ageComparator);
-            System.out.println(" >ElementData:" + elementData.size());
+            Util.info(" >ElementData:" + elementData.size());
             for (ElementData data : elementData) {
                 double parsedProbability = data.getParsedProbability(this, damageData);
                 boolean probability = probability(parsedProbability);
-                System.out.println(" >" + data.discernName + " Probability: " + parsedProbability + "value: " + probability);
+                Util.info(" >" + data.discernName + " Probability: " + parsedProbability + "value: " + probability);
                 if (data.probabilityTag.isEmpty() || probability) {
-                    System.out.println("> 开始计算: " + data.discernName);
+                    Util.info("> 开始计算: " + data.discernName);
                     SXElementDamageEvent event = new SXElementDamageEvent(damageData, data);
                     Bukkit.getPluginManager().callEvent(event);
                     String attackFormula = event.getElementData().attackFormula;
@@ -164,19 +165,19 @@ public class AttackElement extends SubAttribute {
                             switch (first) {
                                 case "+":
                                     damageData.addDamage(getValue(temp, event.getData(), event.getElementData()), dz);
-                                    System.out.println(" R>Add " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
+                                    Util.info(" R>Add " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
                                     break;
                                 case "-":
                                     damageData.takeDamage(getValue(temp, event.getData(), event.getElementData()), dz);
-                                    System.out.println(" R>Take " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
+                                    Util.info(" R>Take " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
                                     break;
                                 case "=":
                                     damageData.setDamage(getValue(temp, event.getData(), event.getElementData()), dz);
-                                    System.out.println(" R>Set " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
+                                    Util.info(" R>Set " + dz + " Damage: " + getValue(temp, event.getData(), event.getElementData()));
                                     break;
                                 case "#":
                                 default:
-                                    System.out.println(" R>Break" + dz + " No Formula");
+                                    Util.info(" R>Break" + dz + " No Formula");
                                     break;
                             }
                         }
@@ -186,33 +187,33 @@ public class AttackElement extends SubAttribute {
                     switch (first) {
                         case "+":
                             damageData.addDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
-                            System.out.println(" >Add " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
+                            Util.info(" >Add " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
                             break;
                         case "-":
                             damageData.takeDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
-                            System.out.println(" >Take " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
+                            Util.info(" >Take " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
                             break;
                         case "=":
                             damageData.setDamage(getValue(attackFormula, event.getData(), event.getElementData()), event.getElementData().group);
-                            System.out.println(" >Set " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
+                            Util.info(" >Set " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
                             break;
                         case "@":
                             double value = getValue(attackFormula, event.getData(), event.getElementData());
                             // 把All伤害当作唯一值 取消掉其他的值
 //                            damageData.setDamage(getValue(attackFormula, event.getData(), event.getElementData()), "All");
-//                            System.out.println(" >Save " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
+//                            Debug.info(" >Save " + event.getElementData().discernName + " Damage: " + getValue(attackFormula, event.getData(), event.getElementData()));
 //                            // 移除非All类型的值
 //                            damageData.getDamages().keySet().stream().filter(s -> !s.equals("All")).forEach(damageData.getDamages()::remove);
                             damageData.getDamages().clear();
                             damageData.addDamage(value, "All");
                         case "#":
                         default:
-                            System.out.println(" >Break" + event.getElementData().discernName + " No Formula");
+                            Util.info(" >Break" + event.getElementData().discernName + " No Formula");
                             break;
                     }
-                    System.out.println("当前伤害: " + damageData.getDamages());
+                    Util.info("当前伤害: " + damageData.getDamages());
                 }
-                System.out.println("------------------------------------------------");
+                Util.info("------------------------------------------------");
             }
         }
     }
@@ -224,7 +225,7 @@ public class AttackElement extends SubAttribute {
     public double getValue(String formatString, DamageData damageData) {
         // 解析 <a:攻击者属性> <d:防御者属性>
         String baseString = formatString;
-//        System.out.println(data.discernName + " 原始公式: " + baseString);
+//        Debug.info(data.discernName + " 原始公式: " + baseString);
         baseString = baseString.replace("<damage>", String.valueOf(damageData.getDamage()));
         Map<String, List<String>> map = convertStringToMap(formatString);
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
@@ -268,7 +269,6 @@ public class AttackElement extends SubAttribute {
                 }
             }
         }
-//        System.out.println(data.discernName + " 运算过程: " + baseString);
         double result = 0.0;
         // 计算公式
         try {
@@ -276,7 +276,6 @@ public class AttackElement extends SubAttribute {
         } catch (Exception e) {
             result = 0.0;
         }
-//        System.out.println(data.discernName + " 运算结果: " + result);
         return result;
     }
 

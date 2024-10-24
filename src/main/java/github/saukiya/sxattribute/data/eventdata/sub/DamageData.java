@@ -96,8 +96,8 @@ public class DamageData implements EventData {
     public double getDamage() {
         AtomicReference<Double> all = new AtomicReference<>(0D);
 //        Double reduce = damages.values().stream().filter(d -> d >= 0).reduce(0D, Double::sum);
-//        System.out.println("getDamage: " + all + ", " + reduce);
-//        System.out.println(damages);
+//        Debug.info("getDamage: " + all + ", " + reduce);
+//        Debug.info(damages);
 //        if (reduce + all.get() < 0) {
 //            return 0;
 //        }

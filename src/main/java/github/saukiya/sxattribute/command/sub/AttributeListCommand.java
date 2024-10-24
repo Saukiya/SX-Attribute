@@ -5,6 +5,7 @@ import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
+import github.saukiya.sxattribute.util.Util;
 import github.saukiya.util.nms.MessageUtil;
 import lombok.val;
 import org.bukkit.command.CommandSender;
@@ -36,7 +37,7 @@ public class AttributeListCommand extends SXAttributeCommand {
                     str.append("\n§7- ").append(type.name());
                 }
                 if (attribute.getPlaceholders() != null) {
-                    System.out.println(attribute.getName());
+                    Util.info(attribute.getName());
                     for (String placeName : attribute.getPlaceholders()) {
                         str.append("\n§7- %sx_").append(placeName).append("% : ").append(attribute.getPlaceholder(attributeData.getValues(attribute), (Player) sender, placeName));
                     }

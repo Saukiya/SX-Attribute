@@ -14,7 +14,7 @@ public class TimeUtil {
     @Getter
     private static SimpleDateFormatUtils sdf = new SimpleDateFormatUtils();
 
-    private static Map<String, Integer> timeMap = new HashMap<>();
+    private static Map<String, Double> timeMap = new HashMap<>();
 
     /**
      * 添加冷却时间
@@ -23,8 +23,12 @@ public class TimeUtil {
      * @param name   String
      * @param times  int
      */
+    public static void add(Player player, String name, double times) {
+        timeMap.put(player.getName() + ":" + name, System.currentTimeMillis() + times * 1000);
+    }
+
     public static void add(Player player, String name, int times) {
-        timeMap.put(player.getName() + ":" + name, Integer.parseInt(String.valueOf(System.currentTimeMillis() / 1000)) + times);
+        add(player, name, (double) times);
     }
 
     /**
@@ -34,9 +38,14 @@ public class TimeUtil {
      * @param name   String
      * @return
      */
-    private static int get(Player player, String name) {
-        Integer time = timeMap.get(player.getName() + ":" + name);
-        return time != null ? time - Integer.parseInt(String.valueOf(System.currentTimeMillis() / 1000)) : -1;
+    public static double get(Player player, String name) {
+        Double time = timeMap.get(player.getName() + ":" + name);
+        if (time == null) return 0;
+        double result = (time - System.currentTimeMillis()) / 1000D;
+        if (result < 0) {
+            timeMap.remove(player.getName() + ":" + name);
+        }
+        return result;
     }
 
     /**
@@ -47,11 +56,7 @@ public class TimeUtil {
      * @return Boolean
      */
     public static boolean is(Player player, String name) {
-        if (get(player, name) > 0) {
-            return true;
-        }
-        timeMap.remove(player.getName() + ":" + name);
-        return false;
+        return get(player, name) > 0;
     }
 
     private static Date getThisWeekMonday(Date date) {
