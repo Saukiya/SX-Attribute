@@ -1,0 +1,14 @@
+# Project exclude paths
+/.gradle/
+/.idea/
+/build/
+/out/
+/run/
+/versions/
+
+**/out/
+**/build/
+**/generated/
+**/generated_tests/
+
+local.properties
