@@ -1,14 +1,16 @@
 package github.saukiya.sxattribute.data.itemdata.sub;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.data.RandomStringManager;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.itemdata.IGenerator;
 import github.saukiya.sxattribute.data.itemdata.IUpdate;
-import github.saukiya.sxattribute.util.CalculatorUtil;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxitem.SXItem;
 import github.saukiya.sxitem.data.item.ItemManager;
 import github.saukiya.util.nms.ItemUtil;
-import me.clip.placeholderapi.PlaceholderAPI;
+import github.saukiya.util.nms.NbtUtil;
+import lombok.val;
 import org.bukkit.Color;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -100,7 +102,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     @Override
     public String getName() {
-        return SXAttribute.getRandomStringManager().processRandomString(displayName, new HashMap<>());
+        return SXAttribute.getRandomStringManager().getInstSpace().random(displayName);
     }
 
     @Override
@@ -110,49 +112,27 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     @Override
     public ItemStack getItem(Player player) {
-        Map<String, String> lockRandomMap = new HashMap<>();
-        String displayName = SXAttribute.getRandomStringManager().processRandomString(this.displayName, lockRandomMap);
-        String id = SXAttribute.getRandomStringManager().processRandomString(ids.get(SXAttribute.getRandom().nextInt(ids.size())), lockRandomMap);
-        List<String> loreList = new ArrayList<>();
-        for (String lore : this.loreList) {
-            lore = SXAttribute.getRandomStringManager().processRandomString(lore, lockRandomMap);
-            if (!lore.contains("%DeleteLore%")) {
-                loreList.addAll(Arrays.asList(lore.split("/n|\n")));
-            }
-        }
-        if (SXAttribute.isPlaceholder() && player != null) {
-            displayName = PlaceholderAPI.setPlaceholders(player, displayName);
-            loreList = PlaceholderAPI.setPlaceholders(player, loreList);
-        }
-        // 计算器<c:>
-        try {
-            for (int i = 0; i < loreList.size(); i++) {
-                String lore = loreList.get(i);
-                List<String> replaceExprList = SXAttribute.getRandomStringManager().getStringList("<c:", ">", lore);
-                for (String expr : replaceExprList) {
-                    lore = lore.replaceFirst("<c:" + expr.replace("*", "\\*").replace("(", "\\(").replace(")", "\\)").replace("+", "\\+") + ">", SXAttribute.getDf().format(CalculatorUtil.getResult(expr)));
-                }
-                loreList.set(i, lore);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        val space = new RandomStringManager.Space(); // LockMap 在里面呢
+        String displayName = SXAttribute.getRandomStringManager().processRandomString(this.displayName, space);
+        String id = SXAttribute.getRandomStringManager().processRandomString(ids.get(SXAttribute.getRandom().nextInt(ids.size())), space);
+        List<String> loreList = SXAttribute.getRandomStringManager().processRandomString(this.loreList, space);
 
         List<String> enchantList = new ArrayList<>();
-        for (String enchant : this.enchantList) {
-            enchant = SXAttribute.getRandomStringManager().processRandomString(enchant, lockRandomMap);
-            if (enchant.contains("%DeleteLore%")) continue;
+        for (String enchant : SXAttribute.getRandomStringManager().processRandomString(this.enchantList, space)) {
             enchant = enchant.replace("/n", "\n");
             enchantList.addAll(Arrays.asList(enchant.split("\n")));
         }
 
         ItemStack item = getItemStack(displayName, id, loreList, enchantList, itemFlagList, unbreakable, color, skullName);
-        if (lockRandomMap.size() > 0) {
+        if (!space.getLockMap().isEmpty()) {
+            val wrapper = NbtUtil.getInst().getItemTagWrapper(item);
             List<String> list = new ArrayList<>();
-            for (Map.Entry<String, String> entry : lockRandomMap.entrySet()) {
-                list.add(entry.getKey() + "§e§k|§e§r" + entry.getValue());
+            for (Map.Entry<String, String> entry : space.getLockMap().entrySet()) {
+                list.add(entry.getKey() + "§e§k|§e§r" + entry.getValue());// old
+                wrapper.set(SXItem.getInst().getName() + ".Lock." + entry.getKey(), entry.getValue()); // new
             }
-            SXAttribute.getNbtUtil().setNBTList(item, SXAttribute.getInst().getName() + "-Lock", list);
+            wrapper.set(SXAttribute.getInst().getName() + "。Lock", list);
+            wrapper.save();
         }
         if (item.getItemMeta().hasLore()) {
             if (Config.isClearDefaultAttribute() && SXAttribute.getNbtUtil().isEquipment(item) && config.getBoolean("ClearAttribute", true)) {
@@ -190,6 +170,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
     public ItemStack getItemStack(String itemName, String id, List<String> loreList, List<String> enchantList, List<String> itemFlagList, boolean unbreakable, Color color, String skullName) {
         String[] idSplit = id.split(":");
         ItemStack item = new ItemStack(ItemManager.getMaterial(idSplit[0]));
+
         if (item.getType().getMaxDurability() != 0 && idSplit.length > 1) {
             item.setDurability(Short.parseShort(idSplit[1]));
         }
@@ -199,9 +180,8 @@ public class GeneratorSX implements IGenerator, IUpdate {
         if (itemName != null) {
             meta.setDisplayName(itemName.replace('&', '§'));
         }
-        for (int i = 0; i < loreList.size(); i++) {
-            loreList.set(i, loreList.get(i).replace('&', '§'));
-        }
+
+        loreList.replaceAll(lore -> lore.replace('&', '§'));
         meta.setLore(loreList);
 
         for (String enchant : enchantList) {
