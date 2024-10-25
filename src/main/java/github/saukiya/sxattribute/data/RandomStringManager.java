@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.data;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxitem.data.expression.ExpressionSpace;
+import github.saukiya.util.base.EmptyMap;
 import lombok.Getter;
 import lombok.val;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,7 +20,8 @@ public class RandomStringManager {
 
     private final Map<String, List<String>> map = new HashMap<>();
 
-    private final Space instSpace = new Space(null);
+    // 临时的
+    private final Space instSpace = new Space(EmptyMap.emptyMap());
 
     public RandomStringManager() {
         loadData();

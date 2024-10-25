@@ -12,6 +12,7 @@ import github.saukiya.util.nms.ItemUtil;
 import github.saukiya.util.nms.NbtUtil;
 import lombok.val;
 import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -169,7 +170,12 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     public ItemStack getItemStack(String itemName, String id, List<String> loreList, List<String> enchantList, List<String> itemFlagList, boolean unbreakable, Color color, String skullName) {
         String[] idSplit = id.split(":");
-        ItemStack item = new ItemStack(ItemManager.getMaterial(idSplit[0]));
+        Material material = ItemManager.getMaterial(idSplit[0]);
+        if (material == null) {
+            SXAttribute.getInst().getLogger().warning("Item-" + getKey() + " ID ERROR: " + id);
+            material = Material.APPLE;
+        }
+        ItemStack item = new ItemStack(material);
 
         if (item.getType().getMaxDurability() != 0 && idSplit.length > 1) {
             item.setDurability(Short.parseShort(idSplit[1]));

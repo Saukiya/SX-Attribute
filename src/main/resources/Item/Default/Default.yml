@@ -105,3 +105,31 @@ Default-6:
   - DURABILITY:1
   ItemFlagList:
   - HIDE_ENCHANTS
+Default-7:
+  Name: '&c&l随机字符串说明'
+  ID: '359:12'
+  Lore:
+    - ''
+    - '&4&l!!! 以下内容以配置文件为主 !!!'
+    - ''
+    - "&e&l'&c&l<>&e&l' 非替换变量需用 '&c&l\$&e&l' 转义"
+    - '&7格式: \$<1:内容> 或 <内容>'
+    - '&7例如: \$<s:DefaultPrefix> 或 <DefaultPrefix>'
+    - ''
+    - '&e&l随机类型:'
+    - '&cb   - &7整行判断&r [<b:匹配名:匹配词1:匹配词2:匹配词3:匹配词4>] 这行因为没有匹配词和匹配名相同而被删除'
+    - '&cb   - &7整行判断&r [<b:<l:品质>:史诗:优秀:普通>]'
+    - '&ct   - &7时间格式&r [<t:1Y1M1D1h1m1s>]'
+    - '&cc   - &7计算器&r [<c:((2*3) + 2) * 1.4>] [<c:int ((2*3) + 2) * 1.4>]'
+    - '&cl   - &7锁定随机&r [<l:品质>] [<l:EASY#AAA:BBB:CCC>]'
+    - '&cs   - &7正常随机&r [<s:<s:品质>Color>♦&r] [<s:AAA:BBB:CCC>]'
+    - '&cd   - &7小数随机&r [<d:2.3_6>]'
+    - '&ci&7/&cr - &7整数随机&r [<i:1_7>]'
+    - '&cu   - &7UUID随机&r [<u:random>]'
+    - '&cj   - &7脚本处理[SX-Item/Scripts]&r [<j:Default.itemScript#QAQ,QWQ,???,!!!>]'
+    - '&8 SX-Attribute吃到了SX-Item的表达式红利'
+    - ''
+    - '&7SX-Attribute目前不支持局部变量(懒)'
+    - ''
+    - '不存在的变量则会删除该行: <s:不存在>'
+    - '&r↑这里有一行被吃了'
