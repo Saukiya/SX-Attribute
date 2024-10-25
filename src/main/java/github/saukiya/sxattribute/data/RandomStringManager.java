@@ -150,6 +150,12 @@ public class RandomStringManager {
             super();
         }
 
+        /**
+         * 这个是内部接口 要替换表达式去隔壁replace(String key);
+         *
+         * @param key Key
+         * @return
+         */
         @Override
         public String random(String key) {
             String str;

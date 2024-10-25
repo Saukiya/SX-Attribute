@@ -102,7 +102,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     @Override
     public String getName() {
-        return SXAttribute.getRandomStringManager().getInstSpace().random(displayName);
+        return SXAttribute.getRandomStringManager().getInstSpace().replace(displayName);
     }
 
     @Override
