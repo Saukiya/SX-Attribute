@@ -2,9 +2,9 @@ package github.saukiya.sxattribute.util;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
+import github.saukiya.tools.nms.MessageUtil;
 import lombok.Getter;
 import lombok.Setter;
-import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -171,24 +171,7 @@ public enum Message {
         }
 
         public static void send(LivingEntity entity, String msg) {
-            if (entity instanceof Player) {
-                Player player = (Player) entity;
-                if (msg.startsWith("[ACTIONBAR]")) {
-                    msg = msg.substring(11);
-                    if (SXAttribute.getVersionSplit()[1] >= 9 && SXAttribute.getVersionSplit()[2] >= 2) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg));
-                    }
-                } else if (msg.startsWith("[TITLE]")) {
-                    String[] titleSplit = msg.substring(7).split(":");
-                    if (SXAttribute.getVersionSplit()[1] >= 11 && SXAttribute.getVersionSplit()[2] >= 2) {
-                        player.sendTitle(titleSplit[0], titleSplit.length > 1 ? titleSplit[1] : null, 5, 20, 5);
-                    } else {
-                        player.sendTitle(titleSplit[0], titleSplit.length > 1 ? titleSplit[1] : null);
-                    }
-                } else {
-                    player.sendMessage(msg);
-                }
-            }
+            MessageUtil.send(entity, msg);
         }
 
         public static TextComponent getTextComponent(String msg, String command, String showText) {

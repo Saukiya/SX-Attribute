@@ -7,8 +7,8 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.Placeholders;
-import github.saukiya.sxattribute.util.ReMaterial;
-import github.saukiya.util.nms.ItemUtil;
+import github.saukiya.tools.nms.ItemUtil;
+import github.saukiya.tools.util.ReMaterial;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -65,8 +65,6 @@ public class StatsCommand extends SubCommand implements Listener {
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§c");
         stainedGlass.setItemMeta(glassMeta);
-        ItemStack skull = ReMaterial.PLAYER_HEAD.item();
-        ItemMeta skullMeta = skull.getItemMeta();
         List<String> skullLoreList = new ArrayList<>();
         if (hideList.contains(player.getUniqueId())) {
             skullLoreList.add(Message.getMsg(Message.INVENTORY__STATS__HIDE_OFF));
@@ -77,6 +75,8 @@ public class StatsCommand extends SubCommand implements Listener {
         if (SXAttribute.isPlaceholder()) {
             skullLoreList = PlaceholderAPI.setPlaceholders(player, skullLoreList);
         }
+        ItemStack skull = ReMaterial.PLAYER_HEAD.item();
+        ItemMeta skullMeta = skull.getItemMeta();
         skullMeta.setLore(skullLoreList);
         skullMeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));
         if (Config.isCommandStatsDisplaySkullSkin()) {

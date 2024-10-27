@@ -17,9 +17,7 @@ softdepend:
 
 commands:
   sxAttribute:
-    aliases:
-    - sx
-    - sxattribute
+    aliases: [ sx, sa, sxa ]
 
 permissions:
   sx-attribute.use:

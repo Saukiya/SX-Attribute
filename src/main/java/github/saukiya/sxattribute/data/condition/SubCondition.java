@@ -2,7 +2,7 @@ package github.saukiya.sxattribute.data.condition;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
-import github.saukiya.util.nms.ItemUtil;
+import github.saukiya.tools.nms.ItemUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;

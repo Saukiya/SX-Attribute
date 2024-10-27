@@ -1,8 +1,8 @@
 package github.saukiya.sxattribute.data;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxitem.data.expression.ExpressionSpace;
-import github.saukiya.util.base.EmptyMap;
+import github.saukiya.sxitem.data.expression.ExpressionHandler;
+import github.saukiya.tools.base.EmptyMap;
 import lombok.Getter;
 import lombok.val;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,8 +20,7 @@ public class RandomStringManager {
 
     private final Map<String, List<String>> map = new HashMap<>();
 
-    // 临时的
-    private final Space instSpace = new Space(EmptyMap.emptyMap());
+    private final Handler handler = new Handler(EmptyMap.emptyMap());
 
     public RandomStringManager() {
         loadData();
@@ -31,39 +30,39 @@ public class RandomStringManager {
      * 处理随机文本
      *
      * @param stringList 被随机的文本列表
-     * @param space      表达式空间
+     * @param handler      表达式空间
      * @return 处理后的Map
      */
-    public List<String> processRandomString(List<String> stringList, Space space) {
-        return space.replace(stringList);
+    public List<String> processRandomString(List<String> stringList, Handler handler) {
+        return handler.replace(stringList);
     }
 
     /**
      * 处理随机文本
      *
      * @param string  被随机的文本
-     * @param space 表达式空间
+     * @param handler 表达式空间
      * @return 处理后的Map
      */
-    public String processRandomString(String string, Space space) {
-        return space.replace(string);
+    public String processRandomString(String string, Handler handler) {
+        return handler.replace(string);
     }
 
 
     @Deprecated
     public List<String> processRandomString(List<String> stringList, Map<String, String> lockMap) {
-        return processRandomString(stringList, new Space(lockMap));
+        return processRandomString(stringList, new Handler(lockMap));
     }
 
     @Deprecated
     public String processRandomString(String string, Map<String, String> lockMap) {
-        return processRandomString(string, new Space(lockMap));
+        return processRandomString(string, new Handler(lockMap));
     }
 
     @Deprecated
     private String getRandomString(String string, Map<String, String> lockMap) {
         string = random(string);
-        return processRandomString(string, new Space(lockMap));
+        return processRandomString(string, new Handler(lockMap));
     }
 
     @Deprecated
@@ -142,29 +141,24 @@ public class RandomStringManager {
         return value.toString().replace("/n", "\n").replace("\\n", "\n");
     }
 
-    public static class Space extends ExpressionSpace {
+    public static class Handler extends ExpressionHandler {
 
-        public Space(Map<String, String> lockMap) {
+        public Handler(Map<String, String> lockMap) {
             super(null, null, lockMap);
         }
 
-        public Space() {
+        public Handler() {
             super();
         }
 
         /**
-         * 这个是内部接口 要替换表达式去隔壁replace(String key);
+         * 这个是内部实现接口 要替换表达式去隔壁<code>handler.replace(String key);</code>
          *
          * @param key Key
          * @return
          */
         @Override
         public String random(String key) {
-            String str;
-            str = getOtherMap().get(key);
-            if (str != null) return str;
-//            str = RandomManager.random(key, getLocalMap());
-//            if (str != null) return str;
             return SXAttribute.getRandomStringManager().random(key);
         }
     }

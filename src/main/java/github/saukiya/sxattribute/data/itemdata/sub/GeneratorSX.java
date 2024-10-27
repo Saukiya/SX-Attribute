@@ -8,8 +8,8 @@ import github.saukiya.sxattribute.data.itemdata.IUpdate;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxitem.SXItem;
 import github.saukiya.sxitem.data.item.ItemManager;
-import github.saukiya.util.nms.ItemUtil;
-import github.saukiya.util.nms.NbtUtil;
+import github.saukiya.tools.nms.ItemUtil;
+import github.saukiya.tools.nms.NbtUtil;
 import lombok.val;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -103,7 +103,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     @Override
     public String getName() {
-        return SXAttribute.getRandomStringManager().getInstSpace().replace(displayName);
+        return SXAttribute.getRandomStringManager().getHandler().replace(displayName);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     @Override
     public ItemStack getItem(Player player) {
-        val space = new RandomStringManager.Space(); // LockMap 在里面呢
+        val space = new RandomStringManager.Handler(); // LockMap 在里面呢
         String displayName = SXAttribute.getRandomStringManager().processRandomString(this.displayName, space);
         String id = SXAttribute.getRandomStringManager().processRandomString(ids.get(SXAttribute.getRandom().nextInt(ids.size())), space);
         List<String> loreList = SXAttribute.getRandomStringManager().processRandomString(this.loreList, space);

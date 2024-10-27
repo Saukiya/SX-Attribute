@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.command.SubCommand;
 import github.saukiya.sxattribute.data.itemdata.ItemDataManager;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
-import github.saukiya.sxattribute.util.ReMaterial;
+import github.saukiya.tools.util.ReMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;

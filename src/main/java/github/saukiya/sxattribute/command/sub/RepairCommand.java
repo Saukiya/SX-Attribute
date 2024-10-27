@@ -8,7 +8,7 @@ import github.saukiya.sxattribute.data.condition.sub.Durability;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
-import github.saukiya.sxattribute.util.ReMaterial;
+import github.saukiya.tools.util.ReMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;

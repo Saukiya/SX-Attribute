@@ -8,7 +8,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxattribute.data.itemdata.IGenerator;
 import github.saukiya.sxattribute.event.SXItemSpawnEvent;
 import github.saukiya.sxattribute.util.NbtUtil;
-import github.saukiya.util.nms.ItemUtil;
+import github.saukiya.tools.nms.ItemUtil;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

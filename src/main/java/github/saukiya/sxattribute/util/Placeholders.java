@@ -25,8 +25,8 @@ public class Placeholders {
         if (task != null) {
             Bukkit.getScheduler().cancelTask(task.getTaskId());
         }
-        Placeholder.register(SXAttribute.getInst(), "sx");
         task = Bukkit.getScheduler().runTaskTimer(SXAttribute.getInst(), () -> dataMap.clear(), 20, 20);
+        Placeholder.register(SXAttribute.getInst(), "sx");
     }
 
     public static String onPlaceholderRequest(Player player, String string, SXAttributeData attributeData) {

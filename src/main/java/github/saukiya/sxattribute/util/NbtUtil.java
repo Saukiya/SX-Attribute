@@ -1,13 +1,13 @@
 package github.saukiya.sxattribute.util;
 
-import github.saukiya.util.nms.ItemUtil;
+import github.saukiya.tools.nms.ItemUtil;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static github.saukiya.util.nms.NbtUtil.getInst;
+import static github.saukiya.tools.nms.NbtUtil.getInst;
 
 /**
  * @author Saukiya
