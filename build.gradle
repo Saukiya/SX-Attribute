@@ -43,7 +43,7 @@ shadowJar {
     // 过滤未使用的依赖
     minimize()
     // bStats重定向
-    relocate('org.bstats', 'github.saukiya.sxitem.bstats')
+    relocate('org.bstats', 'github.saukiya.sxattribute.bstats')
 }
 
 //gradle 需要对文件中含有的'$'进行转义: $ -> \$
