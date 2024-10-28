@@ -5,7 +5,7 @@ import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
 import github.saukiya.sxattribute.util.ReMaterial;
-import github.saukiya.util.command.SenderType;
+import github.saukiya.tools.command.SenderType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;

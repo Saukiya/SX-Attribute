@@ -2,7 +2,7 @@ package github.saukiya.sxattribute.util;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.util.nms.MessageUtil;
+import github.saukiya.tools.nms.MessageUtil;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;

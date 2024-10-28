@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXElementDamageEvent;
 import github.saukiya.sxattribute.util.Util;
-import github.saukiya.util.common.CalculatorUtil;
+import github.saukiya.tools.util.CalculatorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

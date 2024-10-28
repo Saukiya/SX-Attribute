@@ -5,7 +5,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.nms.NMS;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;

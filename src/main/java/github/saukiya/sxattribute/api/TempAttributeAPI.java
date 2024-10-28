@@ -2,7 +2,7 @@ package github.saukiya.sxattribute.api;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
-import github.saukiya.util.base.Tuple;
+import github.saukiya.tools.base.Tuple;
 import org.bukkit.Bukkit;
 
 import java.util.UUID;

@@ -4,7 +4,7 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.sub.RepairCommand;
 import github.saukiya.sxattribute.command.sub.SellCommand;
 import github.saukiya.sxattribute.util.Util;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Arrow;

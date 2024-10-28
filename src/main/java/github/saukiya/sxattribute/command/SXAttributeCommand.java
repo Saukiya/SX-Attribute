@@ -2,7 +2,7 @@ package github.saukiya.sxattribute.command;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Message;
-import github.saukiya.sxitem.command.SubCommand;
+import github.saukiya.tools.command.SubCommand;
 
 import java.util.Arrays;
 

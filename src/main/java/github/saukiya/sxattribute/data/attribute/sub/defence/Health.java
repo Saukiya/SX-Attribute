@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;

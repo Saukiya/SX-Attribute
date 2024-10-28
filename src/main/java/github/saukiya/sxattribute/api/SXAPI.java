@@ -7,7 +7,7 @@ import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageTempData;
 import github.saukiya.sxitem.SXItem;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.nms.NMS;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

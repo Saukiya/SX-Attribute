@@ -1,7 +1,7 @@
 package github.saukiya.sxattribute.util;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.nms.NMS;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;

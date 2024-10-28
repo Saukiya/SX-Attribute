@@ -11,7 +11,7 @@ import github.saukiya.sxattribute.event.SXLoadAttributeEvent;
 import github.saukiya.sxattribute.event.SXPreLoadItemEvent;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxitem.SXItem;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.nms.NMS;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

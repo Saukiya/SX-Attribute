@@ -21,9 +21,9 @@ import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.MoneyUtil;
 import github.saukiya.sxattribute.util.PlaceholderUtil;
-import github.saukiya.util.command.MainCommand;
-import github.saukiya.util.common.LogUtil;
-import github.saukiya.util.nms.NMS;
+import github.saukiya.tools.command.MainCommand;
+import github.saukiya.tools.nms.NMS;
+import github.saukiya.tools.util.LogUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -86,14 +86,12 @@ public class SXAttribute extends JavaPlugin {
     @Getter
     private static MainCommand mainCommand;
 
-    private static LogUtil logUtil;
-
     @SneakyThrows
     @Override
     public void onLoad() {
         super.onLoad();
         inst = this;
-        logUtil = new LogUtil(this);
+        LogUtil.setup(this);
         Config.loadConfig();
         Message.loadMessage();
         mainCommand = new MainCommand(this);
@@ -267,6 +265,5 @@ public class SXAttribute extends JavaPlugin {
         conditionManager.onConditionDisable();
         listenerHealthChange.cancel();
         mainCommand.onDisable();
-        logUtil.onDisable();
     }
 }

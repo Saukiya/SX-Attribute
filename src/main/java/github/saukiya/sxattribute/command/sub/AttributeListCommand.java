@@ -6,7 +6,7 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.util.Util;
-import github.saukiya.util.nms.MessageUtil;
+import github.saukiya.tools.nms.MessageUtil;
 import lombok.val;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;

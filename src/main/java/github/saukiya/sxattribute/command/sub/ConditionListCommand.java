@@ -3,7 +3,7 @@ package github.saukiya.sxattribute.command.sub;
 import github.saukiya.sxattribute.command.SXAttributeCommand;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
-import github.saukiya.util.nms.MessageUtil;
+import github.saukiya.tools.nms.MessageUtil;
 import org.bukkit.command.CommandSender;
 
 /**

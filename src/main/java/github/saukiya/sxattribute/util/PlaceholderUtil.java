@@ -3,7 +3,7 @@ package github.saukiya.sxattribute.util;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
-import github.saukiya.util.helper.PlaceholderHelper;
+import github.saukiya.tools.helper.PlaceholderHelper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PlaceholderUtil implements PlaceholderHelper.PlaceholderRequest {
+public class PlaceholderUtil {
     
     private static PlaceholderUtil inst = new PlaceholderUtil();
 
@@ -24,14 +24,13 @@ public class PlaceholderUtil implements PlaceholderHelper.PlaceholderRequest {
     static BukkitTask task;
 
     public static void setup() {
-        PlaceholderHelper.setup(SXAttribute.getInst(), "sx", inst);
+        PlaceholderHelper.setup(SXAttribute.getInst(), "sx", inst::onPlaceholderRequest);
         if (task != null) {
             Bukkit.getScheduler().cancelTask(task.getTaskId());
         }
         task = Bukkit.getScheduler().runTaskTimer(SXAttribute.getInst(), ()-> dataMap.clear(), 20, 20);
     }
 
-    @Override
     public String onPlaceholderRequest(Player player, String string) {
         return onPlaceholderRequest(player, string, dataMap.computeIfAbsent(player.getUniqueId(), k -> SXAttribute.getAttributeManager().getEntityData(player)));
     }
