@@ -1,5 +1,7 @@
 CommandStatsDisplaySkullSkin: false
 DecimalFormat: '#.##'
+Compatibility:
+  MythicMobs: true # 穿戴和掉落物品目前与SX-Item有一定冲突, 如果物品ID相同, 会判断两次. 可选择性关闭SX的掉落/穿戴功能, 重启有效
 Holographic:
   Enabled: true
   DisplayTime: 2

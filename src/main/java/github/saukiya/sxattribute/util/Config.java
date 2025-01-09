@@ -60,6 +60,8 @@ public class Config {
     public static final String ATTRIBUTE_PRIORITY = "AttributePriority";
     public static final String CONDITION_PRIORITY = "ConditionPriority";
 
+    public static final String COMPATIBILITY_MYTHIC_MOBS = "Compatibility.MythicMobs";
+
     @Getter
     private static YamlConfiguration config;
     @Getter
@@ -98,6 +100,8 @@ public class Config {
     private static List<String> bossBarBlackCauseList;
     @Getter
     private static boolean clearItemDurability;
+    @Getter
+    private static boolean mythicMobs;
 
     /**
      * 加载Config类
@@ -128,5 +132,6 @@ public class Config {
         registerSlot = config.getBoolean(REGISTER_SLOTS_ENABLED);
         minimumDamage = config.getDouble(MINIMUM_DAMAGE);
         clearItemDurability = config.getBoolean(CLEAR_ITEM_DURABILITY, true);
+        mythicMobs = config.getBoolean(COMPATIBILITY_MYTHIC_MOBS, true);
     }
 }

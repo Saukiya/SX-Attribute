@@ -1,6 +1,7 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxitem.SXItem;
 import github.saukiya.sxitem.helper.MythicMobsHelper;
 import github.saukiya.tools.base.EmptyMap;
@@ -41,6 +42,7 @@ public class ListenerMythicMobs {
     private static MythicMobsHelper.DeathHandler deathHandler = new MythicMobDeathHandler();
 
     public static void setup() {
+        if (!Config.isMythicMobs()) return;
         if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
             if (NMS.hasClass("io.lumine.xikage.mythicmobs.mobs.MythicMob")) {
                 Bukkit.getPluginManager().registerEvents(handler = new V4Listener(), SXAttribute.getInst());
