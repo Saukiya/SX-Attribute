@@ -32,6 +32,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
     compileOnly 'com.github.Saukiya:SX-Item:4.4.0'
     compileOnly 'io.lumine.xikage:MythicMobs:4.9.1'
+    compileOnly 'io.lumine:Mythic-Dist:5.2.1'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
 
@@ -46,6 +47,7 @@ shadowJar {
     relocate('org.bstats', 'github.saukiya.sxattribute.bstats')
 }
 
+tasks.build.finalizedBy shadowJar
 //gradle 需要对文件中含有的'$'进行转义: $ -> \$
 processResources.expand(version: version)
 tasks.build.finalizedBy shadowJar

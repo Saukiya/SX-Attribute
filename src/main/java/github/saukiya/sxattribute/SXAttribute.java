@@ -11,7 +11,6 @@ import github.saukiya.sxattribute.data.attribute.sub.defence.*;
 import github.saukiya.sxattribute.data.attribute.sub.other.EventMessage;
 import github.saukiya.sxattribute.data.attribute.sub.other.ExpAddition;
 import github.saukiya.sxattribute.data.attribute.sub.other.JSAttribute;
-import github.saukiya.sxattribute.data.attribute.sub.other.MythicMobsDrop;
 import github.saukiya.sxattribute.data.attribute.sub.update.AttackSpeed;
 import github.saukiya.sxattribute.data.attribute.sub.update.Command;
 import github.saukiya.sxattribute.data.attribute.sub.update.WalkSpeed;
@@ -134,9 +133,6 @@ public class SXAttribute extends JavaPlugin {
 
         new EventMessage().registerAttribute();
         new ExpAddition().registerAttribute();
-        if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
-            new MythicMobsDrop().registerAttribute();
-        }
         new HealthRegen().registerAttribute();
 
         new Health().registerAttribute();
@@ -226,12 +222,8 @@ public class SXAttribute extends JavaPlugin {
             SXAttribute.getInst().getLogger().warning("No Find HolographicDisplays!");
         }
 
-        if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
-            mythicMobs = true;
-            Bukkit.getPluginManager().registerEvents(new ListenerMythicmobsSpawn(), this);
-        } else {
-            SXAttribute.getInst().getLogger().warning("No Find MythicMobs!");
-        }
+        ListenerMythicMobs.setup();
+        mythicMobs = ListenerMythicMobs.getHandler() != null;
 
         if (Bukkit.getPluginManager().isPluginEnabled("RPGInventory")) {
             rpgInventory = true;
@@ -280,15 +272,6 @@ public class SXAttribute extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ListenerItemSpawn(), this);
         mainCommand.setup("sxAttribute");
         SXAttribute.getInst().getLogger().info("Author: Saukiya Q群:830192024");
-        if (Config.getConfig().getBoolean(Config.QAQ)) {
-            Bukkit.getConsoleSender().sendMessage("");
-            Bukkit.getConsoleSender().sendMessage("§c   ______  __             ___   __  __       _ __          __");
-            Bukkit.getConsoleSender().sendMessage("§c  / ___/ |/ /            /   | / /_/ /______(_) /_  __  __/ /____");
-            Bukkit.getConsoleSender().sendMessage("§c  \\__ \\|   /   ______   / /| |/ __/ __/ ___/ / __ \\/ / / / __/ _ \\");
-            Bukkit.getConsoleSender().sendMessage("§c ___/ /   |   /_____/  / ___ / /_/ /_/ /  / / /_/ / /_/ / /_/  __/");
-            Bukkit.getConsoleSender().sendMessage("§c/____/_/|_|           /_/  |_\\__/\\__/_/  /_/_.___/\\__,_/\\__/\\___/");
-            Bukkit.getConsoleSender().sendMessage("");
-        }
     }
 
     @Override

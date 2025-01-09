@@ -5,8 +5,6 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
-import io.lumine.xikage.mythicmobs.MythicMobs;
-import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -243,8 +241,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
 
     public boolean isMythicBossBar(LivingEntity entity) {
         if (SXAttribute.isMythicMobs()) {
-            ActiveMob activeMob;
-            return (activeMob = MythicMobs.inst().getMobManager().getMythicMobInstance(entity)) != null && activeMob.getType().usesBossBar();
+            return ListenerMythicMobs.getIsMythicBossBar().apply(entity);
         }
         return false;
     }

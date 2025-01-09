@@ -9,7 +9,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class Config {
-    public static final String QAQ = "装逼启动信息";
     public static final String COMMAND_STATS_DISPLAY_SKULL_SKIN = "CommandStatsDisplaySkullSkin";
     public static final String DECIMAL_FORMAT = "DecimalFormat";
 
