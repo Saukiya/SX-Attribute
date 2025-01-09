@@ -163,7 +163,7 @@ public class StatsCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryClickStatsEvent(InventoryClickEvent event) {
-        if (!event.isCancelled() && event.getInventory().getHolder().equals(holder)) {
+        if (!event.isCancelled() && holder.equals(event.getInventory().getHolder())) {
             if (event.getRawSlot() < 0) {
                 event.getView().getPlayer().closeInventory();
                 return;

@@ -112,7 +112,7 @@ public class RepairCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryClickRepairEvent(InventoryClickEvent event) {
-        if (!event.isCancelled() && event.getInventory().getHolder().equals(holder)) {
+        if (!event.isCancelled() && holder.equals(event.getInventory().getHolder())) {
             if (event.getRawSlot() < 0) {
                 event.getView().getPlayer().closeInventory();
                 return;
@@ -184,7 +184,7 @@ public class RepairCommand extends SubCommand implements Listener {
 
     @EventHandler
     void onInventoryCloseRepairEvent(InventoryCloseEvent event) {
-        if (event.getInventory().getHolder().equals(holder)) {
+        if (holder.equals(event.getInventory().getHolder())) {
             Player player = (Player) event.getView().getPlayer();
             Inventory inv = event.getInventory();
             ItemStack item = inv.getItem(20);

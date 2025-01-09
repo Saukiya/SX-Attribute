@@ -71,7 +71,7 @@ public class ListenerUpdateAttribute implements Listener {
         if (SXAttribute.isRpgInventory()) {
             updateEquipmentData(player);
         } else {
-            if (inv.getHolder().equals(player) || inv.getHolder().equals(RepairCommand.holder) || inv.getHolder().equals(SellCommand.holder)) {
+            if (player.equals(inv.getHolder()) || RepairCommand.holder.equals(inv.getHolder()) || SellCommand.holder.equals(inv.getHolder())) {
                 updateEquipmentData(player);
             }
         }
