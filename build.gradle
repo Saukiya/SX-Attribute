@@ -4,7 +4,7 @@ plugins {
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '3.7.0'
+version '3.8.0'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
