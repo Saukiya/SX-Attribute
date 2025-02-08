@@ -49,7 +49,7 @@ public class Placeholders {
         final String identifier;
 
         public static void register(JavaPlugin plugin, String identifier) {
-            new Placeholder(plugin, identifier);
+            new Placeholder(plugin, identifier).register();
         }
 
         @Nonnull
