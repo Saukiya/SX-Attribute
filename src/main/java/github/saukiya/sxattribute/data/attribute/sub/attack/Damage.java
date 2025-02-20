@@ -19,6 +19,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -40,7 +42,7 @@ import java.util.List;
  *
  * @author Saukiya
  */
-public class Damage extends SubAttribute {
+public class Damage extends SubAttribute implements Listener {
 
     @Getter
     private static final int TYPE_DEFAULT = 0;
@@ -65,7 +67,7 @@ public class Damage extends SubAttribute {
         return config;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onSXDamageEvent(SXDamageEvent event) {
         DamageData damageData = event.getData();
         if (!damageData.isCancelled() && !damageData.isCrit()) {
