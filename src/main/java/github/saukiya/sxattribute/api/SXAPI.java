@@ -141,7 +141,7 @@ public class SXAPI {
      * @return boolean
      */
     public boolean isUse(LivingEntity entity, EquipmentType type, List<String> list) {
-        return SXAttribute.getConditionManager().isUse(entity, type, list);
+        return SXAttribute.getConditionManager().isUse(entity, type, null, list);
     }
 
     /**

@@ -90,7 +90,7 @@ public class SXAttributeManager implements Listener {
             if (preLoadItem.getItem().getItemMeta().hasLore()) {
                 list = preLoadItem.getItem().getItemMeta().getLore().stream().map(str -> str.split("§X")[0]).filter(str -> str.length() > 0).collect(Collectors.toList());
             }
-            if (!SXAttribute.getConditionManager().isUse(entity, preLoadItem.getType(), list)) {
+            if (!SXAttribute.getConditionManager().isUse(entity, preLoadItem.getType(), preLoadItem.getItem(), list)) {
                 iterator.remove();
             }
         }

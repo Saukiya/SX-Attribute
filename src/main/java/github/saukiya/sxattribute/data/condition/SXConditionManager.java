@@ -6,6 +6,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,11 +52,11 @@ public class SXConditionManager implements Listener {
      * @param type   物品所处位置
      * @return boolean
      */
-    public boolean isUse(LivingEntity entity, EquipmentType type, List<String> list) {
+    public boolean isUse(LivingEntity entity, EquipmentType type, ItemStack item, List<String> list) {
         for (String lore : list) {
             for (SubCondition condition : SubCondition.getConditions()) {
                 if (condition.containsType(type)) {
-                    if (!condition.determine(entity, null, lore)) {
+                    if (!condition.determine(entity, item, lore)) {
                         return false;
                     }
                 }
