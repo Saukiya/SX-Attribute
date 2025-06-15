@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -63,8 +64,15 @@ public class Tearing extends SubAttribute {
                                 damageData.getDefender().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, damageData.getDefender().getEyeLocation().add(0, -1, 0), 2, 0.2D, 0.2D, 0.2D, 0.1f);
                             }
                             if (damageData.getAttacker() instanceof Player) {
-                                ((Player) damageData.getAttacker()).playSound(damageData.getDefender().getEyeLocation(), "ENTITY_" + damageData.getDefender().getType().toString() + "_HURT", 1, 1);
+                                String soundName = "ENTITY_" + damageData.getDefender().getType() + "_HURT";
+                                for (Sound value : Sound.values()) {
+                                    if (value.name().equals(soundName)) {
+                                        ((Player) damageData.getAttacker()).playSound(damageData.getDefender().getEyeLocation(), value, 1, 1);
+                                        break;
+                                    }
+                                }
                             }
+
                         }
                     }
                 }.runTaskTimer(getPlugin(), 5, size);
