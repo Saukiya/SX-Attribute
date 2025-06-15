@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import ru.endlesscode.rpginventory.inventory.InventoryManager;
@@ -189,7 +190,7 @@ public class SXAttributeManager implements Listener {
     public void loadEntityData(LivingEntity entity, boolean isAsync) {
         Player player = entity instanceof Player ? (Player) entity : null;
         List<PreLoadItem> preItemList = new ArrayList<>();
-
+        EntityEquipment equipment = entity.getEquipment();
         if (SXAttribute.isRpgInventory() && player != null) {
             // RPGInv Load
             Inventory inv = InventoryManager.get(player).getInventory();
@@ -216,24 +217,28 @@ public class SXAttributeManager implements Listener {
             }
 
             // Equipment Load
-            for (ItemStack item : entity.getEquipment().getArmorContents()) {
-                if (item != null && !item.getType().equals(Material.AIR)) {
-                    preItemList.add(new PreLoadItem(EquipmentType.EQUIPMENT, item));
+            if (equipment != null) {
+                for (ItemStack item : equipment.getArmorContents()) {
+                    if (item != null && !item.getType().equals(Material.AIR)) {
+                        preItemList.add(new PreLoadItem(EquipmentType.EQUIPMENT, item));
+                    }
                 }
             }
         }
 
         // Hand Load
-        if (SXAttribute.getVersionSplit()[1] > 8) {
-            if (entity.getEquipment().getItemInMainHand() != null && !entity.getEquipment().getItemInMainHand().getType().equals(Material.AIR)) {
-                preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, entity.getEquipment().getItemInMainHand()));
-            }
-            if (entity.getEquipment().getItemInOffHand() != null && !entity.getEquipment().getItemInOffHand().getType().equals(Material.AIR)) {
-                preItemList.add(new PreLoadItem(EquipmentType.OFF_HAND, entity.getEquipment().getItemInOffHand()));
-            }
-        } else {
-            if (entity.getEquipment().getItemInHand() != null && !entity.getEquipment().getItemInHand().getType().equals(Material.AIR)) {
-                preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, entity.getEquipment().getItemInHand()));
+        if (equipment != null) {
+            if (SXAttribute.getVersionSplit()[1] > 8) {
+                if (equipment.getItemInMainHand() != null && !equipment.getItemInMainHand().getType().equals(Material.AIR)) {
+                    preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, equipment.getItemInMainHand()));
+                }
+                if (equipment.getItemInOffHand() != null && !equipment.getItemInOffHand().getType().equals(Material.AIR)) {
+                    preItemList.add(new PreLoadItem(EquipmentType.OFF_HAND, equipment.getItemInOffHand()));
+                }
+            } else {
+                if (equipment.getItemInHand() != null && !equipment.getItemInHand().getType().equals(Material.AIR)) {
+                    preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, equipment.getItemInHand()));
+                }
             }
         }
 

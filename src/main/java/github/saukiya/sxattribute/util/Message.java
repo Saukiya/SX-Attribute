@@ -161,7 +161,7 @@ public enum Message {
 
         public List<String> getStringList(String loc, Object... args) {
             List<String> list = config.getStringList(loc);
-            if (list.size() == 0) return Collections.singletonList("Null Message: " + loc);
+            if (list.isEmpty()) return Collections.singletonList("Null Message: " + loc);
             IntStream.range(0, list.size()).forEach(i -> list.set(i, MessageFormat.format(list.get(i), args).replace('&', '§')));
             return list;
         }

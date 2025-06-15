@@ -100,7 +100,7 @@ public class Damage extends SubAttribute implements Listener {
 
             damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || SXAttribute.getVersionSplit()[1] < 9 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
 
-            damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVE : TYPE_PVP));
+            damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVP : TYPE_PVE));
             // 如果该事件更新事件，并且更新目标为玩家
         } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && SXAttribute.getVersionSplit()[1] > 8) {
             ((UpdateData) eventData).getEntity().getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);

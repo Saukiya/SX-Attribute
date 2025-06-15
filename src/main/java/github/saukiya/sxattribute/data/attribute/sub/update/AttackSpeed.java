@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -114,13 +115,13 @@ public class AttackSpeed extends SubAttribute implements Listener {
     @EventHandler
     void onItemSpawnEvent(SXItemSpawnEvent event) {
         // 整理攻击速度
-        if (event.getItem().getItemMeta().hasLore()) {
-            IGenerator ig = event.getIg();
-            if (config().getStringList("SupportIGList").contains(ig.getType())) {
-                double speed = ig.getConfig().getDouble("AttackSpeed", getAttackSpeed(event.getItem()));
-                if (speed > -1) {
-                    setAttackSpeed(event.getItem(), speed - 4);
-                }
+        ItemMeta meta = event.getItem().getItemMeta();
+        if (meta == null || !meta.hasLore()) return;
+        IGenerator ig = event.getIg();
+        if (config().getStringList("SupportIGList").contains(ig.getType())) {
+            double speed = ig.getConfig().getDouble("AttackSpeed", getAttackSpeed(event.getItem()));
+            if (speed > -1) {
+                setAttackSpeed(event.getItem(), speed - 4);
             }
         }
     }
