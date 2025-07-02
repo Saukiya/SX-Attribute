@@ -73,8 +73,7 @@ public class RepairCommand extends SubCommand implements Listener {
             inv.setItem(18 + i, glassItem);
             inv.setItem(27 + i, glassItem);
         }
-        glassItem.setDurability((short) 0);
-        glassItem.setType(Material.IRON_BARS);
+        glassItem = ReMaterial.IRON_BARS.item();
         for (int i = 1; i < 4; i++) {
             inv.setItem(5 + (i * 9), glassItem);
         }
