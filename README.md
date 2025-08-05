@@ -186,10 +186,10 @@
 ## 开发文档 Development
 
 * [开发总览](./markdown/api/overview.md)
-* [JavaDoc](https://saukiya.github.io/SX-Attribute-backup/javadoc/index.html)
+* [JavaDoc](https://saukiya.github.io/SX-Attribute/javadoc/index.html)
 * [注册属性](./markdown/api/attribute.md)
 * [注册条件](./markdown/api/condition.md)
-* [API](https://saukiya.github.io/SX-Attribute-backup/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
+* [API](https://saukiya.github.io/SX-Attribute/javadoc/github/saukiya/sxattribute/api/SXAttributeAPI.html)
 
 
 <br>
