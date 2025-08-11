@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -23,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import ru.endlesscode.rpginventory.inventory.InventoryManager;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -163,7 +164,21 @@ public class SXAttributeManager implements Listener {
         data.calculationCombatPower();
         data.add(defaultAttributeData);
         SXGetAttributeEvent event = new SXGetAttributeEvent(entity, data);
-        Bukkit.getPluginManager().callEvent(event);
+        if(Bukkit.isPrimaryThread()){
+            Bukkit.getPluginManager().callEvent(event);
+        }else{
+            Future<Void> callEventFuture = Bukkit.getScheduler().callSyncMethod(SXAttribute.getInst(),() -> {
+                Bukkit.getPluginManager().callEvent(event);
+                return null;
+            });
+            try {
+                callEventFuture.get(50, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (TimeoutException e) {
+                SXAttribute.getInst().getLogger().warning("Timed out during the execution of the SXGetAttributeEvent callback (50 milliseconds)");
+            }
+        }
         data.correct();
         return data;
     }
