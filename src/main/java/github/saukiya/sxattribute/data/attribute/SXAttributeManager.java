@@ -172,11 +172,11 @@ public class SXAttributeManager implements Listener {
                 return null;
             });
             try {
-                callEventFuture.get(50, TimeUnit.MILLISECONDS);
+                callEventFuture.get(100, TimeUnit.MILLISECONDS);
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             } catch (TimeoutException e) {
-                SXAttribute.getInst().getLogger().warning("Timed out during the execution of the SXGetAttributeEvent callback (50 milliseconds)");
+                SXAttribute.getInst().getLogger().warning("Timed out during the execution of the SXGetAttributeEvent callback (100 milliseconds)");
             }
         }
         data.correct();
