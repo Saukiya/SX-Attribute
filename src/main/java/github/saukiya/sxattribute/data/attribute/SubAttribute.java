@@ -17,6 +17,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 /**
@@ -257,8 +259,18 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
      * @return String
      */
     public static double getNumber(String lore) {
-        String str = lore.replaceAll("\u00a7+[a-z0-9]", "").replaceAll("[^-0-9.]", "");
-        return str.length() == 0 || str.replaceAll("[^.]", "").length() > 1 ? 0D : Double.valueOf(str);
+        // 去除颜色代码和 gradient 标签
+        String cleaned = lore.replaceAll("§[a-z0-9]", "").replaceAll("gradient(:#.{6}){2}", "");
+        // 匹配第一个合法数字（支持正负号和小数）
+        Matcher matcher = Pattern.compile("[-+]?\\d+(\\.\\d+)?").matcher(cleaned);
+        if (matcher.find()) {
+            try {
+                return Double.parseDouble(matcher.group());
+            } catch (NumberFormatException e) {
+                return 0D;
+            }
+        }
+        return 0D;
     }
 
     /**
