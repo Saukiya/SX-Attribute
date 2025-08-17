@@ -104,6 +104,11 @@ public class ListenerUpdateAttribute implements Listener {
         }
     }
 
+    @EventHandler(ignoreCancelled = true)
+    void onPlayerDeathEvent(PlayerRespawnEvent event) {
+        updateEquipmentData(event.getPlayer());
+    }
+
     @EventHandler
     void onPlayerJoinEvent(PlayerJoinEvent event) {
         updateEquipmentData(event.getPlayer());
