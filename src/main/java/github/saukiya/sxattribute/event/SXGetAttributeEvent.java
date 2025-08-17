@@ -23,7 +23,8 @@ public class SXGetAttributeEvent extends Event {
     @Setter
     private SXAttributeData data;
 
-    public SXGetAttributeEvent(LivingEntity entity, SXAttributeData data) {
+    public SXGetAttributeEvent(LivingEntity entity, SXAttributeData data, boolean isAsync) {
+        super(isAsync);
         this.entity = entity;
         this.data = data;
     }
