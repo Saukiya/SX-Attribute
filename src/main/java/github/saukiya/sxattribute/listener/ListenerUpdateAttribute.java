@@ -91,7 +91,7 @@ public class ListenerUpdateAttribute implements Listener {
         updateHandData(player, item);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler()
     void onPlayerInteractEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if ((event.getAction() + "").contains("RIGHT")) {
