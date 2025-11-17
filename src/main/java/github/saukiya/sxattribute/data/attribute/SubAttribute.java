@@ -260,7 +260,7 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
      */
     public static double getNumber(String lore) {
         // 去除颜色代码和 gradient 标签
-        String cleaned = lore.replaceAll("§[a-z0-9]", "").replaceAll("gradient(:#.{6}){2}", "");
+        String cleaned = lore.replaceAll("§[a-z0-9]", "").replaceAll("<#[a-fA-F0-9]{6}>", "");
         // 匹配第一个合法数字（支持正负号和小数）
         Matcher matcher = Pattern.compile("[-+]?\\d+(\\.\\d+)?").matcher(cleaned);
         if (matcher.find()) {
