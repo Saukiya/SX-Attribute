@@ -29,7 +29,7 @@ public class NBTCommand extends SubCommand {
             item = SXAttribute.getItemDataManager().getItem(args[1], sender instanceof Player ? (Player) sender : null);
         } else if (sender instanceof Player) {
             EntityEquipment eq = ((Player) sender).getEquipment();
-            if (SXAttribute.getVersionSplit()[1] >= 9) {
+            if (SXAttribute.isVersionAtLeast(9)) {
                 item = eq.getItemInMainHand();
             } else {
                 item = eq.getItemInHand();

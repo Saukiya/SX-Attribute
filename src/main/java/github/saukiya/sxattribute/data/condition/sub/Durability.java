@@ -96,7 +96,7 @@ public class Durability extends SubCondition implements Listener {
                         if (Config.isClearItemDurability()) {
                             Bukkit.getPluginManager().callEvent(new PlayerItemBreakEvent(player, item));
                             // 当耐久为0时物品消失 并取消属性
-                            if (SXAttribute.getVersionSplit()[1] > 10) {
+                            if (SXAttribute.isVersionAtLeast(11)) {
                                 item.setAmount(0);
                             } else {
                                 clearItem(player, item);

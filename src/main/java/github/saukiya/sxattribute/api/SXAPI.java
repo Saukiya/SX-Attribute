@@ -226,7 +226,7 @@ public class SXAPI {
     }
 
     public double getMaxHealth(LivingEntity entity) {
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (SXAttribute.isHigherVersion()) {
             AttributeInstance instance = AttributeUtil.getInstance(entity, "MAX_HEALTH", "GENERIC_MAX_HEALTH");
             if (instance != null) return instance.getBaseValue();
         }

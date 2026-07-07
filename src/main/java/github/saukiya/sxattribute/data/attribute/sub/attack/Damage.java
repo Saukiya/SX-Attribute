@@ -85,12 +85,12 @@ public class Damage extends SubAttribute implements Listener {
 
             if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 EntityEquipment eq = attackEntity.getEquipment();
-                ItemStack mainHand = SXAttribute.getVersionSplit()[1] > 8 ? eq.getItemInMainHand() : eq.getItemInHand();
+                ItemStack mainHand = SXAttribute.isHigherVersion() ? eq.getItemInMainHand() : eq.getItemInHand();
                 if (mainHand != null) {
                     if (Material.BOW.equals(mainHand.getType()) && !Config.isBowCloseRangeAttack()) {
                         SXAttributeData sxAttributeData = SXAttribute.getApi().loadItemData(attackEntity, new PreLoadItem(EquipmentType.MAIN_HAND, mainHand));
 
-                        if (SXAttribute.getVersionSplit()[1] > 8) {
+                        if (SXAttribute.isHigherVersion()) {
                             damageData.setDamage(event.getDamage() - (values[0] / event.getDamage() * sxAttributeData.getValues(getClass().getSimpleName())[0]));
                         }
                         values = damageData.getAttackerData().take(sxAttributeData).getValues(getClass().getSimpleName());
@@ -99,11 +99,11 @@ public class Damage extends SubAttribute implements Listener {
             }
 
 
-            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || SXAttribute.getVersionSplit()[1] < 9 ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
+            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || !SXAttribute.isHigherVersion() ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
 
             damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVP : TYPE_PVE));
             // 如果该事件更新事件，并且更新目标为玩家
-        } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && SXAttribute.getVersionSplit()[1] > 8) {
+        } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && SXAttribute.isHigherVersion()) {
             AttributeInstance instance = AttributeUtil.getInstance(((UpdateData) eventData).getEntity(), "ATTACK_DAMAGE", "GENERIC_ATTACK_DAMAGE");
             if (instance != null) {
                 instance.setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);

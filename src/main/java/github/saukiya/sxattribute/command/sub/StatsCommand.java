@@ -94,7 +94,9 @@ public class StatsCommand extends SubCommand implements Listener {
             inv.setItem(i, stainedGlass);
         }
         inv.setItem(10, getAttackUI(player, attributeData));
+        inv.setItem(12, getMovementUI(player, attributeData));
         inv.setItem(13, getDefenseUI(player, attributeData));
+        inv.setItem(14, getGatherUI(player, attributeData));
         inv.setItem(16, getBaseUI(player, attributeData));
         (openInvPlayer.length > 0 ? openInvPlayer[0] : player).openInventory(inv);
     }
@@ -131,7 +133,32 @@ public class StatsCommand extends SubCommand implements Listener {
         return item;
     }
 
+    private ItemStack getMovementUI(Player player, SXAttributeData data) {
+        ItemStack item = new ItemStack(Material.IRON_BOOTS);
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__MOVEMENT));
+        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__MOVEMENT_LORE));
+        meta.setLore(loreList);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack getGatherUI(Player player, SXAttributeData data) {
+        ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE);
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__GATHER));
+        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__GATHER_LORE));
+        meta.setLore(loreList);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     private List<String> process(Player player, SXAttributeData data, List<String> list) {
+        // getStringList 在 key 缺失时会返回不可变的 singletonList (如旧 Message.yml 未含新分区键),
+        // 而下方 set/remove 需要可变列表, 故统一包装为 ArrayList 防止 UnsupportedOperationException
+        list = new ArrayList<>(list);
         for (int i = 0; i < list.size(); i++) {
             String lore = list.get(i);
             while (lore.contains("%") && lore.split("%").length > 1 && lore.split("%")[1].contains("sx_") && lore.split("%")[1].split("_").length > 1) {

@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class ListenerUpdateAttribute implements Listener {
 
     public ListenerUpdateAttribute() {
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (SXAttribute.isHigherVersion()) {
             Bukkit.getPluginManager().registerEvents(new VersionListener(), SXAttribute.getInst());
         }
     }
@@ -121,7 +121,7 @@ public class ListenerUpdateAttribute implements Listener {
     void onEntitySpawnEvent(CreatureSpawnEvent event) {
         LivingEntity entity = event.getEntity();
 
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (SXAttribute.isHigherVersion()) {
             entity.setInvulnerable(true);
         }
         new BukkitRunnable() {
@@ -130,7 +130,7 @@ public class ListenerUpdateAttribute implements Listener {
                 if (entity != null && !entity.isDead()) {
                     SXAttribute.getAttributeManager().loadEntityData(entity, true);
                     SXAttribute.getAttributeManager().attributeUpdateEvent(entity);
-                    if (SXAttribute.getVersionSplit()[1] > 8) {
+                    if (SXAttribute.isHigherVersion()) {
                         entity.setInvulnerable(false);
                     }
                 }

@@ -67,7 +67,7 @@ public class ListenerDamage implements Listener {
         attackData = attackData != null ? attackData : SXAttribute.getAttributeManager().getEntityData(attackEntity);
 
         EntityEquipment eq = attackEntity.getEquipment();
-        ItemStack mainHand = SXAttribute.getVersionSplit()[1] > 8 ? eq.getItemInMainHand() : eq.getItemInHand();
+        ItemStack mainHand = SXAttribute.isHigherVersion() ? eq.getItemInMainHand() : eq.getItemInHand();
         if (mainHand != null) {
             if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                 if (attackEntity instanceof Player && !((HumanEntity) attackEntity).getGameMode().equals(GameMode.CREATIVE)) {

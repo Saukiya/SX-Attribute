@@ -16,7 +16,7 @@ public class ListenerBanShieldInteract implements Listener {
     @EventHandler
     void onPlayerClickEvent(PlayerInteractEvent event) {
         // 1.9.0 禁用盾牌右键
-        if (!event.isCancelled() && SXAttribute.getVersionSplit()[1] >= 9) {
+        if (!event.isCancelled() && SXAttribute.isVersionAtLeast(9)) {
             event.setCancelled(Config.isBanShieldDefense() && event.getItem() != null && event.getItem().getType().equals(Material.SHIELD));
         }
     }

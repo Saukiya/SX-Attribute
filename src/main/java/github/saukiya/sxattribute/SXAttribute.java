@@ -6,14 +6,13 @@ import github.saukiya.sxattribute.data.RandomStringManager;
 import github.saukiya.sxattribute.data.SlotDataManager;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SXAttributeManager;
+import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.attribute.sub.attack.*;
 import github.saukiya.sxattribute.data.attribute.sub.defence.*;
 import github.saukiya.sxattribute.data.attribute.sub.other.EventMessage;
 import github.saukiya.sxattribute.data.attribute.sub.other.ExpAddition;
 import github.saukiya.sxattribute.data.attribute.sub.other.JSAttribute;
-import github.saukiya.sxattribute.data.attribute.sub.update.AttackSpeed;
-import github.saukiya.sxattribute.data.attribute.sub.update.Command;
-import github.saukiya.sxattribute.data.attribute.sub.update.WalkSpeed;
+import github.saukiya.sxattribute.data.attribute.sub.update.*;
 import github.saukiya.sxattribute.data.condition.SXConditionManager;
 import github.saukiya.sxattribute.data.condition.sub.*;
 import github.saukiya.sxattribute.data.itemdata.ItemDataManager;
@@ -101,6 +100,63 @@ public class SXAttribute extends JavaPlugin {
     @Getter
     private static MainCommand mainCommand;
 
+    /**
+     * 判断服务器次版本是否 >= 指定值 (跨新旧版本号方案安全)
+     * <p>
+     * 旧版本号方案为 "1.X.Y", 次版本号 versionSplit[1] 即为 9/13/16...;
+     * 高版本新方案(如 26.x) getBukkitVersion() 形如 "26.1.build.2",
+     * 解析后 versionSplit = [26, 1, 0], 此时 versionSplit[1] 恒为个位数,
+     * 单纯判断 versionSplit[1] >= minMinor 会把新版误判为低版本, 需一并判断主版本号:
+     * 主版本 > 1 时(新方案)必然覆盖所有旧特性, 直接返回 true。
+     *
+     * @param minMinor int 旧方案下要求的最低次版本号 (如 9 表示 1.9)
+     * @return boolean 满足则返回 true
+     */
+    public static boolean isVersionAtLeast(int minMinor) {
+        return versionSplit[0] > 1 || versionSplit[1] >= minMinor;
+    }
+
+    /**
+     * 判断服务器版本是否 >= 指定版本 (精确到补丁号, 跨新旧版本号方案安全)
+     * <p>
+     * 用于门控按补丁号引入的原版属性 (如 scale 于 1.20.5, camera_distance 于 1.21.6):
+     * 逐段比较主版本 -> 次版本 -> 补丁号。高版本新方案(major > 1, 如 26.x)在与 major=1 的
+     * 旧特性比较时 versionSplit[0] > major 直接返回 true, 天然覆盖所有旧特性。
+     *
+     * @param major int 主版本号 (旧方案恒为 1)
+     * @param minor int 次版本号
+     * @param patch int 补丁号
+     * @return boolean 满足则返回 true
+     */
+    public static boolean isVersionAtLeast(int major, int minor, int patch) {
+        if (versionSplit[0] != major) return versionSplit[0] > major;
+        if (versionSplit[1] != minor) return versionSplit[1] > minor;
+        return versionSplit[2] >= patch;
+    }
+
+    /**
+     * 按版本条件注册属性 (低于要求版本则跳过, 不注册)
+     *
+     * @param attribute SubAttribute 待注册属性
+     * @param major     int 主版本号
+     * @param minor     int 次版本号
+     * @param patch     int 补丁号
+     */
+    private void registerIfVersion(SubAttribute attribute, int major, int minor, int patch) {
+        if (isVersionAtLeast(major, minor, patch)) {
+            attribute.registerAttribute();
+        }
+    }
+
+    /**
+     * 判断服务器版本是否 >= 1.9 (即支持副手、攻击速度属性、双手物品等特性)
+     *
+     * @return boolean 版本 >= 1.9 返回 true
+     */
+    public static boolean isHigherVersion() {
+        return isVersionAtLeast(9);
+    }
+
     @SneakyThrows
     @Override
     public void onLoad() {
@@ -143,13 +199,49 @@ public class SXAttribute extends JavaPlugin {
 
         new Health().registerAttribute();
         new WalkSpeed().registerAttribute();
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (SXAttribute.isHigherVersion()) {
             new AttackSpeed().registerAttribute();
         }
         new Command().registerAttribute();
 
+        // 高版本原版属性包装 (按补丁号精确门控, 低版本自动跳过; 属性不存在时 AttributeUtil 返回 null 二次降级)
+        // 攻击分区
+        registerIfVersion(new AttackRange(), 1, 20, 5);
+        registerIfVersion(new AttackKnockback(), 1, 20, 5);
+        registerIfVersion(new Sweeping(), 1, 21, 0);
+        // 防御分区
+        registerIfVersion(new KnockbackResistance(), 1, 9, 0);
+        registerIfVersion(new ExplosionKnockback(), 1, 21, 0);
+        registerIfVersion(new SafeFallDistance(), 1, 20, 5);
+        registerIfVersion(new FallDamage(), 1, 20, 5);
+        registerIfVersion(new BurningTime(), 1, 21, 0);
+        // 移动分区
+        registerIfVersion(new Scale(), 1, 20, 5);
+        registerIfVersion(new JumpStrength(), 1, 20, 5);
+        registerIfVersion(new Gravity(), 1, 20, 5);
+        registerIfVersion(new StepHeight(), 1, 20, 5);
+        registerIfVersion(new SneakingSpeed(), 1, 21, 0);
+        registerIfVersion(new MovementEfficiency(), 1, 21, 0);
+        registerIfVersion(new WaterMovement(), 1, 21, 0);
+        registerIfVersion(new FlyingSpeed(), 1, 9, 0);
+        registerIfVersion(new Bounciness(), 26, 2, 0);
+        registerIfVersion(new FrictionModifier(), 26, 2, 0);
+        registerIfVersion(new AirDragModifier(), 26, 2, 0);
+        // 采集分区
+        registerIfVersion(new BlockRange(), 1, 20, 5);
+        registerIfVersion(new MiningEfficiency(), 1, 21, 0);
+        registerIfVersion(new BlockBreakSpeed(), 1, 20, 5);
+        registerIfVersion(new SubmergedMining(), 1, 21, 0);
+        registerIfVersion(new OxygenBonus(), 1, 21, 0);
+        // 其他分区
+        registerIfVersion(new Luck(), 1, 9, 0);
+        registerIfVersion(new CameraDistance(), 1, 21, 6);
+        registerIfVersion(new WaypointTransmit(), 1, 21, 6);
+        registerIfVersion(new WaypointReceive(), 1, 21, 6);
+        registerIfVersion(new NameTagDistance(), 26, 2, 0);
+
         File jsAttributeFiles = new File(getDataFolder(), "Attribute" + File.separator + "JavaScript");
-        if (!jsAttributeFiles.exists() && SXAttribute.getVersionSplit()[1] > 8) {
+        if (!jsAttributeFiles.exists() && SXAttribute.isHigherVersion()) {
             saveResource("Attribute/JavaScript/JSAttribute.js", true);
             saveResource("Attribute/SX-Attribute/JSAttribute_JS.yml", true);
         }
@@ -186,7 +278,7 @@ public class SXAttribute extends JavaPlugin {
             }
         }
 
-        if (SXAttribute.getVersionSplit()[1] > 8) {
+        if (SXAttribute.isHigherVersion()) {
             new MainHand().registerCondition();
             new OffHand().registerCondition();
         }

@@ -56,7 +56,7 @@ public class Health extends SubAttribute {
             }
             double maxHealth = values[0] + getSkillAPIHealth(player);
             if (player.getHealth() > maxHealth) player.setHealth(maxHealth);
-            if (SXAttribute.getVersionSplit()[1] > 8) {
+            if (SXAttribute.isHigherVersion()) {
                 AttributeInstance instance = AttributeUtil.getInstance(player, "MAX_HEALTH", "GENERIC_MAX_HEALTH");
                 if (instance != null) {
                     instance.setBaseValue(maxHealth);

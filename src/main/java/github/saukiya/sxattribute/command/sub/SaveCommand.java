@@ -35,7 +35,7 @@ public class SaveCommand extends SubCommand {
         }
         String itemName = args[1];
         Player player = (Player) sender;
-        ItemStack itemStack = SXAttribute.getVersionSplit()[1] > 8 ? player.getEquipment().getItemInMainHand() : player.getEquipment().getItemInHand();
+        ItemStack itemStack = SXAttribute.isHigherVersion() ? player.getEquipment().getItemInMainHand() : player.getEquipment().getItemInHand();
         if (itemStack.getType().toString().contains("AIR")) {
             player.sendMessage(Message.getMsg(Message.ADMIN__NO_ITEM));
             return;

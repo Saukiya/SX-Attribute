@@ -60,7 +60,7 @@ public class Tearing extends SubAttribute {
                         if (!event.isCancelled()) {
                             double damage = damageData.getDefender().getHealth() < event.getDamage() ? damageData.getDefender().getHealth() : event.getDamage();
                             damageData.getDefender().setHealth(damageData.getDefender().getHealth() - damage);
-                            if (SXAttribute.getVersionSplit()[1] > 8) {
+                            if (SXAttribute.isHigherVersion()) {
                                 damageData.getDefender().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, damageData.getDefender().getEyeLocation().add(0, -1, 0), 2, 0.2D, 0.2D, 0.2D, 0.1f);
                             }
                             if (damageData.getAttacker() instanceof Player) {

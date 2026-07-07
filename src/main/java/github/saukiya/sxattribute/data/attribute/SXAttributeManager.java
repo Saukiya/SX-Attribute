@@ -228,7 +228,7 @@ public class SXAttributeManager implements Listener {
 
         // Hand Load
         if (equipment != null) {
-            if (SXAttribute.getVersionSplit()[1] > 8) {
+            if (SXAttribute.isHigherVersion()) {
                 if (equipment.getItemInMainHand() != null && !equipment.getItemInMainHand().getType().equals(Material.AIR)) {
                     preItemList.add(new PreLoadItem(EquipmentType.MAIN_HAND, equipment.getItemInMainHand()));
                 }

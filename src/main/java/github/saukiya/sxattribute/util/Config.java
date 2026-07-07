@@ -116,7 +116,7 @@ public class Config {
         SXAttribute.setDf(new DecimalFormat(config.getString(DECIMAL_FORMAT)));
         commandStatsDisplaySkullSkin = config.getBoolean(COMMAND_STATS_DISPLAY_SKULL_SKIN);
         healthNameVisible = config.getBoolean(HEALTH_NAME_ENABLED);
-        healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED) && SXAttribute.getVersionSplit()[1] >= 9;
+        healthBossBar = config.getBoolean(HEALTH_BOSS_BAR_ENABLED) && SXAttribute.isVersionAtLeast(9);
         bossBarBlackCauseList = config.getStringList(HEALTH_BOSS_BAR_BLACK_CAUSE_LIST);
         holographic = config.getBoolean(HOLOGRAPHIC_ENABLED);
         holographicBlackList = config.getStringList(HOLOGRAPHIC_BLACK_CAUSE_LIST);

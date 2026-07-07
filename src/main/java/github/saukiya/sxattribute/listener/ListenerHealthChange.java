@@ -148,7 +148,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
             }
             if (damager != null) {
                 // BossBar
-                if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.getVersionSplit()[1] > 9 && !Config.getBossBarBlackCauseList().contains(event.getCause().name()) && !isMythicBossBar(entity)) {
+                if (Config.isHealthBossBar() && damager instanceof Player && SXAttribute.isVersionAtLeast(10) && !Config.getBossBarBlackCauseList().contains(event.getCause().name()) && !isMythicBossBar(entity)) {
                     if (bossBarData == null) {
                         bossBarData = new BossBarData(entity, name, maxHealth, progress);
                         bossBarData.setProgress(progress);

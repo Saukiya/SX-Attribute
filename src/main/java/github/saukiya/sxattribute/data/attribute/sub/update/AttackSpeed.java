@@ -77,7 +77,7 @@ public class AttackSpeed extends SubAttribute implements Listener {
         if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player) {
             Player player = (Player) ((UpdateData) eventData).getEntity();
 
-            if (SXAttribute.getVersionSplit()[1] > 8) {
+            if (SXAttribute.isHigherVersion()) {
                 AttributeInstance instance = AttributeUtil.getInstance(player, "ATTACK_SPEED", "GENERIC_ATTACK_SPEED");
                 if (instance != null) {
                     instance.setBaseValue(config().getDouble("AttackSpeed.Default") * (100 + values[0]) / 100);
