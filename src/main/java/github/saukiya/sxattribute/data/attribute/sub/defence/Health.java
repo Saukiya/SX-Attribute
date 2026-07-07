@@ -7,8 +7,9 @@ import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
+import github.saukiya.sxattribute.util.AttributeUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.spigotmc.SpigotConfig;
@@ -56,7 +57,12 @@ public class Health extends SubAttribute {
             double maxHealth = values[0] + getSkillAPIHealth(player);
             if (player.getHealth() > maxHealth) player.setHealth(maxHealth);
             if (SXAttribute.getVersionSplit()[1] > 8) {
-                player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
+                AttributeInstance instance = AttributeUtil.getInstance(player, "MAX_HEALTH", "GENERIC_MAX_HEALTH");
+                if (instance != null) {
+                    instance.setBaseValue(maxHealth);
+                } else {
+                    player.setMaxHealth(maxHealth);
+                }
             } else {
                 player.setMaxHealth(maxHealth);
             }

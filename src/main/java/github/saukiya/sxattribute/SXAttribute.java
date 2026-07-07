@@ -46,7 +46,6 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 /**
  * SX-Attribute
@@ -109,8 +108,15 @@ public class SXAttribute extends JavaPlugin {
         inst = this;
         String version = Bukkit.getBukkitVersion().split("-")[0].replace(" ", "");
         String[] strSplit = version.split("[.]");
-        IntStream.range(0, strSplit.length).forEach(i -> versionSplit[i] = Integer.valueOf(strSplit[i]));
-        SXAttribute.getInst().getLogger().info("ServerVersion: " + version);
+        // 逐段解析版本号: 遇到非纯数字段(如高版本的 "build")即停止, 并防止写入越界
+        // 高版本(26.x)getBukkitVersion() 可能形如 "26.1.build.2", 旧的 Integer.valueOf 全量解析会崩
+        for (int i = 0; i < strSplit.length && i < versionSplit.length; i++) {
+            if (!strSplit[i].matches("\\d+")) {
+                break;
+            }
+            versionSplit[i] = Integer.parseInt(strSplit[i]);
+        }
+        SXAttribute.getInst().getLogger().info("ServerVersion: " + version + " -> " + Arrays.toString(versionSplit));
         Config.loadConfig();
         Message.loadMessage();
         mainCommand = new MainCommand();
@@ -253,11 +259,11 @@ public class SXAttribute extends JavaPlugin {
                         memberValues.put("priority", EventPriority.LOW);
                         SXAttribute.getInst().getLogger().info("EditDamageEventPriority: " + priority.name());
 
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
-                        SXAttribute.getInst().getLogger().warning("EditDamageEventPriority ERROR!");
+                    } catch (NoSuchFieldException | IllegalAccessException | RuntimeException e) {
+                        // Java 9+ 强封装下反射 JDK 内部 memberValues 可能抛 InaccessibleObjectException(RuntimeException)
+                        // 失败时放弃修改事件优先级(退化为默认 HIGH), 继续启用插件, 不再直接禁用
+                        SXAttribute.getInst().getLogger().warning("EditDamageEventPriority ERROR! Fallback to default priority.");
                         e.printStackTrace();
-                        this.setEnabled(false);
-                        return;
                     }
                     break;
                 }
@@ -276,8 +282,15 @@ public class SXAttribute extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        attributeManager.onAttributeDisable();
-        conditionManager.onConditionDisable();
-        listenerHealthChange.cancel();
+        // 各字段均在 onEnable 才赋值; 若 onLoad/onEnable 提前崩溃则为 null, 需判空避免掩盖原始异常
+        if (attributeManager != null) attributeManager.onAttributeDisable();
+        if (conditionManager != null) conditionManager.onConditionDisable();
+        if (listenerHealthChange != null) {
+            try {
+                listenerHealthChange.cancel();
+            } catch (IllegalStateException ignored) {
+                // BukkitRunnable 未被调度时 cancel() 会抛 IllegalStateException, 忽略
+            }
+        }
     }
 }

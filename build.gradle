@@ -1,13 +1,21 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.gradleup.shadow' version '8.3.9'
 }
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '3.8.5'
+version '3.9.0'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile) {
+    // JDK 23+ 默认不再运行注解处理器, 显式开启以保证 Lombok 生效; -Xlint:-options 压掉 target 8 的过时警告
+    options.compilerArgs += ["-Xlint:-options", "-proc:full"]
+    options.encoding = "UTF-8"
+}
 
 repositories {
     mavenLocal()
@@ -30,14 +38,13 @@ dependencies {
     compileOnly fileTree('lib')
 
     compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
-    compileOnly 'com.github.Saukiya:SX-Item:4.4.0'
     compileOnly 'io.lumine.xikage:MythicMobs:4.9.1'
     compileOnly 'io.lumine:Mythic-Dist:5.2.1'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
 
-    compileOnly 'org.projectlombok:lombok:1.18.34'
-    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    compileOnly 'org.projectlombok:lombok:1.18.46'
+    annotationProcessor 'org.projectlombok:lombok:1.18.46'
 }
 
 shadowJar {

@@ -5,7 +5,8 @@ import github.saukiya.sxattribute.data.PreLoadItem;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
-import org.bukkit.attribute.Attribute;
+import github.saukiya.sxattribute.util.AttributeUtil;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -225,7 +226,12 @@ public class SXAPI {
     }
 
     public double getMaxHealth(LivingEntity entity) {
-        return SXAttribute.getVersionSplit()[1] > 8 ? entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : entity.getMaxHealth();
+        if (SXAttribute.getVersionSplit()[1] > 8) {
+            AttributeInstance instance = AttributeUtil.getInstance(entity, "MAX_HEALTH", "GENERIC_MAX_HEALTH");
+            if (instance != null) return instance.getBaseValue();
+        }
+        // 1.8 或高版本解析失败时回退到 Bukkit 老 API
+        return entity.getMaxHealth();
     }
 
     /**

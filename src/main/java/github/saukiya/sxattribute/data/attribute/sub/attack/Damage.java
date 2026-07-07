@@ -11,9 +11,10 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.AttributeUtil;
 import lombok.Getter;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -103,7 +104,10 @@ public class Damage extends SubAttribute implements Listener {
             damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVP : TYPE_PVE));
             // 如果该事件更新事件，并且更新目标为玩家
         } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && SXAttribute.getVersionSplit()[1] > 8) {
-            ((UpdateData) eventData).getEntity().getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);
+            AttributeInstance instance = AttributeUtil.getInstance(((UpdateData) eventData).getEntity(), "ATTACK_DAMAGE", "GENERIC_ATTACK_DAMAGE");
+            if (instance != null) {
+                instance.setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);
+            }
         }
     }
 

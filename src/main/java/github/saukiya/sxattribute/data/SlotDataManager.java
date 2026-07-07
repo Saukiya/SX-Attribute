@@ -21,6 +21,11 @@ public class SlotDataManager {
 
     public void loadData() {
         slotList.clear();
+        // 防御: 若 onLoad 提前崩溃导致 Config 未加载(config 为 null), 直接返回避免连锁 NPE
+        if (Config.getConfig() == null) {
+            SXAttribute.getInst().getLogger().warning("Config not loaded, skip SlotData loading.");
+            return;
+        }
         List<String> registerSlotList = Config.getConfig().getStringList(Config.REGISTER_SLOTS_LIST);
         if (Config.isRegisterSlot() && registerSlotList.size() > 0) {
             for (String str : registerSlotList) {
