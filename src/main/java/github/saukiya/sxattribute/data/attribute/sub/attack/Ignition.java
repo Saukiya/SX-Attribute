@@ -41,9 +41,13 @@ public class Ignition extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
             DamageData damageData = (DamageData) eventData;
-            if (values[0] > 0 && probability(values[0] - damageData.getDefenderData().getValues("Toughness")[0])) {
-                damageData.getDefender().setFireTicks(40 + SXAttribute.getRandom().nextInt(60));
-                damageData.sendHolo(getString("Message.Holo", getDf().format(damageData.getDefender().getFireTicks() / 20D)));
+            double toughness = effectiveOf("Toughness", damageData.getDefender(), damageData.getDefenderData().getValues("Toughness")[0]);
+            // 触发几率公式 (变量 value=点燃几率, toughness=目标韧性); 默认 几率-韧性
+            double chance = formula(damageData.getAttacker(), "Formula.Chance", values[0] - toughness, "value", values[0], "toughness", toughness);
+            if (values[0] > 0 && probability(chance)) {
+                // 点燃时长(tick)公式; 默认 40+随机0~59
+                damageData.getDefender().setFireTicks((int) formula(damageData.getDefender(), "Formula.Ignition", 40 + SXAttribute.getRandom().nextInt(60)));
+                if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(damageData.getDefender().getFireTicks() / 20D)));
                 send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(damageData.getDefender().getFireTicks() / 20D));
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(damageData.getDefender().getFireTicks() / 20D));
             }

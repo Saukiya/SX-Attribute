@@ -109,6 +109,8 @@ public class ListenerUpdateAttribute implements Listener {
 
     @EventHandler
     void onPlayerJoinEvent(PlayerJoinEvent event) {
+        // 上线重新施加持久化源(跨重连存活), 再刷新装备源
+        SXAttribute.getPersistentSourceManager().apply(event.getPlayer());
         updateEquipmentData(event.getPlayer());
     }
 

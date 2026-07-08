@@ -73,7 +73,8 @@ public class ExpAddition extends SubAttribute implements Listener {
         Player player = event.getPlayer();
         double expAddition = SXAttribute.getApi().getEntityData(player).getValues(getName())[0];
         if (event.getAmount() > 0 && expAddition > 0) {
-            event.setAmount((int) (event.getAmount() * (100 + expAddition) / 100));
+            // 经验增益公式 (变量 amount=原始经验, value=经验增幅); 默认 原始*(100+增幅)/100
+            event.setAmount((int) formula(player, "Formula", event.getAmount() * (100 + expAddition) / 100D, "amount", event.getAmount(), "value", expAddition));
             send(player, "Message", event.getAmount(), expAddition);
         }
     }

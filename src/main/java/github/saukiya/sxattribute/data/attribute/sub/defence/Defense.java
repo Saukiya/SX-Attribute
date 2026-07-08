@@ -102,7 +102,11 @@ public class Defense extends SubAttribute {
 
 
     private double getAttribute(double[] values, int type) {
-        return values[type * 2] + SXAttribute.getRandom().nextDouble() * (values[type * 2 + 1] - values[type * 2]);
+        double min = values[type * 2];
+        double max = values[type * 2 + 1];
+        double fallback = min + SXAttribute.getRandom().nextDouble() * (max - min);
+        // 防御掷点公式 (变量 min/max); 默认 min~max 均匀随机
+        return formula((Player) null, "Formula", fallback, "min", min, "max", max);
     }
 
     @Override

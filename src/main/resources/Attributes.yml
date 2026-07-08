@@ -1,0 +1,1417 @@
+# ############################################################################
+# SX-Attribute 属性中央配置 Attributes.yml  (单一事实来源)
+# ----------------------------------------------------------------------------
+# · 一个属性一个节点; DiscernName = 玩家物品 Lore 里书写的识别名(词条前缀)。
+# · 公式引擎: 需安装 SX-Item; 未安装时忽略 Formula, 回退 Mode 预设(PERCENT/ADD/RATIO)。
+# · 公式语法(SX-Item): 外层 <c: 数学式> 求值; 变量用 <l:名> 引用; 支持 %PlaceholderAPI%。
+#   随机: <d:a_b> 取[a,b]随机小数, <i:a_b> 取[a,b]随机整数。
+# · 通用公式变量:
+#     <l:value>   = 玩家物品词条上该属性的累加数值
+#     <l:default> = 该属性的默认基值(见各节点 Default / 原版默认)
+#     <l:base>    = 施加前实体当前的属性基值
+#     <l:min> / <l:max> = 数值下限 / 上限
+#   (战斗类另有 damage/ratio/toughness/health/hitrate/amount/skillapi 等专用变量, 见各节点说明)
+# · 战斗类的 DiscernName/CombatPower/UpperLimit/Message/List 等缺省值由代码在内存补齐,
+#   本文件不自动写回(以保留注释)。如需改这些值, 在对应节点手动补写该键即可覆盖。
+# ############################################################################
+
+Settings:
+  # 是否启用 SX-Item 公式引擎(关闭则所有 Formula 失效, 全部回退 Mode 预设)
+  FormulaEngine: true
+  # /stats 面板是否由本文件 Display 自动生成(关闭则回退 Message.yml 手写 lore)
+  AutoPanel: true
+
+Attributes:
+
+  # ========================= 原版包装属性(数值型, 完全数据驱动) =========================
+  # ─── 攻击距离 (entity_interaction_range) ─────────────────────────────────────────
+  #  原版效果 : 玩家与实体的交互/攻击可达距离(方块), 原版默认3
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(3.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  AttackRange:
+    DiscernName: 攻击距离
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: entity_interaction_range
+    LegacyName: PLAYER_ENTITY_INTERACTION_RANGE
+    Version: "1.20.5"
+    Default: 3.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: ATTACK
+      Order: 20
+      Rows:
+        - placeholder: AttackRange
+          label: 攻击距离
+          color: "&c"
+
+  # ─── 攻击击退 (attack_knockback) ─────────────────────────────────────────
+  #  原版效果 : 近战命中对目标的额外击退强度, 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  AttackKnockback:
+    DiscernName: 攻击击退
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: attack_knockback
+    LegacyName: GENERIC_ATTACK_KNOCKBACK
+    Version: "1.20.5"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: ATTACK
+      Order: 21
+      Rows:
+        - placeholder: AttackKnockback
+          label: 攻击击退
+          color: "&c"
+
+  # ─── 横扫比例 (sweeping_damage_ratio) ─────────────────────────────────────────
+  #  原版效果 : 横扫攻击对周围目标造成的伤害比例(0~1), 原版默认0
+  #  增幅模式 : RATIO  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅 / 100  (0~1 系数)
+  Sweeping:
+    DiscernName: 横扫比例
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: sweeping_damage_ratio
+    LegacyName: PLAYER_SWEEPING_DAMAGE_RATIO
+    Version: "1.21"
+    Default: 0.0
+    Min: 0
+    Max: 100
+    Mode: RATIO
+    Formula: "<c:<l:default> + <l:value> / 100>"
+    CombatPower: 0
+    Display:
+      Category: ATTACK
+      Order: 22
+      Rows:
+        - placeholder: Sweeping
+          label: 横扫比例
+          color: "&c"
+          suffix: "%"
+
+  # ─── 击退抗性 (knockback_resistance) ─────────────────────────────────────────
+  #  原版效果 : 受到击退的抗性(0~1, 1=完全免疫击退), 原版默认0
+  #  增幅模式 : RATIO  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.9 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅 / 100  (0~1 系数)
+  KnockbackResistance:
+    DiscernName: 击退抗性
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: knockback_resistance
+    LegacyName: GENERIC_KNOCKBACK_RESISTANCE
+    Version: "1.9"
+    Default: 0.0
+    Min: 0
+    Max: 100
+    Mode: RATIO
+    Formula: "<c:<l:default> + <l:value> / 100>"
+    CombatPower: 0
+    Display:
+      Category: DEFENSE
+      Order: 20
+      Rows:
+        - placeholder: KnockbackResistance
+          label: 击退抗性
+          color: "&9"
+          suffix: "%"
+
+  # ─── 爆炸击退抗性 (explosion_knockback_resistance) ─────────────────────────────────────────
+  #  原版效果 : 受到爆炸击退的抗性(0~1), 原版默认0
+  #  增幅模式 : RATIO  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅 / 100  (0~1 系数)
+  ExplosionKnockback:
+    DiscernName: 爆炸击退抗性
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: explosion_knockback_resistance
+    LegacyName: GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE
+    Version: "1.21"
+    Default: 0.0
+    Min: 0
+    Max: 100
+    Mode: RATIO
+    Formula: "<c:<l:default> + <l:value> / 100>"
+    CombatPower: 0
+    Display:
+      Category: DEFENSE
+      Order: 21
+      Rows:
+        - placeholder: ExplosionKnockback
+          label: 爆炸击退抗性
+          color: "&9"
+          suffix: "%"
+
+  # ─── 摔落保护 (safe_fall_distance) ─────────────────────────────────────────
+  #  原版效果 : 安全摔落距离(方块), 超过该高度的部分才计摔落伤害, 原版默认3
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(3.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  SafeFallDistance:
+    DiscernName: 摔落保护
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: safe_fall_distance
+    LegacyName: GENERIC_SAFE_FALL_DISTANCE
+    Version: "1.20.5"
+    Default: 3.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: DEFENSE
+      Order: 22
+      Rows:
+        - placeholder: SafeFallDistance
+          label: 摔落保护
+          color: "&f"
+
+  # ─── 摔伤倍率 (fall_damage_multiplier) ─────────────────────────────────────────
+  #  原版效果 : 摔落伤害倍率(1.0=正常, 越小越抗摔, 0=免摔伤), 原版默认1
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(1.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  FallDamage:
+    DiscernName: 摔伤倍率
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: fall_damage_multiplier
+    LegacyName: GENERIC_FALL_DAMAGE_MULTIPLIER
+    Version: "1.20.5"
+    Default: 1.0
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: DEFENSE
+      Order: 23
+      Rows:
+        - placeholder: FallDamage
+          label: 摔伤倍率
+          color: "&f"
+          suffix: "%"
+
+  # ─── 燃烧时长 (burning_time) ─────────────────────────────────────────
+  #  原版效果 : 着火后燃烧持续时间倍率(1.0=正常; 0.5=燃烧时间减半即减免一半燃烧; 0=不燃烧), 原版默认1
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(1.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100  (即经倍率后的燃烧时长, 值<1 代表减免燃烧)
+  BurningTime:
+    DiscernName: 燃烧时长
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: burning_time
+    LegacyName: GENERIC_BURNING_TIME
+    Version: "1.21"
+    Default: 1.0
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: DEFENSE
+      Order: 24
+      Rows:
+        - placeholder: BurningTime
+          label: 燃烧时长
+          color: "&6"
+          suffix: "%"
+
+  # ─── 体型增幅 (scale) ─────────────────────────────────────────
+  #  原版效果 : 实体体型缩放(1.0=正常, 2.0=两倍), 影响模型/碰撞箱/视高/触及范围, 原版默认1
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(1.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  Scale:
+    DiscernName: 体型增幅
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: scale
+    LegacyName: GENERIC_SCALE
+    Version: "1.20.5"
+    Default: 1.0
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 2
+      Rows:
+        - placeholder: Scale
+          label: 体型增幅
+          color: "&d"
+          suffix: "%"
+
+  # ─── 跳跃力 (jump_strength) ─────────────────────────────────────────
+  #  原版效果 : 跳跃初速度(方块/tick, 0.42≈正常约1.25格), 原版默认0.42
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.42)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  JumpStrength:
+    DiscernName: 跳跃力
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: jump_strength
+    LegacyName: GENERIC_JUMP_STRENGTH
+    Version: "1.20.5"
+    Default: 0.42
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 3
+      Rows:
+        - placeholder: JumpStrength
+          label: 跳跃力
+          color: "&a"
+          suffix: "%"
+
+  # ─── 重力 (gravity) ─────────────────────────────────────────
+  #  原版效果 : 每tick下落重力加速度(0.08=正常, 越小下落越慢), 原版默认0.08
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.08)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  Gravity:
+    DiscernName: 重力
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: gravity
+    LegacyName: GENERIC_GRAVITY
+    Version: "1.20.5"
+    Default: 0.08
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 4
+      Rows:
+        - placeholder: Gravity
+          label: 重力
+          color: "&7"
+          suffix: "%"
+
+  # ─── 自动上阶 (step_height) ─────────────────────────────────────────
+  #  原版效果 : 自动登上台阶的最大高度(方块, 0.6=正常可上半砖), 原版默认0.6
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.6)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  StepHeight:
+    DiscernName: 自动上阶
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: step_height
+    LegacyName: GENERIC_STEP_HEIGHT
+    Version: "1.20.5"
+    Default: 0.6
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 5
+      Rows:
+        - placeholder: StepHeight
+          label: 自动上阶
+          color: "&e"
+
+  # ─── 潜行速度 (sneaking_speed) ─────────────────────────────────────────
+  #  原版效果 : 潜行时的移动速度倍率(0.3=正常潜行速度), 原版默认0.3
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.3)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  SneakingSpeed:
+    DiscernName: 潜行速度
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: sneaking_speed
+    LegacyName: PLAYER_SNEAKING_SPEED
+    Version: "1.21"
+    Default: 0.3
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 6
+      Rows:
+        - placeholder: SneakingSpeed
+          label: 潜行速度
+          color: "&8"
+          suffix: "%"
+
+  # ─── 移动效率 (movement_efficiency) ─────────────────────────────────────────
+  #  原版效果 : 在减速方块(灵魂沙/黏液等)上的移动效率(0~1, 1=完全无视减速), 原版默认0
+  #  增幅模式 : RATIO  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅 / 100  (0~1 系数)
+  MovementEfficiency:
+    DiscernName: 移动效率
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: movement_efficiency
+    LegacyName: GENERIC_MOVEMENT_EFFICIENCY
+    Version: "1.21"
+    Default: 0.0
+    Min: 0
+    Max: 100
+    Mode: RATIO
+    Formula: "<c:<l:default> + <l:value> / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 7
+      Rows:
+        - placeholder: MovementEfficiency
+          label: 移动效率
+          color: "&f"
+          suffix: "%"
+
+  # ─── 水中移动效率 (water_movement_efficiency) ─────────────────────────────────────────
+  #  原版效果 : 水中移动效率(0~1, 越高水中越不减速), 原版默认0
+  #  增幅模式 : RATIO  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅 / 100  (0~1 系数)
+  WaterMovement:
+    DiscernName: 水中移动效率
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: water_movement_efficiency
+    LegacyName: GENERIC_WATER_MOVEMENT_EFFICIENCY
+    Version: "1.21"
+    Default: 0.0
+    Min: 0
+    Max: 100
+    Mode: RATIO
+    Formula: "<c:<l:default> + <l:value> / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 8
+      Rows:
+        - placeholder: WaterMovement
+          label: 水中移动效率
+          color: "&3"
+          suffix: "%"
+
+  # ─── 飞行速度 (flying_speed) ─────────────────────────────────────────
+  #  原版效果 : 飞行(创造飞行等)速度(0.4=正常), 原版默认0.4
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.9 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.4)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  FlyingSpeed:
+    DiscernName: 飞行速度
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: flying_speed
+    LegacyName: GENERIC_FLYING_SPEED
+    Version: "1.9"
+    Default: 0.4
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 9
+      Rows:
+        - placeholder: FlyingSpeed
+          label: 飞行速度
+          color: "&b"
+          suffix: "%"
+
+  # ─── 弹性 (bounciness) ─────────────────────────────────────────
+  #  原版效果 : 落地反弹系数(0~1, 类似床/史莱姆块的反弹), 原版默认0
+  #  增幅模式 : RATIO  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 26.2 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅 / 100  (0~1 系数)
+  Bounciness:
+    DiscernName: 弹性
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: bounciness
+    LegacyName: BOUNCINESS
+    Version: "26.2"
+    Default: 0.0
+    Min: 0
+    Max: 100
+    Mode: RATIO
+    Formula: "<c:<l:default> + <l:value> / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 10
+      Rows:
+        - placeholder: Bounciness
+          label: 弹性
+          color: "&a"
+          suffix: "%"
+
+  # ─── 摩擦修正 (friction_modifier) ─────────────────────────────────────────
+  #  原版效果 : 地面摩擦力修正(1.0=正常, 越小越滑, 类似冰面), 原版默认1
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 26.2 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(1.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  FrictionModifier:
+    DiscernName: 摩擦修正
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: friction_modifier
+    LegacyName: FRICTION_MODIFIER
+    Version: "26.2"
+    Default: 1.0
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 11
+      Rows:
+        - placeholder: FrictionModifier
+          label: 摩擦修正
+          color: "&7"
+          suffix: "%"
+
+  # ─── 空气阻力修正 (air_drag_modifier) ─────────────────────────────────────────
+  #  原版效果 : 空气阻力修正(1.0=正常, 影响空中水平惯性), 原版默认1
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 26.2 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(1.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  AirDragModifier:
+    DiscernName: 空气阻力修正
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: air_drag_modifier
+    LegacyName: AIR_DRAG_MODIFIER
+    Version: "26.2"
+    Default: 1.0
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: MOVEMENT
+      Order: 12
+      Rows:
+        - placeholder: AirDragModifier
+          label: 空气阻力修正
+          color: "&7"
+          suffix: "%"
+
+  # ─── 交互距离 (block_interaction_range) ─────────────────────────────────────────
+  #  原版效果 : 玩家与方块的交互/挖掘可达距离(方块), 原版默认4.5
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(4.5)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  BlockRange:
+    DiscernName: 交互距离
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: block_interaction_range
+    LegacyName: PLAYER_BLOCK_INTERACTION_RANGE
+    Version: "1.20.5"
+    Default: 4.5
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: GATHER
+      Order: 1
+      Rows:
+        - placeholder: BlockRange
+          label: 交互距离
+          color: "&6"
+
+  # ─── 挖掘效率 (mining_efficiency) ─────────────────────────────────────────
+  #  原版效果 : 挖掘效率加成(类似急迫效果, 叠加挖掘速度), 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  MiningEfficiency:
+    DiscernName: 挖掘效率
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: mining_efficiency
+    LegacyName: PLAYER_MINING_EFFICIENCY
+    Version: "1.21"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: GATHER
+      Order: 2
+      Rows:
+        - placeholder: MiningEfficiency
+          label: 挖掘效率
+          color: "&e"
+
+  # ─── 挖掘速度 (block_break_speed) ─────────────────────────────────────────
+  #  原版效果 : 挖掘速度倍率(1.0=正常, 2.0=两倍速), 原版默认1
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.20.5 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(1.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  BlockBreakSpeed:
+    DiscernName: 挖掘速度
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: block_break_speed
+    LegacyName: PLAYER_BLOCK_BREAK_SPEED
+    Version: "1.20.5"
+    Default: 1.0
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: GATHER
+      Order: 3
+      Rows:
+        - placeholder: BlockBreakSpeed
+          label: 挖掘速度
+          color: "&e"
+          suffix: "%"
+
+  # ─── 水下挖掘速度 (submerged_mining_speed) ─────────────────────────────────────────
+  #  原版效果 : 水下挖掘速度倍率(0.2=正常水下减速, 1.0=无视水下惩罚), 原版默认0.2
+  #  增幅模式 : PERCENT  (玩家词条填百分比(如 +50 表示 +50%))
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.2)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 × (100 + 增幅) / 100
+  SubmergedMining:
+    DiscernName: 水下挖掘速度
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: submerged_mining_speed
+    LegacyName: PLAYER_SUBMERGED_MINING_SPEED
+    Version: "1.21"
+    Default: 0.2
+    Min: -100
+    Max: 2147483647
+    Mode: PERCENT
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    CombatPower: 0
+    Display:
+      Category: GATHER
+      Order: 4
+      Rows:
+        - placeholder: SubmergedMining
+          label: 水下挖掘速度
+          color: "&3"
+          suffix: "%"
+
+  # ─── 氧气加成 (oxygen_bonus) ─────────────────────────────────────────
+  #  原版效果 : 氧气加成(水下憋气时间加成, 越高越久), 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.21 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  OxygenBonus:
+    DiscernName: 氧气加成
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: oxygen_bonus
+    LegacyName: GENERIC_OXYGEN_BONUS
+    Version: "1.21"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: GATHER
+      Order: 5
+      Rows:
+        - placeholder: OxygenBonus
+          label: 氧气加成
+          color: "&b"
+
+  # ─── 幸运 (luck) ─────────────────────────────────────────
+  #  原版效果 : 幸运值(影响钓鱼/战利品表的掉落质量), 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.9 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  Luck:
+    DiscernName: 幸运
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: luck
+    LegacyName: GENERIC_LUCK
+    Version: "1.9"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: OTHER
+      Order: 20
+      Rows:
+        - placeholder: Luck
+          label: 幸运
+          color: "&a"
+
+  # ─── 视距 (camera_distance) ─────────────────────────────────────────
+  #  原版效果 : 第三人称视角相机与玩家的距离(方块), 原版默认4
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.21.6 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(4.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  CameraDistance:
+    DiscernName: 视距
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: camera_distance
+    LegacyName: CAMERA_DISTANCE
+    Version: "1.21.6"
+    Default: 4.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: OTHER
+      Order: 21
+      Rows:
+        - placeholder: CameraDistance
+          label: 视距
+          color: "&d"
+
+  # ─── 定位栏发送范围 (waypoint_transmit_range) ─────────────────────────────────────────
+  #  原版效果 : 定位条(Locator Bar)自身位置信号的发送范围(方块), 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.21.6 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  WaypointTransmit:
+    DiscernName: 定位栏发送范围
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: waypoint_transmit_range
+    LegacyName: WAYPOINT_TRANSMIT_RANGE
+    Version: "1.21.6"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: OTHER
+      Order: 22
+      Rows:
+        - placeholder: WaypointTransmit
+          label: 定位栏发送范围
+          color: "&e"
+
+  # ─── 定位栏接收范围 (waypoint_receive_range) ─────────────────────────────────────────
+  #  原版效果 : 定位条(Locator Bar)接收他人位置信号的范围(方块), 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 1.21.6 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  WaypointReceive:
+    DiscernName: 定位栏接收范围
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: waypoint_receive_range
+    LegacyName: WAYPOINT_RECEIVE_RANGE
+    Version: "1.21.6"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: OTHER
+      Order: 23
+      Rows:
+        - placeholder: WaypointReceive
+          label: 定位栏接收范围
+          color: "&e"
+
+  # ─── 名牌距离 (name_tag_distance) ─────────────────────────────────────────
+  #  原版效果 : 实体名牌/名称可见的最大距离(方块), 原版默认0
+  #  增幅模式 : ADD  (玩家词条填绝对量)
+  #  版本要求 : 26.2 及以上才注册(低版本自动跳过)
+  #  公式变量 : <l:value>=词条增幅  <l:default>=默认基值(0.0)  <l:base>=当前基值  <l:min>/<l:max>=限幅
+  #  公式结果 : 施加到原版属性的最终基值 = 默认基值 + 增幅
+  NameTagDistance:
+    DiscernName: 名牌距离
+    Enable: true
+    Type:
+      - UPDATE
+    RegistryKey: name_tag_distance
+    LegacyName: NAME_TAG_DISTANCE
+    Version: "26.2"
+    Default: 0.0
+    Min: -100
+    Max: 2147483647
+    Mode: ADD
+    Formula: "<c:<l:default> + <l:value>>"
+    CombatPower: 0
+    Display:
+      Category: OTHER
+      Order: 24
+      Rows:
+        - placeholder: NameTagDistance
+          label: 名牌距离
+          color: "&7"
+
+  # ===================== 战斗类/其余属性(效果逻辑在 Java, 公式可调核心数学) =====================
+  # 近战/远程附加伤害(区间)。参与伤害事件, 效果逻辑在 Java, 仅公式可调掷点。
+  # Formula 变量: <l:min>=词条最小伤害  <l:max>=词条最大伤害
+  # Formula 结果 : 本次攻击附加的伤害值(默认在 min~max 间均匀随机, 用 <d:0_1> 实现)
+  Damage:
+    Enable: true
+    Formula: "<c:<l:min> + <d:0_1> * (<l:max> - <l:min>)>"
+    Message:
+      Enable: true
+      Holo: "&c&o伤害: &b&o{0}"
+    Damage:
+      DiscernName: 攻击力
+      CombatPower: 1
+    PVPDamage:
+      DiscernName: PVP攻击力
+      CombatPower: 1
+    PVEDamage:
+      DiscernName: PVE攻击力
+      CombatPower: 1
+    Display:
+      Category: ATTACK
+      Order: 1
+      Rows:
+        - placeholder: Damage
+          label: 攻击力
+          color: "&c"
+        - placeholder: PvpDamage
+          label: PVP攻击力
+          color: "&c"
+        - placeholder: PveDamage
+          label: PVE攻击力
+          color: "&c"
+
+  # 命中几率。被动数值, 由 Dodge(闪避)读取以抵消其闪避几率(读取的是"生效值"=本属性 Formula 结果)。
+  # Formula 变量: <l:value>=命中几率词条值   结果: 生效命中(在 Dodge 的 <l:hitrate> 中被减去; 默认恒等)
+  HitRate:
+    Enable: true
+    Formula: "<c:<l:value>>"
+    HitRate:
+      DiscernName: 命中几率
+      CombatPower: 1
+      UpperLimit: 80
+    Display:
+      Category: ATTACK
+      Order: 2
+      Rows:
+        - placeholder: HitRate
+          label: 命中几率
+          color: "&a"
+          suffix: "%"
+
+  # 破甲。命中时按几率使本次攻击无视防御力(Defense 减伤)。
+  # Formula.Chance 变量: <l:value>=破甲几率(%)
+  # Formula.Chance 结果: 最终破甲判定几率(%)
+  Real:
+    Enable: true
+    Formula:
+      Chance: "<c:<l:value>>"
+    Message:
+      Enable: true
+      Holo: "&c&o破甲"
+      Battle: "[ACTIONBAR]&c{0}&6 被 &c{1}&6 破甲了!"
+    Real:
+      DiscernName: 破甲几率
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: ATTACK
+      Order: 3
+      Rows:
+        - placeholder: Real
+          label: 破甲几率
+          color: "&6"
+          suffix: "%"
+
+  # 暴击。按几率触发, 触发后放大本次伤害。
+  # Formula.CritRate 变量: <l:value>=暴击几率(%)   结果: 最终暴击判定几率(%)
+  # Formula.Crit     变量: <l:damage>=当前伤害, <l:value>=暴伤增幅(%)   结果: 暴击后的伤害值
+  Crit:
+    Enable: true
+    Formula:
+      CritRate: "<c:<l:value>>"
+      Crit: "<c:<l:damage> * (100 + <l:value>) / 100>"
+    Message:
+      Enable: true
+      Holo: "&a&o暴击: &b&o+{0}"
+      Battle: "[ACTIONBAR]&c{0}&6 对 &c{1}&6 造成了暴击! &8[&c{2}&8]"
+    CritRate:
+      DiscernName: 暴击几率
+      CombatPower: 1
+      UpperLimit: 100
+    Crit:
+      DiscernName: 暴伤增幅
+      CombatPower: 1
+      UpperLimit: 1000
+    Display:
+      Category: ATTACK
+      Order: 4
+      Rows:
+        - placeholder: CritRate
+          label: 暴击几率
+          color: "&c"
+          suffix: "%"
+        - placeholder: Crit
+          label: 暴伤增幅
+          color: "&4"
+          suffix: "%"
+
+  # 吸血。按几率触发, 触发后按伤害的比例回复攻击者生命。
+  # Formula.LifeStealRate 变量: <l:value>=吸血几率(%)   结果: 判定几率(%)
+  # Formula.LifeSteal     变量: <l:damage>=当前伤害, <l:ratio>=吸血倍率(%)   结果: 回复的生命值
+  LifeSteal:
+    Enable: true
+    Formula:
+      LifeStealRate: "<c:<l:value>>"
+      LifeSteal: "<c:<l:damage> * <l:ratio> / 100>"
+    Message:
+      Enable: true
+      Holo: "&c&o吸取: &b&o{0}"
+      Battle: "[ACTIONBAR]&c{0}&6 被 &c{1}&6 偷取生命了!"
+    LifeStealRate:
+      DiscernName: 吸血几率
+      CombatPower: 1
+      UpperLimit: 100
+    LifeSteal:
+      DiscernName: 吸血倍率
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: ATTACK
+      Order: 5
+      Rows:
+        - placeholder: LifeStealRate
+          label: 吸血几率
+          color: "&6"
+          suffix: "%"
+        - placeholder: LifeSteal
+          label: 吸血倍率
+          color: "&6"
+          suffix: "%"
+
+  # 点燃。按几率(减目标韧性)触发, 使目标着火一段时间。
+  # Formula.Chance   变量: <l:value>=点燃几率, <l:toughness>=目标韧性   结果: 判定几率(%)
+  # Formula.Ignition 结果: 点燃持续时间(单位 tick, 20tick=1秒; 默认 40 + 随机0~59 tick)
+  Ignition:
+    Enable: true
+    Formula:
+      Chance: "<c:<l:value> - <l:toughness>>"
+      Ignition: "<c:40 + <i:0_59>>"
+    Message:
+      Enable: true
+      Holo: "&c&o点燃: &b&o{0}s"
+      Battle: "[ACTIONBAR]&c{0}&6 被 &c{1}&6 点燃了!"
+    Ignition:
+      DiscernName: 点燃几率
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: ATTACK
+      Order: 6
+      Rows:
+        - placeholder: Ignition
+          label: 点燃几率
+          color: "&c"
+          suffix: "%"
+
+  # 雷霆。按几率(减目标韧性)触发, 召唤闪电并按目标当前生命造成伤害。
+  # Formula.Chance    变量: <l:value>=雷霆几率, <l:toughness>=目标韧性   结果: 判定几率(%)
+  # Formula.Lightning 变量: <l:health>=目标当前生命   结果: 雷击造成的伤害值(默认 生命*随机0~1/10)
+  Lightning:
+    Enable: true
+    Formula:
+      Chance: "<c:<l:value> - <l:toughness>>"
+      Lightning: "<c:<l:health> * <d:0_1> / 10>"
+    Message:
+      Enable: true
+      Holo: "&e&o雷霆: &b&o{0}"
+      Battle: "[ACTIONBAR]&c{0}&6 被 &c{1}&6 用雷电击中了!"
+    Lightning:
+      DiscernName: 雷霆几率
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: ATTACK
+      Order: 7
+      Rows:
+        - placeholder: Lightning
+          label: 雷霆几率
+          color: "&e"
+          suffix: "%"
+
+  # 撕裂。按几率(减目标韧性)触发, 持续多跳按目标生命扣血(真实伤害)。
+  # Formula.Chance  变量: <l:value>=撕裂几率, <l:toughness>=目标韧性   结果: 判定几率(%)
+  # Formula.Tearing 变量: <l:health>=目标当前生命   结果: 每跳撕裂伤害(默认 生命/100)
+  Tearing:
+    Enable: true
+    Formula:
+      Chance: "<c:<l:value> - <l:toughness>>"
+      Tearing: "<c:<l:health> / 100>"
+    Message:
+      Enable: true
+      Holo: "&c&o撕裂: &b{0}"
+      Battle: "[ACTIONBAR]&c{0}&6 被 &c{1}&6 撕裂了!"
+    Tearing:
+      DiscernName: 撕裂几率
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: ATTACK
+      Order: 8
+      Rows:
+        - placeholder: Tearing
+          label: 撕裂几率
+          color: "&c"
+          suffix: "%"
+
+  # 药水攻击。命中时对每种配置的药水效果按几率(减目标韧性)施加。效果列表 List.* 由代码缺省在内存补齐,
+  # 如需增删药水种类/等级/时长, 在本节点补写 List.<名>.{Type,DiscernName,CombatPower,MinLevel,MaxLevel,MinTime,MaxTime} 即可。
+  # Formula.Chance 变量: <l:value>=该效果几率, <l:toughness>=目标韧性   结果: 该效果判定几率(%)
+  AttackPotion:
+    Enable: true
+    NetworkLink: "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/potion/PotionEffectType.html"
+    Formula:
+      Chance: "<c:<l:value> - <l:toughness>>"
+    Message:
+      Enable: true
+      Holo: "&o{0}: &b&o{1}s"
+      Battle: "[ACTIONBAR]&c{0}&6 对 &c{1}&6 造成了 &r{2}&6 效果!"
+    List:
+      Blindness:
+        Type: BLINDNESS
+        DiscernName: 致盲几率
+        CombatPower: 1
+        MessageName: "&7致盲&7"
+        MinLevel: 1
+        MaxLevel: 2
+        MinTime: 2
+        MaxTime: 5
+      Wither:
+        Type: WITHER
+        DiscernName: 凋零几率
+        CombatPower: 1
+        MessageName: "&9凋零&7"
+        MinLevel: 1
+        MaxLevel: 2
+        MinTime: 2
+        MaxTime: 5
+      Slow:
+        Type: SLOW
+        DiscernName: 减速几率
+        CombatPower: 1
+        MessageName: "&3减速&7"
+        MinLevel: 1
+        MaxLevel: 2
+        MinTime: 2
+        MaxTime: 5
+      Poison:
+        Type: POISON
+        DiscernName: 中毒几率
+        CombatPower: 1
+        MessageName: "&d中毒&7"
+        MinLevel: 1
+        MaxLevel: 2
+        MinTime: 2
+        MaxTime: 5
+      Hunger1:
+        Type: HUNGER
+        DiscernName: 夺食几率
+        CombatPower: 1
+        UpperLimit: 50
+        MessageName: "&c饥饿&7"
+        MinLevel: 4
+        MaxLevel: 5
+        MinTime: 2
+        MaxTime: 5
+
+  # 防御力(区间减伤)。攻击者破甲(Real)时本次不生效。
+  # Formula 变量: <l:min>=词条最小防御  <l:max>=词条最大防御
+  # Formula 结果 : 本次减免的伤害值(默认在 min~max 间均匀随机)
+  Defense:
+    Enable: true
+    Formula: "<c:<l:min> + <d:0_1> * (<l:max> - <l:min>)>"
+    Defense:
+      DiscernName: 防御力
+      CombatPower: 1
+    PVPDefense:
+      DiscernName: PVP防御力
+      CombatPower: 1
+    PVEDefense:
+      DiscernName: PVE防御力
+      CombatPower: 1
+    Display:
+      Category: DEFENSE
+      Order: 1
+      Rows:
+        - placeholder: Defense
+          label: 防御力
+          color: "&6"
+        - placeholder: PvpDefense
+          label: PVP防御力
+          color: "&6"
+        - placeholder: PveDefense
+          label: PVE防御力
+          color: "&6"
+
+  # 生命上限。UPDATE 型, 设置玩家最大生命值。
+  # Formula 变量: <l:value>=生命上限词条, <l:skillapi>=SkillAPI 职业附加生命
+  # Formula 结果 : 玩家最终最大生命上限(施加到原版 max_health)
+  Health:
+    Enable: true
+    Formula: "<c:<l:value> + <l:skillapi>>"
+    Health:
+      DiscernName: 生命上限
+      CombatPower: 1
+    HealthScaled:
+      Enabled: true
+      Value: 40
+    Display:
+      Category: DEFENSE
+      Order: 2
+      Rows:
+        - line: "&a生命上限:&b %sx_Health%/%sx_MaxHealth%"
+
+  # 生命恢复。每秒(20tick)自动回复生命。
+  # Formula 变量: <l:value>=生命恢复词条
+  # Formula 结果 : 每秒回复的生命值
+  HealthRegen:
+    Enable: true
+    Formula: "<c:<l:value>>"
+    Health:
+      DiscernName: 生命恢复
+      CombatPower: 1
+    HealthScaled:
+      Enabled: true
+      Value: 40
+    Display:
+      Category: DEFENSE
+      Order: 3
+      Rows:
+        - placeholder: HealthRegen
+          label: 生命恢复
+          color: "&a"
+
+  # 闪避。受击时按几率(减攻击者命中)完全免除本次伤害并击退自身。
+  # Formula.Chance 变量: <l:value>=闪避几率, <l:hitrate>=攻击者命中   结果: 判定几率(%)
+  Dodge:
+    Enable: true
+    Formula:
+      Chance: "<c:<l:value> - <l:hitrate>>"
+    Message:
+      Enable: true
+      Holo: "&a&o闪避"
+      Battle: "[ACTIONBAR]&c{0}&6 躲开了 &c{1}&6 的攻击!"
+    Dodge:
+      DiscernName: 格挡几率
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: DEFENSE
+      Order: 4
+      Rows:
+        - placeholder: Dodge
+          label: 闪避几率
+          color: "&d"
+          suffix: "%"
+
+  # 韧性。被动数值, 被 点燃/雷霆/撕裂/药水 触发型攻击读取以降低其触发几率(读取的是"生效值"=本属性 Formula 结果)。
+  # Formula 变量: <l:value>=韧性词条值   结果: 生效韧性(在其它属性的 <l:toughness> 中被减去; 默认恒等, 可改为递减/封顶等)
+  Toughness:
+    Enable: true
+    Formula: "<c:<l:value>>"
+    Toughness:
+      DiscernName: 韧性
+      CombatPower: 1
+      UpperLimit: 80
+    Display:
+      Category: DEFENSE
+      Order: 5
+      Rows:
+        - placeholder: Toughness
+          label: 韧性
+          color: "&9"
+          suffix: "%"
+
+  # 反射(反伤)。受击时按几率触发, 将伤害的比例反弹给攻击者。
+  # Formula.ReflectionRate 变量: <l:value>=反射几率(%)   结果: 判定几率(%)
+  # Formula.Reflection     变量: <l:damage>=当前伤害, <l:ratio>=反射比例(%)   结果: 反弹给攻击者的伤害
+  Reflection:
+    Enable: true
+    Formula:
+      ReflectionRate: "<c:<l:value>>"
+      Reflection: "<c:<l:damage> * <l:ratio> / 100>"
+    Message:
+      Enable: true
+      Holo: "&6&o反伤: &b&o{0}"
+      Battle: "[ACTIONBAR]&c{0}&6 被 &c{1}&6 反弹伤害了!"
+    ReflectionRate:
+      DiscernName: 反射几率
+      CombatPower: 1
+      UpperLimit: 80
+    Reflection:
+      DiscernName: 反射比例
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: DEFENSE
+      Order: 6
+      Rows:
+        - placeholder: ReflectionRate
+          label: 反射几率
+          color: "&c"
+          suffix: "%"
+        - placeholder: Reflection
+          label: 反射比例
+          color: "&c"
+          suffix: "%"
+
+  # 格挡。受击时按几率触发, 减免伤害的一定比例。
+  # Formula.BlockRate 变量: <l:value>=格挡几率(%)   结果: 判定几率(%)
+  # Formula.Block     变量: <l:damage>=当前伤害, <l:ratio>=格挡比例(%)   结果: 格挡减免的伤害
+  Block:
+    Enable: true
+    Formula:
+      BlockRate: "<c:<l:value>>"
+      Block: "<c:<l:damage> * <l:ratio> / 100>"
+    Message:
+      Enable: true
+      Holo: "&2&o格挡: &b&o{0}"
+      Battle: "[ACTIONBAR]&c{0}&6 格挡了 &c{1}&6 的部分伤害!"
+    BlockRate:
+      DiscernName: 格挡几率
+      CombatPower: 1
+      UpperLimit: 100
+    Block:
+      DiscernName: 格挡比例
+      CombatPower: 1
+      UpperLimit: 100
+    Display:
+      Category: DEFENSE
+      Order: 7
+      Rows:
+        - placeholder: BlockRate
+          label: 格挡几率
+          color: "&2"
+          suffix: "%"
+        - placeholder: Block
+          label: 格挡比例
+          color: "&2"
+          suffix: "%"
+
+  # 移速增幅(旧版实现, 直接 setWalkSpeed)。
+  # Formula 变量: <l:default>=基础移速(0.2), <l:value>=移速增幅(%)
+  # Formula 结果 : 最终移动速度(Bukkit 上限约 1.0)
+  WalkSpeed:
+    Enable: true
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    WalkSpeed:
+      DiscernName: 移速增幅
+      Default: 0.2
+      UpperLimit: 400
+      CombatPower: 1
+    Display:
+      Category: MOVEMENT
+      Order: 1
+      Rows:
+        - placeholder: WalkSpeed
+          label: 移速增幅
+          color: "&b"
+          suffix: "%"
+
+  # 经验增幅。获得经验时按比例增加。
+  # Formula 变量: <l:amount>=原始经验, <l:value>=经验增幅(%)
+  # Formula 结果 : 最终获得的经验值
+  ExpAddition:
+    Enable: true
+    Formula: "<c:<l:amount> * (100 + <l:value>) / 100>"
+    Message: "&7你的经验增加了 &6{0}&7! [&a+{1}%&7]"
+    ExpAddition:
+      DiscernName: 经验增幅
+      CombatPower: 1
+    Display:
+      Category: OTHER
+      Order: 1
+      Rows:
+        - placeholder: ExpAddition
+          label: 经验增幅
+          color: "&e"
+          suffix: "%"
+
+  # 攻速增幅。UPDATE 型, 设置玩家攻击速度属性。
+  # Formula 变量: <l:default>=基础攻速(3.5), <l:value>=攻速增幅(%)
+  # Formula 结果 : 施加到原版 attack_speed 的最终基值
+  AttackSpeed:
+    Enable: true
+    Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+    AttackSpeed:
+      DiscernName: 攻速增幅
+      Default: 3.5
+      CombatPower: 1
+    SupportIGList:
+      - SX
+    ItemDefaultSpeed:
+      DIAMOND_HOE: 4
+      IRON_HOE: 3
+      STONE_HOE: 2
+      DIAMOND_SWORD: 1.6
+      IRON_SWORD: 1.6
+      GOLD_SWORD: 1.6
+      STONE_SWORD: 1.6
+      WOOD_SWORD: 1.6
+      DIAMOND_PICKAXE: 1.2
+      IRON_PICKAXE: 1.2
+      GOLD_PICKAXE: 1.2
+      STONE_PICKAXE: 1.2
+      WOOD_PICKAXE: 1.2
+      DIAMOND_SPADE: 1
+      IRON_SPADE: 1
+      GOLD_SPADE: 1
+      STONE_SPADE: 1
+      WOOD_SPADE: 1
+      DIAMOND_AXE: 1
+      GOLD_AXE: 1
+      WOOD_HOE: 1
+      GOLD_HOE: 1
+      IRON_AXE: 0.9
+      STONE_AXE: 0.8
+      WOOD_AXE: 0.8
+    Display:
+      Category: OTHER
+      Order: 2
+      Rows:
+        - placeholder: AttackSpeed
+          label: 攻速增幅
+          color: "&b"
+          suffix: "%"
+
+  # 战斗信息浮空显示管理器。无数值/无 Formula, 仅可整体开关。
+  EventMessage:
+    Enable: true
+
+  # 指令属性。按物品词条触发控制台指令(List.<Tick>.* 由代码缺省在内存补齐, 可在此节点补写覆盖)。无 Formula。
+  Command:
+    Enable: true
+    List:
+      Tick1:
+        DiscernName: 驾驭飞行
+        Enabled:
+          - "fly %player% on"
+        Disable:
+          - "fly %player% off"
+        Continued:
+          - "particle smoke %player_x% %player_y% %player_z% 0.5 0.5 0.5 0 20 normal %player%"
+      Tick2:
+        DiscernName: 速度 II
+        Enabled:
+          - "effect %player% minecraft:speed 5 1"
+        Disable:
+          - "effect %player% minecraft:speed 0 0"
+        Continued:
+          - "delay 40"
+          - "effect %player% minecraft:speed 5 1"
+        CombatPower: 20

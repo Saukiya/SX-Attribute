@@ -2,7 +2,9 @@ package github.saukiya.sxattribute.api;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.PreLoadItem;
+import github.saukiya.sxattribute.data.attribute.AttributeSource;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
+import github.saukiya.sxattribute.data.attribute.SXAttributeManager;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.AttributeUtil;
@@ -21,14 +23,105 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SXAPI {
 
-    private static Map<UUID, Map<Class<?>, SXAttributeData>> map = new ConcurrentHashMap<>();
+    /** Class 分源保留名前缀 (旧 API 映射为命名源 class:&lt;全类名&gt;) */
+    private static final String CLASS_PREFIX = "class:";
+    /** 抛射物快照保留源名 */
+    private static final String PROJECTILE = "抛射物";
 
+    private static SXAttributeManager mgr() {
+        return SXAttribute.getAttributeManager();
+    }
+
+    /**
+     * 汇总实体全部 Class 分源(旧 API 注入)的属性
+     */
     public SXAttributeData getAPIAttribute(UUID uuid) {
         SXAttributeData attributeData = new SXAttributeData();
-        for (SXAttributeData data : map.getOrDefault(uuid, new HashMap<>()).values()) {
-            attributeData.add(data);
+        for (String name : mgr().getSourceNames(uuid)) {
+            if (name.startsWith(CLASS_PREFIX)) {
+                AttributeSource source = mgr().getSource(uuid, name);
+                if (source != null) {
+                    attributeData.add(source.getData());
+                }
+            }
         }
         return attributeData;
+    }
+
+    // ==================== 多属性源 API (命名源) ====================
+
+    /**
+     * 添加/覆盖一个命名属性源(解析 lore), 同名替换不叠加; 触发可取消的 SXAttributeSourceAddEvent。
+     *
+     * @param entity 实体
+     * @param source 源标识名 (如 "力量加成")
+     * @param lore   属性词条行 (如 ["攻击伤害: 50"])
+     * @param update 是否立即刷新 UPDATE 类属性
+     * @return 是否成功 (被事件取消则 false)
+     */
+    public boolean addSourceAttribute(LivingEntity entity, String source, List<String> lore, boolean update) {
+        return addSourceAttribute(entity, source, loadListData(lore), update);
+    }
+
+    /**
+     * 添加/覆盖一个命名属性源(直接数据), 同名替换不叠加; 触发可取消的 SXAttributeSourceAddEvent。
+     */
+    public boolean addSourceAttribute(LivingEntity entity, String source, SXAttributeData data, boolean update) {
+        boolean ok = mgr().addSource(entity, source, data, false, true);
+        if (ok && update) {
+            mgr().attributeUpdateEvent(entity);
+        }
+        return ok;
+    }
+
+    /**
+     * 创建静态源(不触发事件的纯数值注入, 用于内部计算后批量注入)。
+     */
+    public void createStaticAttributeSource(LivingEntity entity, String source, List<String> lore, boolean update) {
+        createStaticAttributeSource(entity, source, loadListData(lore), update);
+    }
+
+    public void createStaticAttributeSource(LivingEntity entity, String source, SXAttributeData data, boolean update) {
+        mgr().addSource(entity, source, data, true, false);
+        if (update) {
+            mgr().attributeUpdateEvent(entity);
+        }
+    }
+
+    /**
+     * 移除一个命名源(非静态源触发 SXAttributeSourceRemoveEvent)。
+     *
+     * @return 被移除源的数据 (无则 null)
+     */
+    public SXAttributeData takeSourceAttribute(LivingEntity entity, String source, boolean update) {
+        SXAttributeData removed = mgr().takeSource(entity, source, true);
+        if (removed != null && update) {
+            mgr().attributeUpdateEvent(entity);
+        }
+        return removed;
+    }
+
+    public SXAttributeData takeSourceAttribute(LivingEntity entity, String source) {
+        return takeSourceAttribute(entity, source, true);
+    }
+
+    /**
+     * 获取某命名源的数据 (无则 null)
+     */
+    public SXAttributeData getSourceAttribute(UUID uuid, String source) {
+        AttributeSource s = mgr().getSource(uuid, source);
+        return s != null ? s.getData() : null;
+    }
+
+    public boolean hasSourceAttribute(UUID uuid, String source) {
+        return mgr().hasSource(uuid, source);
+    }
+
+    /**
+     * 获取实体全部命名源的名称集合
+     */
+    public Set<String> getSourceNames(UUID uuid) {
+        return mgr().getSourceNames(uuid);
     }
 
     /**
@@ -41,7 +134,7 @@ public class SXAPI {
      */
     public void setProjectileData(UUID uuid, SXAttributeData attributeData) {
         if (attributeData != null && attributeData.isValid()) {
-            SXAttribute.getAttributeManager().getEntityDataMap().put(uuid, attributeData);
+            mgr().putSource(uuid, new AttributeSource(PROJECTILE, attributeData, true));
         }
     }
 
@@ -52,7 +145,8 @@ public class SXAPI {
      * @return SXAttributeData / null
      */
     public SXAttributeData getProjectileData(UUID uuid) {
-        return SXAttribute.getAttributeManager().getEntityDataMap().get(uuid);
+        AttributeSource source = mgr().getSource(uuid, PROJECTILE);
+        return source != null ? source.getData() : null;
     }
 
     /**
@@ -73,7 +167,8 @@ public class SXAPI {
      * @return SXAttributeData / null
      */
     public SXAttributeData getEntityAPIData(Class<?> c, UUID uuid) {
-        return map.containsKey(uuid) ? map.get(uuid).get(c) : null;
+        AttributeSource source = mgr().getSource(uuid, CLASS_PREFIX + c.getName());
+        return source != null ? source.getData() : null;
     }
 
     /**
@@ -84,18 +179,18 @@ public class SXAPI {
      * @return boolean
      */
     public boolean hasEntityAPIData(Class<?> c, UUID uuid) {
-        return map.containsKey(uuid) && map.get(uuid).containsKey(c);
+        return mgr().hasSource(uuid, CLASS_PREFIX + c.getName());
     }
 
     /**
-     * 设置插件关联的实体属性数据
+     * 设置插件关联的实体属性数据 (映射为命名源 class:&lt;全类名&gt;)
      *
      * @param c             Class
      * @param uuid          UUID
      * @param attributeData SXAttributeData
      */
     public void setEntityAPIData(Class<?> c, UUID uuid, SXAttributeData attributeData) {
-        map.computeIfAbsent(uuid, k -> new HashMap<>()).put(c, attributeData);
+        mgr().putSource(uuid, new AttributeSource(CLASS_PREFIX + c.getName(), attributeData, true));
     }
 
     /**
@@ -107,8 +202,8 @@ public class SXAPI {
      * @return SXAttributeData / null
      */
     public SXAttributeData removeEntityAPIData(Class<?> c, UUID uuid) {
-        Map<Class<?>, SXAttributeData> map = SXAPI.map.get(uuid);
-        return map != null ? map.remove(c) : null;
+        AttributeSource removed = mgr().removeSource(uuid, CLASS_PREFIX + c.getName());
+        return removed != null ? removed.getData() : null;
     }
 
     /**
@@ -117,18 +212,23 @@ public class SXAPI {
      * @param c Class
      */
     public void removePluginAllEntityData(Class<?> c) {
-        for (Map<Class<?>, SXAttributeData> statsMap : map.values()) {
-            statsMap.remove(c);
+        String name = CLASS_PREFIX + c.getName();
+        for (UUID uuid : mgr().getTrackedEntities()) {
+            mgr().removeSource(uuid, name);
         }
     }
 
     /**
-     * 清除插件所有关联的实体属性数据
+     * 清除该实体所有 Class 分源数据
      *
      * @param uuid 实体UUID
      */
     public void removeEntityAllPluginData(UUID uuid) {
-        map.remove(uuid);
+        for (String name : mgr().getSourceNames(uuid)) {
+            if (name.startsWith(CLASS_PREFIX)) {
+                mgr().removeSource(uuid, name);
+            }
+        }
     }
 
 

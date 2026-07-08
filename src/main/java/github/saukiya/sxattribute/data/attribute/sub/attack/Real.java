@@ -37,10 +37,12 @@ public class Real extends SubAttribute {
     @Override
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
-            if (probability(values[0])) {
-                DamageData damageData = (DamageData) eventData;
+            DamageData damageData = (DamageData) eventData;
+            // 触发几率公式 (变量 value=破甲几率); 默认恒等
+            double chance = formula(damageData.getAttacker(), "Formula.Chance", values[0], "value", values[0]);
+            if (probability(chance)) {
                 damageData.getEffectiveAttributeList().add(getName());
-                damageData.sendHolo(getString("Message.Holo"));
+                if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo"));
                 send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson());
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName());
             }

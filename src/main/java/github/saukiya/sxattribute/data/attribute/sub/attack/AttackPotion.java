@@ -117,12 +117,14 @@ public class AttackPotion extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
             DamageData damageData = (DamageData) eventData;
-            double defenseToughness = damageData.getDefenderData().getValues("Toughness")[0];
+            double defenseToughness = effectiveOf("Toughness", damageData.getDefender(), damageData.getDefenderData().getValues("Toughness")[0]);
             for (int i = 0; i < dataList.length; i++) {
-                if (probability(values[i] - defenseToughness)) {
+                // 触发几率公式 (变量 value=该效果几率, toughness=目标韧性); 默认 几率-韧性
+                double chance = formula(damageData.getAttacker(), "Formula.Chance", values[i] - defenseToughness, "value", values[i], "toughness", defenseToughness);
+                if (probability(chance)) {
                     double time = dataList[i].getTime();
                     damageData.getDefender().addPotionEffect(new PotionEffect(dataList[i].type, (int) (time * 20), dataList[i].getLevel()));
-                    damageData.sendHolo(getString("Message.Holo", dataList[i].messageName, getDf().format(time)));
+                    if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", dataList[i].messageName, getDf().format(time)));
                     send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(time), dataList[i].messageName);
                     send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(time), dataList[i].messageName);
                 }

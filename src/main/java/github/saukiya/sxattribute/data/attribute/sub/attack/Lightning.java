@@ -38,11 +38,16 @@ public class Lightning extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
             DamageData damageData = (DamageData) eventData;
-            if (values[0] > 0 && probability(values[0] - damageData.getDefenderData().getValues("Toughness")[0])) {
+            double toughness = effectiveOf("Toughness", damageData.getDefender(), damageData.getDefenderData().getValues("Toughness")[0]);
+            // 触发几率公式 (变量 value=雷霆几率, toughness=目标韧性); 默认 几率-韧性
+            double chance = formula(damageData.getAttacker(), "Formula.Chance", values[0] - toughness, "value", values[0], "toughness", toughness);
+            if (values[0] > 0 && probability(chance)) {
                 damageData.getDefender().getWorld().strikeLightningEffect(damageData.getDefender().getLocation());
-                double lightningDamage = damageData.getDefender().getHealth() * SXAttribute.getRandom().nextDouble() / 10;
-                damageData.getDefender().setHealth(damageData.getDefender().getHealth() - lightningDamage);
-                damageData.sendHolo(getString("Message.Holo", getDf().format(lightningDamage)));
+                double health = damageData.getDefender().getHealth();
+                // 雷霆伤害公式 (变量 health=目标当前生命); 默认 生命*随机0~1/10
+                double lightningDamage = formula(damageData.getDefender(), "Formula.Lightning", health * SXAttribute.getRandom().nextDouble() / 10, "health", health);
+                damageData.getDefender().setHealth(Math.max(0, health - lightningDamage));
+                if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(lightningDamage)));
                 send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(lightningDamage));
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(lightningDamage));
             }

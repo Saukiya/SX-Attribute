@@ -54,7 +54,8 @@ public class Health extends SubAttribute {
             if (skillAPI) {
                 SkillAPI.getPlayerData(player).getAttribute(AttributeManager.HEALTH);
             }
-            double maxHealth = values[0] + getSkillAPIHealth(player);
+            // 生命上限公式 (变量 value=生命上限词条, skillapi=SkillAPI 附加生命); 默认 词条+SkillAPI
+            double maxHealth = formula(player, "Formula", values[0] + getSkillAPIHealth(player), "value", values[0], "skillapi", getSkillAPIHealth(player));
             if (player.getHealth() > maxHealth) player.setHealth(maxHealth);
             if (SXAttribute.isHigherVersion()) {
                 AttributeInstance instance = AttributeUtil.getInstance(player, "MAX_HEALTH", "GENERIC_MAX_HEALTH");

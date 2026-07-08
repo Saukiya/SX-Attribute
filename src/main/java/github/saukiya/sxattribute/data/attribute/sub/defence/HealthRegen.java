@@ -31,6 +31,8 @@ public class HealthRegen extends SubAttribute {
                         if (player.getHealth() < maxHealth) {
                             double healthRegen = SXAttribute.getApi().getEntityData(player).getValues(getName())[0];
                             if (healthRegen > 0) {
+                                // 生命恢复量公式 (变量 value=生命恢复); 默认恒等
+                                healthRegen = formula(player, "Formula", healthRegen, "value", healthRegen);
                                 EntityRegainHealthEvent event = new EntityRegainHealthEvent(player, healthRegen, EntityRegainHealthEvent.RegainReason.CUSTOM);
                                 Bukkit.getPluginManager().callEvent(event);
                                 if (!event.isCancelled()) {

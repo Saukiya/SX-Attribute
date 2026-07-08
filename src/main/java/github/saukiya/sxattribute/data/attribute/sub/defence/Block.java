@@ -40,13 +40,16 @@ public class Block extends SubAttribute {
     @Override
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
-            if (probability(values[0])) {
-                DamageData damageData = (DamageData) eventData;
+            DamageData damageData = (DamageData) eventData;
+            // 格挡几率公式 (变量 value=格挡几率); 默认恒等
+            double rate = formula(damageData.getDefender(), "Formula.BlockRate", values[0], "value", values[0]);
+            if (probability(rate)) {
                 if (!(damageData.getEffectiveAttributeList().contains("Real") || damageData.getEffectiveAttributeList().contains("Reflection"))) {
                     damageData.getEffectiveAttributeList().add(this.getName());
-                    double blockDamage = damageData.getDamage() * values[1] / 100;
+                    // 格挡减伤量公式 (变量 damage=当前伤害, ratio=格挡比例); 默认 伤害*比例/100
+                    double blockDamage = formula(damageData.getDefender(), "Formula.Block", damageData.getDamage() * values[1] / 100, "damage", damageData.getDamage(), "ratio", values[1]);
                     damageData.setDamage(damageData.getDamage() - blockDamage);
-                    damageData.sendHolo(getString("Message.Holo", getDf().format(blockDamage)));
+                    if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(blockDamage)));
                     send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(blockDamage));
                     send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(blockDamage));
                 }
