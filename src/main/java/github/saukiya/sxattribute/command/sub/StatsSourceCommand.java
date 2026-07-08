@@ -3,6 +3,7 @@ package github.saukiya.sxattribute.command.sub;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.SubCommand;
 import github.saukiya.sxattribute.data.attribute.AttributeSource;
+import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -48,24 +49,38 @@ public class StatsSourceCommand extends SubCommand implements Listener {
             return;
         }
         List<String> names = new ArrayList<>(SXAttribute.getAttributeManager().getSourceNames(target.getUniqueId()));
-        int size = Math.max(9, Math.min(54, (names.size() + 8) / 9 * 9));
+        SXAttributeData defaultData = SXAttribute.getAttributeManager().getDefaultAttributeData();
+        boolean hasDefault = defaultData != null && defaultData.isValid();
+        int total = names.size() + (hasDefault ? 1 : 0);
+        int size = Math.max(9, Math.min(54, (total + 8) / 9 * 9));
         Inventory inv = Bukkit.createInventory(holder, size, "§d§l属性源统计 §7- §f" + target.getName());
-        for (int i = 0; i < names.size() && i < size; i++) {
-            String name = names.get(i);
+        int slot = 0;
+        for (String name : names) {
+            if (slot >= size) {
+                break;
+            }
             AttributeSource source = SXAttribute.getAttributeManager().getSource(target.getUniqueId(), name);
             if (source == null) {
                 continue;
             }
-            ItemStack item = new ItemStack(Material.PAPER);
-            ItemMeta meta = item.getItemMeta();
-            meta.addItemFlags(ItemFlag.values());
-            meta.setDisplayName("§b§l" + name + (source.isSilent() ? " §8(静态)" : ""));
-            List<String> lore = SourceCommand.describe(target, source.getData());
-            meta.setLore(lore.isEmpty() ? java.util.Collections.singletonList("§7(空)") : lore);
-            item.setItemMeta(meta);
-            inv.setItem(i, item);
+            inv.setItem(slot++, buildItem("§b§l" + name + (source.isSilent() ? " §8(静态)" : ""), source.getData()));
+        }
+        // 默认属性作为独立一格
+        if (hasDefault && slot < size) {
+            inv.setItem(slot, buildItem("§b§l默认 §8(全局)", defaultData));
         }
         ((Player) sender).openInventory(inv);
+    }
+
+    private static ItemStack buildItem(String name, SXAttributeData data) {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(ItemFlag.values());
+        meta.setDisplayName(name);
+        List<String> lore = SourceCommand.describe(data);
+        meta.setLore(lore.isEmpty() ? java.util.Collections.singletonList("§7(空)") : lore);
+        item.setItemMeta(meta);
+        return item;
     }
 
     @EventHandler

@@ -325,6 +325,13 @@ public class SXAttributeManager implements Listener {
     }
 
     /**
+     * @return 全局默认属性数据 (Config.DefaultAttribute; 作为独立"默认"来源展示, 可能为 null)
+     */
+    public SXAttributeData getDefaultAttributeData() {
+        return defaultAttributeData;
+    }
+
+    /**
      * 获取生物总数据 = 全部命名源之和 + 默认属性
      *
      * @param entity LivingEntity
