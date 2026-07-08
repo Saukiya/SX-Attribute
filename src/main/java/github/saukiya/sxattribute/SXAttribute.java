@@ -2,6 +2,7 @@ package github.saukiya.sxattribute;
 
 import github.saukiya.sxattribute.api.SXAPI;
 import github.saukiya.sxattribute.command.MainCommand;
+import github.saukiya.sxattribute.data.PersistentSourceManager;
 import github.saukiya.sxattribute.data.RandomStringManager;
 import github.saukiya.sxattribute.data.SlotDataManager;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
@@ -100,6 +101,9 @@ public class SXAttribute extends JavaPlugin {
 
     @Getter
     private static MainCommand mainCommand;
+
+    @Getter
+    private static PersistentSourceManager persistentSourceManager;
 
     /**
      * 判断服务器次版本是否 >= 指定值 (跨新旧版本号方案安全)
@@ -323,6 +327,7 @@ public class SXAttribute extends JavaPlugin {
         attributeManager = new SXAttributeManager();
         conditionManager = new SXConditionManager();
         slotDataManager = new SlotDataManager();
+        persistentSourceManager = new PersistentSourceManager();
         listenerHealthChange = new ListenerHealthChange();
 
         if (!Config.getConfig().getString(Config.DAMAGE_EVENT_PRIORITY, "HIGH").equals("HIGH")) {

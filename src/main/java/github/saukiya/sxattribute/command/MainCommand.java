@@ -33,6 +33,11 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         new AttributeListCommand().registerCommand();
         new ConditionListCommand().registerCommand();
         new ReloadCommand().registerCommand();
+        new SourceCommand().registerCommand();
+        new StatsSourceCommand().registerCommand();
+        new UpdateCommand().registerCommand();
+        new PersistentCommand().registerCommand();
+        new DelPersistentCommand().registerCommand();
     }
 
     public void setup(String command) {

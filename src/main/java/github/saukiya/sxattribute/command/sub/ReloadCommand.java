@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -37,9 +38,15 @@ public class ReloadCommand extends SubCommand {
         SXAttribute.getAttributeManager().onAttributeReload();
         SXAttribute.getAttributeManager().loadDefaultAttributeData();
         SXAttribute.getSlotDataManager().loadData();
+        // 重载后立即对在线玩家重新载入并施加属性: UPDATE 类属性按新公式/数值以默认值绝对重算,
+        // 使改动即时生效, 避免旧基值残留(否则需玩家切换物品才刷新, 表现为"体型不变/默认值残留")。
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            SXAttribute.getAttributeManager().loadEntityData(onlinePlayer);
+            SXAttribute.getAttributeManager().attributeUpdateEvent(onlinePlayer);
+        }
         int size = 0;
         d1:
-        for (UUID uuid : new ArrayList<>(SXAttribute.getAttributeManager().getEntityDataMap().keySet())) {
+        for (UUID uuid : new ArrayList<>(SXAttribute.getAttributeManager().getTrackedEntities())) {
             for (World world : Bukkit.getWorlds()) {
                 for (Entity entity : world.getEntities()) {
                     if (entity.getUniqueId().equals(uuid)) {
