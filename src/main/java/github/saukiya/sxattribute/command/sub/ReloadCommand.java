@@ -29,6 +29,7 @@ public class ReloadCommand extends SubCommand {
     public void onCommand(CommandSender sender, String[] args) {
         long oldTimes = System.currentTimeMillis();
         Config.loadConfig();
+        github.saukiya.sxattribute.util.AttributeConfig.load();
         Message.loadMessage();
         SXAttribute.getRandomStringManager().loadData();
         SXAttribute.getItemDataManager().loadItemData();

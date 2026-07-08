@@ -4,6 +4,7 @@ import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.command.SenderType;
 import github.saukiya.sxattribute.command.SubCommand;
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
+import github.saukiya.sxattribute.util.AttributeConfig;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
 import github.saukiya.sxattribute.util.Placeholders;
@@ -14,6 +15,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +28,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -106,7 +110,7 @@ public class StatsCommand extends SubCommand implements Listener {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__ATTACK));
-        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__ATTACK_LORE));
+        List<String> loreList = process(player, data, panelLore("ATTACK", Message.INVENTORY__STATS__ATTACK_LORE));
         meta.setLore(loreList);
         item.setItemMeta(meta);
         return item;
@@ -117,7 +121,7 @@ public class StatsCommand extends SubCommand implements Listener {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__DEFENSE));
-        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__DEFENSE_LORE));
+        List<String> loreList = process(player, data, panelLore("DEFENSE", Message.INVENTORY__STATS__DEFENSE_LORE));
         meta.setLore(loreList);
         item.setItemMeta(meta);
         return item;
@@ -127,7 +131,7 @@ public class StatsCommand extends SubCommand implements Listener {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__BASE));
-        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__BASE_LORE));
+        List<String> loreList = process(player, data, panelLore("OTHER", Message.INVENTORY__STATS__BASE_LORE));
         meta.setLore(loreList);
         item.setItemMeta(meta);
         return item;
@@ -138,7 +142,7 @@ public class StatsCommand extends SubCommand implements Listener {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__MOVEMENT));
-        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__MOVEMENT_LORE));
+        List<String> loreList = process(player, data, panelLore("MOVEMENT", Message.INVENTORY__STATS__MOVEMENT_LORE));
         meta.setLore(loreList);
         item.setItemMeta(meta);
         return item;
@@ -149,10 +153,70 @@ public class StatsCommand extends SubCommand implements Listener {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__GATHER));
-        List<String> loreList = process(player, data, Message.getStringList(Message.INVENTORY__STATS__GATHER_LORE));
+        List<String> loreList = process(player, data, panelLore("GATHER", Message.INVENTORY__STATS__GATHER_LORE));
         meta.setLore(loreList);
         item.setItemMeta(meta);
         return item;
+    }
+
+    /**
+     * 取某分区面板 lore 源: AutoPanel 开则由 Attributes.yml 的 Display 自动生成, 否则回退 Message.yml。
+     *
+     * @param category 分区 (ATTACK/DEFENSE/MOVEMENT/GATHER/OTHER)
+     * @param fallback AutoPanel 关闭时的 Message.yml 键
+     * @return lore 行 (含 %sx_xxx% 占位, 交由 process 渲染)
+     */
+    private List<String> panelLore(String category, Message fallback) {
+        return AttributeConfig.isAutoPanel() ? buildDisplayLore(category) : Message.getStringList(fallback);
+    }
+
+    /**
+     * 按 Attributes.yml 各属性节点的 Display 元数据, 生成指定分区的面板 lore 行。
+     * <p>
+     * 收集所有 {@code Display.Category} 匹配的属性, 按 {@code Display.Order} 升序, 逐 Row 生成:
+     * 含 {@code line} 则原样使用; 否则拼 {@code {color}{label}:&b %sx_{placeholder}%{suffix}}。
+     *
+     * @param category 目标分区
+     * @return 未渲染的 lore 行列表 (可变)
+     */
+    private List<String> buildDisplayLore(String category) {
+        TreeMap<Integer, List<String>> ordered = new TreeMap<>();
+        int autoOrder = 100000;
+        for (String name : AttributeConfig.attributeNames()) {
+            ConfigurationSection sec = AttributeConfig.getSection(name);
+            if (sec == null) {
+                continue;
+            }
+            ConfigurationSection display = sec.getConfigurationSection("Display");
+            if (display == null || !category.equalsIgnoreCase(display.getString("Category", ""))) {
+                continue;
+            }
+            List<String> lines = new ArrayList<>();
+            for (Map<?, ?> row : display.getMapList("Rows")) {
+                Object line = row.get("line");
+                if (line != null) {
+                    // 与 Message.yml 路径一致: & 颜色码转 §, 供 process 渲染与隐藏 0 值判断
+                    lines.add(String.valueOf(line).replace('&', '§'));
+                    continue;
+                }
+                Object placeholder = row.get("placeholder");
+                if (placeholder == null) {
+                    continue;
+                }
+                String color = row.get("color") == null ? "" : String.valueOf(row.get("color"));
+                String label = row.get("label") == null ? "" : String.valueOf(row.get("label"));
+                String suffix = row.get("suffix") == null ? "" : String.valueOf(row.get("suffix"));
+                lines.add((color + label + ":&b %sx_" + placeholder + "%" + suffix).replace('&', '§'));
+            }
+            if (!lines.isEmpty()) {
+                ordered.computeIfAbsent(display.getInt("Order", autoOrder++), k -> new ArrayList<>()).addAll(lines);
+            }
+        }
+        List<String> result = new ArrayList<>();
+        for (List<String> value : ordered.values()) {
+            result.addAll(value);
+        }
+        return result;
     }
 
     private List<String> process(Player player, SXAttributeData data, List<String> list) {

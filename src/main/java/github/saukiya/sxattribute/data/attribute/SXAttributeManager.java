@@ -45,6 +45,7 @@ public class SXAttributeManager implements Listener {
         for (int i = 0; i < size; i++) {
             SubAttribute.getAttributes().get(i).setPriority(i).loadConfig().onEnable();
         }
+        github.saukiya.sxattribute.util.AttributeConfig.saveIfDirty();
         SXAttribute.getInst().getLogger().info("Loaded " + size + " Attributes");
     }
 
@@ -70,6 +71,7 @@ public class SXAttributeManager implements Listener {
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
             attribute.loadConfig().onReLoad();
         }
+        github.saukiya.sxattribute.util.AttributeConfig.saveIfDirty();
     }
 
     public SXAttributeData loadItemData(LivingEntity entity, List<PreLoadItem> preItemList) {

@@ -2,12 +2,16 @@ package github.saukiya.sxattribute.data.attribute;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.eventdata.EventData;
+import github.saukiya.sxattribute.util.AttributeConfig;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.FormulaUtil;
 import github.saukiya.sxattribute.util.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +20,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -87,6 +93,36 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
      * 加载配置文件
      */
     public final SubAttribute loadConfig() {
+        // 中央化: 本插件属性把 config() 重定向到 Attributes.yml 对应节点, 并把 defaultConfig()
+        // 的缺省键自动播种进节点(仅补缺, 不覆盖用户已填)。key 名与旧 <Name>.yml 一致, 读取逻辑无需改动。
+        boolean own = getPlugin() != null && getPlugin().equals(SXAttribute.getInst());
+        YamlConfiguration def = own ? defaultConfig(new YamlConfiguration()) : null;
+        boolean centralize = own && AttributeConfig.getConfig() != null
+                && (AttributeConfig.has(getName()) || def != null);
+        if (centralize) {
+            ConfigurationSection node = AttributeConfig.getOrCreateSection(getName());
+            if (def != null) {
+                for (Map.Entry<String, Object> entry : def.getValues(true).entrySet()) {
+                    if (!(entry.getValue() instanceof ConfigurationSection) && !node.contains(entry.getKey())) {
+                        node.set(entry.getKey(), entry.getValue());
+                        AttributeConfig.markDirty();
+                    }
+                }
+            }
+            if (!node.contains("Enable")) {
+                node.set("Enable", true);
+                AttributeConfig.markDirty();
+            }
+            YamlConfiguration yaml = new YamlConfiguration();
+            for (Map.Entry<String, Object> entry : node.getValues(true).entrySet()) {
+                if (!(entry.getValue() instanceof ConfigurationSection)) {
+                    yaml.set(entry.getKey(), entry.getValue());
+                }
+            }
+            setConfig(yaml);
+            return this;
+        }
+        // 原路径 (第三方插件属性 / 无中央节点且无 defaultConfig, 如 JSAttribute)
         if (!getConfigFile().exists()) {
             YamlConfiguration yaml = defaultConfig(new YamlConfiguration());
             if (yaml != null) {
@@ -97,6 +133,94 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
             setConfig(YamlConfiguration.loadConfiguration(getConfigFile()));
         }
         return this;
+    }
+
+    /**
+     * 战斗提示(holo/battle)是否启用 (读 Message.Enable, 缺省 true)
+     *
+     * @return 启用返回 true
+     */
+    public boolean isMessageEnabled() {
+        return config() == null || config().getBoolean("Message.Enable", true);
+    }
+
+    /**
+     * 生效公式求值 (战斗类核心数学的可配置钩子)
+     * <p>
+     * 读取 config() 中 {@code key} 指定的公式串, 按 {@code nameValue}(名,值 交替) 注入 {@code <l:名>} 变量后求值。
+     * 公式缺失/为空 或 SX-Item 引擎不可用时返回 {@code fallback} (即原硬编码算法), 保证零回归与降级安全。
+     *
+     * @param player    玩家 (供 PlaceholderAPI, 可为 null)
+     * @param key       公式配置键 (如 "Formula.Crit")
+     * @param fallback  兜底值 (原算法结果)
+     * @param nameValue 变量: 名,值,名,值...
+     * @return 公式结果, 不可用则 fallback
+     */
+    protected double formula(Player player, String key, double fallback, Object... nameValue) {
+        if (config() == null) {
+            return fallback;
+        }
+        String expr = config().getString(key);
+        if (expr == null || expr.isEmpty()) {
+            return fallback;
+        }
+        Map<String, Double> vars = new HashMap<>();
+        for (int i = 0; i + 1 < nameValue.length; i += 2) {
+            vars.put(String.valueOf(nameValue[i]), ((Number) nameValue[i + 1]).doubleValue());
+        }
+        return FormulaUtil.eval(player, expr, vars, fallback);
+    }
+
+    /**
+     * 生效公式求值 (实体重载: 非玩家实体以 null 玩家求值, 跳过 PlaceholderAPI)
+     *
+     * @param entity    实体
+     * @param key       公式配置键
+     * @param fallback  兜底值
+     * @param nameValue 变量: 名,值...
+     * @return 公式结果, 不可用则 fallback
+     */
+    protected double formula(LivingEntity entity, String key, double fallback, Object... nameValue) {
+        return formula(entity instanceof Player ? (Player) entity : null, key, fallback, nameValue);
+    }
+
+    /**
+     * 按本属性自身的 {@code Formula}(变量 {@code <l:value>}) 计算"生效值"。
+     * <p>
+     * 供其它属性引用被动修正型属性时使用(如 点燃/雷霆/撕裂/药水 读取韧性、闪避读取命中):
+     * 引用方应先取生效值再参与运算, 使被动属性自身的公式生效。无 Formula/引擎不可用时返回原值(恒等)。
+     *
+     * @param entity   实体 (供 PlaceholderAPI)
+     * @param rawValue 原始词条值
+     * @return 经本属性 Formula 计算后的生效值
+     */
+    public double effectiveValue(LivingEntity entity, double rawValue) {
+        return formula(entity, "Formula", rawValue, "value", rawValue);
+    }
+
+    /**
+     * 取名为 {@code attributeName} 的属性对 {@code rawValue} 应用其 {@code Formula} 后的生效值;
+     * 该属性不存在则原样返回。用于触发型攻击引用韧性/命中等被动修正属性。
+     *
+     * @param attributeName 被引用属性名 (如 "Toughness" / "HitRate")
+     * @param entity        提供该被动值的实体
+     * @param rawValue      原始词条值
+     * @return 生效值
+     */
+    protected double effectiveOf(String attributeName, LivingEntity entity, double rawValue) {
+        SubAttribute attribute = getSubAttribute(attributeName);
+        return attribute != null ? attribute.effectiveValue(entity, rawValue) : rawValue;
+    }
+
+    /**
+     * 拦截战斗提示消息发送: Message.Enable 关闭时跳过 "Message.*" 提示 (holo 由各属性调用点单独判断)
+     */
+    @Override
+    public void send(LivingEntity entity, String loc, Object... args) {
+        if (loc != null && loc.startsWith("Message.") && !isMessageEnabled()) {
+            return;
+        }
+        super.send(entity, loc, args);
     }
 
     /**
@@ -148,6 +272,8 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
     public void registerAttribute() {
         if (getPlugin() == null) {
             SXAttribute.getInst().getLogger().warning("Attribute >>  [NULL|" + getName() + "] Null Plugin!");
+        } else if (!AttributeConfig.isEnabled(getName())) {
+            SXAttribute.getInst().getLogger().info("Attribute >> Disable By Attributes.yml [" + getPlugin().getName() + "|" + getName() + "] !");
         } else if (getPriority() < 0) {
             SXAttribute.getInst().getLogger().warning("Attribute >> Disable [" + getPlugin().getName() + "|" + getName() + "] !");
         } else if (Bukkit.getPluginManager().getPlugin("SX-Attribute").isEnabled()) {

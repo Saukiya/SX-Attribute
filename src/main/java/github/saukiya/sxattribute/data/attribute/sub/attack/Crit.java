@@ -46,7 +46,7 @@ public class Crit extends SubAttribute implements Listener {
         DamageData damageData = event.getData();
         if (!damageData.isCancelled() && damageData.isCrit()) {
             String damage = getDf().format(damageData.getEvent().getFinalDamage());
-            damageData.sendHolo(getString("Message.Holo", damage));
+            if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", damage));
             send(damageData.getAttacker(), "Message.Battle", getFirstPerson(), damageData.getDefenderName(), damage);
             send(damageData.getDefender(), "Message.Battle", damageData.getAttackerName(), getFirstPerson(), damage);
         }
@@ -55,10 +55,16 @@ public class Crit extends SubAttribute implements Listener {
     @Override
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
-            if (probability(values[0])) {
-                DamageData damageData = (DamageData) eventData;
+            DamageData damageData = (DamageData) eventData;
+            // 暴击几率公式 (变量 value=暴击几率); 默认恒等, 可配置递减等
+            double rate = formula(damageData.getAttacker(), "Formula.CritRate", values[0], "value", values[0]);
+            if (probability(rate)) {
                 damageData.setCrit(true);
-                damageData.setDamage(damageData.getDamage() * (100 + values[1]) / 100);
+                // 暴伤公式 (变量 damage=当前伤害, value=暴伤增幅); 默认 damage*(100+增幅)/100
+                double critDamage = formula(damageData.getAttacker(), "Formula.Crit",
+                        damageData.getDamage() * (100 + values[1]) / 100,
+                        "damage", damageData.getDamage(), "value", values[1]);
+                damageData.setDamage(critDamage);
             }
         }
     }

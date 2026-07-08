@@ -72,7 +72,7 @@ public class Damage extends SubAttribute implements Listener {
     public void onSXDamageEvent(SXDamageEvent event) {
         DamageData damageData = event.getData();
         if (!damageData.isCancelled() && !damageData.isCrit()) {
-            damageData.sendHolo(getString("Message.Holo", getDf().format(damageData.getEvent().getFinalDamage())));
+            if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(damageData.getEvent().getFinalDamage())));
         }
     }
 
@@ -153,7 +153,11 @@ public class Damage extends SubAttribute implements Listener {
     }
 
     private double getAttribute(double[] values, int type) {
-        return values[type * 2] + SXAttribute.getRandom().nextDouble() * (values[type * 2 + 1] - values[type * 2]);
+        double min = values[type * 2];
+        double max = values[type * 2 + 1];
+        double fallback = min + SXAttribute.getRandom().nextDouble() * (max - min);
+        // 伤害掷点公式 (变量 min/max); 默认 min~max 均匀随机, 可用 <d:0_1> 表达随机
+        return formula((Player) null, "Formula", fallback, "min", min, "max", max);
     }
 
     @Override

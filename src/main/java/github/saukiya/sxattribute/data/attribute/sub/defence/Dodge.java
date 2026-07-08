@@ -40,12 +40,15 @@ public class Dodge extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
             DamageData damageData = (DamageData) eventData;
-            if (values[0] > 0 && probability(values[0] - damageData.getAttackerData().getValues("HitRate")[0])) {
+            double hitRate = effectiveOf("HitRate", damageData.getAttacker(), damageData.getAttackerData().getValues("HitRate")[0]);
+            // 闪避几率公式 (变量 value=闪避几率, hitrate=攻击者命中); 默认 闪避-命中
+            double chance = formula(damageData.getDefender(), "Formula.Chance", values[0] - hitRate, "value", values[0], "hitrate", hitRate);
+            if (values[0] > 0 && probability(chance)) {
                 damageData.setCancelled(true);
                 Location loc = damageData.getAttacker().getLocation().clone();
                 loc.setYaw(loc.getYaw() + SXAttribute.getRandom().nextInt(80) - 40);
                 damageData.getDefender().setVelocity(loc.getDirection().setY(0.1).multiply(0.7));
-                damageData.sendHolo(getString("Message.Holo"));
+                if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo"));
                 send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson());
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName());
             }

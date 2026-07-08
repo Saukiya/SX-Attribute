@@ -43,11 +43,14 @@ public class LifeSteal extends SubAttribute {
     @Override
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
-            if (probability(values[0])) {
-                DamageData damageData = (DamageData) eventData;
-                LivingEntity damager = damageData.getAttacker();
+            DamageData damageData = (DamageData) eventData;
+            LivingEntity damager = damageData.getAttacker();
+            // 吸血几率公式 (变量 value=吸血几率); 默认恒等
+            double rate = formula(damager, "Formula.LifeStealRate", values[0], "value", values[0]);
+            if (probability(rate)) {
                 double maxHealth = SXAttribute.getApi().getMaxHealth(damager);
-                double lifeHealth = damageData.getDamage() * values[1] / 100;
+                // 吸血量公式 (变量 damage=当前伤害, ratio=吸血倍率); 默认 伤害*倍率/100
+                double lifeHealth = formula(damager, "Formula.LifeSteal", damageData.getDamage() * values[1] / 100, "damage", damageData.getDamage(), "ratio", values[1]);
                 EntityRegainHealthEvent event = new EntityRegainHealthEvent(damager, lifeHealth, EntityRegainHealthEvent.RegainReason.CUSTOM);
                 Bukkit.getPluginManager().callEvent(event);
                 if (event.isCancelled()) {
@@ -55,7 +58,7 @@ public class LifeSteal extends SubAttribute {
                 }
                 lifeHealth = (maxHealth < damager.getHealth() + event.getAmount()) ? (maxHealth - damager.getHealth()) : event.getAmount();
                 damager.setHealth(damager.getHealth() + lifeHealth);
-                damageData.sendHolo(getString("Message.Holo", getDf().format(lifeHealth)));
+                if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(lifeHealth)));
                 send(damager, "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(lifeHealth));
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(lifeHealth));
             }

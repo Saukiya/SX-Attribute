@@ -25,6 +25,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -135,16 +136,24 @@ public class SXAttribute extends JavaPlugin {
     }
 
     /**
-     * 按版本条件注册属性 (低于要求版本则跳过, 不注册)
+     * 解析 "major.minor.patch" 版本串并判断服务器版本是否 >= 之 (缺省段补 0)
      *
-     * @param attribute SubAttribute 待注册属性
-     * @param major     int 主版本号
-     * @param minor     int 次版本号
-     * @param patch     int 补丁号
+     * @param version 版本串 (如 "1.20.5" / "1.21" / "26.2")
+     * @return 满足则返回 true
      */
-    private void registerIfVersion(SubAttribute attribute, int major, int minor, int patch) {
-        if (isVersionAtLeast(major, minor, patch)) {
-            attribute.registerAttribute();
+    public static boolean isVersionAtLeast(String version) {
+        String[] p = version.split("[.]");
+        int major = p.length > 0 ? parseIntSafe(p[0], 1) : 1;
+        int minor = p.length > 1 ? parseIntSafe(p[1], 0) : 0;
+        int patch = p.length > 2 ? parseIntSafe(p[2], 0) : 0;
+        return isVersionAtLeast(major, minor, patch);
+    }
+
+    private static int parseIntSafe(String s, int def) {
+        try {
+            return Integer.parseInt(s.trim());
+        } catch (NumberFormatException e) {
+            return def;
         }
     }
 
@@ -174,6 +183,7 @@ public class SXAttribute extends JavaPlugin {
         }
         SXAttribute.getInst().getLogger().info("ServerVersion: " + version + " -> " + Arrays.toString(versionSplit));
         Config.loadConfig();
+        AttributeConfig.load();
         Message.loadMessage();
         mainCommand = new MainCommand();
 
@@ -204,41 +214,18 @@ public class SXAttribute extends JavaPlugin {
         }
         new Command().registerAttribute();
 
-        // 高版本原版属性包装 (按补丁号精确门控, 低版本自动跳过; 属性不存在时 AttributeUtil 返回 null 二次降级)
-        // 攻击分区
-        registerIfVersion(new AttackRange(), 1, 20, 5);
-        registerIfVersion(new AttackKnockback(), 1, 20, 5);
-        registerIfVersion(new Sweeping(), 1, 21, 0);
-        // 防御分区
-        registerIfVersion(new KnockbackResistance(), 1, 9, 0);
-        registerIfVersion(new ExplosionKnockback(), 1, 21, 0);
-        registerIfVersion(new SafeFallDistance(), 1, 20, 5);
-        registerIfVersion(new FallDamage(), 1, 20, 5);
-        registerIfVersion(new BurningTime(), 1, 21, 0);
-        // 移动分区
-        registerIfVersion(new Scale(), 1, 20, 5);
-        registerIfVersion(new JumpStrength(), 1, 20, 5);
-        registerIfVersion(new Gravity(), 1, 20, 5);
-        registerIfVersion(new StepHeight(), 1, 20, 5);
-        registerIfVersion(new SneakingSpeed(), 1, 21, 0);
-        registerIfVersion(new MovementEfficiency(), 1, 21, 0);
-        registerIfVersion(new WaterMovement(), 1, 21, 0);
-        registerIfVersion(new FlyingSpeed(), 1, 9, 0);
-        registerIfVersion(new Bounciness(), 26, 2, 0);
-        registerIfVersion(new FrictionModifier(), 26, 2, 0);
-        registerIfVersion(new AirDragModifier(), 26, 2, 0);
-        // 采集分区
-        registerIfVersion(new BlockRange(), 1, 20, 5);
-        registerIfVersion(new MiningEfficiency(), 1, 21, 0);
-        registerIfVersion(new BlockBreakSpeed(), 1, 20, 5);
-        registerIfVersion(new SubmergedMining(), 1, 21, 0);
-        registerIfVersion(new OxygenBonus(), 1, 21, 0);
-        // 其他分区
-        registerIfVersion(new Luck(), 1, 9, 0);
-        registerIfVersion(new CameraDistance(), 1, 21, 6);
-        registerIfVersion(new WaypointTransmit(), 1, 21, 6);
-        registerIfVersion(new WaypointReceive(), 1, 21, 6);
-        registerIfVersion(new NameTagDistance(), 26, 2, 0);
+        // 原版属性包装 (数据驱动): 遍历 Attributes.yml 中含 RegistryKey 的数值型节点,
+        // 按 Version 精确门控(低版本自动跳过), 实例化 VanillaUpdateAttribute 注册。
+        // 属性在当前版本不存在时 AttributeUtil 返回 null 二次降级, 不报错。
+        for (String attributeName : AttributeConfig.attributeNames()) {
+            ConfigurationSection sec = AttributeConfig.getSection(attributeName);
+            if (sec == null || !sec.contains("RegistryKey")) {
+                continue;
+            }
+            if (isVersionAtLeast(sec.getString("Version", "1.0"))) {
+                new VanillaUpdateAttribute(attributeName, sec).registerAttribute();
+            }
+        }
 
         File jsAttributeFiles = new File(getDataFolder(), "Attribute" + File.separator + "JavaScript");
         if (!jsAttributeFiles.exists() && SXAttribute.isHigherVersion()) {

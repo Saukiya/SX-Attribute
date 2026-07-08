@@ -39,7 +39,9 @@ public class WalkSpeed extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player) {
             Player player = (Player) ((UpdateData) eventData).getEntity();
-            player.setWalkSpeed((float) (config().getDouble("WalkSpeed.Default") * (100 + values[0]) / 100D));
+            double def = config().getDouble("WalkSpeed.Default");
+            // 移速公式 (变量 default=基础移速, value=移速增幅); 默认 基础*(100+增幅)/100
+            player.setWalkSpeed((float) formula(player, "Formula", def * (100 + values[0]) / 100D, "default", def, "value", values[0]));
         }
     }
 

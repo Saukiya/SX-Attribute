@@ -80,7 +80,9 @@ public class AttackSpeed extends SubAttribute implements Listener {
             if (SXAttribute.isHigherVersion()) {
                 AttributeInstance instance = AttributeUtil.getInstance(player, "ATTACK_SPEED", "GENERIC_ATTACK_SPEED");
                 if (instance != null) {
-                    instance.setBaseValue(config().getDouble("AttackSpeed.Default") * (100 + values[0]) / 100);
+                    double def = config().getDouble("AttackSpeed.Default");
+                    // 攻速公式 (变量 default=基础攻速, value=攻速增幅); 默认 基础*(100+增幅)/100
+                    instance.setBaseValue(formula(player, "Formula", def * (100 + values[0]) / 100, "default", def, "value", values[0]));
                 }
             } else {
                 player.setWalkSpeed((float) (values[0] / 500.0D));

@@ -44,9 +44,13 @@ public class Tearing extends SubAttribute {
     public void eventMethod(double[] values, EventData eventData) {
         if (eventData instanceof DamageData) {
             DamageData damageData = (DamageData) eventData;
-            if (values[0] > 0 && probability(values[0] - damageData.getDefenderData().getValues("Toughness")[0])) {
+            double toughness = effectiveOf("Toughness", damageData.getDefender(), damageData.getDefenderData().getValues("Toughness")[0]);
+            // 触发几率公式 (变量 value=撕裂几率, toughness=目标韧性); 默认 几率-韧性
+            double chance = formula(damageData.getAttacker(), "Formula.Chance", values[0] - toughness, "value", values[0], "toughness", toughness);
+            if (values[0] > 0 && probability(chance)) {
                 int size = SXAttribute.getRandom().nextInt(3) + 1;
-                double tearingDamage = damageData.getDefender().getHealth() / 100;
+                // 每跳撕裂伤害公式 (变量 health=目标当前生命); 默认 生命/100
+                double tearingDamage = formula(damageData.getDefender(), "Formula.Tearing", damageData.getDefender().getHealth() / 100, "health", damageData.getDefender().getHealth());
                 new BukkitRunnable() {
                     int i = 0;
 
@@ -76,7 +80,7 @@ public class Tearing extends SubAttribute {
                         }
                     }
                 }.runTaskTimer(getPlugin(), 5, size);
-                damageData.sendHolo(getString("Message.Holo", getDf().format(tearingDamage * 12 / size)));
+                if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(tearingDamage * 12 / size)));
                 send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(tearingDamage * 12 / size));
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(tearingDamage * 12 / size));
             }
