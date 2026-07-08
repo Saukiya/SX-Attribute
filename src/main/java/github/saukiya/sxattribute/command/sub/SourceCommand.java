@@ -71,8 +71,13 @@ public class SourceCommand extends SubCommand {
     static List<String> describe(Player player, SXAttributeData data) {
         List<String> lines = new ArrayList<>();
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
+            List<String> placeholders = attribute.getPlaceholders();
+            if (placeholders == null) {
+                // 部分属性(如 EventMessage / 脚本 JSAttribute)可能返回 null, 跳过
+                continue;
+            }
             double[] values = data.getValues(attribute);
-            for (String placeholder : attribute.getPlaceholders()) {
+            for (String placeholder : placeholders) {
                 Object value = attribute.getPlaceholder(values, player, placeholder);
                 if (value == null) {
                     continue;
