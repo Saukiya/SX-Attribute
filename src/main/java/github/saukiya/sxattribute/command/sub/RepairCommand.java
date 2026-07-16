@@ -52,7 +52,8 @@ public class RepairCommand extends SubCommand implements Listener {
      */
     public static void openRepairInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 45, Message.getMsg(Message.INVENTORY__REPAIR__NAME));
-        ItemStack glassItem = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
+        // 字符串解析是 ReMaterial 新旧 API 共同保留的二进制协议，不能链接已删除的枚举字段。
+        ItemStack glassItem = ReMaterial.getItem("BLACK_STAINED_GLASS_PANE");
         ItemMeta glassMeta = glassItem.getItemMeta();
         glassMeta.setDisplayName("§r");
         glassItem.setItemMeta(glassMeta);
@@ -74,11 +75,11 @@ public class RepairCommand extends SubCommand implements Listener {
             inv.setItem(27 + i, glassItem);
         }
         glassItem.setDurability((short) 0);
-        glassItem.setType(ReMaterial.IRON_BARS.material());
+        glassItem.setType(ReMaterial.getMaterial("IRON_BARS"));
         for (int i = 1; i < 4; i++) {
             inv.setItem(5 + (i * 9), glassItem);
         }
-        glassItem = ReMaterial.WHITE_STAINED_GLASS_PANE.item();
+        glassItem = ReMaterial.getItem("WHITE_STAINED_GLASS_PANE");
         glassMeta.setDisplayName(Message.getMsg(Message.INVENTORY__REPAIR__GUIDE));
         glassItem.setItemMeta(glassMeta);
         inv.setItem(11, glassItem);

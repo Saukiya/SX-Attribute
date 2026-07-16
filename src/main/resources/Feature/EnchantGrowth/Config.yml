@@ -1,5 +1,5 @@
 Enable: true
-# Beta 默认使用真实存在的原版附魔；自定义 ID 只有被版本适配器预注册后才允许切换使用。
+# 自定义附魔优先使用服务端真实注册；不可用时按 Fallback 自动切换为 NBT + 动态 Lore。
 DefaultEnchant: SHARPNESS
 ManualExperience: 10
 Gain:
@@ -12,7 +12,9 @@ Lore:
 Cost: { Money: 100, Experience: 0, Levels: 0, Items: [] }
 Enchants:
   GrowthPower:
+    Enable: true
     Custom: true
+    Fallback: LORE
     Name: 成长之力
     StartLevel: 1
     MaxLevel: 10
@@ -25,6 +27,7 @@ Enchants:
     Attributes:
       - "攻击力: {level}"
   SHARPNESS:
+    Enable: true
     Custom: false
     VanillaName: DAMAGE_ALL
     Name: 锋利成长

@@ -40,17 +40,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * SX-Attribute
@@ -283,8 +285,7 @@ public class SXAttribute extends JavaPlugin {
                 saveResource("Attribute/SX-Attribute/JSAttribute_JS.yml", true);
             }
             if (!directory.isDirectory()) return;
-            ScriptEngineManager manager = new ScriptEngineManager();
-            if (manager.getEngineByName("JavaScript") == null) {
+            if (createJavaScriptEngine() == null) {
                 getLogger().warning("JavaScript attribute subsystem disabled: no JavaScript engine is available.");
                 return;
             }
@@ -300,7 +301,7 @@ public class SXAttribute extends JavaPlugin {
             if (files == null) return;
             Arrays.sort(files, (left, right) -> left.getName().compareToIgnoreCase(right.getName()));
             for (File file : files) {
-                loadJavaScriptAttribute(manager, file, arrays, attributeType, pluginClass, schedulerClass, bukkitClass);
+                loadJavaScriptAttribute(file, arrays, attributeType, pluginClass, schedulerClass, bukkitClass);
             }
         } catch (Throwable exception) {
             rethrowFatalJavaScriptFailure(exception);
@@ -309,10 +310,10 @@ public class SXAttribute extends JavaPlugin {
     }
 
     /** 单个文件拥有独立引擎和异常边界，坏文件不会污染其它脚本的全局变量。 */
-    private void loadJavaScriptAttribute(ScriptEngineManager manager, File file, Object arrays, Object attributeType,
-                                         Object pluginClass, Object schedulerClass, Object bukkitClass) {
+    private void loadJavaScriptAttribute(File file, Object arrays, Object attributeType, Object pluginClass,
+                                         Object schedulerClass, Object bukkitClass) {
         try {
-            ScriptEngine engine = manager.getEngineByName("JavaScript");
+            ScriptEngine engine = createJavaScriptEngine();
             if (engine == null) throw new IllegalStateException("JavaScript engine disappeared during loading");
             engine.put("Arrays", arrays);
             engine.put("SXAttributeType", attributeType);
@@ -320,7 +321,11 @@ public class SXAttribute extends JavaPlugin {
             engine.put("FoliaScheduler", schedulerClass);
             engine.put("Bukkit", bukkitClass);
             engine.put("API", api);
-            try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+            // 内置脚本不能自行 new ScriptEngineManager：Java 21 的插件类加载隔离会让它再次得到 null。
+            engine.put("SXAEngine", engine);
+            String source = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+            String migratedSource = migrateBuiltInJavaScriptEngine(file, source);
+            try (StringReader reader = new StringReader(migratedSource)) {
                 engine.eval(reader);
             }
             new JSAttribute(file.getName().substring(0, file.getName().length() - 3), engine).registerAttribute();
@@ -328,6 +333,66 @@ public class SXAttribute extends JavaPlugin {
             rethrowFatalJavaScriptFailure(exception);
             logJavaScriptFailure("file loading", file, exception);
         }
+    }
+
+    /**
+     * 迁移已落盘的旧版内置 JSAttribute 引擎声明。
+     * <p>
+     * 只处理固定文件名和固定原始语句，避免改写服主自行创建或已经定制的其它 JavaScript 属性。
+     */
+    private String migrateBuiltInJavaScriptEngine(File file, String source) throws Exception {
+        if (!"JSAttribute.js".equals(file.getName())) return source;
+        String legacy = "engine: jsManager.getEngineByName(\"JavaScript\"),";
+        if (!source.contains(legacy)) return source;
+        String migrated = source.replace(legacy, "engine: SXAEngine,");
+        Files.write(file.toPath(), migrated.getBytes(StandardCharsets.UTF_8));
+        getLogger().info("Migrated JSAttribute.js to the isolated JavaScript engine.");
+        return migrated;
+    }
+
+    /**
+     * 从当前插件、线程上下文及 SX-Item 的类加载器发现 JavaScript 引擎。
+     * <p>
+     * Java 15+ 已移除内置 Nashorn，而 SX-Item 会按需加载 nashorn-core；在 Bukkit 插件隔离环境中，
+     * 默认 {@link ScriptEngineManager} 看不到另一个插件的服务提供者，因此必须显式使用其类加载器。
+     */
+    private ScriptEngine createJavaScriptEngine() {
+        Set<ClassLoader> loaders = new LinkedHashSet<>();
+        loaders.add(getClass().getClassLoader());
+        loaders.add(Thread.currentThread().getContextClassLoader());
+        if (Bukkit.getPluginManager().getPlugin("SX-Item") != null) {
+            loaders.add(Bukkit.getPluginManager().getPlugin("SX-Item").getClass().getClassLoader());
+        }
+        for (ClassLoader loader : loaders) {
+            if (loader == null) continue;
+            ScriptEngine engine = findJavaScriptEngine(loader);
+            if (engine != null) return engine;
+        }
+        return null;
+    }
+
+    private ScriptEngine findJavaScriptEngine(ClassLoader loader) {
+        try {
+            ScriptEngineManager manager = new ScriptEngineManager(loader);
+            for (String name : Arrays.asList("JavaScript", "javascript", "nashorn", "Nashorn")) {
+                ScriptEngine engine = manager.getEngineByName(name);
+                if (engine != null) return engine;
+            }
+        } catch (RuntimeException ignored) {
+            // 服务描述文件损坏时继续尝试直接实例化工厂，不能让可选脚本影响本体。
+        }
+        for (String factoryName : Arrays.asList(
+                "org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory",
+                "jdk.nashorn.api.scripting.NashornScriptEngineFactory")) {
+            try {
+                Object factory = Class.forName(factoryName, true, loader).getDeclaredConstructor().newInstance();
+                Object engine = factory.getClass().getMethod("getScriptEngine").invoke(factory);
+                if (engine instanceof ScriptEngine) return (ScriptEngine) engine;
+            } catch (ReflectiveOperationException | LinkageError ignored) {
+                // 当前类加载器不含该 Nashorn 实现，继续尝试下一个候选。
+            }
+        }
+        return null;
     }
 
     private void logJavaScriptFailure(String phase, File file, Throwable exception) {

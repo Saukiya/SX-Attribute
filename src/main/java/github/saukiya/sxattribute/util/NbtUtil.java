@@ -1,7 +1,9 @@
 package github.saukiya.sxattribute.util;
 
+import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.tools.nms.ItemUtil;
 import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import static github.saukiya.tools.nms.NbtUtil.getInst;
 
 @Getter
 public class NbtUtil {
+
+    private static boolean failureLogged;
 
     public boolean isEquipment(ItemStack item) {
         switch (item.getType().name()) {
@@ -107,10 +111,11 @@ public class NbtUtil {
      * @return ItemStack
      */
     public ItemStack setNBT(ItemStack item, String key, Object value) {
+        if (!isUsable(item)) return item;
         try {
             getInst().getItemTagWrapper(item).builder().set(key, value).save();
         } catch (Exception e) {
-            e.printStackTrace();
+            reportFailure("setNBT", e);
         }
         return item;
     }
@@ -124,10 +129,11 @@ public class NbtUtil {
      * @return ItemStack
      */
     public ItemStack setNBTList(ItemStack item, String key, List<String> list) {
+        if (!isUsable(item)) return item;
         try {
             getInst().getItemTagWrapper(item).builder().set(key, list).save();
         } catch (Exception e) {
-            e.printStackTrace();
+            reportFailure("setNBTList", e);
         }
         return item;
     }
@@ -140,13 +146,14 @@ public class NbtUtil {
      * @return String
      */
     public String getNBT(ItemStack item, String key) {
+        if (!isUsable(item)) return null;
         try {
             Object result = getInst().getItemTagWrapper(item).get(key);
             if (result != null) {
                 return String.valueOf(result);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            reportFailure("getNBT", e);
         }
         return null;
     }
@@ -161,6 +168,7 @@ public class NbtUtil {
      */
     public List<String> getNBTList(ItemStack item, String key) {
         List<String> list = new ArrayList<>();
+        if (!isUsable(item)) return list;
         try {
             Object result = getInst().getItemTagWrapper(item).get(key);
             if (result instanceof List) {
@@ -170,7 +178,7 @@ public class NbtUtil {
                 return list;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            reportFailure("getNBTList", e);
         }
         return list;
     }
@@ -183,10 +191,11 @@ public class NbtUtil {
      * @return Boolean
      */
     public boolean hasNBT(ItemStack item, String key) {
+        if (!isUsable(item)) return false;
         try {
             return getInst().getItemTagWrapper(item).get(key) != null;
         } catch (Exception e) {
-            e.printStackTrace();
+            reportFailure("hasNBT", e);
         }
         return false;
     }
@@ -200,11 +209,25 @@ public class NbtUtil {
      * @return boolean
      */
     public boolean removeNBT(ItemStack item, String key) {
+        if (!isUsable(item)) return false;
         try {
             Object result = getInst().getItemTagWrapper(item).set(key, null);
             return result != null;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private boolean isUsable(ItemStack item) {
+        return item != null && item.getType() != Material.AIR;
+    }
+
+    /** NMS NBT 适配失败时只记录一次摘要，避免装备刷新和战斗事件持续输出完整堆栈。 */
+    private void reportFailure(String operation, Exception exception) {
+        if (failureLogged) return;
+        failureLogged = true;
+        SXAttribute.getInst().getLogger().severe("NBT adapter failed during " + operation
+                + "; NBT-dependent features will use safe defaults: " + exception.getClass().getSimpleName()
+                + ": " + exception.getMessage());
     }
 }

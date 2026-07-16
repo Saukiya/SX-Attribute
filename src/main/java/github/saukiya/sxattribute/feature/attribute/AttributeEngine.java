@@ -92,7 +92,7 @@ public class AttributeEngine implements Listener {
             boolean attackerSide = event != AttributeDefinition.AttributeTrigger.DAMAGE_DEFEND;
             Map<String, Double> variables = context.variablesFor(invocation.definition(), attackerSide);
             String when = invocation.trigger().getWhen();
-            if (when != null && FormulaUtil.eval(context.formulaPlayer(), when, variables, 0D) <= 0D) continue;
+            if (when != null && !FormulaUtil.evalCondition(context.formulaPlayer(), when, variables, false)) continue;
             for (Map<String, Object> action : invocation.trigger().getActions()) {
                 SXAttributeActionEvent pre = new SXAttributeActionEvent(invocation.definition().getId(), SXAttributeActionEvent.Phase.PRE, action, context);
                 Bukkit.getPluginManager().callEvent(pre);

@@ -65,7 +65,8 @@ public class StatsCommand extends SubCommand implements Listener {
     public void openStatsInventory(Player player, Player... openInvPlayer) {
         SXAttributeData attributeData = SXAttribute.getApi().getEntityData(player);
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__STATS__NAME));
-        ItemStack stainedGlass = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
+        // SX-Item 4.5.4 将 ReMaterial 从枚举改为兼容门面；按字符串解析可同时兼容新旧实现。
+        ItemStack stainedGlass = ReMaterial.getItem("BLACK_STAINED_GLASS_PANE");
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§c");
         stainedGlass.setItemMeta(glassMeta);
@@ -79,7 +80,7 @@ public class StatsCommand extends SubCommand implements Listener {
         if (SXAttribute.isPlaceholder()) {
             skullLoreList = PlaceholderAPI.setPlaceholders(player, skullLoreList);
         }
-        ItemStack skull = ReMaterial.PLAYER_HEAD.item();
+        ItemStack skull = ReMaterial.getItem("PLAYER_HEAD");
         ItemMeta skullMeta = skull.getItemMeta();
         skullMeta.setLore(skullLoreList);
         skullMeta.setDisplayName(Message.getMsg(Message.INVENTORY__STATS__SKULL_NAME, player.getDisplayName()));

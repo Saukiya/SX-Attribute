@@ -71,13 +71,29 @@ public class ForgeFeatureManager implements Listener {
     }
 
     private <T extends EquipmentFeature> T register(T feature) {
-        feature.reload();
-        features.put(feature.id().toLowerCase(), feature);
-        return feature;
+        try {
+            feature.reload();
+            features.put(feature.id().toLowerCase(), feature);
+            return feature;
+        } catch (RuntimeException | LinkageError exception) {
+            SXAttribute.getInst().getLogger().severe("Equipment feature " + feature.id()
+                    + " was disabled without affecting SX-Attribute: " + exception.getClass().getSimpleName()
+                    + ": " + exception.getMessage());
+            return null;
+        }
     }
 
     public void reload() {
-        features.values().forEach(EquipmentFeature::reload);
+        for (EquipmentFeature feature : new ArrayList<>(features.values())) {
+            try {
+                feature.reload();
+            } catch (RuntimeException | LinkageError exception) {
+                features.remove(feature.id().toLowerCase());
+                SXAttribute.getInst().getLogger().severe("Equipment feature " + feature.id()
+                        + " failed during reload and was disabled: " + exception.getClass().getSimpleName()
+                        + ": " + exception.getMessage());
+            }
+        }
         loadForgeConfig();
     }
 

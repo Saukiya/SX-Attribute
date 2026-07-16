@@ -90,7 +90,7 @@ Attributes:
       power: { Match: 残血攻击, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 1000 }
     Triggers:
       - Event: DAMAGE_DEFEND
-        When: "<c:<l:defender_health> / <l:defender_max_health> <= 0.3>"
+        When: "<c:<l:self_power> > 0 && <l:defender_health> / <l:defender_max_health> <= 0.3>"
         Actions:
           - Type: SOURCE_APPLY
             Target: DEFENDER

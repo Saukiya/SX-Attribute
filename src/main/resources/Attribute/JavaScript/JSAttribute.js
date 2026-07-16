@@ -65,7 +65,8 @@ function getBinding(player) {
  *
  */
 var JSRunnableManager = {
-    engine: jsManager.getEngineByName("JavaScript"),
+    // 复用 Java 侧按 SX-Item 类加载器发现的引擎，Java 21 下重新创建管理器会得到 null。
+    engine: SXAEngine,
 
     create: function (name) {
         var JSRunnable = {

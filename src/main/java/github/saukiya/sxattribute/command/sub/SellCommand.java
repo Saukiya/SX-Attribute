@@ -46,7 +46,8 @@ public class SellCommand extends SubCommand implements Listener {
      */
     public static void openSellInventory(Player player) {
         Inventory inv = Bukkit.createInventory(holder, 27, Message.getMsg(Message.INVENTORY__SELL__NAME));
-        ItemStack stainedGlass = ReMaterial.BLACK_STAINED_GLASS_PANE.item();
+        // 不直接链接 ReMaterial 枚举字段，兼容 SX-Item 4.5.4 的静态门面实现。
+        ItemStack stainedGlass = ReMaterial.getItem("BLACK_STAINED_GLASS_PANE");
         ItemMeta glassMeta = stainedGlass.getItemMeta();
         glassMeta.setDisplayName("§r");
         stainedGlass.setItemMeta(glassMeta);
@@ -54,7 +55,7 @@ public class SellCommand extends SubCommand implements Listener {
             inv.setItem(i, stainedGlass);
         }
 
-        ItemStack enterItem = ReMaterial.YELLOW_STAINED_GLASS_PANE.item();
+        ItemStack enterItem = ReMaterial.getItem("YELLOW_STAINED_GLASS_PANE");
         ItemMeta enterMeta = enterItem.getItemMeta();
         enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
         enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
