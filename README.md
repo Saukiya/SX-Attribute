@@ -18,6 +18,7 @@
 
 - Spigot
 - Paper
+- Folia
 - More...
 
 ## Support version

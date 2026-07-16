@@ -130,7 +130,7 @@ var JSRunnableManager = {
                     if (typeof value == "string") {
                         delay += parseInt(value.slice(6, value.length));
                     } else {
-                        Bukkit.getScheduler().runTaskLater(JSAttribute.getPlugin(), JSAttribute.createRunnable(value, JSAttribute.put(getBinding(player), "data", this.data)), delay);
+                        FoliaScheduler.runEntity(player, JSAttribute.getPlugin(), JSAttribute.createRunnable(value, JSAttribute.put(getBinding(player), "data", this.data)), delay);
                     }
                 }
                 return delay;
@@ -147,7 +147,7 @@ var JSRunnableManager = {
                             var playerName = this.players[playerKey];
                             var player = Bukkit.getPlayerExact(playerName);
                             if (player != null) {
-                                Bukkit.getScheduler().runTaskLater(JSAttribute.getPlugin(), JSAttribute.createRunnable(value, JSAttribute.put(getBinding(player), "data", this.data)), delay);
+                                FoliaScheduler.runEntity(player, JSAttribute.getPlugin(), JSAttribute.createRunnable(value, JSAttribute.put(getBinding(player), "data", this.data)), delay);
                             } else {
                                 for (var i = 0; i < this.players.length; i++) {
                                     if (this.players[i] === playerName) {
@@ -159,7 +159,7 @@ var JSRunnableManager = {
                         }
                     }
                 }
-                Bukkit.getScheduler().runTaskLater(JSAttribute.getPlugin(), JSAttribute.createRunnable(this.cycleRun, this.cycleBinding), delay === 0 ? 20 : delay);
+                FoliaScheduler.runSync(JSAttribute.getPlugin(), JSAttribute.createRunnable(this.cycleRun, this.cycleBinding), delay === 0 ? 20 : delay);
             }
         };
         JSRunnable.cycleBinding = this.engine.createBindings();

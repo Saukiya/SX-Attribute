@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class EventMessage extends SubAttribute implements Listener {
     public void onEnable() {
         if (SXAttribute.isHolographic()) {
             holoList = new ArrayList<>();
-            new BukkitRunnable() {
+            FoliaScheduler.runTimer(getPlugin(), new BukkitRunnable() {
                 @Override
                 public void run() {
                     double moveDistance = 0.1D / Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME);
@@ -48,7 +49,7 @@ public class EventMessage extends SubAttribute implements Listener {
                         }
                     }
                 }
-            }.runTaskTimer(getPlugin(), 20, 2);
+            }, 20, 2);
         }
     }
 

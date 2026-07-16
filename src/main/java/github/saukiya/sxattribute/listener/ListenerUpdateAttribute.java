@@ -15,6 +15,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 
 import java.util.Arrays;
 
@@ -45,13 +46,13 @@ public class ListenerUpdateAttribute implements Listener {
      * @param player Player
      */
     private void updateEquipmentData(Player player) {
-        new BukkitRunnable() {
+        FoliaScheduler.runEntity(player, SXAttribute.getInst(), new BukkitRunnable() {
             @Override
             public void run() {
                 SXAttribute.getAttributeManager().loadEntityData(player, true);
                 SXAttribute.getAttributeManager().attributeUpdateEvent(player);
             }
-        }.runTaskAsynchronously(SXAttribute.getInst());
+        }, 1);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -126,7 +127,7 @@ public class ListenerUpdateAttribute implements Listener {
         if (SXAttribute.isHigherVersion()) {
             entity.setInvulnerable(true);
         }
-        new BukkitRunnable() {
+        FoliaScheduler.runEntity(entity, SXAttribute.getInst(), new BukkitRunnable() {
             @Override
             public void run() {
                 if (entity != null && !entity.isDead()) {
@@ -137,7 +138,7 @@ public class ListenerUpdateAttribute implements Listener {
                     }
                 }
             }
-        }.runTaskLaterAsynchronously(SXAttribute.getInst(), 16);
+        }, 16);
     }
 
     @EventHandler

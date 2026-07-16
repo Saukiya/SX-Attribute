@@ -1,10 +1,12 @@
+import org.gradle.api.attributes.java.TargetJvmVersion
+
 plugins {
     id 'com.gradleup.shadow' version '8.3.9'
 }
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '3.9.2'
+version '3.9.3'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -29,6 +31,8 @@ repositories {
     maven { url "https://repo.codemc.io/repository/maven-public" }
     // CraftBukkit
     maven { url 'https://repo.codemc.io/repository/nms/' }
+    // Folia API
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
     // Github Project
     maven { url 'https://jitpack.io' }
 }
@@ -37,10 +41,19 @@ dependencies {
     implementation 'org.bstats:bstats-bukkit:2.2.1'
     compileOnly fileTree('lib')
 
+    // Folia API must precede the legacy Spigot server jar so its scheduler methods are visible to javac.
+    compileOnly('dev.folia:folia-api:1.20.6-R0.1-SNAPSHOT') {
+        attributes {
+            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 21)
+        }
+    }
     compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
     compileOnly 'io.lumine.xikage:MythicMobs:4.9.1'
     compileOnly 'io.lumine:Mythic-Dist:5.2.1'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9'
+    // 仅需编译期的 DHAPI/Hologram API 类, 运行时由服务器实际安装的 DecentHolograms 提供(API 向后兼容);
+    // 选用 2.8.6 单体 jar: 含完整 api 包且未声明 JDK 变体, 规避新版聚合坐标 nms-* 子模块要求高版本 JDK 的解析冲突
+    compileOnly('com.github.decentsoftware-eu:decentholograms:2.8.6') { transitive = false }
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
 
     compileOnly 'org.projectlombok:lombok:1.18.46'

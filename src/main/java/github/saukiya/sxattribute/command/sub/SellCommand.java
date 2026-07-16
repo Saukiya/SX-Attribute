@@ -126,12 +126,13 @@ public class SellCommand extends SubCommand implements Listener {
                             enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__NO_SELL));
                         } else {
                             enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__ENTER));
-                            enterMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                            // 按注册名获取耐久附魔，避免依赖已从新 API 移除的静态常量。
+                            enterMeta.addEnchant(Enchantment.getByName("DURABILITY"), 1, true);
                         }
                     } else {
                         enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__OUT, sell));
                         enterMeta.setLore(new ArrayList<>());
-                        enterMeta.removeEnchant(Enchantment.DURABILITY);
+                        enterMeta.removeEnchant(Enchantment.getByName("DURABILITY"));
                         MoneyUtil.give(player, sell);
                         Message.send(player, Message.PLAYER__SELL, size, sell);
                     }
@@ -139,7 +140,7 @@ public class SellCommand extends SubCommand implements Listener {
                     return;
                 }
             }
-            enterMeta.removeEnchant(Enchantment.DURABILITY);
+            enterMeta.removeEnchant(Enchantment.getByName("DURABILITY"));
             enterMeta.setDisplayName(Message.getMsg(Message.INVENTORY__SELL__SELL));
             enterMeta.setLore(Message.getStringList(Message.INVENTORY__SELL__LORE__DEFAULT));
             enterItem.setItemMeta(enterMeta);

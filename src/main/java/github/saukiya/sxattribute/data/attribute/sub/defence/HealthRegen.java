@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +74,7 @@ public class HealthRegen extends SubAttribute {
 
     @Override
     public void onEnable() {
-        runnable.runTaskTimer(getPlugin(), 19, 20);
+        FoliaScheduler.runTimer(getPlugin(), runnable, 19, 20);
     }
 
     @Override

@@ -1,0 +1,162 @@
+[align=center][size=6][b][color=#8e44ad]SX-Attribute[/color][/b][/size]
+[size=4][color=#7f8c8d]跨版本 · 公式驱动 · 多属性源 的 Minecraft 属性管理插件[/color][/size][/align]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 插件简介[/color][/b][/size]
+
+[b]SX-Attribute[/b] 是一款为服务器提供 [b]RPG 属性系统[/b] 的插件：通过在物品 Lore 上书写属性词条（如 [color=#c0392b]攻击力: 10-20[/color]、[color=#c0392b]暴击几率: 30[/color]），即可为玩家/生物赋予战斗与功能属性，并接管原版伤害计算。
+
+本版本进行了核心重构，主打三件事：
+[list]
+[*][b]集中配置[/b] —— 全部属性统一到一个 [color=#16a085]Attributes.yml[/color]，一处调整默认值 / 上下限 / 生效公式 / 开关 / 面板显示。
+[*][b]公式驱动[/b] —— 属性如何生效由可编辑的公式决定（基于 SX-Item 表达式引擎），并支持 PlaceholderAPI 变量。
+[*][b]多属性源[/b] —— 实体最终属性 = 若干独立命名源之和，装备 / 药水 / 脚本 / 职业等来源分别记录、分别清理、互不叠加。
+[/list]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 特性亮点[/color][/b][/size]
+
+[list]
+[*][color=#27ae60][b]跨版本[/b][/color]：运行期解析属性，兼容 1.8 ~ 1.21.x 乃至 26.x 新版本号方案；高版本新属性按版本号精确门控，低版本自动跳过不报错。
+[*][color=#27ae60][b]海量原版属性[/b][/color]：体型、跳跃力、重力、挖掘速度、交互距离、击退抗性、幸运、视距等数十种原版属性开箱即用。
+[*][color=#27ae60][b]完整战斗系统[/b][/color]：攻击力(区间/PVP/PVE)、暴击、破甲、吸血、格挡、反射、闪避、韧性、点燃、雷霆、撕裂、药水攻击……核心数学均可用公式自定义。
+[*][color=#27ae60][b]属性面板[/b][/color]：[color=#c0392b]/sxa stats[/color] 图形化查看属性，分区展示，可由配置自动生成。
+[*][color=#27ae60][b]多属性源 + 事件[/b][/color]：命名源可单独增/改/删，提供添加(可取消)/移除事件，支持静态源；持久化源随玩家存档保存。
+[*][color=#27ae60][b]生态兼容[/b][/color]：PlaceholderAPI、Vault、HolographicDisplays、RPGInventory、MythicMobs、SkillAPI。
+[/list]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 依赖与兼容[/color][/b][/size]
+
+[table]
+[tr][td][b]项目[/b][/td][td][b]说明[/b][/td][/tr]
+[tr][td]服务端[/td][td]Spigot / Paper / Folia（及衍生端）[/td][/tr]
+[tr][td]版本[/td][td]1.8 ~ 最新（含 26.x）[/td][/tr]
+[tr][td][color=#c0392b]前置(必需)[/color][/td][td][b]SX-Item[/b]（属性/物品与表达式引擎）[/td][/tr]
+[tr][td]可选(软依赖)[/td][td]PlaceholderAPI、Vault、HolographicDisplays、RPGInventory、MythicMobs、SkillAPI[/td][/tr]
+[/table]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 安装[/color][/b][/size]
+
+[list=1]
+[*]将 [b]SX-Item[/b] 与 [b]SX-Attribute[/b] 放入服务器 [color=#16a085]plugins[/color] 目录。
+[*]启动服务器生成配置文件。
+[*]按需编辑 [color=#16a085]Attributes.yml[/color] / [color=#16a085]Config.yml[/color] / [color=#16a085]Message.yml[/color]，执行 [color=#c0392b]/sxa reload[/color] 生效。
+[/list]
+
+[color=#e67e22][b]※ 升级提示：[/b][/color]从旧版本升级后，建议删除旧的 [color=#16a085]Attribute/SX-Attribute/[/color] 目录，让插件按新结构（Attributes.yml）重建。
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 内置属性一览[/color][/b][/size]
+
+[b][color=#c0392b]【攻击】[/color][/b] 攻击力(区间/PVP/PVE)、命中几率、破甲几率、暴击几率、暴伤增幅、吸血几率、吸血倍率、点燃几率、雷霆几率、撕裂几率、药水攻击(致盲/凋零/减速/中毒/夺食)、攻击距离、攻击击退、横扫比例
+
+[b][color=#2980b9]【防御】[/color][/b] 防御力(区间/PVP/PVE)、生命上限、生命恢复、闪避几率、韧性、反射几率、反射比例、格挡几率、格挡比例、击退抗性、爆炸击退抗性、摔落保护、摔伤倍率、燃烧时长
+
+[b][color=#16a085]【移动】[/color][/b] 移速增幅、体型增幅、跳跃力、重力、自动上阶、潜行速度、移动效率、水中移动效率、飞行速度、弹性、摩擦修正、空气阻力修正
+
+[b][color=#d35400]【采集】[/color][/b] 交互距离、挖掘效率、挖掘速度、水下挖掘速度、氧气加成
+
+[b][color=#8e44ad]【其他】[/color][/b] 经验增幅、攻速增幅、幸运、视距、定位栏发送范围、定位栏接收范围、名牌距离、指令属性
+
+[color=#7f8c8d](部分属性需对应 MC 版本；低版本会自动跳过不注册。)[/color]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 中央配置 Attributes.yml[/color][/b][/size]
+
+一个属性一个节点，[b]DiscernName[/b] 即物品 Lore 里书写的识别名。数值型属性支持 [b]Formula[/b] 生效公式：
+
+[code]Scale:                       # 体型
+  DiscernName: 体型增幅        # 物品词条前缀
+  Enable: true               # 开关
+  Default: 1.0               # 原版默认基值
+  Min: -100
+  Max: 2147483647
+  Mode: PERCENT              # 无公式时的预设算法
+  # 公式变量: <l:value>=词条填写值  <l:default>=默认基值  <l:base>=当前基值
+  Formula: "<c:<l:default> * (100 + <l:value>) / 100>"
+  Display:                   # /stats 面板显示
+    Category: MOVEMENT
+    Order: 2
+    Rows:
+      - placeholder: Scale
+        label: 体型增幅
+        color: "&d"
+        suffix: "%"[/code]
+
+[list]
+[*]公式语法（SX-Item）：外层 [color=#c0392b]<c: 数学式>[/color] 求值，变量用 [color=#c0392b]<l:名>[/color]，随机 [color=#c0392b]<d:a_b>[/color] / [color=#c0392b]<i:a_b>[/color]，并支持 [color=#c0392b]%PlaceholderAPI%[/color]。
+[*]未安装 SX-Item 时忽略公式，回退到 [b]Mode[/b] 预设（PERCENT/ADD/RATIO）。
+[*][b]Settings.AutoPanel[/b] 开启后，[color=#c0392b]/sxa stats[/color] 面板由各属性 [b]Display[/b] 自动生成。
+[/list]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 指令[/color][/b][/size]
+
+主命令 [color=#c0392b]/sxa[/color]（别名 [color=#c0392b]/sx[/color] [color=#c0392b]/sa[/color]）
+
+[table]
+[tr][td][b]指令[/b][/td][td][b]功能[/b][/td][/tr]
+[tr][td]/sxa stats [玩家][/td][td]查看属性面板[/td][/tr]
+[tr][td]/sxa give <物品> [玩家] [数量][/td][td]给予 RPG 物品[/td][/tr]
+[tr][td]/sxa save [类型][/td][td]保存手持物品到配置[/td][/tr]
+[tr][td]/sxa nbt[/td][td]查看手持物品 NBT[/td][/tr]
+[tr][td]/sxa attributelist / conditionlist[/td][td]查看属性 / 条件列表[/td][/tr]
+[tr][td]/sxa reload[/td][td]重载配置（在线玩家即时重算）[/td][/tr]
+[tr][td][color=#16a085]/sxa source [玩家][/color][/td][td]查看玩家各属性来源[/td][/tr]
+[tr][td][color=#16a085]/sxa statssource [玩家][/color][/td][td]打开属性源统计面板[/td][/tr]
+[tr][td][color=#16a085]/sxa update [玩家][/color][/td][td]刷新玩家属性[/td][/tr]
+[tr][td][color=#16a085]/sxa persistent <玩家> <源名> <属性...>[/color][/td][td]新增持久化属性源[/td][/tr]
+[tr][td][color=#16a085]/sxa del-persistent <玩家> <源名>[/color][/td][td]删除持久化属性源[/td][/tr]
+[/table]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 多属性源（进阶）[/color][/b][/size]
+
+一个实体的最终属性 = 若干独立命名源之和；[b]同名源写入即替换，不会叠加[/b]。
+
+[table]
+[tr][td][b]来源标识[/b][/td][td][b]场景[/b][/td][/tr]
+[tr][td]装备-主手 / 副手 / 盔甲 / 槽位 / RPG栏[/td][td]内部物品（按位置分组，自动重建）[/td][/tr]
+[tr][td]力量加成 等自定义名[/td][td]脚本 / 插件注入的动态属性[/td][/tr]
+[tr][td]默认[/td][td]Config 默认属性（独立展示）[/td][/tr]
+[/table]
+
+[b]持久化源[/b]：高版本(1.14+) 使用 MC 原生 PersistentDataContainer 随存档保存；低版本每玩家一个独立 yml。玩家上线自动重新施加。
+
+[b]示例：[/b]
+[code]# 给玩家永久 +50 攻击、+10% 暴击几率(存盘, 跨重连)
+/sxa persistent Steve 力量加成 攻击伤害: 50, 暴击几率: 10
+/sxa source Steve
+/sxa del-persistent Steve 力量加成[/code]
+
+[hr]
+
+[size=5][b][color=#2980b9]■ 开发者 API[/color][/b][/size]
+
+[code]SXAPI api = SXAttribute.getApi();
+
+// 添加/覆盖一个命名源(解析词条), 不叠加; 触发可取消事件
+api.addSourceAttribute(player, "力量加成", Arrays.asList("攻击伤害: 50"), true);
+
+// 静态源: 内部计算后批量注入, 不触发事件
+api.createStaticAttributeSource(player, "职业系统", data, true);
+
+// 移除某源 / 查询
+api.takeSourceAttribute(player, "力量加成");
+api.getSourceNames(player.getUniqueId());[/code]
+
+事件：[color=#c0392b]SXAttributeSourceAddEvent[/color]（可取消 / 可改注入值）、[color=#c0392b]SXAttributeSourceRemoveEvent[/color]（通知）。
+
+[hr]
+
+[align=center][size=3][color=#7f8c8d]原作者 Saukiya · 本插件仅发布于 MCBBS · 有问题请提交 Issue 或论坛回帖[/color][/size][/align]

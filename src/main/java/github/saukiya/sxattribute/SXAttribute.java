@@ -21,6 +21,9 @@ import github.saukiya.sxattribute.data.itemdata.sub.GeneratorImport;
 import github.saukiya.sxattribute.data.itemdata.sub.GeneratorSX;
 import github.saukiya.sxattribute.listener.*;
 import github.saukiya.sxattribute.util.*;
+import github.saukiya.sxattribute.util.hologram.DecentHologramsProvider;
+import github.saukiya.sxattribute.util.hologram.HologramProvider;
+import github.saukiya.sxattribute.util.hologram.HolographicDisplaysProvider;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -98,6 +101,12 @@ public class SXAttribute extends JavaPlugin {
 
     @Getter
     private static boolean placeholder, holographic, vault, rpgInventory, mythicMobs;
+
+    /**
+     * 全息显示提供者. 优先 HolographicDisplays, 其次 DecentHolograms, 均无则为 null.
+     */
+    @Getter
+    private static HologramProvider hologramProvider;
 
     @Getter
     private static MainCommand mainCommand;
@@ -246,6 +255,7 @@ public class SXAttribute extends JavaPlugin {
                 Object arrays = method.invoke(null, Arrays.class);
                 Object sxAttributeType = method.invoke(null, AttributeType.class);
                 Object sxAttribute = method.invoke(null, SXAttribute.class);
+                Object foliaScheduler = method.invoke(null, FoliaScheduler.class);
                 Object bukkit = method.invoke(null, Bukkit.class);
                 for (File jsFile : jsAttributeFiles.listFiles()) {
                     if (jsFile.getName().endsWith(".js")) {
@@ -253,6 +263,7 @@ public class SXAttribute extends JavaPlugin {
                         engine.put("Arrays", arrays);
                         engine.put("SXAttributeType", sxAttributeType);
                         engine.put("SXAttribute", sxAttribute);
+                        engine.put("FoliaScheduler", foliaScheduler);
                         engine.put("Bukkit", bukkit);
                         engine.put("API", api);
                         try {
@@ -305,10 +316,15 @@ public class SXAttribute extends JavaPlugin {
             SXAttribute.getInst().getLogger().warning("No Find Vault!");
         }
 
+        // 全息插件二选一: 优先 HolographicDisplays, 其次 DecentHolograms
         if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+            hologramProvider = new HolographicDisplaysProvider();
+            holographic = true;
+        } else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
+            hologramProvider = new DecentHologramsProvider();
             holographic = true;
         } else {
-            SXAttribute.getInst().getLogger().warning("No Find HolographicDisplays!");
+            SXAttribute.getInst().getLogger().warning("No Find HolographicDisplays or DecentHolograms!");
         }
 
         ListenerMythicMobs.setup();
@@ -373,7 +389,7 @@ public class SXAttribute extends JavaPlugin {
             try {
                 listenerHealthChange.cancel();
             } catch (IllegalStateException ignored) {
-                // BukkitRunnable 未被调度时 cancel() 会抛 IllegalStateException, 忽略
+                // 兼容旧版调度器在任务尚未注册时抛出的取消异常。
             }
         }
     }

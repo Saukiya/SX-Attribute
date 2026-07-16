@@ -8,7 +8,6 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -19,13 +18,13 @@ public class Placeholders {
 
     static Map<UUID, SXAttributeData> dataMap = new HashMap<>();
 
-    static BukkitTask task;
+    static Object task;
 
     public Placeholders() {
         if (task != null) {
-            Bukkit.getScheduler().cancelTask(task.getTaskId());
+            FoliaScheduler.cancel(task);
         }
-        task = Bukkit.getScheduler().runTaskTimer(SXAttribute.getInst(), () -> dataMap.clear(), 20, 20);
+        task = FoliaScheduler.runTimer(SXAttribute.getInst(), () -> dataMap.clear(), 20, 20);
         Placeholder.register(SXAttribute.getInst(), "sx");
     }
 

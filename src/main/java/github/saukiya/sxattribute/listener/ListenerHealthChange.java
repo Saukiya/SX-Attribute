@@ -1,10 +1,9 @@
 package github.saukiya.sxattribute.listener;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.Message;
+import github.saukiya.sxattribute.util.hologram.HologramProvider;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -23,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -32,6 +32,8 @@ import java.util.List;
  * @author Saukiya
  */
 public class ListenerHealthChange extends BukkitRunnable implements Listener {
+
+    private Object scheduledTask;
 
     @Getter
     private List<BossBarData> bossList = new ArrayList<>();
@@ -43,7 +45,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
     private List<HoloData> holoList = new ArrayList<>();
 
     public ListenerHealthChange() {
-        runTaskTimer(SXAttribute.getInst(), 20, 20);
+        scheduledTask = FoliaScheduler.runTimer(SXAttribute.getInst(), this, 20, 20);
     }
 
     @Override
@@ -78,7 +80,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
 
     @Override
     public synchronized void cancel() throws IllegalStateException {
-        super.cancel();
+        FoliaScheduler.cancel(scheduledTask);
         for (BossBarData bossBarData : getBossList()) {
             bossBarData.getBossBar().removeAll();
         }
@@ -162,9 +164,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
             Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() / 2, 0);
             loc.setYaw(entity.getLocation().getYaw() - 90);
             loc.add(loc.getDirection().multiply(0.8D));
-            HoloData holoData = new HoloData(HologramsAPI.createHologram(SXAttribute.getInst(), loc));
-            holoData.getHologram().appendTextLine(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HURT, event.getFinalDamage()));
-
+            new HoloData(SXAttribute.getHologramProvider().create(loc, Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HURT, event.getFinalDamage())));
         }
 
         if (Config.isHealthNameVisible()) {
@@ -222,8 +222,7 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
             Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() * 1.5, 0);
             loc.setYaw(entity.getLocation().getYaw() + 90);
             loc.add(loc.getDirection().multiply(0.8D));
-            HoloData holoData = new HoloData(HologramsAPI.createHologram(SXAttribute.getInst(), loc));
-            holoData.getHologram().appendTextLine(Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HEALTH, SXAttribute.getDf().format(event.getAmount())));
+            new HoloData(SXAttribute.getHologramProvider().create(loc, Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HEALTH, SXAttribute.getDf().format(event.getAmount()))));
         }
         for (NameData data : nameList) {
             if (entity.equals(data.getEntity())) {
@@ -284,11 +283,11 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
     @Getter
     public class HoloData {
 
-        private Hologram hologram;
+        private HologramProvider.Handle hologram;
 
         private long clearTime = System.currentTimeMillis() + (Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME) * 1000);
 
-        HoloData(Hologram hologram) {
+        HoloData(HologramProvider.Handle hologram) {
             this.hologram = hologram;
             getHoloList().add(this);
         }

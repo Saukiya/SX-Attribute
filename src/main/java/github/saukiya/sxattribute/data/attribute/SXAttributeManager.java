@@ -13,6 +13,7 @@ import github.saukiya.sxattribute.event.SXPreLoadItemEvent;
 import github.saukiya.sxattribute.util.AttributeConfig;
 import github.saukiya.sxattribute.util.Config;
 import org.bukkit.Bukkit;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -309,7 +310,8 @@ public class SXAttributeManager implements Listener {
      * @param entity Player
      */
     public void attributeUpdateEvent(LivingEntity entity) {
-        Bukkit.getScheduler().runTask(SXAttribute.getInst(), () -> {
+        // 属性更新必须回到实体所属区域线程，否则 Folia 会拒绝修改实体状态。
+        FoliaScheduler.runEntity(entity, SXAttribute.getInst(), () -> {
             UpdateData updateData = new UpdateData(entity);
             SXAttributeData attributeData = getEntityData(entity);
             for (SubAttribute attribute : SubAttribute.getAttributes()) {
@@ -317,7 +319,7 @@ public class SXAttributeManager implements Listener {
                     attribute.eventMethod(attributeData.getValues()[attribute.getPriority()], updateData);
                 }
             }
-        });
+        }, 1);
     }
 
     public void loadDefaultAttributeData() {

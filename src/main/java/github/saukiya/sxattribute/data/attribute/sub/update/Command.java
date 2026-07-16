@@ -7,6 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.UpdateData;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -178,7 +179,7 @@ public class Command extends SubAttribute implements Listener {
                 if (command.startsWith("delay ")) {
                     delay = Integer.parseInt(command.substring(6));
                 } else {
-                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.dispatchCommand(sxSender, (SXAttribute.isPlaceholder() ? PlaceholderAPI.setPlaceholders(player, command) : command).replace("%player%", player.getName())), delay);
+                    FoliaScheduler.runEntity(player, getPlugin(), () -> Bukkit.dispatchCommand(sxSender, (SXAttribute.isPlaceholder() ? PlaceholderAPI.setPlaceholders(player, command) : command).replace("%player%", player.getName())), delay);
                 }
             }
         }
@@ -189,7 +190,7 @@ public class Command extends SubAttribute implements Listener {
                 if (command.startsWith("delay ")) {
                     delay = Integer.parseInt(command.substring(6));
                 } else {
-                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+                    FoliaScheduler.runSync(getPlugin(), () -> {
                         for (String playerName : players) {
                             Player player = Bukkit.getPlayerExact(playerName);
                             if (player != null) {
@@ -199,7 +200,7 @@ public class Command extends SubAttribute implements Listener {
                     }, delay);
                 }
             }
-            Bukkit.getScheduler().runTaskLater(getPlugin(), this::run, delay == 0 ? 20 : delay);
+            FoliaScheduler.runSync(getPlugin(), this::run, delay == 0 ? 20 : delay);
         }
     }
 

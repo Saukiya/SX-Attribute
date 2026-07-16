@@ -10,9 +10,8 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import github.saukiya.sxattribute.util.FoliaScheduler;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +50,7 @@ public class Tearing extends SubAttribute {
                 int size = SXAttribute.getRandom().nextInt(3) + 1;
                 // 每跳撕裂伤害公式 (变量 health=目标当前生命); 默认 生命/100
                 double tearingDamage = formula(damageData.getDefender(), "Formula.Tearing", damageData.getDefender().getHealth() / 100, "health", damageData.getDefender().getHealth());
-                new BukkitRunnable() {
+                FoliaScheduler.runEntityTimer(damageData.getDefender(), getPlugin(), new BukkitRunnable() {
                     int i = 0;
 
                     @Override
@@ -60,9 +59,9 @@ public class Tearing extends SubAttribute {
                         if (i >= 12 / size || damageData.getDefender().isDead() || damageData.getEvent().isCancelled())
                             cancel();
                         damageData.getDefender().playEffect(EntityEffect.HURT);
-                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(damageData.getAttacker(), damageData.getDefender(), EntityDamageEvent.DamageCause.CUSTOM, tearingDamage);
-                        if (!event.isCancelled()) {
-                            double damage = damageData.getDefender().getHealth() < event.getDamage() ? damageData.getDefender().getHealth() : event.getDamage();
+                        // 这里没有发布合成事件，旧构造器已被新 API 标记移除；直接使用公式伤害可保持跨版本行为一致。
+                        if (!damageData.getEvent().isCancelled()) {
+                            double damage = Math.min(damageData.getDefender().getHealth(), tearingDamage);
                             damageData.getDefender().setHealth(damageData.getDefender().getHealth() - damage);
                             if (SXAttribute.isHigherVersion()) {
                                 damageData.getDefender().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, damageData.getDefender().getEyeLocation().add(0, -1, 0), 2, 0.2D, 0.2D, 0.2D, 0.1f);
@@ -79,7 +78,7 @@ public class Tearing extends SubAttribute {
 
                         }
                     }
-                }.runTaskTimer(getPlugin(), 5, size);
+                }, 5, size);
                 if (isMessageEnabled()) damageData.sendHolo(getString("Message.Holo", getDf().format(tearingDamage * 12 / size)));
                 send(damageData.getAttacker(), "Message.Battle", damageData.getDefenderName(), getFirstPerson(), getDf().format(tearingDamage * 12 / size));
                 send(damageData.getDefender(), "Message.Battle", getFirstPerson(), damageData.getAttackerName(), getDf().format(tearingDamage * 12 / size));

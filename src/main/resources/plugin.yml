@@ -3,12 +3,15 @@ main: github.saukiya.sxattribute.SXAttribute
 version: $version
 author: Saukiya
 api-version: 1.13
+# Folia 通过该标记确认插件已使用区域/全局调度器适配。
+folia-supported: true
 
 depend:
   - SX-Item
 
 softdepend:
 - HolographicDisplays
+- DecentHolograms
 - PlaceholderAPI
 - RPGInventory
 - MythicMobs
