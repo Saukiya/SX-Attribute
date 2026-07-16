@@ -1,0 +1,7 @@
+Success: "&a强化操作完成"
+MaxLevel: "&c已达到最高等级"
+Protected: "&e强化失败，但装备受到保护"
+Downgrade: "&c强化失败并降低等级"
+Reset: "&c强化失败并重置等级"
+Destroy: "&4强化失败，装备已损毁"
+Keep: "&c强化失败，等级保持不变"

@@ -31,6 +31,15 @@ public class ReloadCommand extends SubCommand {
         long oldTimes = System.currentTimeMillis();
         Config.loadConfig();
         github.saukiya.sxattribute.util.AttributeConfig.load();
+        if (SXAttribute.getAttributeEngine() != null) {
+            SXAttribute.getAttributeEngine().reload();
+        }
+        if (SXAttribute.getSourceService() != null) {
+            SXAttribute.getSourceService().reload();
+        }
+        if (SXAttribute.getForgeFeatureManager() != null) {
+            SXAttribute.getForgeFeatureManager().reload();
+        }
         Message.loadMessage();
         SXAttribute.getRandomStringManager().loadData();
         SXAttribute.getItemDataManager().loadItemData();

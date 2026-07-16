@@ -6,7 +6,7 @@ plugins {
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '3.9.3'
+version '4.0.0-beta.1'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,12 +37,29 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+configurations {
+    // 单元测试会直接构造 Bukkit 的 YAML 配置对象，但服务端 API 仍必须保持 compileOnly，不能打进插件包。
+    testCompileOnly.extendsFrom compileOnly
+}
+
 dependencies {
     implementation 'org.bstats:bstats-bukkit:2.2.1'
+    // 来源持久化与多服协调。驱动随插件打包，服主只需在 Feature/Source/Config.yml 选择后端。
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'org.xerial:sqlite-jdbc:3.45.3.0'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'org.postgresql:postgresql:42.7.3'
+    implementation 'redis.clients:jedis:4.4.6'
     compileOnly fileTree('lib')
 
     // Folia API must precede the legacy Spigot server jar so its scheduler methods are visible to javac.
     compileOnly('dev.folia:folia-api:1.20.6-R0.1-SNAPSHOT') {
+        attributes {
+            attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 21)
+        }
+    }
+    // 测试运行时只使用 API 包，避免本地完整 Spigot 服务端 JAR 内嵌的旧 SnakeYAML 污染类路径。
+    testRuntimeOnly('dev.folia:folia-api:1.20.6-R0.1-SNAPSHOT') {
         attributes {
             attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 21)
         }
@@ -58,18 +75,31 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.46'
     annotationProcessor 'org.projectlombok:lombok:1.18.46'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 shadowJar {
     // 过滤未使用的依赖
-    minimize()
+    minimize {
+        // JDBC 驱动由配置字符串选择，静态分析无法看到引用，不能被 minimize 删除。
+        exclude(dependency('org.xerial:sqlite-jdbc:.*'))
+        exclude(dependency('mysql:mysql-connector-java:.*'))
+        exclude(dependency('org.postgresql:postgresql:.*'))
+    }
+    mergeServiceFiles()
     // bStats重定向
     relocate('org.bstats', 'github.saukiya.sxattribute.bstats')
+    relocate('com.zaxxer.hikari', 'github.saukiya.sxattribute.libs.hikari')
+    relocate('redis.clients.jedis', 'github.saukiya.sxattribute.libs.jedis')
 }
 
 tasks.build.finalizedBy shadowJar
-//gradle 需要对文件中含有的'$'进行转义: $ -> \$
-processResources.expand(version: version)
+processResources {
+    // 仅 plugin.yml 需要注入版本号；其它配置包含公式与转义符，不能作为 Groovy 模板展开。
+    filesMatching('plugin.yml') {
+        expand(version: version)
+    }
+}
 tasks.build.finalizedBy shadowJar
 buildCopyTask('buildLatestJar', "$rootDir\\build", "Latest")
 

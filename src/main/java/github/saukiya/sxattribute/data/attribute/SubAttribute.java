@@ -93,7 +93,7 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
      * 加载配置文件
      */
     public final SubAttribute loadConfig() {
-        // 中央化: 本插件属性把 config() 重定向到 Attributes.yml 对应节点, 并把 defaultConfig()
+        // 中央化: 本插件属性把 config() 重定向到 Feature/Attribute 聚合视图对应节点, 并把 defaultConfig()
         // 的缺省键自动播种进节点(仅补缺, 不覆盖用户已填)。key 名与旧 <Name>.yml 一致, 读取逻辑无需改动。
         boolean own = getPlugin() != null && getPlugin().equals(SXAttribute.getInst());
         YamlConfiguration def = own ? defaultConfig(new YamlConfiguration()) : null;
@@ -273,7 +273,7 @@ public abstract class SubAttribute extends Message.Tool implements Comparable<Su
         if (getPlugin() == null) {
             SXAttribute.getInst().getLogger().warning("Attribute >>  [NULL|" + getName() + "] Null Plugin!");
         } else if (!AttributeConfig.isEnabled(getName())) {
-            SXAttribute.getInst().getLogger().info("Attribute >> Disable By Attributes.yml [" + getPlugin().getName() + "|" + getName() + "] !");
+            SXAttribute.getInst().getLogger().info("Attribute >> Disable By Feature/Attribute [" + getPlugin().getName() + "|" + getName() + "] !");
         } else if (getPriority() < 0) {
             SXAttribute.getInst().getLogger().warning("Attribute >> Disable [" + getPlugin().getName() + "|" + getName() + "] !");
         } else if (Bukkit.getPluginManager().getPlugin("SX-Attribute").isEnabled()) {

@@ -298,7 +298,12 @@ public class SXAttributeManager implements Listener {
         SXAttributeData sxAttributeData = new SXAttributeData();
         list.stream().map(str -> str.split("§X")[0]).filter(s -> s.length() > 0).forEach(s -> {
             for (SubAttribute attribute : SubAttribute.getAttributes()) {
-                attribute.loadAttribute(sxAttributeData.getValues()[attribute.getPriority()], s);
+                if (AttributeConfig.isEnabled(attribute.getName())) {
+                    attribute.loadAttribute(sxAttributeData.getValues()[attribute.getPriority()], s);
+                }
+            }
+            if (SXAttribute.getAttributeEngine() != null) {
+                SXAttribute.getAttributeEngine().parseLore(sxAttributeData, s);
             }
         });
         return sxAttributeData;
@@ -315,7 +320,7 @@ public class SXAttributeManager implements Listener {
             UpdateData updateData = new UpdateData(entity);
             SXAttributeData attributeData = getEntityData(entity);
             for (SubAttribute attribute : SubAttribute.getAttributes()) {
-                if (attribute.containsType(AttributeType.UPDATE)) {
+                if (AttributeConfig.isEnabled(attribute.getName()) && attribute.containsType(AttributeType.UPDATE)) {
                     attribute.eventMethod(attributeData.getValues()[attribute.getPriority()], updateData);
                 }
             }

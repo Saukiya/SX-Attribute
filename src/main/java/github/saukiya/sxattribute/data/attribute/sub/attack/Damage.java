@@ -99,14 +99,20 @@ public class Damage extends SubAttribute implements Listener {
             }
 
 
-            damageData.addDamage(((!Config.isDamageGauges() || event.getDamager() instanceof Projectile) || !(event.getDamager() instanceof Player)) || !SXAttribute.isHigherVersion() ? getAttribute(values, TYPE_DEFAULT) : getAttribute(values, TYPE_DEFAULT) - values[0]);
+            double defaultDamage = getAttribute(values, TYPE_DEFAULT);
+            if (usesVanillaAttackDamage(event)) {
+                // 高版本玩家近战已由原版攻击属性贡献一部分伤害，因此这里只补足 SX 掷点结果。
+                // 原版会按 Spigot 上限裁剪属性基值，扣减时必须使用实际写入值，否则超上限部分会被误抵消。
+                defaultDamage -= getVanillaAttackDamage(values[0]);
+            }
+            damageData.addDamage(defaultDamage);
 
             damageData.addDamage(getAttribute(values, event.getEntity() instanceof Player ? TYPE_PVP : TYPE_PVE));
             // 如果该事件更新事件，并且更新目标为玩家
         } else if (eventData instanceof UpdateData && ((UpdateData) eventData).getEntity() instanceof Player && SXAttribute.isHigherVersion()) {
             AttributeInstance instance = AttributeUtil.getInstance(((UpdateData) eventData).getEntity(), "ATTACK_DAMAGE", "GENERIC_ATTACK_DAMAGE");
             if (instance != null) {
-                instance.setBaseValue(Config.isDamageGauges() ? values[0] : values[1] == 0D ? 1 : 0.01);
+                instance.setBaseValue(Config.isDamageGauges() ? getVanillaAttackDamage(values[0]) : values[1] == 0D ? 1 : 0.01);
             }
         }
     }
@@ -160,6 +166,25 @@ public class Damage extends SubAttribute implements Listener {
         return formula((Player) null, "Formula", fallback, "min", min, "max", max);
     }
 
+    /**
+     * 判断当前事件是否已经包含玩家的原版攻击属性伤害。
+     * 投射物、非玩家攻击与旧版本不会经过同一套原版属性同步流程，不能从 SX 伤害中扣减基值。
+     */
+    private boolean usesVanillaAttackDamage(EntityDamageByEntityEvent event) {
+        return Config.isDamageGauges()
+                && !(event.getDamager() instanceof Projectile)
+                && event.getDamager() instanceof Player
+                && SXAttribute.isHigherVersion();
+    }
+
+    /**
+     * 获取能够同步给原版 {@code generic.attack_damage} 的实际基值。
+     * SX 的逻辑伤害允许超过该上限，超出的部分会在伤害事件中作为补差加入。
+     */
+    private double getVanillaAttackDamage(double damage) {
+        return Math.min(damage, SpigotConfig.attackDamage);
+    }
+
     @Override
     public void loadAttribute(double[] values, String lore) {
         String[] loreSplit = lore.split("-");
@@ -177,8 +202,8 @@ public class Damage extends SubAttribute implements Listener {
 
     @Override
     public void correct(double[] values) {
-        values[0] = Math.min(Math.max(values[0], Config.isDamageGauges() ? 1 : 0), SpigotConfig.attackDamage);
-        values[1] = Math.min(values[1], SpigotConfig.attackDamage);
+        // Spigot 的上限只约束原版属性基值，不能裁剪 SX 在伤害事件中独立计算的逻辑伤害。
+        values[0] = Math.max(values[0], Config.isDamageGauges() ? 1 : 0);
         values[1] = Math.max(values[1], values[0]);
         values[2] = Math.max(values[2], 0);
         values[3] = Math.max(values[3], values[2]);

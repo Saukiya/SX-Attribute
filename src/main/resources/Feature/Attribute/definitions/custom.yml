@@ -1,0 +1,104 @@
+# 自定义属性定义入口。
+#
+# Attributes:
+#   FireDamage:
+#     Enable: true
+#     Priority: 500
+#     Values:
+#       damage:
+#         Match: 火元素伤害
+#         MatchMode: CONTAINS
+#         Aggregate: SUM
+#         Min: 0
+#         Max: 100000
+#     Triggers:
+#       - Event: DAMAGE_ATTACK
+#         When: "<c:<l:self_damage> > 0>"
+#         Actions:
+#           - Type: DAMAGE
+#             Mode: ADD
+#             Formula: "<c:<l:self_damage>>"
+Attributes:
+  FireDamage:
+    Enable: true
+    Priority: 500
+    Values:
+      damage: { Match: 火元素伤害, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100000, CombatPower: 1 }
+      chance: { Match: 火元素触发, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100 }
+    Triggers:
+      - Event: DAMAGE_ATTACK
+        Priority: 500
+        When: "<c:<l:self_damage> > 0>"
+        Actions:
+          - Type: DAMAGE
+            Mode: ADD
+            Chance: "<c:<l:self_chance>>"
+            Formula: "<c:<l:self_damage> * (100 - <l:defender_FireResistance_resistance>) / 100>"
+    Display:
+      Category: ATTACK
+      Order: 50
+      Rows:
+        - { placeholder: FireDamage_damage, label: 火元素伤害, color: "&c" }
+
+  FireResistance:
+    Enable: true
+    Priority: 400
+    Values:
+      resistance: { Match: 火元素抗性, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100, CombatPower: 1 }
+    Triggers: []
+    Display:
+      Category: DEFENSE
+      Order: 50
+      Rows:
+        - { placeholder: FireResistance_resistance, label: 火元素抗性, color: "&c", suffix: "%" }
+
+  UndeadSlayer:
+    Enable: true
+    Priority: 450
+    Values:
+      ratio: { Match: 亡灵克制, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100 }
+    Triggers:
+      - Event: DAMAGE_ATTACK
+        When: "<c:<l:self_ratio> > 0>"
+        Actions:
+          - Type: DAMAGE
+            Mode: MULTIPLY
+            Chance: "<c:(<l:defender_type_ZOMBIE> + <l:defender_type_SKELETON> + <l:defender_type_WITHER_SKELETON>) * 100>"
+            Formula: "<c:(100 + <l:self_ratio>) / 100>"
+
+  PoisonDebuff:
+    Enable: true
+    Priority: 600
+    Values:
+      chance: { Match: 中毒触发, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100 }
+      level: { Match: 中毒等级, MatchMode: CONTAINS, Aggregate: MAX, Min: 0, Max: 10 }
+    Triggers:
+      - Event: DAMAGE_ATTACK
+        When: "<c:<l:self_chance> > 0>"
+        Actions:
+          - Type: POTION
+            Target: DEFENDER
+            Potion: POISON
+            Chance: "<c:<l:self_chance>>"
+            Duration: "<c:60 + <l:self_level> * 20>"
+            Amplifier: "<c:<l:self_level>>"
+
+  LowHealthBuff:
+    Enable: true
+    Priority: 700
+    Values:
+      power: { Match: 残血攻击, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 1000 }
+    Triggers:
+      - Event: DAMAGE_DEFEND
+        When: "<c:<l:defender_health> / <l:defender_max_health> <= 0.3>"
+        Actions:
+          - Type: SOURCE_APPLY
+            Target: DEFENDER
+            Source: buff:low_health
+            Duration: "<c:100>"
+            StackMode: REFRESH
+            MaxStacks: 1
+            Persistent: false
+            Tags: [ low_health ]
+            Attributes:
+              - "攻击力: 20"

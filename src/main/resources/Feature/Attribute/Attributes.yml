@@ -1,0 +1,10 @@
+# 属性聚合清单。注册顺序由 Files 决定；自定义分片可直接追加到此列表。
+Enable: true
+DuplicatePolicy: ERROR
+Settings:
+  FormulaEngine: true
+  AutoPanel: true
+  TickPeriod: 20
+Files:
+  - definitions/builtin.yml
+  - definitions/custom.yml

@@ -38,6 +38,17 @@ public class Placeholders {
                 return obj instanceof Double ? SXAttribute.getDf().format(obj) : obj.toString();
             }
         }
+        if (SXAttribute.getAttributeEngine() != null) {
+            for (github.saukiya.sxattribute.feature.attribute.AttributeDefinition definition
+                    : SXAttribute.getAttributeEngine().registry().definitions().values()) {
+                for (String field : definition.getValues().keySet()) {
+                    if (string.equalsIgnoreCase(definition.getId() + "_" + field)
+                            || definition.getValues().size() == 1 && string.equalsIgnoreCase(definition.getId())) {
+                        return SXAttribute.getDf().format(attributeData.getDynamicValue(definition.getId(), field));
+                    }
+                }
+            }
+        }
         return "§cN/A - " + string;
     }
 

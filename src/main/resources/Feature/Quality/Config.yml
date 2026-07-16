@@ -1,0 +1,23 @@
+Enable: true
+Lore:
+  Format: "&7品质: {name}"
+Cost:
+  Money: 100
+  Experience: 0
+  Levels: 0
+  Items: []
+Qualities:
+  Common:
+    Name: "&f普通"
+    Weight: 70
+    Attributes: []
+  Rare:
+    Name: "&9稀有"
+    Weight: 25
+    Attributes:
+      - "攻击力: 5"
+  Epic:
+    Name: "&5史诗"
+    Weight: 5
+    Attributes:
+      - "攻击力: 15"

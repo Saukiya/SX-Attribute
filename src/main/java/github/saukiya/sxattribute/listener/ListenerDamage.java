@@ -7,7 +7,10 @@ import github.saukiya.sxattribute.data.attribute.SubAttribute;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
+import github.saukiya.sxattribute.feature.attribute.AttributeDefinition;
+import github.saukiya.sxattribute.feature.attribute.AttributeExecutionContext;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.AttributeConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -83,7 +86,14 @@ public class ListenerDamage implements Listener {
 
         DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
 
+        AttributeExecutionContext dynamicContext = new AttributeExecutionContext(attackEntity, defenseEntity, attackData, defenseData, damageData);
+        if (SXAttribute.getAttributeEngine() != null) {
+            SXAttribute.getAttributeEngine().fire(AttributeDefinition.AttributeTrigger.DAMAGE_ATTACK, dynamicContext);
+            SXAttribute.getAttributeEngine().fire(AttributeDefinition.AttributeTrigger.DAMAGE_DEFEND, dynamicContext);
+        }
+
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
+            if (!AttributeConfig.isEnabled(attribute.getName())) continue;
             if (attribute.containsType(AttributeType.ATTACK) && attackData.isValid(attribute)) {
                 attribute.eventMethod(attackData.getValues(attribute), damageData);
             } else if (attribute.containsType(AttributeType.DEFENCE) && defenseData.isValid(attribute)) {
@@ -97,5 +107,10 @@ public class ListenerDamage implements Listener {
         }
         damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage());
         Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageData));
+        if (SXAttribute.getAttributeEngine() != null) {
+            dynamicContext.getVariables().put("event_damage", damageData.getDamage());
+            dynamicContext.getVariables().put("event_cancelled", damageData.isCancelled() ? 1D : 0D);
+            SXAttribute.getAttributeEngine().fire(AttributeDefinition.AttributeTrigger.DAMAGE_AFTER, dynamicContext);
+        }
     }
 }

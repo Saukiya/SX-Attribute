@@ -1,0 +1,38 @@
+# 属性源生命周期与多服持久化。
+Enable: true
+CheckPeriodTicks: 10
+ServerId: server-1
+NetworkMode: false
+
+Storage:
+  # MEMORY / SQLITE / MYSQL / POSTGRESQL
+  Type: SQLITE
+  PoolSize: 4
+  SQLiteFile: source-data.db
+  Host: 127.0.0.1
+  Port: 3306
+  Database: sxattribute
+  Username: root
+  Password: change-me
+  Parameters: "useSSL=false&characterEncoding=utf8"
+
+Redis:
+  Enable: false
+  Host: 127.0.0.1
+  Port: 6379
+  Password: ""
+  Database: 0
+  TimeoutMillis: 2000
+  LockMillis: 5000
+  Channel: sxattribute:source:invalidate
+
+Rules:
+  BattleRage:
+    Source: buff:battle_rage
+    Duration: "<c:200>"
+    MaxStacks: "<c:5>"
+    StackMode: STACK
+    Persistent: false
+    Tags: [ rage ]
+    Attributes:
+      - "攻击力: 5"

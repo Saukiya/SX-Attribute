@@ -1,0 +1,7 @@
+Success: "&a镶嵌操作完成"
+NoGem: "&c没有可拆卸的宝石"
+Destroyed: "&c宝石拆卸时损毁"
+Extracted: "&a已拆卸 {gem}"
+NoSlot: "&c没有空余宝石孔"
+NeedGem: "&c请在副手放置宝石"
+InvalidGem: "&c副手物品不是已注册宝石"

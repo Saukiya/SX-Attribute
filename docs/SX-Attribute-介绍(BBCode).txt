@@ -9,7 +9,7 @@
 
 本版本进行了核心重构，主打三件事：
 [list]
-[*][b]集中配置[/b] —— 全部属性统一到一个 [color=#16a085]Attributes.yml[/color]，一处调整默认值 / 上下限 / 生效公式 / 开关 / 面板显示。
+[*][b]集中配置[/b] —— 全部属性由 [color=#16a085]Feature/Attribute/Attributes.yml[/color] 聚合，分片维护默认值 / 上下限 / 生效公式 / 开关 / 面板显示。
 [*][b]公式驱动[/b] —— 属性如何生效由可编辑的公式决定（基于 SX-Item 表达式引擎），并支持 PlaceholderAPI 变量。
 [*][b]多属性源[/b] —— 实体最终属性 = 若干独立命名源之和，装备 / 药水 / 脚本 / 职业等来源分别记录、分别清理、互不叠加。
 [/list]
@@ -46,10 +46,10 @@
 [list=1]
 [*]将 [b]SX-Item[/b] 与 [b]SX-Attribute[/b] 放入服务器 [color=#16a085]plugins[/color] 目录。
 [*]启动服务器生成配置文件。
-[*]按需编辑 [color=#16a085]Attributes.yml[/color] / [color=#16a085]Config.yml[/color] / [color=#16a085]Message.yml[/color]，执行 [color=#c0392b]/sxa reload[/color] 生效。
+[*]按需编辑 [color=#16a085]Feature/Attribute/[/color] / [color=#16a085]Config.yml[/color] / [color=#16a085]Message.yml[/color]，执行 [color=#c0392b]/sxa reload[/color] 生效。
 [/list]
 
-[color=#e67e22][b]※ 升级提示：[/b][/color]从旧版本升级后，建议删除旧的 [color=#16a085]Attribute/SX-Attribute/[/color] 目录，让插件按新结构（Attributes.yml）重建。
+[color=#e67e22][b]※ 升级提示：[/b][/color]旧版根 Attributes.yml 会自动备份并迁移到 [color=#16a085]Feature/Attribute/definitions/legacy.yml[/color]。
 
 [hr]
 
@@ -69,7 +69,7 @@
 
 [hr]
 
-[size=5][b][color=#2980b9]■ 中央配置 Attributes.yml[/color][/b][/size]
+[size=5][b][color=#2980b9]■ 属性聚合 Feature/Attribute/Attributes.yml[/color][/b][/size]
 
 一个属性一个节点，[b]DiscernName[/b] 即物品 Lore 里书写的识别名。数值型属性支持 [b]Formula[/b] 生效公式：
 

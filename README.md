@@ -8,6 +8,16 @@
 
 文档部分已过时.
 
+## 配置化 Feature 引擎
+
+- 属性主清单迁移为 `Feature/Attribute/Attributes.yml`，按顺序聚合 `definitions/*.yml`。
+- 自定义属性可声明命名字段、事件触发器、条件公式和白名单动作，用同一套定义表达元素、克制、特效、Buff 与 Debuff。
+- `Feature/Source/Config.yml` 可选择内存、SQLite、MySQL 或 PostgreSQL；多服模式使用 Redis 写锁与失效广播。
+- `/sxa forge` 打开装备成长 GUI；套装、品质、词缀、强化、升星、重铸、洗练、宝石孔和附魔成长均有独立目录与开关。
+- 装备成长状态写入 SX-Item NBT，Lore 只作为动态渲染结果。
+
+模块结构、API 和多服一致性约束见 `src/main/java/github/saukiya/sxattribute/feature/README.md`。
+
 我听说，世间器物各有其用，就像一柄好剑，若能削铁如泥，便算尽了它的本分。SX-Attribute 这个插件，在我的世界Java版里，就像一把趁手的工具——它能把属性分得清清楚楚，让玩家知道什么装备该配什么效果，什么职业该有什么长处。这不正是礼法里说的“各司其职”吗？
 
 有人或许会问：难道就没有比它更好的插件吗？那我倒要反问一句：若有一把刀，既能切菜又能劈柴，但切菜不如菜刀利落，劈柴不如斧头干脆——这样的东西，能算得上“好用”吗？SX-Attribute 不贪多，只把属性这一件事做到明白、稳定、不乱，这就可以说是尽了名分。

@@ -1,0 +1,18 @@
+Enable: true
+MaxLevel: 20
+Formula:
+  SuccessChance: "<c:100 - <l:level> * 3>"
+Failure: { Policy: DOWNGRADE, Levels: 1, ProtectionChance: "<c:0>" }
+Lore:
+  Level: "&a强化等级: +{level}"
+  Attribute: "&7{name}: {value}"
+Attributes:
+  Damage:
+    Name: 攻击力
+    Formula: "<c:<l:level> * 2>"
+Cost:
+  Money: 200
+  Experience: 0
+  Levels: 0
+  Items:
+    - { Material: IRON_INGOT, Amount: 1 }

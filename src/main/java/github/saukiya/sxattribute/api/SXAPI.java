@@ -8,10 +8,14 @@ import github.saukiya.sxattribute.data.attribute.SXAttributeManager;
 import github.saukiya.sxattribute.data.condition.EquipmentType;
 import github.saukiya.sxattribute.data.condition.SubCondition;
 import github.saukiya.sxattribute.util.AttributeUtil;
+import github.saukiya.sxattribute.feature.source.SourceApplyRequest;
+import github.saukiya.sxattribute.feature.source.SourceWriteResult;
+import github.saukiya.sxattribute.feature.equipment.core.FeatureResult;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -122,6 +126,56 @@ public class SXAPI {
      */
     public Set<String> getSourceNames(UUID uuid) {
         return mgr().getSourceNames(uuid);
+    }
+
+    /**
+     * 读取配置化属性的命名字段。
+     *
+     * @param entity      实体
+     * @param attributeId Feature/Attribute 定义 ID
+     * @param field       Values 下的字段名
+     * @return 当前聚合值，未定义返回 0
+     */
+    public double getDynamicAttribute(LivingEntity entity, String attributeId, String field) {
+        return getEntityData(entity).getDynamicValue(attributeId, field);
+    }
+
+    /**
+     * 通过统一生命周期服务施加临时或持久化来源。
+     */
+    public SourceWriteResult applyManagedSource(LivingEntity entity, SourceApplyRequest request) {
+        return SXAttribute.getSourceService().apply(entity, request);
+    }
+
+    /**
+     * 移除统一生命周期服务管理的来源。
+     */
+    public SourceWriteResult removeManagedSource(LivingEntity entity, String source) {
+        return SXAttribute.getSourceService().remove(entity, source);
+    }
+
+    public SourceWriteResult applyManagedSourceRule(LivingEntity entity, String ruleId) {
+        return SXAttribute.getSourceService().applyRule(entity, ruleId);
+    }
+
+    /**
+     * 不经过 GUI 成本扣除，直接执行一个装备模块操作，供任务、NPC 或外部菜单调用。
+     */
+    public FeatureResult operateEquipmentFeature(Player player, ItemStack item, String featureId) {
+        return SXAttribute.getForgeFeatureManager().operate(player, item, featureId);
+    }
+
+    /** 触发配置化属性的 API 事件类型。 */
+    public void triggerDynamicAttributes(LivingEntity actor, LivingEntity target) {
+        SXAttribute.getAttributeEngine().fireApi(actor, target);
+    }
+
+    public YamlConfiguration getEquipmentFeatureState(ItemStack item, String featureId) {
+        return SXAttribute.getForgeFeatureManager().state(item, featureId);
+    }
+
+    public void setEquipmentFeatureState(Player player, ItemStack item, String featureId, YamlConfiguration state) {
+        SXAttribute.getForgeFeatureManager().state(player, item, featureId, state);
     }
 
     /**

@@ -27,3 +27,6 @@ permissions:
     default: true
   sx-attribute.stats:
     default: true
+  sx-attribute.forge:
+    description: 使用配置化装备成长界面
+    default: op

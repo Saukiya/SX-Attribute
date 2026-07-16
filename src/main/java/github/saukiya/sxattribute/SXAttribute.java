@@ -19,6 +19,9 @@ import github.saukiya.sxattribute.data.condition.sub.*;
 import github.saukiya.sxattribute.data.itemdata.ItemDataManager;
 import github.saukiya.sxattribute.data.itemdata.sub.GeneratorImport;
 import github.saukiya.sxattribute.data.itemdata.sub.GeneratorSX;
+import github.saukiya.sxattribute.feature.attribute.AttributeEngine;
+import github.saukiya.sxattribute.feature.equipment.ForgeFeatureManager;
+import github.saukiya.sxattribute.feature.source.SourceService;
 import github.saukiya.sxattribute.listener.*;
 import github.saukiya.sxattribute.util.*;
 import github.saukiya.sxattribute.util.hologram.DecentHologramsProvider;
@@ -113,6 +116,18 @@ public class SXAttribute extends JavaPlugin {
 
     @Getter
     private static PersistentSourceManager persistentSourceManager;
+
+    /** 配置化属性注册表与白名单动作运行时。 */
+    @Getter
+    private static AttributeEngine attributeEngine;
+
+    /** 统一管理临时及持久化命名源的生命周期服务。 */
+    @Getter
+    private static SourceService sourceService;
+
+    /** 独立装备成长模块与统一锻造 GUI 注册器。 */
+    @Getter
+    private static ForgeFeatureManager forgeFeatureManager;
 
     /**
      * 判断服务器次版本是否 >= 指定值 (跨新旧版本号方案安全)
@@ -227,7 +242,7 @@ public class SXAttribute extends JavaPlugin {
         }
         new Command().registerAttribute();
 
-        // 原版属性包装 (数据驱动): 遍历 Attributes.yml 中含 RegistryKey 的数值型节点,
+        // 原版属性包装 (数据驱动): 遍历 Feature/Attribute 聚合视图中含 RegistryKey 的数值型节点,
         // 按 Version 精确门控(低版本自动跳过), 实例化 VanillaUpdateAttribute 注册。
         // 属性在当前版本不存在时 AttributeUtil 返回 null 二次降级, 不报错。
         for (String attributeName : AttributeConfig.attributeNames()) {
@@ -344,6 +359,9 @@ public class SXAttribute extends JavaPlugin {
         conditionManager = new SXConditionManager();
         slotDataManager = new SlotDataManager();
         persistentSourceManager = new PersistentSourceManager();
+        sourceService = new SourceService();
+        attributeEngine = new AttributeEngine();
+        forgeFeatureManager = new ForgeFeatureManager();
         listenerHealthChange = new ListenerHealthChange();
 
         if (!Config.getConfig().getString(Config.DAMAGE_EVENT_PRIORITY, "HIGH").equals("HIGH")) {
@@ -385,6 +403,8 @@ public class SXAttribute extends JavaPlugin {
         // 各字段均在 onEnable 才赋值; 若 onLoad/onEnable 提前崩溃则为 null, 需判空避免掩盖原始异常
         if (attributeManager != null) attributeManager.onAttributeDisable();
         if (conditionManager != null) conditionManager.onConditionDisable();
+        if (attributeEngine != null) attributeEngine.disable();
+        if (sourceService != null) sourceService.disable();
         if (listenerHealthChange != null) {
             try {
                 listenerHealthChange.cancel();

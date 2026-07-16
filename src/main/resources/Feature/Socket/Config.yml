@@ -1,0 +1,20 @@
+Enable: true
+DefaultSlots: 2
+Lore:
+  Slots: "&7宝石孔: {used}/{slots}"
+  Gem: "&7宝石: {gem}"
+Cost: { Money: 50, Experience: 0, Levels: 0, Items: [] }
+Extraction:
+  Enable: true
+  DestroyChance: 10
+Gems:
+  Ruby:
+    Name: "&c红宝石"
+    Material: REDSTONE
+    Attributes:
+      - "攻击力: 8"
+  Sapphire:
+    Name: "&b蓝宝石"
+    Material: LAPIS_LAZULI
+    Attributes:
+      - "生命上限: 20"

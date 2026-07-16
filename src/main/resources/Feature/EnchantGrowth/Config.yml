@@ -1,0 +1,34 @@
+Enable: true
+# Beta 默认使用真实存在的原版附魔；自定义 ID 只有被版本适配器预注册后才允许切换使用。
+DefaultEnchant: SHARPNESS
+ManualExperience: 10
+Gain:
+  Damage: 1
+  Kill: 10
+  BlockBreak: 1
+  Fishing: 5
+Lore:
+  Level: "&d{name} {level} &8({exp} EXP)"
+Cost: { Money: 100, Experience: 0, Levels: 0, Items: [] }
+Enchants:
+  GrowthPower:
+    Custom: true
+    Name: 成长之力
+    StartLevel: 1
+    MaxLevel: 10
+    Treasure: false
+    Cursed: false
+    Rarity: RARE
+    Materials: [ DIAMOND_SWORD, IRON_SWORD ]
+    Conflicts: []
+    RequiredExperience: "<c:100 * <l:level>>"
+    Attributes:
+      - "攻击力: {level}"
+  SHARPNESS:
+    Custom: false
+    VanillaName: DAMAGE_ALL
+    Name: 锋利成长
+    MaxLevel: 10
+    RequiredExperience: "<c:150 * <l:level>>"
+    Attributes:
+      - "攻击力: {level}"

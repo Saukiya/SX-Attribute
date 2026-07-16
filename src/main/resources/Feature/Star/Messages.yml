@@ -1,0 +1,7 @@
+Success: "&a升星操作完成"
+MaxLevel: "&c已达到最高星级"
+Protected: "&e升星失败，但装备受到保护"
+Downgrade: "&c升星失败并降低星级"
+Reset: "&c升星失败并重置星级"
+Destroy: "&4升星失败，装备已损毁"
+Keep: "&c升星失败，星级保持不变"

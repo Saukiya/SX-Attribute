@@ -1,0 +1,32 @@
+Enable: true
+Count: 2
+AllowedMaterials: []
+Formula:
+  Count: "<c:2>"
+Cost:
+  Money: 100
+  Experience: 0
+  Levels: 0
+  Items: []
+Affixes:
+  Attack:
+    Weight: 70
+    Rare: false
+    Min: 1
+    Max: 10
+    Lore:
+      - "&c攻击力: {value}"
+  Critical:
+    Weight: 25
+    Rare: false
+    Min: 1
+    Max: 8
+    Lore:
+      - "&6暴击几率: {value}%"
+  Fire:
+    Weight: 5
+    Rare: true
+    Min: 5
+    Max: 25
+    Lore:
+      - "&c火元素伤害: {value}"

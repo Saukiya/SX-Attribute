@@ -1,0 +1,4 @@
+NoItem: "&c请先在主手持有装备"
+ItemChanged: "&c主手装备已变化，请重新打开锻造界面"
+CostInsufficient: "&c消耗不足"
+TransactionFailed: "&c操作失败，消耗已返还"

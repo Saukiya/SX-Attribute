@@ -1,0 +1,20 @@
+Enable: true
+DefaultSet: Warrior
+Lore:
+  Format: "&7套装: {set}"
+Cost: { Money: 0, Experience: 0, Levels: 0, Items: [] }
+Sets:
+  Warrior:
+    Thresholds:
+      2:
+        Attributes:
+          - "攻击力: 10"
+      4:
+        Attributes:
+          - "生命上限: 40"
+Mixes:
+  WarriorMix:
+    Requirements:
+      Warrior: 2
+    Attributes:
+      - "防御力: 5"

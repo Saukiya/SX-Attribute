@@ -1,0 +1,17 @@
+Enable: true
+MaxLevel: 10
+Formula:
+  SuccessChance: "<c:80 - <l:level> * 5>"
+Failure: { Policy: KEEP, Levels: 1, ProtectionChance: "<c:0>" }
+Lore:
+  Level: "&b星级: {level}星"
+  Attribute: "&7{name}: {value}"
+Attributes:
+  Health:
+    Name: 生命上限
+    Formula: "<c:<l:level> * 5>"
+Cost:
+  Money: 500
+  Experience: 0
+  Levels: 1
+  Items: []

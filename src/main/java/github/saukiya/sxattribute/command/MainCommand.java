@@ -38,6 +38,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         new UpdateCommand().registerCommand();
         new PersistentCommand().registerCommand();
         new DelPersistentCommand().registerCommand();
+        new ForgeCommand().registerCommand();
     }
 
     public void setup(String command) {
