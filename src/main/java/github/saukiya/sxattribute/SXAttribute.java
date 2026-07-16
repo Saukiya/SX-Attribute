@@ -39,10 +39,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -255,45 +253,7 @@ public class SXAttribute extends JavaPlugin {
             }
         }
 
-        File jsAttributeFiles = new File(getDataFolder(), "Attribute" + File.separator + "JavaScript");
-        if (!jsAttributeFiles.exists() && SXAttribute.isHigherVersion()) {
-            saveResource("Attribute/JavaScript/JSAttribute.js", true);
-            saveResource("Attribute/SX-Attribute/JSAttribute_JS.yml", true);
-        }
-        if (jsAttributeFiles.exists() && jsAttributeFiles.isDirectory()) {
-            ScriptEngineManager jsManager = new ScriptEngineManager();
-            if (jsManager.getEngineByName("JavaScript") != null) {
-                Class<?> clazz = Class.forName(System.getProperty("java.class.version").startsWith("52") ?
-                        "jdk.internal.dynalink.beans.StaticClass" :
-                        "jdk.dynalink.beans.StaticClass");
-                Method method = clazz.getMethod("forClass", Class.class);
-                Object arrays = method.invoke(null, Arrays.class);
-                Object sxAttributeType = method.invoke(null, AttributeType.class);
-                Object sxAttribute = method.invoke(null, SXAttribute.class);
-                Object foliaScheduler = method.invoke(null, FoliaScheduler.class);
-                Object bukkit = method.invoke(null, Bukkit.class);
-                for (File jsFile : jsAttributeFiles.listFiles()) {
-                    if (jsFile.getName().endsWith(".js")) {
-                        ScriptEngine engine = jsManager.getEngineByName("JavaScript");
-                        engine.put("Arrays", arrays);
-                        engine.put("SXAttributeType", sxAttributeType);
-                        engine.put("SXAttribute", sxAttribute);
-                        engine.put("FoliaScheduler", foliaScheduler);
-                        engine.put("Bukkit", bukkit);
-                        engine.put("API", api);
-                        try {
-                            engine.eval(new InputStreamReader(new FileInputStream(jsFile), StandardCharsets.UTF_8));
-                            new JSAttribute(jsFile.getName().replace(".js", ""), engine).registerAttribute();
-                        } catch (ScriptException | FileNotFoundException e) {
-                            SXAttribute.getInst().getLogger().info("==========================================================================================");
-                            e.printStackTrace();
-                            SXAttribute.getInst().getLogger().warning("Error JavaScript: " + jsFile.getName());
-                            SXAttribute.getInst().getLogger().info("==========================================================================================");
-                        }
-                    }
-                }
-            }
-        }
+        loadJavaScriptAttributes();
 
         if (SXAttribute.isHigherVersion()) {
             new MainHand().registerCondition();
@@ -307,6 +267,78 @@ public class SXAttribute extends JavaPlugin {
 
         ItemDataManager.registerGenerator(new GeneratorImport());
         ItemDataManager.registerGenerator(new GeneratorSX());
+    }
+
+    /**
+     * 逐文件加载 JavaScript 属性。
+     * <p>
+     * JavaScript 属于可选扩展边界：引擎缺失、适配失败、文件语法错误或构造数据非法时，只跳过对应
+     * 脚本或整个 JS 子系统，不允许异常越过本方法影响原生属性和插件生命周期。
+     */
+    private void loadJavaScriptAttributes() {
+        File directory = new File(getDataFolder(), "Attribute" + File.separator + "JavaScript");
+        try {
+            if (!directory.exists() && SXAttribute.isHigherVersion()) {
+                saveResource("Attribute/JavaScript/JSAttribute.js", true);
+                saveResource("Attribute/SX-Attribute/JSAttribute_JS.yml", true);
+            }
+            if (!directory.isDirectory()) return;
+            ScriptEngineManager manager = new ScriptEngineManager();
+            if (manager.getEngineByName("JavaScript") == null) {
+                getLogger().warning("JavaScript attribute subsystem disabled: no JavaScript engine is available.");
+                return;
+            }
+            Class<?> staticClass = Class.forName(System.getProperty("java.class.version").startsWith("52")
+                    ? "jdk.internal.dynalink.beans.StaticClass" : "jdk.dynalink.beans.StaticClass");
+            Method forClass = staticClass.getMethod("forClass", Class.class);
+            Object arrays = forClass.invoke(null, Arrays.class);
+            Object attributeType = forClass.invoke(null, AttributeType.class);
+            Object pluginClass = forClass.invoke(null, SXAttribute.class);
+            Object schedulerClass = forClass.invoke(null, FoliaScheduler.class);
+            Object bukkitClass = forClass.invoke(null, Bukkit.class);
+            File[] files = directory.listFiles((parent, name) -> name.toLowerCase().endsWith(".js"));
+            if (files == null) return;
+            Arrays.sort(files, (left, right) -> left.getName().compareToIgnoreCase(right.getName()));
+            for (File file : files) {
+                loadJavaScriptAttribute(manager, file, arrays, attributeType, pluginClass, schedulerClass, bukkitClass);
+            }
+        } catch (Throwable exception) {
+            rethrowFatalJavaScriptFailure(exception);
+            logJavaScriptFailure("subsystem initialization", null, exception);
+        }
+    }
+
+    /** 单个文件拥有独立引擎和异常边界，坏文件不会污染其它脚本的全局变量。 */
+    private void loadJavaScriptAttribute(ScriptEngineManager manager, File file, Object arrays, Object attributeType,
+                                         Object pluginClass, Object schedulerClass, Object bukkitClass) {
+        try {
+            ScriptEngine engine = manager.getEngineByName("JavaScript");
+            if (engine == null) throw new IllegalStateException("JavaScript engine disappeared during loading");
+            engine.put("Arrays", arrays);
+            engine.put("SXAttributeType", attributeType);
+            engine.put("SXAttribute", pluginClass);
+            engine.put("FoliaScheduler", schedulerClass);
+            engine.put("Bukkit", bukkitClass);
+            engine.put("API", api);
+            try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+                engine.eval(reader);
+            }
+            new JSAttribute(file.getName().substring(0, file.getName().length() - 3), engine).registerAttribute();
+        } catch (Throwable exception) {
+            rethrowFatalJavaScriptFailure(exception);
+            logJavaScriptFailure("file loading", file, exception);
+        }
+    }
+
+    private void logJavaScriptFailure(String phase, File file, Throwable exception) {
+        String target = file == null ? "JavaScript subsystem" : file.getName();
+        getLogger().severe(target + " failed during " + phase + " and was isolated: "
+                + exception.getClass().getSimpleName() + ": " + exception.getMessage());
+    }
+
+    /** JVM 无法安全继续的错误必须继续抛出；普通脚本和类链接错误才属于可隔离扩展故障。 */
+    private static void rethrowFatalJavaScriptFailure(Throwable exception) {
+        if (exception instanceof VirtualMachineError) throw (VirtualMachineError) exception;
     }
 
     @Override

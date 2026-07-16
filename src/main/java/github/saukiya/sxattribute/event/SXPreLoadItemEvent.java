@@ -26,8 +26,13 @@ public class SXPreLoadItemEvent extends Event {
 
     private List<PreLoadItem> itemList;
 
+    /**
+     * 创建预加载事件。
+     * <p>
+     * 旧 {@code isAsync} 参数仅为二进制兼容保留；事件标记始终以实际调用线程为准。
+     */
     public SXPreLoadItemEvent(LivingEntity entity, List<PreLoadItem> itemList, boolean isAsync) {
-        super(isAsync);
+        super(EventThreadContext.isAsynchronous());
         this.entity = entity;
         this.itemList = itemList;
     }

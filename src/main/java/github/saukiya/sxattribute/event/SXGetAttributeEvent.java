@@ -23,8 +23,11 @@ public class SXGetAttributeEvent extends Event {
     @Setter
     private SXAttributeData data;
 
+    /**
+     * 创建属性读取事件；旧异步参数仅保留调用兼容性，防止调用意图与真实线程不一致。
+     */
     public SXGetAttributeEvent(LivingEntity entity, SXAttributeData data, boolean isAsync) {
-        super(isAsync);
+        super(EventThreadContext.isAsynchronous());
         this.entity = entity;
         this.data = data;
     }

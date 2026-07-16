@@ -29,8 +29,12 @@ public class SXLoadAttributeEvent extends Event {
 
     private SXAttributeData attributeData;
 
-    public SXLoadAttributeEvent(LivingEntity entity, List<PreLoadItem> itemList, SXAttributeData attributeData, boolean isAsync) {
-        super(isAsync);
+    /**
+     * 创建属性加载事件；旧异步参数仅保留调用兼容性，实际标记由当前 Bukkit 线程决定。
+     */
+    public SXLoadAttributeEvent(LivingEntity entity, List<PreLoadItem> itemList,
+                                SXAttributeData attributeData, boolean isAsync) {
+        super(EventThreadContext.isAsynchronous());
         this.entity = entity;
         this.itemList = itemList;
         this.attributeData = attributeData;

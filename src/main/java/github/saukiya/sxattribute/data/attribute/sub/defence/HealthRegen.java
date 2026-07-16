@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import github.saukiya.sxattribute.util.FoliaScheduler;
 
 import java.util.ArrayList;
@@ -22,36 +21,35 @@ import java.util.List;
  */
 public class HealthRegen extends SubAttribute {
 
-    private BukkitRunnable runnable = new BukkitRunnable() {
-        @Override
-        public void run() {
-            try {
-                for (Player player : new ArrayList<>(Bukkit.getOnlinePlayers())) {
-                    if (player != null && !player.isDead() && player.isOnline()) {
-                        double maxHealth = SXAttribute.getApi().getMaxHealth(player);
-                        if (player.getHealth() < maxHealth) {
-                            double healthRegen = SXAttribute.getApi().getEntityData(player).getValues(getName())[0];
-                            if (healthRegen > 0) {
-                                // 生命恢复量公式 (变量 value=生命恢复); 默认恒等
-                                healthRegen = formula(player, "Formula", healthRegen, "value", healthRegen);
-                                EntityRegainHealthEvent event = new EntityRegainHealthEvent(player, healthRegen, EntityRegainHealthEvent.RegainReason.CUSTOM);
-                                Bukkit.getPluginManager().callEvent(event);
-                                if (!event.isCancelled()) {
-                                    healthRegen = (event.getAmount() + player.getHealth()) > maxHealth ? (maxHealth - player.getHealth()) : event.getAmount();
-                                    player.setHealth(healthRegen + player.getHealth());
-                                }
+    /** Bukkit/Folia 返回的真实任务句柄；不能直接取消尚未调度的 BukkitRunnable。 */
+    private Object scheduledTask;
+
+    private final Runnable runnable = () -> {
+        try {
+            for (Player player : new ArrayList<>(Bukkit.getOnlinePlayers())) {
+                if (player != null && !player.isDead() && player.isOnline()) {
+                    double maxHealth = SXAttribute.getApi().getMaxHealth(player);
+                    if (player.getHealth() < maxHealth) {
+                        double healthRegen = SXAttribute.getApi().getEntityData(player).getValues(getName())[0];
+                        if (healthRegen > 0) {
+                            // 生命恢复量公式 (变量 value=生命恢复); 默认恒等
+                            healthRegen = formula(player, "Formula", healthRegen, "value", healthRegen);
+                            EntityRegainHealthEvent event = new EntityRegainHealthEvent(player, healthRegen, EntityRegainHealthEvent.RegainReason.CUSTOM);
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (!event.isCancelled()) {
+                                healthRegen = (event.getAmount() + player.getHealth()) > maxHealth ? (maxHealth - player.getHealth()) : event.getAmount();
+                                player.setHealth(healthRegen + player.getHealth());
                             }
                         }
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                SXAttribute.getInst().getLogger().warning("生命恢复系统崩溃 正在重新启动!");
-                this.cancel();
-                HealthRegen.this.onEnable();
-                SXAttribute.getInst().getLogger().warning("启动完毕!");
-                SXAttribute.getInst().getLogger().warning("如果此消息连续刷屏，请反馈作者QQ: 1940208750");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            SXAttribute.getInst().getLogger().warning("生命恢复系统崩溃 正在重新启动!");
+            HealthRegen.this.onEnable();
+            SXAttribute.getInst().getLogger().warning("启动完毕!");
+            SXAttribute.getInst().getLogger().warning("如果此消息连续刷屏，请反馈作者QQ: 1940208750");
         }
     };
 
@@ -72,14 +70,18 @@ public class HealthRegen extends SubAttribute {
         return config;
     }
 
+    /** 启动或重启生命恢复周期；启动前先取消旧句柄，保证同一属性只存在一个任务。 */
     @Override
     public void onEnable() {
-        FoliaScheduler.runTimer(getPlugin(), runnable, 19, 20);
+        onDisable();
+        scheduledTask = FoliaScheduler.runTimer(getPlugin(), runnable, 19, 20);
     }
 
+    /** 通过统一调度器取消 Bukkit/Folia 任务；未启动或重复关闭时保持幂等。 */
     @Override
     public void onDisable() {
-        runnable.cancel();
+        FoliaScheduler.cancel(scheduledTask);
+        scheduledTask = null;
     }
 
     @Override
