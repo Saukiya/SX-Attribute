@@ -29,7 +29,7 @@ SourceWriteResult result = SXAttribute.getApi().applyManagedSource(player,
 ## 运行约束
 
 - 属性普通定义支持 `/sxa reload` 完整热重载。
-- 自定义附魔 ID 必须在 Minecraft 注册表冻结前注册，新增或删除 ID 需要完整重启；首个 Beta 未提供跨版本注册适配器，未预注册的 ID 会被禁用。
+- 自定义附魔 ID 必须在 Minecraft 注册表冻结前注册，新增或删除真实 ID 需要完整重启；真实注册不可用时可按 `Fallback: LORE` 保留 NBT、属性与动态 Lore 成长。
 - 多服模式下 Redis 不可用时持久化写入会被拒绝，读取仍使用 SQL 事实源。
 - Folia 实体更新必须通过实体调度器执行。
 
@@ -39,4 +39,4 @@ SourceWriteResult result = SXAttribute.getApi().applyManagedSource(player,
 - 可选：Vault、Redis、SQLite/MySQL/PostgreSQL 驱动。
 - 被核心属性管理器、伤害监听器、Placeholder 和 `/sxa forge` 调用。
 
-详见 [DESIGN.md](DESIGN.md)。
+详见 [Feature 设计说明](feature-design.md) 与 [配置化功能文档](../features/README.md)。

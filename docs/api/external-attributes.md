@@ -29,17 +29,21 @@ Attributes:
         Aggregate: SUM
         Min: 0
         Max: 100000
-        CombatPower: "<l:value>"
+        CombatPower: 1
     Triggers:
-      - Type: ATTACK
-        When: "<l:self_Damage> > 0"
+      - Event: DAMAGE_ATTACK
+        When: "<c:<l:self_Damage> > 0>"
         Actions:
           - Type: DAMAGE
-            Formula: "<l:self_Damage>"
+            Mode: ADD
+            Formula: "<c:<l:self_Damage>>"
     Display:
-      Category: 元素
+      Category: OTHER
       Order: 10
-      Format: "&c火焰伤害: {Damage}"
+      Rows:
+        - placeholder: FireDamage_Damage
+          label: 火焰伤害
+          color: "&c"
 ```
 
 物品 Lore：
@@ -66,7 +70,7 @@ Gradle：
 
 ```groovy
 dependencies {
-    compileOnly files('libs/SX-Attribute-4.0.0-beta.1-all.jar')
+    compileOnly files('libs/SX-Attribute-4.0.0-beta.2-all.jar')
     compileOnly files('libs/SX-Item-4.5.0-api.jar')
 }
 ```
@@ -77,9 +81,9 @@ Maven：
 <dependency>
     <groupId>github.saukiya</groupId>
     <artifactId>SX-Attribute</artifactId>
-    <version>4.0.0-beta.1</version>
+    <version>4.0.0-beta.2</version>
     <scope>system</scope>
-    <systemPath>${project.basedir}/libs/SX-Attribute-4.0.0-beta.1-all.jar</systemPath>
+    <systemPath>${project.basedir}/libs/SX-Attribute-4.0.0-beta.2-all.jar</systemPath>
 </dependency>
 ```
 
