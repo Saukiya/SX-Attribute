@@ -19,7 +19,7 @@
 | [功能总览](features/README.md) | Feature 目录结构、模块开关、通用约束与快速开始。 |
 | [统一属性引擎](features/attribute.md) | 自定义属性、元素、克制、特效、Buff/Debuff、条件和动作 DSL。 |
 | [属性来源与多服存储](features/source.md) | 生命周期、叠层、SQL Repository 与 Redis 协调。 |
-| [锻造与装备成长](features/equipment.md) | 套装、品质、词缀、强化、升星、重铸、洗练、宝石孔和附魔成长。 |
+| [锻造与装备成长](features/equipment.md) | 物品生成与属性装载生命周期，以及套装、品质、词缀、强化、升星、重铸、洗练、宝石孔和附魔成长。 |
 
 ## 开发与架构
 

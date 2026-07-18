@@ -47,6 +47,23 @@ Lore:
 
 从 `LORE` 切换到 `VARIABLE` 时，检测到旧 `.Rendered` 会触发一次 SX-Item 模板重建；从 `VARIABLE` 切回 `LORE` 时，旧 Lock 变量会先置为删行值，再写入直接显示行，避免两套文本同时存在。
 
+## 物品生成与属性装载生命周期
+
+装备从模板生成到最终提供角色属性，会依次经过以下阶段：
+
+1. **生成基础物品**：SX-Item 解析物品模板中的名称、Lore、表达式和 `<l:...>` 变量，把锁定值写入 `SX-Item.Lock`，再写入物品 ID 与模板哈希并触发 SX-Item 的 `SXItemSpawnEvent`。此时尚未生成过的装备模块变量使用 SX-Item 删行协议，不会留下空白 Lore。
+2. **修改模块状态**：品质、词缀、强化等操作读取 `SX-Attribute.Feature.<模块>.State`，执行模块规则后将新状态写回。`State` 是唯一状态事实源，不能从 Lore 反推等级、随机值或词缀身份。
+3. **派生属性文本**：模块根据最新 `State` 计算未加显示标记的属性行，写入 `SX-Attribute.Feature.<模块>.Attributes`。该节点是装备拓展属性参与计算的入口。
+4. **同步显示副本**：`LORE` 模式直接维护带 `§X` 标记的 Lore，并用 `.Rendered` 记录本次写入内容；`VARIABLE` 模式把同样带标记的多行文本写入 `SX-Item.Lock.SXAttribute_<模块>_Lore`，显示位置由 SX-Item 模板中的 `<l:SXAttribute_<模块>_Lore>` 决定。
+5. **按需重建 SX-Item**：`VARIABLE` 模式的状态操作会请求 SX-Item 更新物品。SX-Item 用当前模板生成新物品，继承旧 Lock 值和受保护数据，触发 `SXItemUpdateEvent`，然后把新类型和物品元数据应用到原物品。
+6. **迁移装备拓展状态**：SX-Attribute 监听 SX-Item 的更新事件，将每个模块的 `State` 从旧物品复制到新物品，再重新派生 `.Attributes` 和显示数据。事件内不会再次请求 SX-Item 更新，避免递归重建。
+7. **收集已装备物品**：玩家属性刷新时，依次收集 RPGInventory 槽位、自定义注册槽位、盔甲、主手和副手。SX-Attribute 旧 `Item/` 模板物品会先执行自己的哈希更新流程；该流程与 SX-Item 的同名生成事件属于不同事件类型。
+8. **预加载并刷新派生数据**：系统先读取当前 Lore/NBT 供装备条件判断，触发 `SXPreLoadItemEvent`，随后装备模块在事件最低优先级重新生成 `.Attributes` 和显示副本。完成刷新后会再次读取物品，保证本轮计算使用最新数据。
+9. **解析并合并属性**：解析器合并 Lore 与 `NBTAttribute.Nodes` 配置的节点值。每行遇到 `§X` 即截断，因此显示副本不会重复计入；未标记的 `.Attributes` 会正常进入旧属性解析器和动态属性引擎。
+10. **结算最终物品来源**：各装备先按来源分组并触发 `SXLoadAttributeEvent`，套装等跨物品模块在这里按全部已装备物品聚合。最终只替换 SX-Attribute 管理的装备来源，外部插件写入的其它命名来源不会被清除。
+
+生命周期中各数据的职责始终不变：`State` 保存事实，`Attributes` 提供实际数值，Lore 和 SX-Item Lock 只提供显示。`VARIABLE` 仅适用于能被 SX-Item 识别并重建的物品；普通 Bukkit 物品和 SX-Attribute 旧 `Item/` 模板物品需要自动显示时应使用 `LORE`。
+
 成本节点的实际字段如下；扣除前会先完整校验。仅在已经扣除后发生异常时才回滚，材料返还背包，溢出则掉落在玩家位置：
 
 ```yml
