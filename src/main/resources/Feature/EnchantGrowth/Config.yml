@@ -1,34 +1,71 @@
+# 是否启用附魔成长功能；关闭后不注册成长监听与锻造入口。
 Enable: true
 # 自定义附魔优先使用服务端真实注册；不可用时按 Fallback 自动切换为 NBT + 动态 Lore。
+# 锻造界面默认增加经验的附魔 ID，必须对应 Enchants 下的节点名。
 DefaultEnchant: SHARPNESS
+# 每次从锻造界面手动注入的成长经验值。
 ManualExperience: 10
+# 玩家行为带来的附魔成长经验。
 Gain:
+  # 造成一次有效伤害时增加的经验。
   Damage: 1
+  # 击杀生物时增加的经验。
   Kill: 10
+  # 破坏方块时增加的经验。
   BlockBreak: 1
+  # 成功钓鱼时增加的经验。
   Fishing: 5
+# 成长附魔写入装备 Lore 时使用的模板。
 Lore:
+  # 支持 {name}、{level} 与 {exp} 占位符。
   Level: "&d{name} {level} &8({exp} EXP)"
-Cost: { Money: 100, Experience: 0, Levels: 0, Items: [] }
+# 手动增加成长经验时扣除的资源。
+Cost:
+  Money: 100
+  Experience: 0
+  Levels: 0
+  # 空列表表示不需要额外物品；条目结构与其他功能的 Cost.Items 相同。
+  Items:
+    # - Material: EXPERIENCE_BOTTLE
+    #   Amount: 1
+# 可成长附魔定义；子节点名是装备状态与命令使用的稳定附魔 ID。
 Enchants:
   GrowthPower:
+    # 是否加载该附魔定义。
     Enable: true
+    # true 表示注册自定义附魔，false 表示包装原版附魔。
     Custom: true
+    # 无法真实注册自定义附魔时的策略：LORE 为降级显示，DISABLED 为禁用。
     Fallback: LORE
+    # 玩家可见名称。
     Name: 成长之力
+    # 首次获得时的等级。
     StartLevel: 1
+    # 可成长的最高等级。
     MaxLevel: 10
+    # 是否按宝藏附魔规则标记。
     Treasure: false
+    # 是否按诅咒附魔规则标记。
     Cursed: false
+    # 自定义附魔的原版稀有度枚举名。
     Rarity: RARE
-    Materials: [ DIAMOND_SWORD, IRON_SWORD ]
-    Conflicts: []
+    # 允许承载该附魔的 Bukkit 材质名。
+    Materials:
+      - DIAMOND_SWORD
+      - IRON_SWORD
+    # 冲突附魔 ID；空列表表示不额外声明冲突。
+    Conflicts:
+      # - SMITE
+    # 升到下一级所需经验，<l:level> 表示当前等级。
     RequiredExperience: "<c:100 * <l:level>>"
+    # 每级附加到装备 Lore 的属性行，{level} 会替换为当前等级。
     Attributes:
       - "攻击力: {level}"
   SHARPNESS:
+    # 原版附魔同样可进入成长系统，但不会执行自定义注册。
     Enable: true
     Custom: false
+    # 兼容旧版 Bukkit 使用的原版附魔枚举名。
     VanillaName: DAMAGE_ALL
     Name: 锋利成长
     MaxLevel: 10

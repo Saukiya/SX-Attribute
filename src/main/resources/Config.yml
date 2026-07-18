@@ -1,82 +1,141 @@
+# SX-Attribute 主配置。修改后使用 /sx reload 重新加载；标注“重启有效”的项目除外。
+# /stats 头像是否读取玩家皮肤；关闭可避免皮肤查询带来的额外开销。
 CommandStatsDisplaySkullSkin: false
+# 属性数值的 DecimalFormat 格式，# 表示不强制补零。
 DecimalFormat: '#.##'
+# 外部插件兼容开关。
 Compatibility:
   MythicMobs: true # 穿戴和掉落物品目前与SX-Item有一定冲突, 如果物品ID相同, 会判断两次. 可选择性关闭SX的掉落/穿戴功能, 重启有效
 Holographic: # 全息显示, 自动适配 HolographicDisplays 或 DecentHolograms (安装其一即可, 优先前者)
+  # 是否显示伤害、治疗等战斗全息文本。
   Enabled: true
+  # 全息文本保留时长，单位为秒。
   DisplayTime: 2
   HealthOrTake:
     Enabled: false
+# 玩家或生物头顶名称与 BossBar 的生命显示。
 HealthDisplays:
+  # 实体名称上方的字符生命条。
   Name:
     Enabled: true
+    # 生命条包含的心形字符总数。
     Size: 10
     Current: ❤
     Loss: '&7❤'
+    # 名称生命条的前后缀；Suffix 中 {0} 会替换为实体显示名。
     Prefix: '&8[&c'
     Suffix: '&8] &7- &8[&c{0}&8]'
     DisplayTime: 4
+  # 屏幕顶部的 BossBar 生命显示。
   BossBar:
     Enabled: true
+    # {0} 为实体名，{1} 为当前生命，{2} 为最大生命。
     Format: '&a&l{0}:&8&l[&a&l{1}&7&l/&c&l{2}&8&l]'
     DisplayTime: 4
+    # 不触发生命 BossBar 的 Bukkit DamageCause。
     BlackCauseList:
-    - CUSTOM
+      - CUSTOM
+# 是否使用物品自定义名称作为物品显示名。
 ItemDisplayName: true
+# 战斗伤害监听和结算规则。
 DamageEvent:
+  # Bukkit 事件优先级枚举名；修改后重启生效。
   Priority: HIGH
+  # 完全跳过结算的 Bukkit DamageCause。
   BlackCauseList:
-  - CUSTOM
+    - CUSTOM
+  # 是否让实体对实体伤害进入 EVE 属性结算。
   DamageCalculationToEVE: false
+  # 是否显示伤害浮字与相关反馈。
   DamageGauges: true
+  # 是否禁止盾牌防御参与属性伤害结算。
   BanShieldDefense: false
+  # 是否允许弓在近距离触发攻击属性。
   BowCloseRangeAttack: false
+  # 属性结算后的最低有效伤害。
   MinimumDamage: 1.0
+  # 发给客户端的 DAMAGE_INDICATOR 粒子数量上限；优先 PacketEvents、回退 ProtocolLib，-1 不拦截，0 完全隐藏。
+  DamageParticleLimit: 8
+# 是否从物品上清除原版 AttributeModifier，避免与 Lore 属性重复叠加。
 ClearDefaultAttribute: true
+# RPGInventory 中参与属性扫描的固定槽位编号。
 RPGInventorySlot:
-- 4
-- 10
-- 13
-- 14
-- 19
-- 22
-- 28
-- 31
-- 47
-- 48
-- 49
-- 50
-- 51
+  - 4
+  - 10
+  - 13
+  - 14
+  - 19
+  - 22
+  - 28
+  - 31
+  - 47
+  - 48
+  - 49
+  - 50
+  - 51
+# 每点缺失耐久对应的修理价格。
 RepairItemValue: 3.5
+# 额外背包槽位识别协议。
 RegisterSlots:
+  # 是否扫描 List 中声明的额外槽位。
   Enabled: true
+  # 固定格式“槽位编号#显示名”；编号是 Bukkit 背包槽位，不得省略 #。
   List:
-  - 17#宝藏
-  - 26#戒指
-  - 35#项链
+    - 17#宝藏
+    - 26#戒指
+    - 35#项链
+# 实体没有任何装备属性时仍然拥有的基础 Lore 属性。
 DefaultAttribute:
-- '生命上限: 20'
+  - '生命上限: 20'
+# 从物品 NBT 中读取属性文本的路径清单。
+NBTAttribute:
+  # 可配置多个 NBT 节点路径。节点值支持单个属性文本、属性文本列表，或“属性名: 数值”的嵌套映射。
+  Nodes:
+    - 'SX-Attribute.Feature.Affix.Attributes'
+    - 'SX-Attribute.Feature.SetBonus.Attributes'
+    - 'SX-Attribute.Feature.Quality.Attributes'
+    - 'SX-Attribute.Feature.Enhance.Attributes'
+    - 'SX-Attribute.Feature.Star.Attributes'
+    - 'SX-Attribute.Feature.Reforge.Attributes'
+    - 'SX-Attribute.Feature.Reroll.Attributes'
+    - 'SX-Attribute.Feature.Socket.Attributes'
+    - 'SX-Attribute.Feature.EnchantGrowth.Attributes'
+    # 可继续添加其他插件提供的属性节点：
+    # - 'MythicData.Attributes'
+# 装备拓展与其他插件的联动行为。
+EquipmentFeature:
+  # LORE：SX-Attribute 直接维护显示 Lore；VARIABLE：仅提供 SX-Item <l:> 锁变量。
+  LoreMode: VARIABLE
+  # VARIABLE 模式下，SX-Item 的 Lore 可按需添加，例如：
+  # - '<l:SXAttribute_Affix_Lore>'
+  # - '<l:SXAttribute_Enhance_Lore>'
+# 物品使用条件在 Lore 中的识别文本。
 Condition:
+  # 主副手类型标记。
   Hand:
     MainName: 主武器
     OffName: 副武器
+  # 被识别为护甲的物品类型文本。
   Armor:
-  - 头盔
-  - 盔甲
-  - 护腿
-  - 靴子
+    - 头盔
+    - 盔甲
+    - 护腿
+    - 靴子
   Role:
     Name: 限制职业
   LimitLevel:
     Name: 限制等级
   Durability:
     Name: 耐久度
+    # 耐久归零时是否直接删除物品。
     ClearItem: false
   Sell:
     Name: 出售价格
   ExpiryTime:
     Name: 到期时间
+    # 到期时间的解析与显示格式，必须是合法 SimpleDateFormat 模式。
     Format: yyyy/MM/dd HH:mm
+# 属性处理顺序；越靠前越先注册和结算，“名称#来源”可限定实现来源。
 AttributePriority:
 - JSAttribute
 - Dodge#SX-Attribute
@@ -130,11 +189,12 @@ AttributePriority:
 - NameTagDistance
 - MythicMobsDrop
 - EventMessage
+# 物品使用条件的检查顺序；前一个条件失败后不会继续执行后续条件。
 ConditionPriority:
-- Hand
-- MainHand
-- OffHand
-- LimitLevel
-- Role
-- ExpiryTime
-- Durability
+  - Hand
+  - MainHand
+  - OffHand
+  - LimitLevel
+  - Role
+  - ExpiryTime
+  - Durability

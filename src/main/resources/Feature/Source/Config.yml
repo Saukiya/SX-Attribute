@@ -1,38 +1,66 @@
 # 属性源生命周期与多服持久化。
+# 是否启用属性源模块；关闭后不会启动持久化、过期检查和跨服同步。
 Enable: true
+# 属性源过期与状态变化的检查周期，单位为服务端 tick。
 CheckPeriodTicks: 10
+# 当前服务端的唯一标识，多服环境中不得与其他实例重复。
 ServerId: server-1
+# 是否启用跨服协调；开启后应同时正确配置共享数据库与 Redis。
 NetworkMode: false
 
+# 属性源持久化后端配置。
 Storage:
   # MEMORY / SQLITE / MYSQL / POSTGRESQL
   Type: SQLITE
+  # 数据库连接池最大连接数；MEMORY 模式不使用此项。
   PoolSize: 4
+  # SQLite 数据文件名，相对于插件数据目录。
   SQLiteFile: source-data.db
+  # MySQL 或 PostgreSQL 服务地址。
   Host: 127.0.0.1
+  # 数据库端口；MySQL 通常为 3306，PostgreSQL 通常为 5432。
   Port: 3306
+  # 保存属性源数据的数据库名。
   Database: sxattribute
+  # 数据库登录凭据。
   Username: root
   Password: change-me
+  # 追加到 JDBC 地址的连接参数，不需要时可设为空字符串。
   Parameters: "useSSL=false&characterEncoding=utf8"
 
+# Redis 用于跨服失效通知与分布式锁，不承担属性源的主数据存储。
 Redis:
+  # 是否建立 Redis 连接；NetworkMode 开启时应同步开启。
   Enable: false
   Host: 127.0.0.1
   Port: 6379
+  # 无密码实例保持为空字符串。
   Password: ""
+  # Redis 逻辑数据库编号。
   Database: 0
+  # 建立连接和执行命令的超时时间，单位为毫秒。
   TimeoutMillis: 2000
+  # 分布式锁的最长持有时间，单位为毫秒。
   LockMillis: 5000
+  # 属性源发生变化时发布失效消息的频道名。
   Channel: sxattribute:source:invalidate
 
+# 可复用的属性源规则；规则 ID 供脚本、API 或触发动作引用。
 Rules:
   BattleRage:
+    # 写入持久化记录的属性源唯一键。
     Source: buff:battle_rage
+    # 持续时间公式，结果单位为 tick。
     Duration: "<c:200>"
+    # 同一来源允许叠加的最大层数。
     MaxStacks: "<c:5>"
+    # STACK 增加层数，REFRESH 刷新持续时间，REPLACE 替换现有状态。
     StackMode: STACK
+    # 是否把该来源写入 Storage；false 表示仅保存在当前运行实例内。
     Persistent: false
-    Tags: [ rage ]
+    # 用于按类别查询或批量移除属性源的标签。
+    Tags:
+      - rage
+    # 每层属性源提供的属性 Lore。
     Attributes:
       - "攻击力: 5"

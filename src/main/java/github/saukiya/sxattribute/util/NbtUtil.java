@@ -6,8 +6,10 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static github.saukiya.tools.nms.NbtUtil.getInst;
 
@@ -181,6 +183,80 @@ public class NbtUtil {
             reportFailure("getNBTList", e);
         }
         return list;
+    }
+
+    /**
+     * 读取配置节点下可交给属性解析器处理的全部文本。
+     * <p>
+     * 节点可以是单个标量、列表或嵌套 Map。Map 的叶子会被转换为
+     * {@code 键: 值}，使“攻击力: 10”这类结构化 NBT 与 Lore 使用同一套识别规则；
+     * 列表元素则保持原文本，避免改变已有的完整属性行。
+     *
+     * @param item 物品
+     * @param nodes 需要读取的 NBT 节点路径
+     * @return 按配置顺序展开的属性文本，节点不存在或适配失败时返回空列表
+     */
+    public List<String> getAttributeValues(ItemStack item, List<String> nodes) {
+        List<String> values = new ArrayList<>();
+        if (!isUsable(item) || nodes == null || nodes.isEmpty()) return values;
+        for (String node : nodes) {
+            try {
+                Object value = getInst().getItemTagWrapper(item).get(node);
+                appendAttributeValues(values, value, null);
+            } catch (Exception exception) {
+                // 单个第三方节点格式异常不能阻断其余已配置节点，错误摘要仍由统一限流处理。
+                reportFailure("getAttributeValues(" + node + ")", exception);
+            }
+        }
+        return values;
+    }
+
+    /**
+     * 判断物品是否含有任一已配置 NBT 属性节点。
+     * 此方法用于手持物品切换的快速判定，不能仅依赖 Lore，否则纯 NBT 物品不会触发属性刷新。
+     */
+    public boolean hasAttributeValues(ItemStack item, List<String> nodes) {
+        if (!isUsable(item) || nodes == null || nodes.isEmpty()) return false;
+        for (String node : nodes) {
+            try {
+                if (getInst().getItemTagWrapper(item).get(node) != null) return true;
+            } catch (Exception exception) {
+                // 与实际读取保持相同的节点隔离语义，确保后续有效节点仍能触发刷新。
+                reportFailure("hasAttributeValues(" + node + ")", exception);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 递归展开适配器返回的 Java 集合结构；只在 Map 叶子处拼接键名，
+     * 因为普通列表通常已经保存了完整的 Lore 风格属性行。
+     */
+    private void appendAttributeValues(List<String> output, Object value, String fieldName) {
+        if (value == null) return;
+        if (value instanceof Map) {
+            for (Object entryObject : ((Map) value).entrySet()) {
+                Map.Entry entry = (Map.Entry) entryObject;
+                appendAttributeValues(output, entry.getValue(), String.valueOf(entry.getKey()));
+            }
+            return;
+        }
+        if (value instanceof Iterable) {
+            for (Object element : (Iterable) value) {
+                appendAttributeValues(output, element, null);
+            }
+            return;
+        }
+        if (value.getClass().isArray()) {
+            for (int index = 0; index < Array.getLength(value); index++) {
+                appendAttributeValues(output, Array.get(value, index), null);
+            }
+            return;
+        }
+        String text = String.valueOf(value);
+        if (!text.isEmpty()) {
+            output.add(fieldName == null ? text : fieldName + ": " + text);
+        }
     }
 
     /**

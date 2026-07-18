@@ -1,6 +1,6 @@
 # Feature
 
-SX-Attribute 的配置化功能层。属性、元素、克制、特效、Buff、Debuff 与条件统一由属性 DSL 表达；装备成长模块只维护 SX-Item NBT 状态并生成属性 Lore。
+SX-Attribute 的配置化功能层。属性、元素、克制、特效、Buff、Debuff 与条件统一由属性 DSL 表达；装备成长模块以 State NBT 保存状态、以 Attributes NBT 提供属性，并生成不参与计算的显示文本。
 
 该模块用于消除“一种玩法一个监听器/属性类”的扩展成本，使服主可以只修改配置完成数值与玩法组合。
 
@@ -15,6 +15,8 @@ SX-Attribute 的配置化功能层。属性、元素、克制、特效、Buff、
 - `Feature/Attribute/Attributes.yml`：属性分片聚合清单。
 - `Feature/Source/Config.yml`：来源生命周期与存储后端。
 - `Feature/<装备功能>/Config.yml`：独立开关、公式、成本和玩法规则。
+- 根 `Config.yml.NBTAttribute.Nodes`：进入属性解析器的 NBT 节点列表。
+- 根 `Config.yml.EquipmentFeature.LoreMode`：选择直接 Lore 或 SX-Item `<l>` 变量显示。
 
 ## API 示例
 
@@ -32,6 +34,7 @@ SourceWriteResult result = SXAttribute.getApi().applyManagedSource(player,
 - 自定义附魔 ID 必须在 Minecraft 注册表冻结前注册，新增或删除真实 ID 需要完整重启；真实注册不可用时可按 `Fallback: LORE` 保留 NBT、属性与动态 Lore 成长。
 - 多服模式下 Redis 不可用时持久化写入会被拒绝，读取仍使用 SQL 事实源。
 - Folia 实体更新必须通过实体调度器执行。
+- 装备显示 Lore 带 `§X` 标记，只读取 `.Attributes` NBT 计算属性；不要同时配置同一列表的父子节点。
 
 ## 依赖关系
 

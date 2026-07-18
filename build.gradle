@@ -6,7 +6,7 @@ plugins {
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '4.0.0-beta.2'
+version '4.0.0-beta.3'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -29,6 +29,8 @@ repositories {
     maven { url "https://mvn.lumine.io/repository/maven-public/" }
     // bStats-bukkit
     maven { url "https://repo.codemc.io/repository/maven-public" }
+    // ProtocolLib 仅作为可选的出站数据包拦截 API，不随插件打包。
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
     // CraftBukkit
     maven { url 'https://repo.codemc.io/repository/nms/' }
     // Folia API
@@ -72,6 +74,8 @@ dependencies {
     // 选用 2.8.6 单体 jar: 含完整 api 包且未声明 JDK 变体, 规避新版聚合坐标 nms-* 子模块要求高版本 JDK 的解析冲突
     compileOnly('com.github.decentsoftware-eu:decentholograms:2.8.6') { transitive = false }
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
+    compileOnly 'com.github.retrooper:packetevents-spigot:2.13.0'
+    compileOnly 'net.dmulloy2:ProtocolLib:5.3.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.46'
     annotationProcessor 'org.projectlombok:lombok:1.18.46'

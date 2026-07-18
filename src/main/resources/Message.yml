@@ -1,3 +1,5 @@
+# SX-Attribute 通用语言文件。文本支持 & 颜色代码，{0}、{1} 等占位符由调用场景依次替换。
+# 玩家在条件检查、战斗反馈和物品操作中收到的消息。
 PLAYER:
   NO_REGISTER_SLOTS: '[SX-Attribute] &c服务器没有开启额外的槽位识别'
   NO_LEVEL_USE: '[SX-Attribute] &c你没有达到使用 &a{0} &c的等级要求!'
@@ -15,6 +17,7 @@ PLAYER:
     DAMAGE: '&c&o伤害: &b&o{0}'
     TAKE: '&c&o- {0}'
     HEALTH: '&e&o+ {0}'
+# 插件自带界面的标题、按钮和 Lore 文本。
 INVENTORY:
   STATS:
     NAME: '&d&l&oSX-Attribute'
@@ -121,6 +124,7 @@ INVENTORY:
       - '&e价格: {1} 金币'
       - '&7&o价格: {2}/破损值'
   DISPLAY_SLOTS_NAME: '&9&l槽位展示'
+# 管理命令的执行结果和参数错误提示。
 ADMIN:
   CLEAR_ENTITY_DATA: '[SX-Attribute] &c清理了 &6{0}&c 个多余的生物属性数据!'
   NO_ITEM: '[SX-Attribute] &c物品不存在!'
@@ -135,6 +139,7 @@ ADMIN:
   NO_ONLINE: '[SX-Attribute] &c玩家不在线或玩家不存在!'
   NO_CONSOLE: '[SX-Attribute] &c控制台不允许执行此指令!'
   PLUGIN_RELOAD: '[SX-Attribute] §c插件已重载'
+# /sx 帮助列表中各子命令的功能描述。
 COMMAND:
   STATS: 查看属性
   SELL: 打开出售界面
@@ -145,6 +150,7 @@ COMMAND:
   ATTRIBUTELIST: 查看当前属性列表
   CONDITIONLIST: 查看当前条件列表
   RELOAD: 重新加载这个插件的配置
+# 战斗提示中的原版实体名替换表；键必须与 Bukkit 实体显示名一致。
 REPLACE_LIST:
   Pig: 猪猪
   Sheep: 羊羊

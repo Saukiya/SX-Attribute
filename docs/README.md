@@ -6,7 +6,7 @@
 
 | 文档 | 内容 |
 |---|---|
-| [安装与主配置](configuration.md) | 必需/可选依赖、`Config.yml`、`Message.yml` 与重载边界。 |
+| [安装与主配置](configuration.md) | 必需/可选依赖、粒子包适配器、`Config.yml`、`Message.yml` 与重载边界。 |
 | [完整属性配置](attributes.md) | Lore 格式、内置战斗属性、原版属性、条件与动态属性。 |
 | [物品配置与随机表达式](items.md) | `Item/` 模板、`Import`、随机字符串、条件 Lore 与物品指令。 |
 | [指令、权限与 Placeholder](commands.md) | `/sxa` 命令、权限节点与属性占位符。 |
@@ -34,5 +34,6 @@
 
 ## 发布说明
 
+- [4.0.0 Beta 3](releases/4.0.0-beta.3.md)
 - [4.0.0 Beta 2](releases/4.0.0-beta.2.md)
 - [4.0.0 Beta 1](releases/4.0.0-beta.1.md)

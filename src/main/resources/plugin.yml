@@ -1,27 +1,39 @@
+# Bukkit 插件清单；声明加载入口、依赖、命令和权限，不作为运行时功能参数读取。
+# 插件标识与 Java 主类由服务端在加载阶段使用。
 name: SX-Attribute
 main: github.saukiya.sxattribute.SXAttribute
+# 构建时由 Gradle 替换为实际版本号。
 version: $version
 author: Saukiya
 api-version: 1.13
 # Folia 通过该标记确认插件已使用区域/全局调度器适配。
 folia-supported: true
 
+# 必须先加载的硬依赖，缺失时服务端不会启用本插件。
 depend:
   - SX-Item
 
+# 可选联动插件；存在时会先于 SX-Attribute 加载，不存在时对应兼容功能自动跳过。
 softdepend:
-- HolographicDisplays
-- DecentHolograms
-- PlaceholderAPI
-- RPGInventory
-- MythicMobs
-- SkillAPI
-- Vault
+  - HolographicDisplays
+  - DecentHolograms
+  - PlaceholderAPI
+  - RPGInventory
+  - MythicMobs
+  - SkillAPI
+  - Vault
+  - packetevents
+  - ProtocolLib
 
+# 注册主命令及其简写；实际子命令和权限检查由命令处理器完成。
 commands:
   sxAttribute:
-    aliases: [ sx, sa, sxa ]
+    aliases:
+      - sx
+      - sa
+      - sxa
 
+# Bukkit 权限默认值；true 对所有玩家开放，op 仅默认授予管理员。
 permissions:
   sx-attribute.use:
     default: true

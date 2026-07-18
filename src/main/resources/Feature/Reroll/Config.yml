@@ -1,6 +1,14 @@
+# 是否启用词缀洗练；洗练只重抽现有词缀数值，不替换词缀类型。
 Enable: true
+# 每次洗练操作需要扣除的资源。
 Cost:
+  # Vault 金币消耗。
   Money: 200
+  # 玩家当前经验点消耗。
   Experience: 0
+  # 玩家经验等级消耗。
   Levels: 0
-  Items: []
+  # 空列表表示不消耗额外物品。
+  Items:
+    # - Material: MAGMA_CREAM
+    #   Amount: 1

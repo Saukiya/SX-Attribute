@@ -1,3 +1,4 @@
+# 不自动加载的物品模板示例；文件用于保存或暂存配置，不会注册到可直接获取的物品池。
 Default-1:
   Name: <s:DefaultPrefix>&c炎之洗礼<s:DefaultSuffix> <s:<l:品质>Color><l:品质>
   ID:

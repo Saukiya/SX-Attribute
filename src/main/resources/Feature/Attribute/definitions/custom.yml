@@ -23,8 +23,19 @@ Attributes:
     Enable: true
     Priority: 500
     Values:
-      damage: { Match: 火元素伤害, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100000, CombatPower: 1 }
-      chance: { Match: 火元素触发, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100 }
+      damage:
+        Match: 火元素伤害
+        MatchMode: CONTAINS
+        Aggregate: SUM
+        Min: 0
+        Max: 100000
+        CombatPower: 1
+      chance:
+        Match: 火元素触发
+        MatchMode: CONTAINS
+        Aggregate: SUM
+        Min: 0
+        Max: 100
     Triggers:
       - Event: DAMAGE_ATTACK
         Priority: 500
@@ -38,25 +49,44 @@ Attributes:
       Category: ATTACK
       Order: 50
       Rows:
-        - { placeholder: FireDamage_damage, label: 火元素伤害, color: "&c" }
+        - placeholder: FireDamage_damage
+          label: 火元素伤害
+          color: "&c"
 
   FireResistance:
     Enable: true
     Priority: 400
     Values:
-      resistance: { Match: 火元素抗性, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100, CombatPower: 1 }
-    Triggers: []
+      resistance:
+        Match: 火元素抗性
+        MatchMode: CONTAINS
+        Aggregate: SUM
+        Min: 0
+        Max: 100
+        CombatPower: 1
+    Triggers:
+      # - Event: DAMAGE_DEFEND
+      #   Actions:
+      #     - Type: MESSAGE
     Display:
       Category: DEFENSE
       Order: 50
       Rows:
-        - { placeholder: FireResistance_resistance, label: 火元素抗性, color: "&c", suffix: "%" }
+        - placeholder: FireResistance_resistance
+          label: 火元素抗性
+          color: "&c"
+          suffix: "%"
 
   UndeadSlayer:
     Enable: true
     Priority: 450
     Values:
-      ratio: { Match: 亡灵克制, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100 }
+      ratio:
+        Match: 亡灵克制
+        MatchMode: CONTAINS
+        Aggregate: SUM
+        Min: 0
+        Max: 100
     Triggers:
       - Event: DAMAGE_ATTACK
         When: "<c:<l:self_ratio> > 0>"
@@ -70,8 +100,18 @@ Attributes:
     Enable: true
     Priority: 600
     Values:
-      chance: { Match: 中毒触发, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 100 }
-      level: { Match: 中毒等级, MatchMode: CONTAINS, Aggregate: MAX, Min: 0, Max: 10 }
+      chance:
+        Match: 中毒触发
+        MatchMode: CONTAINS
+        Aggregate: SUM
+        Min: 0
+        Max: 100
+      level:
+        Match: 中毒等级
+        MatchMode: CONTAINS
+        Aggregate: MAX
+        Min: 0
+        Max: 10
     Triggers:
       - Event: DAMAGE_ATTACK
         When: "<c:<l:self_chance> > 0>"
@@ -87,7 +127,12 @@ Attributes:
     Enable: true
     Priority: 700
     Values:
-      power: { Match: 残血攻击, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 1000 }
+      power:
+        Match: 残血攻击
+        MatchMode: CONTAINS
+        Aggregate: SUM
+        Min: 0
+        Max: 1000
     Triggers:
       - Event: DAMAGE_DEFEND
         When: "<c:<l:self_power> > 0 && <l:defender_health> / <l:defender_max_health> <= 0.3>"
@@ -99,6 +144,7 @@ Attributes:
             StackMode: REFRESH
             MaxStacks: 1
             Persistent: false
-            Tags: [ low_health ]
+            Tags:
+              - low_health
             Attributes:
               - "攻击力: 20"

@@ -21,7 +21,7 @@ api.triggerDynamicAttributes(player, target);
 | `removeManagedSource(entity, source)` | 删除受管来源。 |
 | `operateEquipmentFeature(player, item, featureId)` | 不经过 GUI 直接运行装备模块操作；调用方负责物品位置和界面反馈。 |
 | `getEquipmentFeatureState(item, featureId)` | 读取模块存储在物品 NBT 中的 YAML 状态。 |
-| `setEquipmentFeatureState(player, item, featureId, state)` | 写入模块状态并触发该模块的 Lore 重建流程。 |
+| `setEquipmentFeatureState(player, item, featureId, state)` | 写入模块状态，并按 `EquipmentFeature.LoreMode` 刷新直接 Lore 或 SX-Item Lock 变量。 |
 | `triggerDynamicAttributes(actor, target)` | 触发所有 `Event: API` 的动态属性规则。 |
 
 受管来源返回 `SourceWriteResult`：`APPLIED`、`REMOVED`、`UNIQUE_EXISTS`、`REDIS_UNAVAILABLE`、`LOCK_CONFLICT`、`STORAGE_DISABLED`、`VERSION_CONFLICT` 或 `FAILED`。持久化来源在多服模式缺少 Redis 时会返回 `REDIS_UNAVAILABLE`，不应把它当作普通失败后继续本地写入。

@@ -78,6 +78,27 @@ SavedItem:
 
 完整表达式能力由所安装的 SX-Item 版本提供；如果模板使用了脚本表达式或其它 SX-Item 扩展，请同步查阅对应版本的 SX-Item 文档。
 
+### 装备拓展 `<l>` 变量
+
+当 `Config.yml` 使用 `EquipmentFeature.LoreMode: VARIABLE` 时，SX-Attribute 会把各模块的显示块写入 SX-Item 的 Lock NBT。变量采用固定格式 `<l:SXAttribute_<模块>_Lore>`，名称中不使用点号，因为点号在 NBT Wrapper 中表示子节点。
+
+本节所说的变量引用位置是 **SX-Item 插件自己的物品模板**。VARIABLE 模式只处理能被 `SXItem.getItemManager()` 识别的物品；SX-Attribute 旧 `Item/` 生成器或普通 Bukkit 物品如需自动显示，应使用 `LORE` 模式。
+
+```yml
+Lore:
+  - '&6装备成长'
+  - '<l:SXAttribute_Quality_Lore>'
+  - '<l:SXAttribute_Affix_Lore>'
+  - '<l:SXAttribute_Enhance_Lore>'
+  - '<l:SXAttribute_Star_Lore>'
+  - '<l:SXAttribute_Socket_Lore>'
+  - '<l:SXAttribute_EnchantGrowth_Lore>'
+```
+
+变量值可以包含多行，SX-Item 会按自己的 Lore 列表展开规则拆分。模块没有内容时变量使用 SX-Item 的 `<DeleteLore>` 协议删除所在行。模板不引用某个变量时，该模块仍保存状态和属性，只是不显示对应 Lore。
+
+这些变量属于显示副本，行首自带不可见的 `§X` 标记，不参与 SX-Attribute 属性识别。真实属性始终从 `SX-Attribute.Feature.<模块>.Attributes` NBT 读取。
+
 ## 条件 Lore
 
 条件管理器按照 `Config.yml` 的 `Condition.Priority` 顺序解析 Lore。内置条件包括装备位置、最低等级、职业限制、Lore 耐久、出售价格和到期时间；各条件的显示关键词同样由 `Config.yml.Condition` 配置决定。

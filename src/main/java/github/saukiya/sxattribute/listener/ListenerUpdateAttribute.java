@@ -34,7 +34,8 @@ public class ListenerUpdateAttribute implements Listener {
      * @param itemList ItemStack[]
      */
     private void updateHandData(Player player, ItemStack... itemList) {
-        if (itemList.length > 0 && Arrays.stream(itemList).allMatch(item -> item == null || !item.hasItemMeta() || !item.getItemMeta().hasLore())) {
+        // 纯 NBT 属性物品同样需要触发刷新，不能再只用 Lore 作为快速返回条件。
+        if (itemList.length > 0 && Arrays.stream(itemList).noneMatch(SXAttribute.getAttributeManager()::hasItemAttributeData)) {
             return;
         }
         updateEquipmentData(player);

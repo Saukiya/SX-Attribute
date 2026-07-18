@@ -1,10 +1,24 @@
+# 是否启用套装绑定与套装属性结算功能。
 Enable: true
+# 点击锻造入口时写入装备的默认套装 ID，必须对应 Sets 下的节点名。
 DefaultSet: Warrior
+# 套装 ID 写入装备 Lore 时使用的模板。
 Lore:
+  # {set} 会替换为装备持久化的套装 ID。
   Format: "&7套装: {set}"
-Cost: { Money: 0, Experience: 0, Levels: 0, Items: [] }
+# 绑定默认套装时需要扣除的资源。
+Cost:
+  Money: 0
+  Experience: 0
+  Levels: 0
+  # 空列表表示不消耗额外物品。
+  Items:
+    # - Material: DIAMOND_CHESTPLATE
+    #   Amount: 1
+# 单一套装定义；子节点名是装备与混搭规则引用的稳定套装 ID。
 Sets:
   Warrior:
+    # 穿戴件数阈值；达到对应数量后应用该节点下的全部属性。
     Thresholds:
       2:
         Attributes:
@@ -12,8 +26,10 @@ Sets:
       4:
         Attributes:
           - "生命上限: 40"
+# 混搭规则可组合多个套装的件数要求，并提供额外属性。
 Mixes:
   WarriorMix:
+    # 键为 Sets 中的套装 ID，值为至少需要穿戴的件数。
     Requirements:
       Warrior: 2
     Attributes:

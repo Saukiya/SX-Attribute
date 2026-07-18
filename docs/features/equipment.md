@@ -1,6 +1,6 @@
 # 锻造与装备成长
 
-所有装备模块由 `/sxa forge` 统一入口调用，也可用单独模块 ID 打开。每个模块在 `Feature/<模块>/` 内包含 `Config.yml`、`Gui.yml`、`Messages.yml`，以 `Enable` 单独开关。真实状态保存为 `SX-Attribute.Feature.<模块>.State` NBT，Lore 会在物品加载和操作后重建。
+所有装备模块由 `/sxa forge` 统一入口调用，也可用单独模块 ID 打开。每个模块在 `Feature/<模块>/` 内包含 `Config.yml`、`Gui.yml`、`Messages.yml`，以 `Enable` 单独开关。真实状态保存为 `SX-Attribute.Feature.<模块>.State` NBT，计算出的属性文本保存为同命名空间下的 `.Attributes`。
 
 ## 统一规则
 
@@ -8,6 +8,44 @@
 - 强化与升星失败策略支持 `KEEP`、`DOWNGRADE`、`RESET`、`DESTROY`；保护概率可用公式配置。
 - GUI 对玩家会话加锁，并以主手物品指纹阻止换物、重复点击和异常扣费。
 - 关闭模块不会删除已有 NBT；重新开启后可继续读取并渲染状态。
+- Lore 只是显示副本，统一带 `§X` 标记，不直接参与属性累计。
+
+## 属性 NBT 与显示模式
+
+每个模块使用三个互相隔离的节点：
+
+| 节点 | 职责 |
+|---|---|
+| `SX-Attribute.Feature.<模块>.State` | 唯一状态事实源，例如等级、词缀 ID、随机值和孔位内容。 |
+| `SX-Attribute.Feature.<模块>.Attributes` | 未加显示标记的属性文本，由 `NBTAttribute.Nodes` 读取并参与计算。 |
+| `SX-Attribute.Feature.<模块>.Rendered` | `LORE` 模式记录上一次直接渲染的行，只用于精确移除和旧物品迁移。 |
+
+`Config.yml` 的 `EquipmentFeature.LoreMode` 提供两种互斥模式：
+
+```yml
+EquipmentFeature:
+  # LORE / VARIABLE
+  LoreMode: VARIABLE
+```
+
+### `LORE` 模式
+
+SX-Attribute 从 `State` 生成显示文本，添加 `§X` 后直接写入物品 Lore，并将本次结果记录到 `.Rendered`。重新渲染时只移除 `.Rendered` 中的旧行，不影响 SX-Item 模板或其它插件添加的 Lore。
+
+### `VARIABLE` 模式
+
+SX-Attribute 将显示块写入 SX-Item Lock NBT，变量名为 `<l:SXAttribute_<模块>_Lore>`。SX-Item 物品模板决定变量的位置，也可以完全不引用：
+
+```yml
+Lore:
+  - '<l:SXAttribute_Quality_Lore>'
+  - '<l:SXAttribute_Affix_Lore>'
+  - '<l:SXAttribute_Enhance_Lore>'
+```
+
+模块没有显示内容时，变量使用 SX-Item 删行协议，不产生空白 Lore。装备状态变化后 SX-Attribute 请求 SX-Item 按模板更新物品；`SXItemUpdateEvent` 中只迁移 `State` 和派生 NBT，不直接修改变量模式的 Lore。
+
+从 `LORE` 切换到 `VARIABLE` 时，检测到旧 `.Rendered` 会触发一次 SX-Item 模板重建；从 `VARIABLE` 切回 `LORE` 时，旧 Lock 变量会先置为删行值，再写入直接显示行，避免两套文本同时存在。
 
 成本节点的实际字段如下；扣除前会先完整校验。仅在已经扣除后发生异常时才回滚，材料返还背包，溢出则掉落在玩家位置：
 

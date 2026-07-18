@@ -1,16 +1,28 @@
+# 是否启用装备品质抽取功能。
 Enable: true
+# 品质标记写入装备 Lore 时使用的模板。
 Lore:
+  # {name} 会替换为抽中的品质显示名。
   Format: "&7品质: {name}"
+# 每次抽取品质需要扣除的资源。
 Cost:
   Money: 100
   Experience: 0
   Levels: 0
-  Items: []
+  # 空列表表示不消耗额外物品。
+  Items:
+    # - Material: EMERALD
+    #   Amount: 1
+# 可抽取的品质池；子节点名是持久化到装备上的稳定品质 ID。
 Qualities:
   Common:
+    # 品质的玩家可见名称，可使用 & 颜色代码。
     Name: "&f普通"
+    # 相对抽取权重，数值越大越容易被选中。
     Weight: 70
-    Attributes: []
+    # 该品质附加的属性 Lore；空列表表示没有额外属性。
+    Attributes:
+      # - "攻击力: 1"
   Rare:
     Name: "&9稀有"
     Weight: 25

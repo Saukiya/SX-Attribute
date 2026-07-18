@@ -1,17 +1,38 @@
+# 是否启用装备升星功能。
 Enable: true
+# 装备允许达到的最高星级。
 MaxLevel: 10
+# 升星过程使用的动态公式，<l:level> 表示操作前的星级。
 Formula:
+  # 成功率百分比；结果会按 0 到 100 的概率处理。
   SuccessChance: "<c:80 - <l:level> * 5>"
-Failure: { Policy: KEEP, Levels: 1, ProtectionChance: "<c:0>" }
+# 升星失败后的处理规则。
+Failure:
+  # 可选 KEEP、DOWNGRADE、RESET、DESTROY，分别表示保留、降级、清零或销毁装备。
+  Policy: KEEP
+  # Policy 为 DOWNGRADE 时降低的星级数。
+  Levels: 1
+  # 失败后免除惩罚的概率公式，结果按百分比处理。
+  ProtectionChance: "<c:0>"
+# 星级状态写入装备 Lore 时使用的显示模板。
 Lore:
+  # {level} 会替换为当前星级。
   Level: "&b星级: {level}星"
+  # {name} 与 {value} 分别替换为属性显示名和公式计算值。
   Attribute: "&7{name}: {value}"
+# 星级提供的属性；子节点名是内部属性 ID。
 Attributes:
   Health:
+    # 属性在 Lore 中显示的名称。
     Name: 生命上限
+    # 当前星级对应的属性值公式。
     Formula: "<c:<l:level> * 5>"
+# 每次升星尝试都会预扣的资源，事务失败时会自动返还。
 Cost:
   Money: 500
   Experience: 0
   Levels: 1
-  Items: []
+  # 空列表表示不消耗额外物品。
+  Items:
+    # - Material: NETHER_STAR
+    #   Amount: 1

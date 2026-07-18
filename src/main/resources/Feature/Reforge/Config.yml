@@ -1,6 +1,14 @@
+# 是否启用词缀重铸；重铸会替换装备上未锁定的词缀类型。
 Enable: true
+# 每次重铸操作需要扣除的资源。
 Cost:
+  # Vault 金币消耗。
   Money: 300
+  # 玩家当前经验点消耗。
   Experience: 0
+  # 玩家经验等级消耗。
   Levels: 0
-  Items: []
+  # 空列表表示不消耗额外物品。
+  Items:
+    # - Material: BLAZE_POWDER
+    #   Amount: 1

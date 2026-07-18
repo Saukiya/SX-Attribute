@@ -1,19 +1,37 @@
+# 是否启用随机词缀功能；关闭后不会在锻造界面注册该操作。
 Enable: true
+# 每次生成的基础词缀数量，Formula.Count 可在运行时覆盖该值。
 Count: 2
-AllowedMaterials: []
+# 允许生成词缀的 Bukkit 材质名；空列表表示不限制装备材质。
+AllowedMaterials:
+  # - DIAMOND_SWORD
+# 动态参数公式；变量与计算语法由 SX-Item 公式引擎提供。
 Formula:
+  # 本次生成的词缀数量。
   Count: "<c:2>"
+# 执行一次词缀生成需要扣除的资源。
 Cost:
+  # Vault 金币消耗；未安装经济实现时非零金额会导致操作失败。
   Money: 100
+  # 玩家当前经验点消耗。
   Experience: 0
+  # 玩家经验等级消耗。
   Levels: 0
-  Items: []
+  # 额外物品消耗，格式见 Material 与 Amount；空列表表示不消耗物品。
+  Items:
+    # - Material: DIAMOND
+    #   Amount: 1
+# 可随机抽取的词缀池；子节点名是写入装备状态的稳定词缀 ID。
 Affixes:
   Attack:
+    # 相对抽取权重，数值越大越容易被选中。
     Weight: 70
+    # 稀有词缀标记，供后续展示或扩展逻辑识别。
     Rare: false
+    # {value} 的随机数值闭区间。
     Min: 1
     Max: 10
+    # 写入装备 Lore 的完整行，{value} 会替换为本次随机值。
     Lore:
       - "&c攻击力: {value}"
   Critical:

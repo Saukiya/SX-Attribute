@@ -1,6 +1,9 @@
+# JavaScript 属性扩展配置。List 下每个节点是一种脚本属性，其节点名是内部稳定 ID。
 List:
   tick:
+    # 玩家装备 Lore 中用于识别该脚本属性的文本。
     DiscernName: 耀眼光芒
+    # 属性首次启用时执行一次的脚本，用于初始化 data 中的持久运行状态。
     Initialization:
     - '
       data.tick = 1;
@@ -11,6 +14,7 @@ List:
       return [Math.cos(radiansCircle) * radians, Math.sin(radiansCircle) * radians];
       }
       '
+    # 玩家获得该属性时按顺序执行的脚本指令。
     Enabled:
     - delay 5
     - player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().clone().add(0, 1, 0), 30, 0.5, 0.5, 0.5, 1);
@@ -20,9 +24,11 @@ List:
     - player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().clone().add(0, 0.5, 0), 50, 1, 0.3, 1, 1);
     - delay 5
     - player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().clone().add(0, 0.25, 0), 60, 1.25, 0.2, 1.25, 1);
+    # 玩家失去该属性时按顺序执行的清理脚本指令。
     Disable:
     - delay 5
     - player.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getLocation().clone().add(0, 1, 0), 3, 0.5, 0.5, 0.5, 0);
+    # 属性保持启用期间循环执行的脚本；delay 控制下一段执行前的 tick 延迟。
     Continued:
     - delay 1
     - '
@@ -37,4 +43,5 @@ List:
 
       player.getWorld().spawnParticle(Particle.SPELL_MOB, player.getLocation().clone().add(v[0], 0.5 + data.tick / 20.0, v[1]), 1, 0, 0, 0, data.tick / 100);
     '
+    # 该脚本属性计入 /stats 的固定战斗力。
     CombatPower: 20

@@ -1,3 +1,4 @@
+# 附魔成长反馈；各键分别覆盖成功、缺少默认附魔和注册降级失败场景。
 Success: "&a附魔成长完成"
 NoDefaultEnchant: "&c未配置默认成长附魔"
 RegistrationFailed: "&c自定义附魔未真实注册且 Lore 降级已关闭"

@@ -6,7 +6,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class Config {
     public static final String COMMAND_STATS_DISPLAY_SKULL_SKIN = "CommandStatsDisplaySkullSkin";
@@ -38,6 +41,10 @@ public class Config {
     public static final String BAN_SHIELD_DEFENSE = "DamageEvent.BanShieldDefense";
     public static final String BOW_CLOSE_RANGE_ATTACK = "DamageEvent.BowCloseRangeAttack";
     public static final String MINIMUM_DAMAGE = "DamageEvent.MinimumDamage";
+    /**
+     * 伤害指示粒子出站包的数量上限；负数表示不拦截，零表示完全取消该粒子包。
+     */
+    public static final String DAMAGE_PARTICLE_LIMIT = "DamageEvent.DamageParticleLimit";
     public static final String CLEAR_DEFAULT_ATTRIBUTE = "ClearDefaultAttribute";
 
     public static final String PRG_INVENTORY_SLOT = "RPGInventorySlot";
@@ -45,6 +52,15 @@ public class Config {
     public static final String REGISTER_SLOTS_ENABLED = "RegisterSlots.Enabled";
     public static final String REGISTER_SLOTS_LIST = "RegisterSlots.List";
     public static final String DEFAULT_ATTRIBUTE = "DefaultAttribute";
+
+    /**
+     * 可作为属性文本来源的 NBT 节点列表。节点路径交由统一 NBT 适配器解析，
+     * 因而必须沿用该适配器支持的点号路径格式。
+     */
+    public static final String NBT_ATTRIBUTE_NODES = "NBTAttribute.Nodes";
+
+    /** 装备拓展显示模式：LORE 由本插件直接渲染，VARIABLE 交给 SX-Item 锁变量模板。 */
+    public static final String EQUIPMENT_FEATURE_LORE_MODE = "EquipmentFeature.LoreMode";
 
     public static final String NAME_HAND_MAIN = "Condition.Hand.MainName";
     public static final String NAME_HAND_OFF = "Condition.Hand.OffName";
@@ -97,11 +113,17 @@ public class Config {
     @Getter
     private static double minimumDamage;
     @Getter
+    private static int damageParticleLimit;
+    @Getter
     private static List<String> bossBarBlackCauseList;
     @Getter
     private static boolean clearItemDurability;
     @Getter
     private static boolean mythicMobs;
+    @Getter
+    private static List<String> nbtAttributeNodes = Collections.emptyList();
+    @Getter
+    private static EquipmentFeatureLoreMode equipmentFeatureLoreMode = EquipmentFeatureLoreMode.VARIABLE;
 
     /**
      * 加载Config类
@@ -131,7 +153,30 @@ public class Config {
         rpgInvSlotList = config.getIntegerList(PRG_INVENTORY_SLOT);
         registerSlot = config.getBoolean(REGISTER_SLOTS_ENABLED);
         minimumDamage = config.getDouble(MINIMUM_DAMAGE);
+        damageParticleLimit = config.getInt(DAMAGE_PARTICLE_LIMIT, 8);
         clearItemDurability = config.getBoolean(CLEAR_ITEM_DURABILITY, true);
         mythicMobs = config.getBoolean(COMPATIBILITY_MYTHIC_MOBS, true);
+        // 在加载时清理空节点并冻结快照，避免异步装备刷新读到重载中的可变列表。
+        nbtAttributeNodes = Collections.unmodifiableList(config.getStringList(NBT_ATTRIBUTE_NODES).stream()
+                .map(String::trim)
+                .filter(node -> !node.isEmpty())
+                .distinct()
+                .collect(Collectors.toList()));
+        try {
+            equipmentFeatureLoreMode = EquipmentFeatureLoreMode.valueOf(
+                    config.getString(EQUIPMENT_FEATURE_LORE_MODE, EquipmentFeatureLoreMode.VARIABLE.name())
+                            .trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException exception) {
+            equipmentFeatureLoreMode = EquipmentFeatureLoreMode.VARIABLE;
+            SXAttribute.getInst().getLogger().warning("Unknown EquipmentFeature.LoreMode; using VARIABLE");
+        }
+    }
+
+    /** 装备拓展显示权归属，两个模式共享相同的 State NBT，不影响属性计算。 */
+    public enum EquipmentFeatureLoreMode {
+        /** SX-Attribute 直接增删 ItemMeta Lore。 */
+        LORE,
+        /** SX-Attribute 提供锁变量，SX-Item 物品模板负责生成 Lore。 */
+        VARIABLE
     }
 }

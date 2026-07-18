@@ -1,10 +1,17 @@
 # 属性聚合清单。注册顺序由 Files 决定；自定义分片可直接追加到此列表。
+# 是否启用统一的可配置属性引擎。
 Enable: true
+# 分片间出现相同属性 ID 时的处理策略；ERROR 会拒绝重复定义，OVERRIDE 以后加载者为准。
 DuplicatePolicy: ERROR
+# 属性引擎的全局运行参数。
 Settings:
+  # 是否允许属性定义使用 SX-Item 公式语法。
   FormulaEngine: true
+  # 是否依据属性定义中的 Display 节点自动生成 /stats 面板。
   AutoPanel: true
+  # 周期型属性与触发器的默认执行周期，单位为 tick。
   TickPeriod: 20
+# 按顺序加载的属性定义分片，路径相对于 Feature/Attribute 目录。
 Files:
   - definitions/builtin.yml
   - definitions/custom.yml

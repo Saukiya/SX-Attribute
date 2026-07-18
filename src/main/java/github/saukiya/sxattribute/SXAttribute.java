@@ -461,6 +461,10 @@ public class SXAttribute extends JavaPlugin {
         forgeFeatureManager = new ForgeFeatureManager();
         listenerHealthChange = new ListenerHealthChange();
 
+        if (Config.getDamageParticleLimit() >= 0) {
+            DamageParticlePacketLimiter.register(this);
+        }
+
         if (!Config.getConfig().getString(Config.DAMAGE_EVENT_PRIORITY, "HIGH").equals("HIGH")) {
             for (Method method : ListenerDamage.class.getDeclaredMethods()) {
                 if (method.getName().equals("onEntityDamageByEntityEvent")) {
@@ -498,6 +502,7 @@ public class SXAttribute extends JavaPlugin {
     @Override
     public void onDisable() {
         // 各字段均在 onEnable 才赋值; 若 onLoad/onEnable 提前崩溃则为 null, 需判空避免掩盖原始异常
+        DamageParticlePacketLimiter.unregister(this);
         if (attributeManager != null) attributeManager.onAttributeDisable();
         if (conditionManager != null) conditionManager.onConditionDisable();
         if (attributeEngine != null) attributeEngine.disable();

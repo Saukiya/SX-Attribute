@@ -1,3 +1,5 @@
+# 可加载的默认物品模板。顶层节点名是 /sx give、/sx save 等命令使用的稳定物品 ID。
+# SX 类型模板支持 SX-Item 的 <s:>、<l:>、<c:>、<r:> 等表达式，并在生成物品时解析。
 Default-1:
   Name: <s:DefaultPrefix>&c炎之洗礼<s:DefaultSuffix> <s:<l:品质>Color><l:品质>
   ID:
@@ -23,6 +25,7 @@ Default-1:
   ItemFlagList:
   - HIDE_ATTRIBUTES
   Unbreakable: false
+# 自动更新示例；Update 控制重载后刷新物品，ClearAttribute 控制刷新前是否清理旧属性。
 Default-2:
   Name: '&c机械轻羽之靴'
   ID: 301
@@ -62,6 +65,7 @@ Default-3:
   - '&8&o"放在背包第三行最后一格生效"'
   EnchantList:
   - DURABILITY:1
+# Import 类型保存完整 Bukkit ItemStack 序列化数据，不参与 SX 模板自动更新。
 Default-4:
   Type: Import
   Item:
@@ -78,6 +82,7 @@ Default-4:
       - §7/sx save 编号 Import
       - ''
       - §c它不支持自动更新§7
+# 自定义基础攻速示例；AttackSpeed 与玩家自身攻速属性分开结算。
 Default-5:
   Name: '&b慢剑'
   ID: 267
@@ -105,6 +110,7 @@ Default-6:
   - DURABILITY:1
   ItemFlagList:
   - HIDE_ENCHANTS
+# 随机表达式说明物品，用 Lore 直接展示所有受支持的表达式语法。
 Default-7:
   Name: '&c&l随机字符串说明'
   ID: '359:12'

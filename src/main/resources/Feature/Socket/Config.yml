@@ -1,16 +1,36 @@
+# 是否启用宝石镶嵌与拆卸功能。
 Enable: true
+# 新装备首次进入镶嵌流程时获得的默认孔位数。
 DefaultSlots: 2
+# 孔位与宝石信息写入装备 Lore 时使用的模板。
 Lore:
+  # {used} 与 {slots} 分别表示已使用孔位和总孔位。
   Slots: "&7宝石孔: {used}/{slots}"
+  # {gem} 会替换为 Gems 中定义的宝石显示名。
   Gem: "&7宝石: {gem}"
-Cost: { Money: 50, Experience: 0, Levels: 0, Items: [] }
+# 每次镶嵌操作需要扣除的资源。
+Cost:
+  Money: 50
+  Experience: 0
+  Levels: 0
+  # 空列表表示不消耗宝石之外的额外物品。
+  Items:
+    # - Material: EMERALD
+    #   Amount: 1
+# 潜行点击执行宝石拆卸时的规则。
 Extraction:
+  # 是否允许从装备上拆卸最后一颗宝石。
   Enable: true
+  # 拆卸后宝石被销毁的百分比概率。
   DestroyChance: 10
+# 可识别的宝石池；子节点名是装备状态中保存的稳定宝石 ID。
 Gems:
   Ruby:
+    # 玩家可见名称。
     Name: "&c红宝石"
+    # 放在副手用于镶嵌的 Bukkit 材质名。
     Material: REDSTONE
+    # 镶嵌后写入装备的属性 Lore。
     Attributes:
       - "攻击力: 8"
   Sapphire:

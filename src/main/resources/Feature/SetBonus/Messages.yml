@@ -1,2 +1,3 @@
+# 套装绑定反馈；NoDefaultSet 用于 DefaultSet 缺失或引用无效时。
 Success: "&a套装操作完成"
 NoDefaultSet: "&c未配置默认套装"

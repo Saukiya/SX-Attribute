@@ -252,10 +252,7 @@ public class SXAttributeManager implements Listener {
         Iterator<PreLoadItem> iterator = preItemList.iterator();
         while (iterator.hasNext()) {
             PreLoadItem preLoadItem = iterator.next();
-            List<String> list = new ArrayList<>();
-            if (preLoadItem.getItem().getItemMeta().hasLore()) {
-                list = preLoadItem.getItem().getItemMeta().getLore().stream().map(str -> str.split("§X")[0]).filter(str -> str.length() > 0).collect(Collectors.toList());
-            }
+            List<String> list = loadItemAttributeLines(preLoadItem.getItem());
             if (!SXAttribute.getConditionManager().isUse(entity, preLoadItem.getType(), preLoadItem.getItem(), list)) {
                 iterator.remove();
             }
@@ -267,8 +264,9 @@ public class SXAttributeManager implements Listener {
         Map<String, SXAttributeData> sources = new LinkedHashMap<>();
         SXAttributeData aggregate = new SXAttributeData();
         for (PreLoadItem preLoadItem : preItemList) {
-            if (preLoadItem.getItem().getItemMeta().hasLore()) {
-                SXAttributeData data = loadListData(preLoadItem.getItem().getItemMeta().getLore().stream().map(str -> str.split("§X")[0]).filter(str -> str.length() > 0).collect(Collectors.toList()));
+            List<String> attributeLines = loadItemAttributeLines(preLoadItem.getItem());
+            if (!attributeLines.isEmpty()) {
+                SXAttributeData data = loadListData(attributeLines);
                 sources.computeIfAbsent(itemSourceName(preLoadItem.getType()), k -> new SXAttributeData()).add(data);
                 aggregate.add(data);
             }
@@ -285,6 +283,30 @@ public class SXAttributeManager implements Listener {
             sources.put(SOURCE_ITEM_EXTRA, delta);
         }
         return sources;
+    }
+
+    /**
+     * 汇总物品 Lore 与配置 NBT 节点中的属性文本。
+     * 两种来源必须进入同一个 {@link #loadListData(List)} 入口，才能保持内置属性、动态属性、
+     * {@code §X} 截断协议以及条件判定的行为一致。
+     */
+    private List<String> loadItemAttributeLines(ItemStack item) {
+        List<String> lines = new ArrayList<>();
+        if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            lines.addAll(item.getItemMeta().getLore());
+        }
+        lines.addAll(SXAttribute.getNbtUtil().getAttributeValues(item, Config.getNbtAttributeNodes()));
+        return lines.stream().map(str -> str.split("§X")[0]).filter(str -> !str.isEmpty()).collect(Collectors.toList());
+    }
+
+    /**
+     * 判断物品是否可能提供属性数据。手持切换监听器依赖此方法跳过无关刷新，
+     * 因此必须同时检查 Lore 和配置的 NBT 节点。
+     */
+    public boolean hasItemAttributeData(ItemStack item) {
+        if (item == null || item.getType() == Material.AIR) return false;
+        if (item.hasItemMeta() && item.getItemMeta().hasLore()) return true;
+        return SXAttribute.getNbtUtil().hasAttributeValues(item, Config.getNbtAttributeNodes());
     }
 
     /**
