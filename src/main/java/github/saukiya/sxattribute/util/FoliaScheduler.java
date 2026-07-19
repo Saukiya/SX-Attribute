@@ -51,7 +51,13 @@ public final class FoliaScheduler {
     }
 
     private static boolean hasFoliaScheduler() {
-        return Bukkit.getName().equalsIgnoreCase("Folia")
-                || Bukkit.getServer().getName().equalsIgnoreCase("Folia");
+        try {
+            // 服务端名称可被分支实现或启动器改写；以 Folia 核心类为能力边界，避免误走线程不安全的 BukkitScheduler。
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer", false,
+                    FoliaScheduler.class.getClassLoader());
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
     }
 }
