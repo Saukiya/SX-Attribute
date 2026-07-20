@@ -135,7 +135,10 @@ public class SXAttributeManager implements Listener {
         Map<String, AttributeSource> map = entitySources.get(uuid);
         if (map != null) {
             for (AttributeSource source : map.values()) {
-                data.add(source.getData());
+                // 诊断来源已经由 Bukkit 等外部系统施加，只展示而不能再次参与 SX 求和。
+                if (source.isContributesToTotal()) {
+                    data.add(source.getData());
+                }
             }
         }
         return data;

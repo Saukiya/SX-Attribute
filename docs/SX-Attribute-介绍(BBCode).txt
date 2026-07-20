@@ -102,7 +102,7 @@ Lore 继续兼容原有属性工作流。新属性字段可以通过 [code]Match
 
 [list]
 [*]服务端：Spigot、Paper、Folia 及 Bukkit 兼容端。
-[*]必需依赖：SX-Item；Vault、PlaceholderAPI、HolographicDisplays、DecentHolograms、RPGInventory、MythicMobs、SkillAPI、PacketEvents、ProtocolLib 为可选依赖。
+[*]必需依赖：SX-Item；Vault、PlaceholderAPI、HolographicDisplays、DecentHolograms、RPGInventory、MythicMobs、AuraSkills、SkillAPI、PacketEvents、ProtocolLib 为可选依赖。
 [*]伤害粒子配置：[code]DamageEvent.DamageParticleLimit[/code] 默认为 8，-1 不拦截，0 完全隐藏；只影响客户端收到的 [code]DAMAGE_INDICATOR[/code] 粒子包。
 [*]完整文档：[url=https://github.com/Saukiya/SX-Attribute/tree/3.x/docs]GitHub docs[/url]（安装、属性、物品、配置化模块、JavaScript、外部 API 与发行说明）。
 [*]反馈问题请附上服务端版本、SX-Attribute 版本、SX-Item 版本、相关配置和完整日志。

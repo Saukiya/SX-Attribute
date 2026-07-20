@@ -34,6 +34,7 @@
 
 ## 发布说明
 
+- [4.0.0 Beta 6](releases/4.0.0-beta.6.md)
 - [4.0.0 Beta 5](releases/4.0.0-beta.5.md)
 - [4.0.0 Beta 4](releases/4.0.0-beta.4.md)
 - [4.0.0 Beta 3](releases/4.0.0-beta.3.md)

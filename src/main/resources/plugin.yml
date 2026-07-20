@@ -20,6 +20,8 @@ softdepend:
   - PlaceholderAPI
   - RPGInventory
   - MythicMobs
+  # AuraSkills 先加载后，SX 首次刷新即可保留其 Bukkit 最大生命声明。
+  - AuraSkills
   - SkillAPI
   - Vault
   - packetevents

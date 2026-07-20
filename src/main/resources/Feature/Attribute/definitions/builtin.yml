@@ -1160,7 +1160,7 @@ Attributes:
 
   # 生命上限。UPDATE 型, 设置玩家最大生命值。
   # Formula 变量: <l:value>=生命上限词条, <l:skillapi>=SkillAPI 职业附加生命
-  # Formula 结果 : 玩家最终最大生命上限(施加到原版 max_health)
+  # Formula 结果 : SX 自身最大生命；以固定加成写入原版 max_health，并保留 AuraSkills 等外部插件的基础值和修饰符
   Health:
     Enable: true
     Formula: "<c:<l:value> + <l:skillapi>>"

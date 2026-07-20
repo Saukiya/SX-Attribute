@@ -2,7 +2,7 @@
 
 ## 安装与依赖
 
-将 SX-Attribute 与 **SX-Item** 放入 `plugins/` 后完整重启服务器。SX-Item 是必需依赖；Vault、PlaceholderAPI、HolographicDisplays、DecentHolograms、RPGInventory、MythicMobs、SkillAPI、PacketEvents 与 ProtocolLib 为可选依赖。
+将 SX-Attribute 与 **SX-Item** 放入 `plugins/` 后完整重启服务器。SX-Item 是必需依赖；Vault、PlaceholderAPI、HolographicDisplays、DecentHolograms、RPGInventory、MythicMobs、AuraSkills、SkillAPI、PacketEvents 与 ProtocolLib 为可选依赖。
 
 `DamageEvent.DamageParticleLimit` 需要 PacketEvents 或 ProtocolLib 才能修改客户端收到的原版伤害指示粒子包。两者同时安装时优先 PacketEvents；PacketEvents 不可用或适配失败时自动回退 ProtocolLib。两者都未安装不会影响伤害结算和插件启动，只会保留原版粒子数量并在控制台提示。
 
