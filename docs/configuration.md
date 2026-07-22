@@ -37,6 +37,14 @@
 | `AttributePriority` | 列表 | 内置属性事件执行顺序；只在理解相互影响时调整。 |
 | `ConditionPriority` | 列表 | 物品条件检查顺序。 |
 
+最大生命的写入与客户端显示选项位于 `Feature/Attribute/definitions/builtin.yml` 的 `Attributes.Health` 节点：
+
+| 配置项 | 默认值 | 说明 |
+| --- | --- | --- |
+| `Health.Mode` | `HEALTH_SCALED` | `HEALTH_SCALED` 使用 3.9.2 的 base value 写入并允许压缩血条；`ATTRIBUTE_MODIFIER` 使用 beta.6 的固定修饰器写入、保留外部 base，且关闭客户端血条压缩。 |
+| `HealthScaled.Enabled` | `true` | 仅在 `HEALTH_SCALED` 模式下控制是否启用 Bukkit 客户端生命缩放。 |
+| `HealthScaled.Value` | `40` | 启用缩放时显示的生命上限，`40` 对应两排红心。 |
+
 ### NBT 属性节点
 
 `NBTAttribute.Nodes` 使用展开式列表配置。每个路径由 SX-Item 的 NBT Wrapper 按点号逐级读取，节点值可以是单条属性文本、属性文本列表，或以属性名为键的嵌套映射：

@@ -32,7 +32,14 @@ public enum Message {
     PLAYER__NO_DURABILITY,
     PLAYER__SELL,
     PLAYER__BATTLE__FIRST_PERSON,
+    /**
+     * 旧版误用的消息枚举名。默认语言文件保留 HURT 作为兼容别名，插件内部统一使用 TAKE。
+     *
+     * @deprecated 新代码必须使用 {@link #PLAYER__HOLOGRAPHIC__TAKE}
+     */
+    @Deprecated
     PLAYER__HOLOGRAPHIC__HURT,
+    PLAYER__HOLOGRAPHIC__TAKE,
     PLAYER__HOLOGRAPHIC__HEALTH,
     INVENTORY__STATS__NAME,
     INVENTORY__STATS__HIDE_ON,

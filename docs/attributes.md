@@ -32,7 +32,7 @@
 | 防御 | `防御力`、`PVP防御力`、`PVE防御力`、`格挡几率`、`格挡比例`、`反射几率`、`反射比例` | 减伤、格挡和反伤。 |
 | 生存 | `生命上限`、`生命恢复`、`闪避几率`、`韧性` | 最大生命、周期回复、闪避和降低触发型效果概率。 |
 
-`生命上限`只以 SX 专属固定加成写入 Bukkit 最大生命，不覆盖基础值或其他修饰符，因此可与 AuraSkills 等通过 Bukkit 属性提供生命的插件叠加。SkillAPI 职业生命继续由 `Health.Formula` 的 `skillapi` 变量合并。`/sxa source` 与 `/sxa statssource` 会把检测到的 SkillAPI 生命和其他 Bukkit 外部生命显示为只读来源；这些诊断来源不会再次参与 SX 求和。
+`生命上限`可通过 `Health.Health.Mode` 选择写入协议。默认 `HEALTH_SCALED` 与 3.9.2 一致：SX 写入 Bukkit 最大生命 base value，并按 `Health.HealthScaled` 将客户端血条压缩到指定值；该模式已用于兼容 Paper 26.1.2，外部修饰符仍可叠加，但其他插件若也写 base value，则最后写入者生效。`ATTRIBUTE_MODIFIER` 与 beta.6 一致：SX 以专属固定修饰器叠加，保留外部 base value 和其他修饰符，但会关闭 Bukkit 客户端血条压缩。SkillAPI 职业生命继续由 `Health.Formula` 的 `skillapi` 变量合并。`/sxa source` 与 `/sxa statssource` 会把检测到的 SkillAPI 生命和其他 Bukkit 外部生命显示为只读来源；这些诊断来源不会再次参与 SX 求和。
 
 `格挡几率` 同时被旧 `Dodge` 与 `Block` 识别，若只想保留其中一种机制，请在 `builtin.yml` 中关闭另一项 `Enable` 或改用不同识别文本。
 

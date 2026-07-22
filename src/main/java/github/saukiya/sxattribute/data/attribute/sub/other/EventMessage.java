@@ -1,7 +1,5 @@
 package github.saukiya.sxattribute.data.attribute.sub.other;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxattribute.data.attribute.AttributeType;
 import github.saukiya.sxattribute.data.attribute.SubAttribute;
@@ -9,6 +7,7 @@ import github.saukiya.sxattribute.data.eventdata.EventData;
 import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.util.Config;
+import github.saukiya.sxattribute.util.hologram.HologramProvider;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -45,7 +44,7 @@ public class EventMessage extends SubAttribute implements Listener {
                         if (holoData.getClearTime() < System.currentTimeMillis()) {
                             holoData.delete();
                         } else {
-                            holoData.getHologram().teleport(holoData.getHologram().getLocation().add(0, moveDistance, 0));
+                            holoData.getHologram().moveUp(moveDistance);
                         }
                     }
                 }
@@ -103,13 +102,11 @@ public class EventMessage extends SubAttribute implements Listener {
         private long clearTime = System.currentTimeMillis() + (Config.getConfig().getInt(Config.HOLOGRAPHIC_DISPLAY_TIME) * 1000);
 
         @Getter
-        private Hologram hologram;
+        private HologramProvider.Handle hologram;
 
         public HoloData(Location loc, List<String> list) {
-            this.hologram = HologramsAPI.createHologram(getPlugin(), loc);
-            for (String message : list) {
-                hologram.appendTextLine(message);
-            }
+            // 所有伤害浮空字必须经过统一提供者，否则只安装 DecentHolograms 时会加载 HD 类并报错。
+            this.hologram = SXAttribute.getHologramProvider().create(loc, list);
             EventMessage.this.getHoloList().add(this);
         }
 

@@ -5,6 +5,8 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import github.saukiya.sxattribute.SXAttribute;
 import org.bukkit.Location;
 
+import java.util.List;
+
 /**
  * HolographicDisplays 适配器.
  * <p>
@@ -16,9 +18,19 @@ import org.bukkit.Location;
 public class HolographicDisplaysProvider implements HologramProvider {
 
     @Override
-    public Handle create(Location location, String text) {
+    public Handle create(Location location, List<String> lines) {
         Hologram hologram = HologramsAPI.createHologram(SXAttribute.getInst(), location);
-        hologram.appendTextLine(text);
-        return hologram::delete;
+        for (String line : lines) hologram.appendTextLine(line);
+        return new Handle() {
+            @Override
+            public void delete() {
+                hologram.delete();
+            }
+
+            @Override
+            public void moveUp(double distance) {
+                hologram.teleport(hologram.getLocation().add(0, distance, 0));
+            }
+        };
     }
 }

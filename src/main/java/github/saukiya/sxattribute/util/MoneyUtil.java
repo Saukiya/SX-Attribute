@@ -5,18 +5,25 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+/**
+ * Vault 经济服务访问入口。
+ *
+ * <p>经济实现可能晚于 Vault 和本插件注册，因此服务提供者不能只在插件启用时解析一次。</p>
+ */
 public class MoneyUtil {
     private static Economy economy = null;
 
     /**
-     * 初始化MoneyUtil类
+     * 解析当前已注册的 Vault 经济服务。
      *
-     * @throws NullPointerException NullPointerException
+     * <p>每次检测都替换缓存，避免经济插件晚注册后永久保持不可用状态，也避免继续使用已注销的提供者。</p>
+     *
+     * @return 当前是否存在可用的经济服务
      */
-    public static void setup() throws NullPointerException {
+    public static boolean setup() {
         RegisteredServiceProvider<Economy> registeredServiceProvider = Bukkit.getServicesManager().getRegistration(Economy.class);
-        if (registeredServiceProvider == null) throw new NullPointerException();
-        economy = registeredServiceProvider.getProvider();
+        economy = registeredServiceProvider == null ? null : registeredServiceProvider.getProvider();
+        return economy != null;
     }
 
     /**

@@ -4,7 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Location;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -26,10 +26,21 @@ public class DecentHologramsProvider implements HologramProvider {
     private static final AtomicLong COUNTER = new AtomicLong();
 
     @Override
-    public Handle create(Location location, String text) {
+    public Handle create(Location location, List<String> lines) {
         String name = "SXAttribute_" + COUNTER.getAndIncrement();
-        // 非持久化全息, 创建时直接带入首行文本 (避免使用配置默认文本)
-        Hologram hologram = DHAPI.createHologram(name, location, Collections.singletonList(text));
-        return hologram::delete;
+        // 非持久化全息创建时一次写入全部行，避免后续操作依赖 DecentHolograms 的页面实现。
+        Hologram hologram = DHAPI.createHologram(name, location, lines);
+        Location currentLocation = location.clone();
+        return new Handle() {
+            @Override
+            public void delete() {
+                hologram.delete();
+            }
+
+            @Override
+            public void moveUp(double distance) {
+                DHAPI.moveHologram(hologram, currentLocation.add(0, distance, 0));
+            }
+        };
     }
 }

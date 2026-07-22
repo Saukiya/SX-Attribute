@@ -17,6 +17,8 @@ PLAYER:
     DAMAGE: '&c&o伤害: &b&o{0}'
     TAKE: '&c&o- {0}'
     HEALTH: '&e&o+ {0}'
+    # 兼容仍读取旧 HURT 键的外部扩展；插件内部受伤浮空字使用 TAKE。
+    HURT: '&d- {0}'
 # 插件自带界面的标题、按钮和 Lore 文本。
 INVENTORY:
   STATS:

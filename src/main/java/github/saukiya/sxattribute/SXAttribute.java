@@ -103,7 +103,23 @@ public class SXAttribute extends JavaPlugin {
     private static ListenerHealthChange listenerHealthChange;
 
     @Getter
-    private static boolean placeholder, holographic, vault, rpgInventory, mythicMobs;
+    private static boolean placeholder, holographic, rpgInventory, mythicMobs;
+
+    /** 由 {@link #isVault()} 动态维护，不能使用 Lombok 生成只返回缓存值的访问器。 */
+    private static boolean vault;
+
+    /**
+     * 检查 Vault 及其经济服务当前是否可用。
+     *
+     * <p>部分经济插件会在 SX-Attribute 启用后才注册服务，必须在功能入口重新解析，
+     * 否则修理和出售指令会在首次检测失败后永久从可用指令中消失。</p>
+     *
+     * @return Vault 经济服务可用时返回 true
+     */
+    public static boolean isVault() {
+        vault = Bukkit.getPluginManager().isPluginEnabled("Vault") && MoneyUtil.setup();
+        return vault;
+    }
 
     /**
      * 全息显示提供者. 优先 HolographicDisplays, 其次 DecentHolograms, 均无则为 null.
@@ -418,10 +434,7 @@ public class SXAttribute extends JavaPlugin {
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-            try {
-                MoneyUtil.setup();
-                vault = true;
-            } catch (NullPointerException e) {
+            if (!isVault()) {
                 SXAttribute.getInst().getLogger().warning("No Find Vault-Economy!");
             }
         } else {

@@ -164,7 +164,8 @@ public class ListenerHealthChange extends BukkitRunnable implements Listener {
             Location loc = entity.getEyeLocation().clone().add(0, 0.6 - SXAttribute.getRandom().nextDouble() / 2, 0);
             loc.setYaw(entity.getLocation().getYaw() - 90);
             loc.add(loc.getDirection().multiply(0.8D));
-            new HoloData(SXAttribute.getHologramProvider().create(loc, Message.getMsg(Message.PLAYER__HOLOGRAPHIC__HURT, event.getFinalDamage())));
+            // 默认语言协议使用 PLAYER.HOLOGRAPHIC.TAKE；HURT 从未存在于 Message.yml，会显示 Null Message。
+            new HoloData(SXAttribute.getHologramProvider().create(loc, Message.getMsg(Message.PLAYER__HOLOGRAPHIC__TAKE, event.getFinalDamage())));
         }
 
         if (Config.isHealthNameVisible()) {
