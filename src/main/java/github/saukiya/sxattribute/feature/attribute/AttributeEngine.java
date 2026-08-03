@@ -87,6 +87,11 @@ public class AttributeEngine implements Listener {
         registry.merge(target, addition);
     }
 
+    /** 在实体来源完成聚合后应用自定义字段映射，保证比例按玩家总属性而不是单件装备分别计算。 */
+    public void applyMappings(SXAttributeData data, LivingEntity entity) {
+        registry.applyMappings(data, entity instanceof Player ? (Player) entity : null);
+    }
+
     public void fire(AttributeDefinition.AttributeTrigger event, AttributeExecutionContext context) {
         for (AttributeRegistry.AttributeInvocation invocation : registry.invocations(event)) {
             boolean attackerSide = event != AttributeDefinition.AttributeTrigger.DAMAGE_DEFEND;

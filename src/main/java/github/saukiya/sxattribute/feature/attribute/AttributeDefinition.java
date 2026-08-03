@@ -24,12 +24,15 @@ public final class AttributeDefinition {
     private final String id;
     private final int priority;
     private final Map<String, ValueDefinition> values;
+    private final List<MappingDefinition> mappings;
     private final List<TriggerDefinition> triggers;
 
-    private AttributeDefinition(String id, int priority, Map<String, ValueDefinition> values, List<TriggerDefinition> triggers) {
+    private AttributeDefinition(String id, int priority, Map<String, ValueDefinition> values,
+                                List<MappingDefinition> mappings, List<TriggerDefinition> triggers) {
         this.id = id;
         this.priority = priority;
         this.values = Collections.unmodifiableMap(values);
+        this.mappings = Collections.unmodifiableList(mappings);
         this.triggers = Collections.unmodifiableList(triggers);
     }
 
@@ -44,11 +47,15 @@ public final class AttributeDefinition {
         } else {
             collectLegacyValues(section, values, "value");
         }
+        List<MappingDefinition> mappings = new ArrayList<>();
+        for (Map<?, ?> map : section.getMapList("Mappings")) {
+            mappings.add(MappingDefinition.parse(id, values, map));
+        }
         List<TriggerDefinition> triggers = new ArrayList<>();
         for (Map<?, ?> map : section.getMapList("Triggers")) {
             triggers.add(TriggerDefinition.parse(map));
         }
-        return new AttributeDefinition(id, section.getInt("Priority", 1000), values, triggers);
+        return new AttributeDefinition(id, section.getInt("Priority", 1000), values, mappings, triggers);
     }
 
     /**
@@ -157,6 +164,59 @@ public final class AttributeDefinition {
             Map<String, Double> variables = new LinkedHashMap<>();
             variables.put("value", value);
             return FormulaUtil.eval(null, combatPowerFormula, variables, value * combatPower);
+        }
+    }
+
+    /**
+     * 将当前自定义属性的一个字段换算为另一条可识别属性文本。
+     * <p>
+     * Target 使用 Lore 识别名而不是 Java 类名，使同一协议既能映射内置属性，也能映射用户定义的属性。
+     * 映射始终以未派生的字段快照为输入，避免映射顺序或循环引用导致结果不稳定。
+     */
+    @Getter
+    public static final class MappingDefinition {
+        private final String source;
+        private final String target;
+        private final String scale;
+        private final double scaleFallback;
+        private final String formula;
+
+        private MappingDefinition(String source, String target, String scale, double scaleFallback, String formula) {
+            this.source = source;
+            this.target = target;
+            this.scale = scale;
+            this.scaleFallback = scaleFallback;
+            this.formula = formula;
+        }
+
+        private static MappingDefinition parse(String attributeId, Map<String, ValueDefinition> values, Map<?, ?> map) {
+            String source = text(map.get("Source"));
+            String target = text(map.get("Target"));
+            if (source == null || !values.containsKey(source)) {
+                throw new IllegalArgumentException("Attribute " + attributeId + " mapping references unknown Source: " + source);
+            }
+            if (target == null) {
+                throw new IllegalArgumentException("Attribute " + attributeId + " mapping requires Target");
+            }
+            Object rawScale = map.containsKey("Scale") ? map.get("Scale") : 1D;
+            return new MappingDefinition(source, target, String.valueOf(rawScale),
+                    scaleFallback(rawScale), text(map.get("Formula")));
+        }
+
+        /** 只有纯数值可脱离公式引擎安全回退，表达式无法在缺少引擎时自行解释。 */
+        private static double scaleFallback(Object value) {
+            if (value instanceof Number) return ((Number) value).doubleValue();
+            try {
+                return Double.parseDouble(String.valueOf(value).trim());
+            } catch (NumberFormatException ignored) {
+                return 1D;
+            }
+        }
+
+        private static String text(Object value) {
+            if (value == null) return null;
+            String text = String.valueOf(value).trim();
+            return text.isEmpty() ? null : text;
         }
     }
 

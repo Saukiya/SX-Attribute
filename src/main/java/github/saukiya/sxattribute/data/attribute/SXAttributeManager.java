@@ -372,6 +372,10 @@ public class SXAttributeManager implements Listener {
     public SXAttributeData getEntityData(LivingEntity entity) {
         SXAttributeData data = new SXAttributeData();
         data.add(sumSources(entity.getUniqueId()));
+        if (SXAttribute.getAttributeEngine() != null) {
+            // 映射必须发生在全部来源求和之后，否则 MAX/LAST 聚合及小数比例会随装备拆分方式产生不同结果。
+            SXAttribute.getAttributeEngine().applyMappings(data, entity);
+        }
         data.calculationCombatPower();
         data.add(defaultAttributeData);
         SXGetAttributeEvent event = new SXGetAttributeEvent(entity, data, !Bukkit.isPrimaryThread());

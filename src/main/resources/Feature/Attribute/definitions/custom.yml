@@ -1,24 +1,88 @@
-# 自定义属性定义入口。
-#
-# Attributes:
-#   FireDamage:
-#     Enable: true
-#     Priority: 500
-#     Values:
-#       damage:
-#         Match: 火元素伤害
-#         MatchMode: CONTAINS
-#         Aggregate: SUM
-#         Min: 0
-#         Max: 100000
-#     Triggers:
-#       - Event: DAMAGE_ATTACK
-#         When: "<c:<l:self_damage> > 0>"
-#         Actions:
-#           - Type: DAMAGE
-#             Mode: ADD
-#             Formula: "<c:<l:self_damage>>"
+# 自定义属性定义入口；下方 Strength 是包含 Scale、Formula、变量与面板展示的完整逐行示例。
+# 所有自定义属性定义都必须放在 Attributes 根节点下。
 Attributes:
+  # Strength 是属性 ID；公式跨属性引用时使用这个 ID，例如 Strength_strength。
+  Strength:
+    # 是否注册力量属性；关闭后 Values、Mappings 与 Display 均不生效。
+    Enable: true
+    # 属性定义优先级；数值越小，相关触发器越早执行。
+    Priority: 300
+    # Values 声明该属性拥有的全部可解析字段，也是映射公式可引用的变量来源。
+    Values:
+      # strength 是主字段 ID；Mapping.Source 使用此名称，公式中可用 value 或 source_strength 读取。
+      strength:
+        # 从 Lore、NBT 或属性来源中识别“力量: 数值”。
+        Match: 力量
+        # CONTAINS 表示属性文本中包含 Match 即可识别。
+        MatchMode: CONTAINS
+        # SUM 表示不同装备和属性来源提供的力量相加。
+        Aggregate: SUM
+        # 力量最终修正时允许的最小值。
+        Min: 0
+        # 力量最终修正时允许的最大值。
+        Max: 100000
+        # 力量本身不额外计算战斗力；映射出的攻击力和暴击几率按目标属性规则计算。
+        CombatPower: 0
+      # attack_bonus 是同一定义的辅助字段，用来演示 Formula 读取属性源中的其它属性。
+      attack_bonus:
+        # 从属性文本中识别“攻击映射倍率: 数值”；例如“攻击映射倍率: 50”。
+        Match: 攻击映射倍率
+        # 使用 CONTAINS 兼容带颜色、前缀或后缀的属性文本。
+        MatchMode: CONTAINS
+        # 多个来源提供的攻击映射倍率累加后再进入 Scale 公式。
+        Aggregate: SUM
+        # 不允许辅助倍率低于 0。
+        Min: 0
+        # 最多允许额外增加 1000% 映射倍率。
+        Max: 1000
+        # 辅助字段只参与映射公式，不单独增加战斗力。
+        CombatPower: 0
+    # Mappings 将聚合后的自定义字段转换成内置属性或其它自定义属性。
+    # Scale 只计算倍率，即“每 1 点 Source 对应多少点 Target”。
+    # Formula 计算最终写入 Target 的数值；不填写时默认结果为 value * scale。
+    # Formula 填写后可使用 value、scale 与其它属性变量，实现非线性或跨属性计算。
+    Mappings:
+      # 第一条映射把力量转换为攻击力，并演示 Scale 与 Formula 的完整变量用法。
+      - # Source 指定读取 Values.strength；其总值同时注入变量 value。
+        Source: strength
+        # Target 使用目标属性的 Lore 识别名，因此这里会进入内置“攻击力”计算。
+        Target: 攻击力
+        # Scale 只计算倍率；这里表示每点力量基础映射 2 点攻击力，再叠加 attack_bonus/100。
+        Scale: "<c:2 + <l:source_attack_bonus> / 100>"
+        # Formula 计算最终值；这里显式写出的 value * scale 与省略 Formula 时的默认行为相同。
+        Formula: "<c:<l:value> * <l:scale>>"
+      # 第二条映射把力量转换为暴击几率，演示固定倍率也通过公式引擎执行。
+      - # Source 仍读取同一个 strength 字段，允许一个源字段映射到多个目标。
+        Source: strength
+        # 目标“暴击几率”的数值单位为百分比。
+        Target: 暴击几率
+        # Scale 固定返回倍率 2，表示每 1 点力量对应 2% 暴击几率。
+        Scale: "<c:2>"
+        # Formula 是最终结果；此处等于力量总值乘倍率 2，也可以直接省略这一行。
+        Formula: "<c:<l:value> * <l:scale>>"
+    # Display 控制 /stats 自动属性面板中的展示位置。
+    Display:
+      # OTHER 表示显示在其它属性分类。
+      Category: OTHER
+      # 同分类中按 Order 从小到大排列。
+      Order: 1
+      # Rows 声明该属性需要展示的面板行。
+      Rows:
+        # placeholder 使用“属性ID_字段ID”读取力量总值。
+        - placeholder: Strength_strength
+          # 面板中显示的中文名称。
+          label: 力量
+          # 面板文字使用金色。
+          color: "&6"
+        # 同时展示用于攻击力公式的辅助倍率字段。
+        - placeholder: Strength_attack_bonus
+          # 面板中显示的辅助字段名称。
+          label: 攻击映射倍率
+          # 辅助倍率使用黄色。
+          color: "&e"
+          # 该字段按百分比展示。
+          suffix: "%"
+
   FireDamage:
     Enable: true
     Priority: 500
