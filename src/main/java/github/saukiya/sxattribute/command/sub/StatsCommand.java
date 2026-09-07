@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 查询属性指令
@@ -38,6 +40,9 @@ import java.util.UUID;
  * @author Saukiya
  */
 public class StatsCommand extends SubCommand implements Listener {
+
+    /** 仅匹配完整 SX 占位符，后随的百分号后缀及其它 PAPI 占位符不属于属性 ID。 */
+    private static final Pattern SX_PLACEHOLDER = Pattern.compile("%sx_([^%]+)%");
 
     private static final InventoryHolder holder = () -> null;
 
@@ -174,7 +179,7 @@ public class StatsCommand extends SubCommand implements Listener {
     /**
      * 按 Attributes.yml 各属性节点的 Display 元数据, 生成指定分区的面板 lore 行。
      * <p>
-     * 收集所有 {@code Display.Category} 匹配的属性, 按 {@code Display.Order} 升序, 逐 Row 生成:
+     * 只收集已启用且服务端支持、{@code Display.Category} 匹配的属性, 按 {@code Display.Order} 升序, 逐 Row 生成:
      * 含 {@code line} 则原样使用; 否则拼 {@code {color}{label}:&b %sx_{placeholder}%{suffix}}。
      *
      * @param category 目标分区
@@ -185,7 +190,7 @@ public class StatsCommand extends SubCommand implements Listener {
         int autoOrder = 100000;
         for (String name : AttributeConfig.attributeNames()) {
             ConfigurationSection sec = AttributeConfig.getSection(name);
-            if (sec == null) {
+            if (sec == null || !AttributeConfig.isEnabled(name) || !AttributeConfig.isSupported(name)) {
                 continue;
             }
             ConfigurationSection display = sec.getConfigurationSection("Display");
@@ -220,10 +225,28 @@ public class StatsCommand extends SubCommand implements Listener {
         return result;
     }
 
+    /**
+     * 旧 Message.yml 和自定义 Display.line 同样可能引用新版原版属性，必须在替换占位符前过滤。
+     * 一行混合多个属性时，只要有已知不可用属性便隐藏整行；未知占位符保留，避免误删外部扩展
+     * 或掩盖拼写错误。此规则独立于“显示零值”开关，不会把不支持的属性伪装成零值。
+     */
+    static boolean containsUnavailableAttribute(String lore) {
+        Matcher matcher = SX_PLACEHOLDER.matcher(lore);
+        while (matcher.find()) {
+            String name = matcher.group(1);
+            if (AttributeConfig.has(name)
+                    && (!AttributeConfig.isEnabled(name) || !AttributeConfig.isSupported(name))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private List<String> process(Player player, SXAttributeData data, List<String> list) {
         // getStringList 在 key 缺失时会返回不可变的 singletonList (如旧 Message.yml 未含新分区键),
         // 而下方 set/remove 需要可变列表, 故统一包装为 ArrayList 防止 UnsupportedOperationException
         list = new ArrayList<>(list);
+        list.removeIf(StatsCommand::containsUnavailableAttribute);
         for (int i = 0; i < list.size(); i++) {
             String lore = list.get(i);
             while (lore.contains("%") && lore.split("%").length > 1 && lore.split("%")[1].contains("sx_") && lore.split("%")[1].split("_").length > 1) {

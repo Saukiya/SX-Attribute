@@ -16,6 +16,23 @@ Feature/Attribute/
 
 ## 属性定义
 
+### 原版属性的版本限制
+
+带 `RegistryKey` 的属性依赖服务端原版能力，同时受 `Version` 最低版本和实际 Bukkit API 是否存在的约束。
+Minecraft 1.12.2 没有以下采集属性，升级 PlaceholderAPI 或调低 `Version` 不会使它们生效：
+
+| 属性 | 最低 Minecraft 版本 |
+| --- | --- |
+| 交互距离 `BlockRange`、挖掘速度 `BlockBreakSpeed` | 1.20.5 |
+| 挖掘效率 `MiningEfficiency`、水下挖掘速度 `SubmergedMining`、氧气加成 `OxygenBonus` | 1.21 |
+
+`/sxa stats` 自动面板会跳过未启用或不受支持的属性；关闭 `Settings.AutoPanel` 后，旧 `Message.yml` 中
+引用这些属性的行也会隐藏。点击“显示更多属性”只显示可用属性的零值，不会显示旧服不支持的能力。
+自定义行混合多个属性时，若其中一个已知属性不可用则隐藏整行；未知占位符仍保留，便于排查拼写或扩展加载问题。
+此处修复的是 issue #55 中的面板 `N/A` 显示；若插件本身无法启用，仍需完整启动日志定位，不能据此判断为 PAPI 故障。
+
+### 动态属性
+
 一个动态属性由 `Values`、可选的 `Mappings`、`Triggers`、`Display` 组成。以下示例为火元素伤害：
 
 ```yml

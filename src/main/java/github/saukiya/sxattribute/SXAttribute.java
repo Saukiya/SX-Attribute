@@ -259,14 +259,14 @@ public class SXAttribute extends JavaPlugin {
         new Command().registerAttribute();
 
         // 原版属性包装 (数据驱动): 遍历 Feature/Attribute 聚合视图中含 RegistryKey 的数值型节点,
-        // 按 Version 精确门控(低版本自动跳过), 实例化 VanillaUpdateAttribute 注册。
-        // 属性在当前版本不存在时 AttributeUtil 返回 null 二次降级, 不报错。
+        // 同时检查 Version 与实际 Bukkit 属性，和面板共用门控；缺失的原版能力不注册，
+        // 避免旧服显示或累计实际上无法生效的属性。
         for (String attributeName : AttributeConfig.attributeNames()) {
             ConfigurationSection sec = AttributeConfig.getSection(attributeName);
             if (sec == null || !sec.contains("RegistryKey")) {
                 continue;
             }
-            if (isVersionAtLeast(sec.getString("Version", "1.0"))) {
+            if (AttributeConfig.isSupported(attributeName)) {
                 new VanillaUpdateAttribute(attributeName, sec).registerAttribute();
             }
         }

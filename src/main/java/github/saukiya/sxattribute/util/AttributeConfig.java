@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ import java.util.Set;
  * 自动播种(仅补缺, 用户已填的键不覆盖)进节点, 首次加载后落盘, 使所有属性的可调值集中可见可改。
  * <p>
  * 数值型原版包装属性 (含 {@code RegistryKey} 的节点) 由此文件完全数据驱动:
- * {@link SXAttribute} 在 onLoad 遍历本文件按 {@code Version} 门控实例化注册, 无需一属性一 Java 类。
+ * {@link SXAttribute} 在 onLoad 按 {@code Version} 与实际 Bukkit API 门控注册, 无需一属性一 Java 类。
  *
  * @author Ray_Hughes
  */
@@ -219,6 +220,23 @@ public class AttributeConfig {
     public static boolean isEnabled(String name) {
         ConfigurationSection sec = getSection(name);
         return enabled && (sec == null || sec.getBoolean("Enable", true));
+    }
+
+    /**
+     * 判断原版包装属性在当前服务端是否存在，供注册与面板共用同一兼容性边界。
+     * <p>
+     * Version 是最低版本约束，不能代替实际 API 检测；即使服主调低 Version，旧服也不会因此
+     * 获得新的原版能力。普通属性及外部扩展不受此门控影响，开关仍由 isEnabled 单独判断。
+     */
+    public static boolean isSupported(String name) {
+        ConfigurationSection sec = getSection(name);
+        if (sec == null || !sec.contains("RegistryKey")) return true;
+        // 1.9 以前没有 Bukkit Attribute API，必须在触碰 AttributeUtil 前返回。
+        if (!SXAttribute.isHigherVersion() || !SXAttribute.isVersionAtLeast(sec.getString("Version", "1.0"))) {
+            return false;
+        }
+        return AttributeUtil.get(sec.getString("RegistryKey", name.toLowerCase(Locale.ROOT)),
+                sec.getString("LegacyName", name.toUpperCase(Locale.ROOT))) != null;
     }
 
     /**

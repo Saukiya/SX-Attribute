@@ -22,7 +22,7 @@ import java.util.Map;
  * <p>
  * 统一封装"读取物品词条数值 -> 施加到原版 AttributeInstance"这一模式。所有元数据
  * (registryKey / legacyName / 识别名 / 默认基值 / 上下限 / 增幅模式 / 生效公式 / 战力系数)
- * 均来自 {@code Attributes.yml} 的对应节点, 由 {@link SXAttribute} 在 onLoad 按版本门控实例化注册,
+ * 均来自 {@code Feature/Attribute} 的聚合节点, 由 {@link SXAttribute} 在 onLoad 检查版本及实际 API 后注册,
  * 无需一属性一 Java 类。
  * <p>
  * 生效值优先用 SX-Item 公式 ({@link FormulaUtil}); 未安装 SX-Item 或公式为空时回退 {@link Mode} 预设。
