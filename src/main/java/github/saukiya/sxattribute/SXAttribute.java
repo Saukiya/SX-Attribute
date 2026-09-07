@@ -455,7 +455,9 @@ public class SXAttribute extends JavaPlugin {
         ListenerMythicMobs.setup();
         mythicMobs = ListenerMythicMobs.getHandler() != null;
 
-        if (Bukkit.getPluginManager().isPluginEnabled("RPGInventory")) {
+        // 旧 Bukkit 不识别插件 provides 别名，显式识别 SX 分支才能启用同一 RPG 装备属性源。
+        if (Bukkit.getPluginManager().isPluginEnabled("RPGInventory")
+                || Bukkit.getPluginManager().isPluginEnabled("SX-RPGInventory")) {
             rpgInventory = true;
         } else {
             SXAttribute.getInst().getLogger().warning("No Find RPGInventory!");

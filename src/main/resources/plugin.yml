@@ -19,6 +19,8 @@ softdepend:
   - DecentHolograms
   - PlaceholderAPI
   - RPGInventory
+  # 1.12 不处理 provides，显式声明分支标识以保证装备提供者先于属性引擎加载。
+  - SX-RPGInventory
   - MythicMobs
   # AuraSkills 先加载后，SX 首次刷新即可保留其 Bukkit 最大生命声明。
   - AuraSkills
