@@ -6,7 +6,8 @@ plugins {
 
 apply plugin: 'java'
 group 'github.saukiya'
-version '4.0.0-beta.8'
+// 发布版本统一从此处注入 plugin.yml，确保插件报告的版本与发布标签一致。
+version '4.0.0-beta.9'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8

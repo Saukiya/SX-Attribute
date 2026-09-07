@@ -12,7 +12,7 @@
 
 ## 开始使用
 
-1. 下载与服务端版本匹配的 SX-Attribute，并将 SX-Attribute 与 [SX-Item](https://github.com/Saukiya/SX-Item/releases) 一同放入 `plugins/`；如需限制高伤害产生的原版伤害粒子，可选安装 PacketEvents 或 ProtocolLib（同时存在时优先 PacketEvents）。当前测试版的变更与升级要求见 [4.0.0 Beta 8 发布说明](docs/releases/4.0.0-beta.8.md)。
+1. 下载与服务端版本匹配的 SX-Attribute，并将 SX-Attribute 与 [SX-Item](https://github.com/Saukiya/SX-Item/releases) 一同放入 `plugins/`；如需限制高伤害产生的原版伤害粒子，可选安装 PacketEvents 或 ProtocolLib（同时存在时优先 PacketEvents）。当前测试版的变更与升级要求见 [4.0.0 Beta 9 发布说明](docs/releases/4.0.0-beta.9.md)；该版本本次仅发布源码与说明，未附插件 JAR。
 2. 完整重启服务器后，从 [文档首页](docs/README.md) 按安装、配置、属性、功能模块的顺序开始。
 3. 优先在测试服调整 `Feature/` 下的规则；普通配置变更可使用 `/sxa reload` 重新加载。
 
