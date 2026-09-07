@@ -16,6 +16,12 @@
 2. 完整重启服务器后，从 [文档首页](docs/README.md) 按安装、配置、属性、功能模块的顺序开始。
 3. 优先在测试服调整 `Feature/` 下的规则；普通配置变更可使用 `/sxa reload` 重新加载。
 
+## 可选联动：SX-RPGInventory
+
+[SX-RPGInventory](https://github.com/FxRayHughes/SX-RPGInventory) 为玩家提供可配置的 RPG 装备槽和便携背包，适合需要饰品槽、多装备位或背包扩展的服务器。它负责装备与背包的交互和保存，SX-Attribute 负责计算装备属性；玩家穿戴、取下装备时会同步刷新属性，并支持通过 SX-Item 物品 ID 配置装备匹配规则和模板。
+
+需要这些功能时，可下载 [SX-RPGInventory 3.0.1 正式版](https://github.com/FxRayHughes/SX-RPGInventory/releases/tag/v3.0.1)，将主包与 SX-Attribute、SX-Item 一同安装，并按其 README 配置 Vault 等依赖。默认使用中文，支持 SQLite、MySQL、PostgreSQL 保存装备及背包数据，Redis 可选作为缓存。具体服务端兼容范围、安装要求和迁移说明请以 [SX-RPGInventory 文档](https://github.com/FxRayHughes/SX-RPGInventory#readme) 为准。
+
 ## 文档与反馈
 
 完整的安装说明、属性配置、物品格式、模块说明、JavaScript 接口、外部 API 和发行记录均收录于 [docs/README.md](docs/README.md)。
