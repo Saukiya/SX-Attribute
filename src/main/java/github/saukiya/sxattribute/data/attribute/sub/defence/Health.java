@@ -206,21 +206,31 @@ public class Health extends SubAttribute {
         SXAttribute.getAttributeManager().putSource(player.getUniqueId(), new AttributeSource(sourceName, data, true, false));
     }
 
+    /** 可选插件安装失败或运行中停用时不能中断 SX 自身的生命刷新。 */
     private int getSkillAPIHealth(Player player) {
-        return skillAPI ? SkillAPI.getPlayerData(player).getClasses().stream().mapToInt(aClass -> (int) aClass.getHealth()).sum() : 0;
+        if (!skillAPI || !Bukkit.getPluginManager().isPluginEnabled("SkillAPI")) return 0;
+        try {
+            return SkillAPI.getPlayerData(player).getClasses().stream().mapToInt(aClass -> (int) aClass.getHealth()).sum();
+        } catch (LinkageError failure) {
+            // 存在同名插件并不保证提供旧 SkillAPI 接口；本轮停用联动，重载时允许重新探测。
+            skillAPI = false;
+            SXAttribute.getInst().getLogger().warning("SkillAPI health integration is unavailable: " + failure);
+            return 0;
+        }
     }
 
     /** 初始化生命协议配置，并探测可选的 SkillAPI 生命来源。 */
     @Override
     public void onEnable() {
         loadHealthSettings();
-        skillAPI = Bukkit.getPluginManager().getPlugin("SkillAPI") != null;
+        skillAPI = Bukkit.getPluginManager().isPluginEnabled("SkillAPI");
     }
 
-    /** 热重载生命协议与缩放参数，具体玩家属性在下一次属性刷新时平滑切换。 */
+    /** 热重载生命协议、缩放参数与可选接口状态，玩家属性在下一次刷新时平滑切换。 */
     @Override
     public void onReLoad() {
         loadHealthSettings();
+        skillAPI = Bukkit.getPluginManager().isPluginEnabled("SkillAPI");
     }
 
     /**
