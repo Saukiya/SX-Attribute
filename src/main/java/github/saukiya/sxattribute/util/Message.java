@@ -15,6 +15,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +25,12 @@ import java.util.stream.IntStream;
 public enum Message {
 
     PLAYER__NO_REGISTER_SLOTS,
+    // 饰品位置指引使用 PlayerInventory 编号，与容器窗口大小无关。
+    PLAYER__SLOT_GUIDE,
+    PLAYER__SLOT_HOTBAR,
+    PLAYER__SLOT_STORAGE,
+    PLAYER__SLOT_EQUIPMENT,
+    PLAYER__SLOT_RPG_INVENTORY,
     PLAYER__NO_LEVEL_USE,
     PLAYER__NO_ROLE,
     PLAYER__NO_USE_SLOT,
@@ -89,6 +97,7 @@ public enum Message {
     ADMIN__PLUGIN_RELOAD,
     ADMIN__NO_ONLINE,
     COMMAND__STATS,
+    COMMAND__DISPLAYSLOT,
     COMMAND__SELL,
     COMMAND__REPAIR,
     COMMAND__GIVE,
@@ -115,6 +124,9 @@ public enum Message {
             SXAttribute.getInst().saveResource("Message.yml", true);
         }
         messages = YamlConfiguration.loadConfiguration(file);
+        // 升级时旧语言文件缺少新命令的文本；从随包资源补默认值，保留服主已有定制且不覆写文件。
+        messages.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(
+                SXAttribute.getInst().getResource("Message.yml"), StandardCharsets.UTF_8)));
         tool.setConfig(messages);
         SubAttribute.setFirstPerson(Message.getMsg(Message.PLAYER__BATTLE__FIRST_PERSON));
     }

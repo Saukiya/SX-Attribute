@@ -41,6 +41,9 @@ permissions:
     default: true
   sx-attribute.stats:
     default: true
+  sx-attribute.displayslot:
+    description: 查看自身背包的饰品槽位置
+    default: true
   sx-attribute.forge:
     description: 使用配置化装备成长界面
     default: op

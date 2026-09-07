@@ -7,6 +7,7 @@
 | 指令 | 说明 |
 |---|---|
 | `/sxa stats [玩家]` | 打开属性面板；管理员可查看在线玩家。 |
+| `/sxa displaySlot` | 在聊天中列出自身背包的饰品槽位置，按 E 放入或取出饰品。 |
 | `/sxa forge [模块]` | 打开锻造 GUI；可选择 `SetBonus`、`Quality`、`Affix`、`Enhance`、`Star`、`Reforge`、`Reroll`、`Socket`、`EnchantGrowth`。 |
 | `/sxa reload` | 重载插件配置、属性分片、来源和装备模块。 |
 | `/sxa source [玩家]` | 查看属性来源与贡献。 |
@@ -27,6 +28,7 @@
 |---|---|---|
 | `sx-attribute.use` | 所有人 | 基础插件使用权限。 |
 | `sx-attribute.stats` | 所有人 | 查看自身属性面板。 |
+| `sx-attribute.displayslot` | 所有人 | 查看自身背包的饰品槽位置。 |
 | `sx-attribute.forge` | OP | 使用配置化锻造界面。 |
 | `SX-Attribute.admin` | OP 检查 | 查看他人属性与大部分管理子命令。 |
 

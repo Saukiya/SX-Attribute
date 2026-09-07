@@ -25,6 +25,8 @@ public class MainCommand implements CommandExecutor, TabCompleter {
 
     public MainCommand() {
         new StatsCommand().registerCommand();
+        // 饰品使用玩家自身背包，旧命令入口也必须参与帮助与权限过滤。
+        new DisplaySlotCommand().registerCommand();
         new RepairCommand().registerCommand();
         new SellCommand().registerCommand();
         new GiveCommand().registerCommand();

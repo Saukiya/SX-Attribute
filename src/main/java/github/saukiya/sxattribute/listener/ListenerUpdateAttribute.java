@@ -1,16 +1,18 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
-import github.saukiya.sxattribute.command.sub.RepairCommand;
-import github.saukiya.sxattribute.command.sub.SellCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -64,16 +66,30 @@ public class ListenerUpdateAttribute implements Listener {
         updateHandData(event.getPlayer(), oldItem, newItem);
     }
 
+    /**
+     * 玩家背包在箱子等窗口中仍可被修改；Shift、数字键和双击收集还会跨背包移动物品。
+     * 不按顶部容器或点击槽位过滤，并等待下一 tick 再读取服务端已提交的物品状态。
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    void onInventoryClickEvent(InventoryClickEvent event) {
+        if (event.getWhoClicked() instanceof Player && event.getAction() != InventoryAction.NOTHING) {
+            updateEquipmentData((Player) event.getWhoClicked());
+        }
+    }
+
+    /** 拖拽不会触发点击事件，也可能同时覆盖容器与玩家自身的饰品槽。 */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    void onInventoryDragEvent(InventoryDragEvent event) {
+        if (event.getWhoClicked() instanceof Player) {
+            updateEquipmentData((Player) event.getWhoClicked());
+        }
+    }
+
+    /** 关闭任何容器后兜底刷新，覆盖其他插件在交互期间直接改动玩家背包的情况。 */
     @EventHandler
     void onInventoryCloseEvent(InventoryCloseEvent event) {
-        Player player = (Player) event.getPlayer();
-        Inventory inv = event.getInventory();
-        if (SXAttribute.isRpgInventory()) {
-            updateEquipmentData(player);
-        } else {
-            if (player.equals(inv.getHolder()) || RepairCommand.holder.equals(inv.getHolder()) || SellCommand.holder.equals(inv.getHolder())) {
-                updateEquipmentData(player);
-            }
+        if (event.getPlayer() instanceof Player) {
+            updateEquipmentData((Player) event.getPlayer());
         }
     }
 

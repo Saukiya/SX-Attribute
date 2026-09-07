@@ -1,7 +1,13 @@
 # SX-Attribute 通用语言文件。文本支持 & 颜色代码，{0}、{1} 等占位符由调用场景依次替换。
 # 玩家在条件检查、战斗反馈和物品操作中收到的消息。
 PLAYER:
-  NO_REGISTER_SLOTS: '[SX-Attribute] &c服务器没有开启额外的槽位识别'
+  NO_REGISTER_SLOTS: '[SX-Attribute] &c服务器没有配置可用的自身背包饰品槽位'
+  # 编号是玩家自己的 Bukkit 背包编号；行列从 1 开始，背包三排按从上到下、从左到右计数。
+  SLOT_GUIDE: '[SX-Attribute] &a按 E 打开自己的背包，将饰品放入以下位置；物品 Lore 须包含对应名称。'
+  SLOT_HOTBAR: '&a{0}&7：快捷栏第 &e{2}&7 格（槽位 &e{1}&7）'
+  SLOT_STORAGE: '&a{0}&7：背包第 &e{2}&7 排第 &e{3}&7 格（槽位 &e{1}&7）'
+  SLOT_EQUIPMENT: '&a{0}&7：自身装备槽 &e{1}&7（36 靴子、37 护腿、38 胸甲、39 头盔、40 副手）'
+  SLOT_RPG_INVENTORY: '[SX-Attribute] &7当前由 RPGInventory 管理装备，请使用该插件的装备栏。'
   NO_LEVEL_USE: '[SX-Attribute] &c你没有达到使用 &a{0} &c的等级要求!'
   NO_ROLE: '[SX-Attribute] &c你没有达到使用 &a{0} &c的职业要求!'
   NO_USE_SLOT: '[SX-Attribute] &7物品 &a{0} &7属于 &a{1}&7 类型!'
@@ -144,6 +150,7 @@ ADMIN:
 # /sx 帮助列表中各子命令的功能描述。
 COMMAND:
   STATS: 查看属性
+  DISPLAYSLOT: 查看自身背包的饰品槽位置
   SELL: 打开出售界面
   REPAIR: 打开修理界面
   GIVE: 给予玩家RPG物品

@@ -29,7 +29,7 @@
 | `DamageEvent.DamageParticleLimit` | `8` | 发给客户端的 `DAMAGE_INDICATOR` 数量上限；优先 PacketEvents、回退 ProtocolLib。`-1` 不拦截，`0` 取消整个粒子包。只修改出站包，不修改伤害、生命或击杀判定。 |
 | `ClearDefaultAttribute` | `true` | 是否清理物品默认原版属性修饰符，避免与 SX 数值重复。 |
 | `RPGInventorySlot` | 列表 | RPGInventory 槽位编号。 |
-| `RegisterSlots` | - | 自定义注册槽位。每项格式为 `槽位#名称`。 |
+| `RegisterSlots` | - | 玩家自身背包中的饰品槽位。每项格式为 `槽位#Lore识别名`，物品 Lore 须包含该名称。 |
 | `DefaultAttribute` | `生命上限: 20` | 实体没有物品属性时的基础属性 Lore。 |
 | `NBTAttribute.Nodes` | 装备模块的 `.Attributes` 节点 | 从物品 NBT 读取属性文本的路径列表；支持字符串、列表和嵌套映射。 |
 | `EquipmentFeature.LoreMode` | `VARIABLE` | 装备拓展显示模式，可选 `LORE` 或 `VARIABLE`。 |
@@ -44,6 +44,14 @@
 | `Health.Mode` | `HEALTH_SCALED` | `HEALTH_SCALED` 使用 3.9.2 的 base value 写入并允许压缩血条；`ATTRIBUTE_MODIFIER` 使用 beta.6 的固定修饰器写入、保留外部 base，且关闭客户端血条压缩。 |
 | `HealthScaled.Enabled` | `true` | 仅在 `HEALTH_SCALED` 模式下控制是否启用 Bukkit 客户端生命缩放。 |
 | `HealthScaled.Value` | `40` | 启用缩放时显示的生命上限，`40` 对应两排红心。 |
+
+### 玩家背包饰品槽位
+
+`RegisterSlots.Enabled: true` 时，默认配置将玩家背包三排最右侧设为饰品位置：第一排 `17#宝藏`、第二排 `26#戒指`、第三排 `35#项链`。`0..8` 是快捷栏，`9..35` 是背包三排，均为 Bukkit 的玩家背包编号。
+
+玩家可执行 `/sx displaySlot` 查看位置，然后按 E 在自己的背包中放入或取出饰品。物品 Lore 必须包含对应识别名，例如槽位 26 中的物品须含“戒指”。点击、拖拽、Shift 移动、数字键换位后会在下一 tick 刷新属性；打开箱子时，下方玩家背包中的相同位置也生效。
+
+启用 RPGInventory 联动时，装备扫描沿用 `RPGInventorySlot` 配置，`displaySlot` 会提示使用 RPGInventory 装备栏。
 
 ### NBT 属性节点
 

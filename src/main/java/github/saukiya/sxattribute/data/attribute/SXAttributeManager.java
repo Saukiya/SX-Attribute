@@ -420,7 +420,7 @@ public class SXAttributeManager implements Listener {
             }
         } else {
 
-            // Slot Load
+            // 注册槽位直接读取玩家自身背包，不能使用当前打开容器的 rawSlot 或复制出的菜单物品。
             if (player != null) {
                 Inventory inv = player.getInventory();
                 for (SlotData slotData : SXAttribute.getSlotDataManager().getSlotList()) {
