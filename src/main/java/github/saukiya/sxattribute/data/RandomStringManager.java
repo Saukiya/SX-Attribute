@@ -6,6 +6,7 @@ import github.saukiya.tools.base.EmptyMap;
 import lombok.Getter;
 import lombok.val;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.*;
@@ -141,7 +142,13 @@ public class RandomStringManager {
         return value.toString().replace("/n", "\n").replace("\\n", "\n");
     }
 
+    /** 使用 SX-Attribute 自身的随机组；有状态调用必须新建 Handler，不能共享管理器的无状态实例。 */
     public static class Handler extends ExpressionHandler {
+
+        /** 每次施法独立持有锁定值，同时向 PAPI 提供当前公式玩家上下文。 */
+        public Handler(Player player, Map<String, String> lockMap) {
+            super(player, null, lockMap);
+        }
 
         public Handler(Map<String, String> lockMap) {
             super(null, null, lockMap);

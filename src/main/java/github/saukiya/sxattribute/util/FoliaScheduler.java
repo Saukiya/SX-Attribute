@@ -22,6 +22,22 @@ public final class FoliaScheduler {
         return FOLIA;
     }
 
+    /** 全局线程不拥有任何实体；普通 Bukkit 则沿用主线程约束。 */
+    public static boolean owns(Entity entity) {
+        return FOLIA ? Bukkit.isOwnedByCurrentRegion(entity) : Bukkit.isPrimaryThread();
+    }
+
+    /**
+     * 跟随实体迁移调度，并在实体已退役时反馈失败。retired 属于服务端退役关键流程，
+     * 此处约定它只能清理插件状态，不能继续读取已移除实体或发布 Bukkit 事件。
+     */
+    public static boolean executeEntity(Entity entity, Plugin plugin, Runnable task, Runnable retired) {
+        if (FOLIA) return entity.getScheduler().execute(plugin, task, retired, 1L);
+        if (Bukkit.isPrimaryThread()) task.run();
+        else Bukkit.getScheduler().runTask(plugin, task);
+        return true;
+    }
+
     /**
      * 在全局调度器上执行一次任务。调用方沿用 Bukkit 的约定，可用 0 表示尽快执行；
      * Folia 的延迟任务至少要求 1 tick，因此仅在 Folia 分支统一修正该边界。

@@ -1,0 +1,86 @@
+# 放入 MythicMobs/Skills；每条完整技能行使用 YAML 引号和 | 属性分隔，兼容早期 MM 4。
+# 属性文本应对应服务器实际 DiscernName / Match；此示例使用 SX 默认识别名。
+SX_CustomHit:
+  Skills:
+    - 'SXDamage{al=攻击力=100|暴击几率=50|暴伤增幅=150|吸血几率=25|吸血倍率=10;pi=true;type=heavy;args=melee|boss} @target'
+
+# basic 的现有属性包含装备成长、饰品、套装及其它已生效的来源。
+SX_BaseHit:
+  Skills:
+    - 'SXBaseDamage{bam=1.5;al=攻击力=20;exclude=Lightning|Tearing} @target'
+
+# a=0.1 是 10% 最大生命的基础伤害，仍经过 SX 防御与 Bukkit 减伤。
+SX_PercentHit:
+  Skills:
+    - 'SXPercentDamage{a=0.1;al=破甲几率=30;dm=1.2} @target'
+
+# 仅在启用 SX-Item 公式引擎时使用；所有版本统一提供 SX 数组/动态字段变量。
+SX_FormulaHit:
+  Skills:
+    - 'SXDamage{al=攻击力=<l:attacker_Damage_0>*2+<l:defender_max_health>*0.05} @target'
+
+# 同一目标的 bam/dm 锁定为同一个 SX 随机组值；a 和范围 Lore 也使用 SX 表达式。
+# 普通基数为 SX-Attribute/RandomString 默认随机组，不从 MM 或 SX-Item 的词条池读取。
+SX_NativeVariables:
+  Skills:
+    - 'SXBaseDamage{a=<c:<l:attacker_Damage_0>*0.2>;bam=<l:普通基数>;dm=<l:普通基数>;al=攻击力: <r:10_20> - <r:30_40>} @target'
+
+# 时间和层数必须在展开后为整数；此处 d、ms 与属性数值全部由 SX 原生引擎生成。
+SX_NativeStack:
+  Skills:
+    - 'SXAttrAdd{s=native_power;al=攻击力=<c:<l:普通基数>*10>;d=<c:int <l:普通基数>*200>;ms=<i:1_3>;sm=STACK} @self'
+
+# 10 秒增益，重复施放只刷新持续时间。
+SX_Rage:
+  Skills:
+    - 'SXAttrAdd{s=rage;al=攻击力=30|防御力=10|吸血几率=20;d=200;sm=REFRESH;tags=rage} @self'
+
+# 最多 3 层；每次使用本次属性作为一层并刷新持续时间。
+SX_Stack:
+  Skills:
+    - 'SXAttrAdd{s=power;al=攻击力=10;d=200;sm=STACK;ms=3;tags=power} @self'
+
+# 来源整体乘 1.5 后增加攻击，保留此前层数、标签及到期时间；只适用非持久化来源。
+SX_Count:
+  Skills:
+    - 'SXAttrCount{s=power;m=1.5;al=攻击力=5} @self'
+
+# 独立设置剩余持续时间，不修改数值；此例改为再持续 5 秒。
+SX_Extend:
+  Skills:
+    - 'SXAttrSourceTime{s=power;d=100} @self'
+
+SX_Remove:
+  Skills:
+    - 'SXAttrTake{s=power} @self'
+
+# 当前子实体继承施法者原始来源的 80%，不包含施法者默认属性；派生映射在目标处计算。
+SX_Inherit:
+  Skills:
+    - 'SXAttrInherit{s=owner;m=0.8;d=1200;exclude=Command;tags=summon} @Children'
+
+# 治疗经过 Bukkit 回血事件，percent=true 时 a 使用小数比例。
+SX_Heal:
+  Skills:
+    - 'SXHeal{a=0.2;percent=true} @self'
+
+# Folia 远程支援：从施法者区域采集最大生命，在目标区域回血。
+# 跨区技能返回的是接受调度，不能假定下一条技能立即读到本次治疗结果。
+SX_RemoteHeal:
+  Skills:
+    - 'SXHeal{a=<c:<l:attacker_max_health>*0.1>} @target'
+
+# 更换装备后重读来源并同步生命、移速等 UPDATE 属性。
+SX_Update:
+  Skills:
+    - 'SXAttrUpdate @self'
+
+# 需自行在动态定义中配置 Event: API 的触发器。
+SX_Trigger:
+  Skills:
+    - 'SXAttrTrigger @target'
+
+# 需在 Feature/Source/Config.yml 的 Rules 下先定义该规则。
+SX_Rule:
+  Skills:
+    - 'SXSourceRule{r=mythic_example} @self'

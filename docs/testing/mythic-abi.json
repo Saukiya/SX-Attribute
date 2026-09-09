@@ -1,0 +1,107 @@
+[
+  {
+    "kind": "mythic",
+    "version": "4.1.0-SNAPSHOT",
+    "sha256": "9b6bf4288e5658c33e6c5b993258d6a5c70064973d646d608a335150812fc9e6",
+    "checks": 23,
+    "missing": []
+  },
+  {
+    "kind": "mythic",
+    "version": "4.9.1",
+    "sha256": "13deb92fc1a95b70169b91940d259d1b6e221e0d90141b8e2e0fac092600da78",
+    "checks": 24,
+    "missing": []
+  },
+  {
+    "kind": "mythic",
+    "version": "4.14.2",
+    "sha256": "d6d649240ce6e94beddf0d147166611b0c51171cab15d0ac1b8b9cb03404f355",
+    "checks": 24,
+    "missing": []
+  },
+  {
+    "kind": "mythic",
+    "version": "5.0.1",
+    "sha256": "31dc2af1474387b44797535a8134a815a69acec90b462adaf20032ff37117b7a",
+    "checks": 23,
+    "missing": []
+  },
+  {
+    "kind": "mythic",
+    "version": "5.2.1",
+    "sha256": "7f2d114ae9ae03f8dce0f02e52f36f261037b8bcc400f76265727707c04342bb",
+    "checks": 23,
+    "missing": []
+  },
+  {
+    "kind": "mythic",
+    "version": "5.13.0",
+    "sha256": "0906a5d1e7927b1f628e3b36bda4c0ea155ec6da2d3997b88e3e41455c2ee05a",
+    "checks": 23,
+    "missing": []
+  },
+  {
+    "kind": "bukkit",
+    "version": "1.8.8",
+    "sha256": "bc50bbc4d8226d75d0d75460828567b4580841d5987cae5c1d89b321f8ffc071",
+    "checks": 18,
+    "missing": []
+  },
+  {
+    "kind": "bukkit",
+    "version": "1.12.2",
+    "sha256": "22ca0ff290aa2d3066348d623e9c8998e58a49f2fee91bc06e3de96b2544e909",
+    "checks": 18,
+    "missing": []
+  },
+  {
+    "kind": "bukkit",
+    "version": "1.20.6",
+    "sha256": "62a1a08d8009debb403794faffb157793dcb7dbc71c94b580908e6046b651538",
+    "checks": 18,
+    "missing": []
+  },
+  {
+    "kind": "bukkit",
+    "version": "1.21.11",
+    "sha256": "0ae533c5a93a5ddb5478b992a478e594d9068fd3fdaaf640a771d754007fb3ac",
+    "checks": 18,
+    "missing": []
+  },
+  {
+    "kind": "bukkit",
+    "version": "26.2",
+    "sha256": "8c7bd2071d8fb85afa1331b3aa240a8507a73b5f661fa7084edcd06a2d9725f8",
+    "checks": 18,
+    "missing": []
+  },
+  {
+    "kind": "folia",
+    "version": "1.19.4",
+    "sha256": "5bcbf2a00f2ba99e883e2e1957f94026abfce6d35fe281e448405bba9c8876af",
+    "checks": 3,
+    "missing": []
+  },
+  {
+    "kind": "folia",
+    "version": "1.20.6",
+    "sha256": "ca8805fb68a96c85e76be4e7af3e84798167bb701c61cbf06a6ac777a7679721",
+    "checks": 3,
+    "missing": []
+  },
+  {
+    "kind": "folia",
+    "version": "26.1.2.build.8-stable",
+    "sha256": "f10a91acaf5e3aa3f2aa27f8f23b932281ff71fce13ee6c9c1b53999ebe93e60",
+    "checks": 3,
+    "missing": []
+  },
+  {
+    "kind": "folia",
+    "version": "26.2.build.7-beta",
+    "sha256": "b91778aa8a60aa04082e520431e0dff15ebebbe562b5eedaf386d2e980fbdd8b",
+    "checks": 3,
+    "missing": []
+  }
+]

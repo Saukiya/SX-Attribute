@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.UnaryOperator;
 
 /**
  * 命名属性源生命周期与持久化服务。
@@ -80,15 +81,34 @@ public class SourceService implements Listener {
         expiryTask = FoliaScheduler.runTimer(SXAttribute.getInst(), this::expire, period, period);
     }
 
+    /** 文本来源同时保留持久化表示，所有入口共用叠层与写入事件。 */
     public SourceWriteResult apply(LivingEntity entity, SourceApplyRequest request) {
+        return apply(entity, request, null);
+    }
+
+    /**
+     * 施加运行时属性快照，用于召唤物继承全部旧数组/脚本字段；快照没有可重载的 Lore 表示，
+     * 因此只允许非持久化 REPLACE，不得覆盖已有持久化来源或伪装成可持久化的文本来源。
+     */
+    public SourceWriteResult applySnapshot(LivingEntity entity, SourceApplyRequest request, SXAttributeData data) {
+        if (data == null || request.isPersistent() || request.getStackMode() != SourceApplyRequest.StackMode.REPLACE) {
+            return SourceWriteResult.FAILED;
+        }
+        return apply(entity, request, copySnapshot(data));
+    }
+
+    private SourceWriteResult apply(LivingEntity entity, SourceApplyRequest request, SXAttributeData snapshot) {
         if (!enabled || entity == null || request.getSource() == null || request.getSource().isEmpty()) return SourceWriteResult.FAILED;
         Map<String, ManagedSource> entitySources = managed.computeIfAbsent(entity.getUniqueId(), ignored -> new ConcurrentHashMap<>());
         trackedEntities.put(entity.getUniqueId(), entity);
         ManagedSource previous = entitySources.get(request.getSource());
+        if (snapshot != null && previous != null && previous.persistent) return SourceWriteResult.FAILED;
         if (previous != null && request.getStackMode() == SourceApplyRequest.StackMode.UNIQUE) {
             return notify(entity, request.getSource(), SourceWriteResult.UNIQUE_EXISTS);
         }
-        ManagedSource next = combine(entity, request, previous);
+        ManagedSource next = snapshot == null ? combine(entity, request, previous)
+                : new ManagedSource(entity.getUniqueId(), request.getSource(), Collections.emptyList(), snapshot,
+                1, expiry(request), -1L, false, new HashSet<>(request.getTags()));
         if (request.isPersistent()) {
             SourceWriteResult stored = persist(next, previous == null ? -1L : previous.version);
             if (stored != SourceWriteResult.APPLIED) return notify(entity, request.getSource(), stored);
@@ -97,6 +117,61 @@ public class SourceService implements Listener {
         SXAttribute.getAttributeManager().putSource(entity.getUniqueId(), new AttributeSource(request.getSource(), next.data, true));
         SXAttribute.getAttributeManager().attributeUpdateEvent(entity);
         return notify(entity, request.getSource(), SourceWriteResult.APPLIED);
+    }
+
+    /** 修改已有来源的剩余时间；不重建数值或叠层，持久化来源仍走版本锁与存储失败反馈。 */
+    public SourceWriteResult changeDuration(LivingEntity entity, String source, long durationTicks) {
+        long now = System.currentTimeMillis();
+        if (!enabled || entity == null || durationTicks < 0L || durationTicks > (Long.MAX_VALUE - now) / 50L) {
+            return SourceWriteResult.FAILED;
+        }
+        Map<String, ManagedSource> sources = managed.get(entity.getUniqueId());
+        ManagedSource previous = sources == null ? null : sources.get(source);
+        if (previous == null) return SourceWriteResult.FAILED;
+        ManagedSource next = previous.refresh(durationTicks == 0L ? 0L : now + durationTicks * 50L);
+        if (next.persistent) {
+            SourceWriteResult stored = persist(next, previous.version);
+            if (stored != SourceWriteResult.APPLIED) return notify(entity, source, stored);
+        }
+        sources.put(source, next);
+        return notify(entity, source, SourceWriteResult.APPLIED);
+    }
+
+    /**
+     * 只计算已有运行时来源的数值，保留到期时间、层数与标签。持久化来源无法从任意数组逆推 Lore，
+     * 因此明确拒绝；调用者应使用文本 REPLACE 重新定义可持久化属性。
+     */
+    public SourceWriteResult transformSnapshot(LivingEntity entity, String source, UnaryOperator<SXAttributeData> transform) {
+        if (!enabled || entity == null) return SourceWriteResult.FAILED;
+        Map<String, ManagedSource> sources = managed.get(entity.getUniqueId());
+        ManagedSource previous = sources == null ? null : sources.get(source);
+        if (previous == null || previous.persistent) return SourceWriteResult.FAILED;
+        SXAttributeData transformed = transform.apply(copySnapshot(previous.data));
+        if (transformed == null) return SourceWriteResult.FAILED;
+        ManagedSource next = new ManagedSource(previous.playerId, source, Collections.emptyList(), copySnapshot(transformed),
+                previous.stacks, previous.expiresAt, previous.version, false, new HashSet<>(previous.tags));
+        sources.put(source, next);
+        SXAttribute.getAttributeManager().putSource(entity.getUniqueId(), new AttributeSource(source, next.data, true));
+        SXAttribute.getAttributeManager().attributeUpdateEvent(entity);
+        return notify(entity, source, SourceWriteResult.APPLIED);
+    }
+
+    /** 保留负数、MAX/LAST 原值，并在写源前拒绝倍率或加法溢出的非有限数值。 */
+    private SXAttributeData copySnapshot(SXAttributeData original) {
+        SXAttributeData copy = new SXAttributeData();
+        for (int i = 0; i < original.getValues().length; i++) {
+            for (double value : original.getValues()[i]) {
+                if (!Double.isFinite(value)) throw new IllegalArgumentException("Source snapshot value must be finite");
+            }
+            System.arraycopy(original.getValues()[i], 0, copy.getValues()[i], 0, original.getValues()[i].length);
+        }
+        original.getDynamicValues().forEach((id, fields) -> {
+            for (double value : fields.values()) {
+                if (!Double.isFinite(value)) throw new IllegalArgumentException("Source snapshot value must be finite");
+            }
+            copy.getDynamicValues().put(id, new LinkedHashMap<>(fields));
+        });
+        return copy;
     }
 
     /** 按 Feature/Source/Config.yml 的 Rules 节点施加来源。 */
@@ -203,6 +278,8 @@ public class SourceService implements Listener {
     }
 
     private SourceWriteResult persist(ManagedSource source, long expectedVersion) {
+        // 继承/计算快照没有可恢复的 Lore；后续 REFRESH/MAX/MIN 也不能把这些数值伪装成持久化空源。
+        if (source.attributes.isEmpty() && source.data.isValid()) return SourceWriteResult.FAILED;
         if ("MEMORY".equals(storageType) || networkMode && "SQLITE".equals(storageType)) return SourceWriteResult.STORAGE_DISABLED;
         RedisCoordinator.Lock lock = null;
         if (networkMode) {

@@ -83,7 +83,8 @@ public class Damage extends SubAttribute implements Listener {
             LivingEntity attackEntity = damageData.getAttacker();
             EntityDamageByEntityEvent event = damageData.getEvent();
 
-            if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+            // 显式技能提供自己的属性快照，不能因施法者手持弓而减去装备属性。
+            if (!damageData.isSkillDamage() && event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
                 EntityEquipment eq = attackEntity.getEquipment();
                 ItemStack mainHand = SXAttribute.isHigherVersion() ? eq.getItemInMainHand() : eq.getItemInHand();
                 if (mainHand != null) {
@@ -100,7 +101,7 @@ public class Damage extends SubAttribute implements Listener {
 
 
             double defaultDamage = getAttribute(values, TYPE_DEFAULT);
-            if (usesVanillaAttackDamage(event)) {
+            if (!damageData.isSkillDamage() && usesVanillaAttackDamage(event)) {
                 // 高版本玩家近战已由原版攻击属性贡献一部分伤害，因此这里只补足 SX 掷点结果。
                 // 原版会按 Spigot 上限裁剪属性基值，扣减时必须使用实际写入值，否则超上限部分会被误抵消。
                 defaultDamage -= getVanillaAttackDamage(values[0]);

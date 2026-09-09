@@ -1,0 +1,40 @@
+# 放入 MythicMobs/Mobs；使用 /mm mobs spawn SX_SpawnWarrior:5 测试等级 5 的出生配置。
+# Health 等原版怪物配置继续由 MM 管理；SXAttribute 提供额外的 SX 属性来源。
+SX_SpawnWarrior:
+  Type: ZOMBIE
+  Display: '&cSX 战士'
+  Health: 200
+  Damage: 1
+  SXAttribute:
+    - '攻击力=<c:20+<l:mob_level>*5>'
+    - '防御力=<c:5+<l:mob_level>*2>'
+    - '暴击几率: <r:10_20>%'
+    - '吸血几率=20'
+    - '吸血倍率=10'
+
+# 普通基数取自 SX-Attribute/RandomString；两行共享同一次锁定结果，每只怪物独立抽取。
+SX_SpawnRandom:
+  Type: SKELETON
+  Display: '&eSX 随机精英'
+  Health: 120
+  Damage: 1
+  SXAttribute:
+    - '攻击力=<c:<l:普通基数>*<l:mob_level>*10>'
+    - '防御力=<c:<l:普通基数>*5>'
+    - '暴击几率=<c:<caster.level>*2>'
+
+# 固定数值不需要公式引擎；别名 SX-Attribute 和小写 sxattribute 也可读取。
+SX_SpawnFixed:
+  Type: ZOMBIE
+  Health: 80
+  SX-Attribute:
+    - '攻击力: 10 - 20'
+    - '防御力=5'
+
+# = 是 SX 的单值公式；: 是完整 Lore，可保留范围与百分号。
+SX_SpawnSyntax:
+  Type: ZOMBIE
+  SXAttribute:
+    - '攻击力=<c:10+<l:mob_level>*2>'
+    - '攻击力: 10 - 20'
+    - '暴击几率: 50%'

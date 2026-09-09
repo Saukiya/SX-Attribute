@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.data.eventdata.sub;
 
 import github.saukiya.sxattribute.data.attribute.SXAttributeData;
 import github.saukiya.sxattribute.data.eventdata.EventData;
+import github.saukiya.sxattribute.hook.mythic.SkillDamageContext;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.LivingEntity;
@@ -53,6 +54,16 @@ public class DamageData implements EventData {
 
     @Getter
     private boolean cancelled = false;
+
+    /** 非空表示显式属性技能；脚本可通过该上下文读取自定义 type 与 args。 */
+    @Getter
+    @Setter
+    private SkillDamageContext skillContext;
+
+    /** 技能基础伤害不含原版近战攻击属性，不应走近战补差与弓近战剔除。 */
+    public boolean isSkillDamage() {
+        return skillContext != null;
+    }
 
     public DamageData(LivingEntity defender, LivingEntity attacker, String defenderName, String attackerName, SXAttributeData defenderData, SXAttributeData attackerData, EntityDamageByEntityEvent event) {
         this.defender = defender;

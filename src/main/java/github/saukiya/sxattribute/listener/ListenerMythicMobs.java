@@ -1,10 +1,12 @@
 package github.saukiya.sxattribute.listener;
 
 import github.saukiya.sxattribute.SXAttribute;
+import github.saukiya.sxattribute.hook.mythic.MobSpawnAttributes;
+import github.saukiya.sxattribute.hook.mythic.Mythic4Skills;
+import github.saukiya.sxattribute.hook.mythic.Mythic5Skills;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxitem.SXItem;
 import github.saukiya.sxitem.helper.MythicMobsHelper;
-import github.saukiya.tools.base.EmptyMap;
 import github.saukiya.tools.nms.NMS;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +16,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -41,15 +44,18 @@ public class ListenerMythicMobs {
     @Setter
     private static MythicMobsHelper.DeathHandler deathHandler = new MythicMobDeathHandler();
 
+    /** 启动期按 API 包选择适配器，保证 MM 4/5 及未安装 MM 的服务器互不链接对方类型。 */
     public static void setup() {
         if (!Config.isMythicMobs()) return;
         if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
             if (NMS.hasClass("io.lumine.xikage.mythicmobs.mobs.MythicMob")) {
                 Bukkit.getPluginManager().registerEvents(handler = new V4Listener(), SXAttribute.getInst());
+                Bukkit.getPluginManager().registerEvents(new Mythic4Skills(), SXAttribute.getInst());
                 isMythicBossBar = V4Listener::isMythicBossBar;
                 SXItem.getInst().getLogger().info("MythicMobsV4Helper Enabled");
             } else if (NMS.hasClass("io.lumine.mythic.api.mobs.MythicMob")) {
                 Bukkit.getPluginManager().registerEvents(handler = new V5Listener(), SXAttribute.getInst());
+                Bukkit.getPluginManager().registerEvents(new Mythic5Skills(), SXAttribute.getInst());
                 isMythicBossBar = V5Listener::isMythicBossBar;
                 SXItem.getInst().getLogger().info("MythicMobsV5Helper Enabled");
             }
@@ -150,30 +156,25 @@ public class ListenerMythicMobs {
 
     public static class V4Listener implements Listener {
 
-        private boolean isVersionGreaterThan490;
-
         public static boolean isMythicBossBar(Entity entity) {
             io.lumine.xikage.mythicmobs.mobs.ActiveMob activeMob = io.lumine.xikage.mythicmobs.MythicMobs.inst().getMobManager().getMythicMobInstance(entity);
             return activeMob != null && activeMob.getType().usesBossBar();
         }
 
-        V4Listener() {
-            try {
-                io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent.class.getMethod("getMob");
-                isVersionGreaterThan490 = true;
-            } catch (NoSuchMethodException e) {
-                isVersionGreaterThan490 = false;
-            }
-        }
-
-        @EventHandler
+        /** 出生事件没有统一的 Cancellable 接口，显式检查取消状态；MM 4.1 不要求存在 getMob()。 */
+        @EventHandler(priority = EventPriority.MONITOR)
         void on(io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent event) {
-            if (event.getEntity() instanceof LivingEntity) {
-                String mobType = event.getMobType().getInternalName();
-                EntityEquipment mobEquipment = ((LivingEntity) event.getEntity()).getEquipment();
-                Map<String, String> mobMap = isVersionGreaterThan490 ? getMobMap(event.getMob()) : EmptyMap.emptyMap();
-                List<String> sxEquipmentList = event.getMobType().getConfig().getStringList("SX-Equipment");
-                spawnHandler.spawn(mobType, mobEquipment, mobMap, sxEquipmentList);
+            if (event.isCancelled() || !(event.getEntity() instanceof LivingEntity)) return;
+            LivingEntity entity = (LivingEntity) event.getEntity();
+            String mobType = event.getMobType().getInternalName();
+            try {
+                io.lumine.xikage.mythicmobs.io.MythicConfig config = event.getMobType().getConfig();
+                List<String> attributes = MobSpawnAttributes.read(config::isSet, config::getStringList);
+                List<String> equipment = new java.util.ArrayList<>(config.getStringList("SX-Equipment"));
+                MobSpawnAttributes.spawn(entity, mobType, MobSpawnAttributes.level(event), attributes,
+                        variables -> spawnHandler.spawn(mobType, entity.getEquipment(), variables, equipment));
+            } catch (RuntimeException | LinkageError exception) {
+                MobSpawnAttributes.warn(mobType, exception.toString());
             }
         }
 
@@ -193,14 +194,25 @@ public class ListenerMythicMobs {
         }
 
         /**
-         * 依据 io.lumine.xikage.mythicmobs.mobs.ActiveMob 提供变量
-         *
-         * @param mob
+         * MM 4 早期 getLevel 返回 int，后期返回 double；早期 ActiveMob 也没有 getDisplayName。
+         * 按方法能力读取这两个字段，避免装备/掉落联动在旧服先于技能发生 NoSuchMethodError。
          */
         public static Map<String, String> getMobMap(io.lumine.xikage.mythicmobs.mobs.ActiveMob mob) {
             Map<String, String> map = new HashMap<>();
-            map.put("mob_level", Double.toString(mob.getLevel()));
-            map.put("mob_name_display", mob.getDisplayName());
+            try {
+                map.put("mob_level", String.valueOf(mob.getClass().getMethod("getLevel").invoke(mob)));
+            } catch (ReflectiveOperationException exception) {
+                throw new IllegalStateException("Cannot read MythicMobs 4 level", exception);
+            }
+            String displayName;
+            try {
+                displayName = (String) mob.getClass().getMethod("getDisplayName").invoke(mob);
+            } catch (NoSuchMethodException ignored) {
+                displayName = mob.getEntity().getBukkitEntity().getCustomName();
+            } catch (ReflectiveOperationException exception) {
+                throw new IllegalStateException("Cannot read MythicMobs 4 display name", exception);
+            }
+            map.put("mob_name_display", displayName == null ? mob.getType().getInternalName() : displayName);
             map.put("mob_name_internal", mob.getType().getInternalName());
             map.put("mob_uuid", mob.getUniqueId().toString());
             return map;
@@ -214,14 +226,20 @@ public class ListenerMythicMobs {
             return activeMob != null && activeMob.getType().usesBossBar();
         }
 
-        @EventHandler
+        /** 与 MM 4 共用出生属性来源和调度，不在回调之外持有/读取出生事件。 */
+        @EventHandler(priority = EventPriority.MONITOR)
         void on(io.lumine.mythic.bukkit.events.MythicMobSpawnEvent event) {
-            if (event.getEntity() instanceof LivingEntity) {
-                String mobType = event.getMobType().getInternalName();
-                EntityEquipment mobEquipment = ((LivingEntity) event.getEntity()).getEquipment();
-                Map<String, String> mobMap = getMobMap(event.getMob());
-                List<String> sxEquipmentList = event.getMobType().getConfig().getStringList("SX-Equipment");
-                spawnHandler.spawn(mobType, mobEquipment, mobMap, sxEquipmentList);
+            if (event.isCancelled() || !(event.getEntity() instanceof LivingEntity)) return;
+            LivingEntity entity = (LivingEntity) event.getEntity();
+            String mobType = event.getMobType().getInternalName();
+            try {
+                io.lumine.mythic.api.config.MythicConfig config = event.getMobType().getConfig();
+                List<String> attributes = MobSpawnAttributes.read(config::isSet, config::getStringList);
+                List<String> equipment = new java.util.ArrayList<>(config.getStringList("SX-Equipment"));
+                MobSpawnAttributes.spawn(entity, mobType, MobSpawnAttributes.level(event), attributes,
+                        variables -> spawnHandler.spawn(mobType, entity.getEquipment(), variables, equipment));
+            } catch (RuntimeException | LinkageError exception) {
+                MobSpawnAttributes.warn(mobType, exception.toString());
             }
         }
 

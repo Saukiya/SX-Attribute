@@ -28,6 +28,7 @@
 | [外部属性注册指南](api/external-attributes.md) | Java API、事件、外部属性类注册与排错。 |
 | [Java API 与事件](api/events.md) | 动态属性、受管来源、装备模块、兼容 API 与全部 Bukkit 事件。 |
 | [多属性源兼容 API](api/legacy-source-api.md) | 命名来源、旧 API、来源事件与兼容持久化指令。 |
+| [MythicMobs 属性技能](features/mythicmobs.md) | MM 4/5 属性伤害、增益、继承、治疗与技能 YAML 示例。 |
 | [JavaScript 属性](api/javascript-attributes.md) | Nashorn 引擎、脚本契约、周期调度、配置与故障隔离。 |
 | [Feature 架构概览](architecture/feature-overview.md) | 功能层职责、依赖和 API 使用示例。 |
 | [Feature 设计说明](architecture/feature-design.md) | 数据流、关键设计决策、限制与安全约束。 |

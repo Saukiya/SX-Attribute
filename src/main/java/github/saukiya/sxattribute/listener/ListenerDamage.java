@@ -9,6 +9,7 @@ import github.saukiya.sxattribute.data.eventdata.sub.DamageData;
 import github.saukiya.sxattribute.event.SXDamageEvent;
 import github.saukiya.sxattribute.feature.attribute.AttributeDefinition;
 import github.saukiya.sxattribute.feature.attribute.AttributeExecutionContext;
+import github.saukiya.sxattribute.hook.mythic.SkillDamageContext;
 import github.saukiya.sxattribute.util.Config;
 import github.saukiya.sxattribute.util.AttributeConfig;
 import org.bukkit.Bukkit;
@@ -30,6 +31,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class ListenerDamage implements Listener {
 
+    /** LOWEST 尽早绑定技能事件；HIGH 按对象身份读取，且仍尊重其它监听器已经发生的取消。 */
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void captureSkillDamage(EntityDamageByEntityEvent event) {
+        SkillDamageContext.capture(event);
+    }
+
     @EventHandler
     void onProjectileHitEvent(EntityShootBowEvent event) {
         if (event.isCancelled()) return;
@@ -46,7 +53,11 @@ public class ListenerDamage implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
-        if (event.isCancelled() || Config.getDamageEventBlackList().contains(event.getCause().name())) {
+        SkillDamageContext skill = SkillDamageContext.find(event);
+        if (event.isCancelled()) return;
+        if (Config.getDamageEventBlackList().contains(event.getCause().name())) {
+            // 技能不能在跳过属性计算后悄悄退化成无防御的普通数值伤害。
+            if (skill != null) event.setCancelled(true);
             return;
         }
         LivingEntity defenseEntity = (event.getEntity() instanceof LivingEntity && !(event.getEntity() instanceof ArmorStand)) ? (LivingEntity) event.getEntity() : null;
@@ -61,17 +72,21 @@ public class ListenerDamage implements Listener {
             attackEntity = (LivingEntity) event.getDamager();
         }
 
-        // 若有一方为null 或 怪v怪的属性计算 则取消
-        if (defenseEntity == null || attackEntity == null || (!Config.isDamageCalculationToEVE() && !(defenseEntity instanceof Player || attackEntity instanceof Player))) {
+        // EVE 开关只控制自动普攻计算；显式 SX 技能允许怪物间交战，仍不能伤害盔甲架。
+        if (defenseEntity == null || attackEntity == null || (skill == null && !Config.isDamageCalculationToEVE() && !(defenseEntity instanceof Player || attackEntity instanceof Player))) {
+            if (skill != null) event.setCancelled(true);
             return;
         }
 
         defenseData = SXAttribute.getAttributeManager().getEntityData(defenseEntity);
-        attackData = attackData != null ? attackData : SXAttribute.getAttributeManager().getEntityData(attackEntity);
+        // 技能已经准备了独立攻击快照，不重复发布一次读取攻击者属性的事件。
+        attackData = skill != null ? skill.getAttributes()
+                : attackData != null ? attackData : SXAttribute.getAttributeManager().getEntityData(attackEntity);
 
         EntityEquipment eq = attackEntity.getEquipment();
-        ItemStack mainHand = SXAttribute.isHigherVersion() ? eq.getItemInMainHand() : eq.getItemInHand();
-        if (mainHand != null) {
+        ItemStack mainHand = eq == null ? null : SXAttribute.isHigherVersion() ? eq.getItemInMainHand() : eq.getItemInHand();
+        // 显式施法不消耗一次普通近战的武器耐久。
+        if (skill == null && mainHand != null) {
             if (!Material.AIR.equals(mainHand.getType()) && mainHand.getItemMeta().hasLore()) {
                 if (attackEntity instanceof Player && !((HumanEntity) attackEntity).getGameMode().equals(GameMode.CREATIVE)) {
                     if (mainHand.getType().getMaxDurability() == 0 || SubCondition.isUnbreakable(mainHand.getItemMeta())) {
@@ -85,6 +100,7 @@ public class ListenerDamage implements Listener {
         String attackName = SXAttribute.getListenerHealthChange().getEntityName(attackEntity);
 
         DamageData damageData = new DamageData(defenseEntity, attackEntity, defenseName, attackName, defenseData, attackData, event);
+        if (skill != null) damageData.setSkillContext(skill);
 
         AttributeExecutionContext dynamicContext = new AttributeExecutionContext(attackEntity, defenseEntity, attackData, defenseData, damageData);
         if (SXAttribute.getAttributeEngine() != null) {
@@ -92,8 +108,12 @@ public class ListenerDamage implements Listener {
             SXAttribute.getAttributeEngine().fire(AttributeDefinition.AttributeTrigger.DAMAGE_DEFEND, dynamicContext);
         }
 
+        boolean damageReached = false;
         for (SubAttribute attribute : SubAttribute.getAttributes()) {
+            // 自定义 CANCEL 必须在内置吸血/药水等副作用之前停止。
+            if (skill != null && damageData.isCancelled()) break;
             if (!AttributeConfig.isEnabled(attribute.getName())) continue;
+            if ("Damage".equals(attribute.getName())) damageReached = true;
             if (attribute.containsType(AttributeType.ATTACK) && attackData.isValid(attribute)) {
                 attribute.eventMethod(attackData.getValues(attribute), damageData);
             } else if (attribute.containsType(AttributeType.DEFENCE) && defenseData.isValid(attribute)) {
@@ -101,11 +121,19 @@ public class ListenerDamage implements Listener {
             }
 
             if (damageData.isCancelled() || damageData.getDamage() <= 0) {
+                // a=0 的属性技能在 Dodge/JSAttribute 之后仍需进入 Damage，不能被提前补成最小伤害。
+                if (skill != null && !damageData.isCancelled() && !damageReached) continue;
                 damageData.setDamage(Config.getMinimumDamage());
                 break;
             }
         }
         damageData.setDamage(damageData.getDamage() > Config.getMinimumDamage() ? damageData.getDamage() : Config.getMinimumDamage());
+        if (skill != null) {
+            // dm 作用于 SX 攻防流程的结果，Bukkit 护甲/吸收等修正继续由原生事件处理。
+            double damage = damageData.getDamage() * skill.getMultiplier();
+            if (!Double.isFinite(damage) || damage <= 0D) damageData.setCancelled(true);
+            damageData.setDamage(Double.isFinite(damage) ? Math.max(0D, damage) : 0D);
+        }
         Bukkit.getPluginManager().callEvent(new SXDamageEvent(damageData));
         if (SXAttribute.getAttributeEngine() != null) {
             dynamicContext.getVariables().put("event_damage", damageData.getDamage());

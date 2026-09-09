@@ -516,6 +516,8 @@ public class SXAttribute extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // 先结束跨区域施法，防止排队回调在属性/来源服务清理后继续写入。
+        github.saukiya.sxattribute.hook.mythic.SkillRegionTask.shutdown();
         // 各字段均在 onEnable 才赋值; 若 onLoad/onEnable 提前崩溃则为 null, 需判空避免掩盖原始异常
         DamageParticlePacketLimiter.unregister(this);
         if (attributeManager != null) attributeManager.onAttributeDisable();
