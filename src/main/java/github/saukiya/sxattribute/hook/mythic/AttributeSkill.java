@@ -332,6 +332,8 @@ public final class AttributeSkill {
 
     private void option(BiFunction<String[], String, String> config, String key, String fallback, String... names) {
         String value = config.apply(names, fallback).trim();
+        // MM 将机制参数中的保留字符编码为占位标记；先还原算式符号，否则 10<&da>2 会被当成 102。
+        value = value.replace("<&da>", "-").replace("<&csp>", " ");
         // 早期 MM 保留参数上的引号；统一只去掉配对的最外层引号，不能破坏 Lore 内的文本。
         if (value.length() >= 2 && (value.startsWith("\"") && value.endsWith("\"")
                 || value.startsWith("'") && value.endsWith("'"))) value = value.substring(1, value.length() - 1);

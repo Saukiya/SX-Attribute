@@ -96,7 +96,8 @@ public class Reflection extends SubAttribute {
     public void correct(double[] values) {
         super.correct(values);
         values[0] = Math.min(values[0], config().getInt("ReflectionRate.UpperLimit", 100));
-        values[1] = Math.min(values[0], config().getInt("Reflection.UpperLimit", 100));
+        // 反射几率只决定是否触发，不能作为反射比例的上限或数值来源。
+        values[1] = Math.min(values[1], config().getInt("Reflection.UpperLimit", 100));
     }
 
     @Override

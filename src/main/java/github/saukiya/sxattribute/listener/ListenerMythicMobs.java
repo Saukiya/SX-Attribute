@@ -234,7 +234,9 @@ public class ListenerMythicMobs {
             String mobType = event.getMobType().getInternalName();
             try {
                 io.lumine.mythic.api.config.MythicConfig config = event.getMobType().getConfig();
-                List<String> attributes = MobSpawnAttributes.read(config::isSet, config::getStringList);
+                // MM 5.13 的 isSet 会忽略大小写匹配，必须用实际键集合维持三个节点的明确优先级。
+                java.util.Set<String> keys = config.getKeys("");
+                List<String> attributes = MobSpawnAttributes.read(keys::contains, config::getStringList);
                 List<String> equipment = new java.util.ArrayList<>(config.getStringList("SX-Equipment"));
                 MobSpawnAttributes.spawn(entity, mobType, MobSpawnAttributes.level(event), attributes,
                         variables -> spawnHandler.spawn(mobType, entity.getEquipment(), variables, equipment));

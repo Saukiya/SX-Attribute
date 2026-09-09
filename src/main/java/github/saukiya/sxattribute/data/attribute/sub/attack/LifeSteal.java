@@ -99,7 +99,8 @@ public class LifeSteal extends SubAttribute {
     public void correct(double[] values) {
         super.correct(values);
         values[0] = Math.min(values[0], config().getInt("LifeStealRate.UpperLimit", 100));
-        values[1] = Math.min(values[0], config().getInt("LifeSteal.UpperLimit", 100));
+        // 触发率和倍率独立配置；用 values[0] 会把 100% 几率错误写成 100% 吸血倍率。
+        values[1] = Math.min(values[1], config().getInt("LifeSteal.UpperLimit", 100));
     }
 
     @Override

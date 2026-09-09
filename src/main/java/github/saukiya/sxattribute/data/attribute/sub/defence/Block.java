@@ -90,7 +90,8 @@ public class Block extends SubAttribute {
     public void correct(double[] values) {
         super.correct(values);
         values[0] = Math.min(values[0], config().getInt("BlockRate.UpperLimit", 100));
-        values[1] = Math.min(values[0], config().getInt("Block.UpperLimit", 100));
+        // 格挡几率与减伤比例独立；不能让 100% 触发率覆盖配置的减伤幅度。
+        values[1] = Math.min(values[1], config().getInt("Block.UpperLimit", 100));
     }
 
     @Override

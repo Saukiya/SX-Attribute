@@ -148,6 +148,8 @@ def mythic_contracts(jar):
         placeholder = skills + "placeholders/PlaceholderString"
         meta = root + "core/skills/placeholders/PlaceholderMeta"
         checks.extend([
+            # Exact keys preserve SX alias precedence when isSet is case-insensitive.
+            (mob_config, "getKeys", "(Ljava/lang/String;)Ljava/util/Set;"),
             (config, "getString", "([Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;"),
             (config, "getLine", "()Ljava/lang/String;"),
             (mechanic, "getThreadSafetyLevel", f"()L{skills}ThreadSafetyLevel;"),
@@ -156,6 +158,9 @@ def mythic_contracts(jar):
         ])
     else:
         checks.extend([
+            # MM 4 rewrites the event from this slot after SX's HIGH calculation.
+            (root + "mobs/ActiveMob", "getLastDamageSkillAmount", "()D"),
+            (root + "mobs/ActiveMob", "setLastDamageSkillAmount", "(D)V"),
             (config, "getString", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"),
             (config, "getLine", "()Ljava/lang/String;"),
             (mechanic, "<init>", f"(Ljava/lang/String;L{config};)V"),

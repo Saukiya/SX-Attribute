@@ -8,11 +8,27 @@ import io.lumine.xikage.mythicmobs.skills.SkillMechanic;
 import io.lumine.xikage.mythicmobs.skills.SkillMetadata;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.EventPriority;
+import github.saukiya.sxattribute.event.SXDamageEvent;
+import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 
 import java.util.Map;
 
 /** MM 4 的技能必须继承 SkillMechanic 并返回 boolean，不能复用 MM 5 的接口签名。 */
 public final class Mythic4Skills implements Listener {
+    /** MM 4 在 HIGHEST 用最近技能伤害覆盖事件；只同步当前 SX 调用栈的施法者，避免串入嵌套技能。 */
+    private static final ThreadLocal<ActiveMob> DAMAGE_CASTER = new ThreadLocal<>();
+
+    /** SX 在 HIGH 完成计算后发布此事件，必须在 MM 的 HIGHEST 覆盖之前更新其原生数值槽。 */
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onDamageCalculated(SXDamageEvent event) {
+        ActiveMob caster = DAMAGE_CASTER.get();
+        if (caster != null && event.getData().isSkillDamage()
+                && caster.getEntity().getBukkitEntity().equals(event.getData().getAttacker())) {
+            caster.setLastDamageSkillAmount(event.getData().getEvent().getDamage());
+        }
+    }
+
     /** 每次 MM 加载技能都创建独立参数对象，避免重载后保留旧公式。 */
     @EventHandler
     public void onMechanic(MythicMechanicLoadEvent event) {
@@ -49,10 +65,19 @@ public final class Mythic4Skills implements Listener {
                         if (!skill.isDamageSkill()) return action.getAsBoolean();
                         // 区域接力可能延后执行；标记必须包围实际伤害调用，不能包围调度提交。
                         boolean previous = metadata.getCaster().isUsingDamageSkill();
+                        ActiveMob caster = metadata.getCaster() instanceof ActiveMob ? (ActiveMob) metadata.getCaster() : null;
+                        ActiveMob outerCaster = DAMAGE_CASTER.get();
+                        double previousAmount = caster == null ? 0D : caster.getLastDamageSkillAmount();
+                        if (caster == null) DAMAGE_CASTER.remove();
+                        else DAMAGE_CASTER.set(caster);
                         metadata.getCaster().setUsingDamageSkill(true);
                         try {
                             return action.getAsBoolean();
                         } finally {
+                            // 内层施法结束后还原外层数值，异常/取消也不能污染下一次 MM 技能。
+                            if (caster != null) caster.setLastDamageSkillAmount(previousAmount);
+                            if (outerCaster == null) DAMAGE_CASTER.remove();
+                            else DAMAGE_CASTER.set(outerCaster);
                             metadata.getCaster().setUsingDamageSkill(previous);
                         }
                     });
