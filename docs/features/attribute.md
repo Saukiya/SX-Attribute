@@ -223,6 +223,37 @@ Formula: "<c:<l:value> * <l:scale> + <l:Crit_CritRate> / 10>"
 
 `CANCEL` 会取消当前 SX 伤害事件，应始终配合明确的 `When` 或 `Chance`。对低血量 Buff，请同时判断属性值和血量，避免没有该词条的生物也获得来源。
 
+### 元素反应与持续来源
+
+元素关系可用标签和来源组合实现。以下配置让火伤命中带有水标签的目标时追加伤害，并施加最多 3 层的临时来源：
+
+```yml
+Attributes:
+  Vaporize:
+    # 反应条件显式依赖标签，避免隐式修改所有伤害事件。
+    Enable: true
+    Values:
+      power: { Match: 蒸发强度, MatchMode: CONTAINS, Aggregate: SUM, Min: 0, Max: 1000 }
+    Triggers:
+      - Event: DAMAGE_ATTACK
+        When: "<c:<l:self_power> > 0 && <l:defender_tag_water> > 0>"
+        Actions:
+          - Type: DAMAGE
+            Target: DEFENDER
+            Mode: ADD
+            Formula: "<c:<l:self_power> * 1.5>"
+          - Type: SOURCE_APPLY
+            Target: DEFENDER
+            Source: debuff:vaporize
+            Duration: "<c:100>"
+            MaxStacks: 3
+            StackMode: ADD
+            Persistent: false
+            Tags: [vaporize]
+```
+
+`StackMode: ADD` 增加层数，`REFRESH` 只刷新时间；`SOURCE_REMOVE` 可在 `DEATH` 或 `UNEQUIP` 时清理临时来源。标签必须由规则明确写入。
+
 ## 显示与重载
 
 `Display.Category`、`Order`、`Rows` 控制属性面板；全局 `Settings.AutoPanel` 开启后会自动生成统计面板行。修改普通属性分片后执行 `/sxa reload`，新注册表会先校验，再原子替换并重算在线实体。

@@ -104,6 +104,23 @@ function calculationCombatPower(values) { return values[0] * config.getInt("Aura
 
 列表中的 `delay 20` 表示后续脚本延迟 20 tick；其它行会被编译为 JavaScript。周期任务默认至少每 20 tick 再次调度一次，避免空列表造成忙循环。
 
+## 事件与线程示例
+
+```javascript
+// 先检查事件能力，兼容不同 EventData 实现并避免脚本熔断。
+function eventMethod(values, eventData) {
+    if (values[0] <= 0 || !eventData || typeof eventData.getEntity !== "function") return;
+    var player = eventData.getEntity();
+    if (!Player.isInstance(player)) return;
+    // 实体和世界操作必须回到所属线程。
+    FoliaScheduler.runEntity(player, JSAttribute.getPlugin(), function() {
+        player.getWorld().playSound(player.getLocation(), "BLOCK_FIRE_AMBIENT", 0.8, 1.2);
+    }, 0);
+}
+```
+
+可热重载数值应写入 `defaultConfig` 后通过 `config.getDouble` 读取；跨 tick 状态放入 `data`，不要把 `player` 或 `eventData` 保存到全局变量。
+
 ## 故障排查
 
 | 日志/现象 | 处理方式 |
