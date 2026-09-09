@@ -121,6 +121,48 @@ function eventMethod(values, eventData) {
 
 可热重载数值应写入 `defaultConfig` 后通过 `config.getDouble` 读取；跨 tick 状态放入 `data`，不要把 `player` 或 `eventData` 保存到全局变量。
 
+## 配置文件示例
+
+脚本首次加载时会创建同名 `_JS.yml`。`defaultConfig` 只负责提供缺省值，服主修改后的值会在重载时继续保留：
+
+```javascript
+function defaultConfig(config) {
+    // 这些键会落盘到 Attribute/SX-Attribute/Aura_JS.yml，便于不改脚本调整效果。
+    config.set("Aura.DiscernName", "光环");
+    config.set("Aura.Particle", "END_ROD");
+    config.set("Aura.Count", 3);
+    config.set("Aura.CombatPower", 10);
+    return config;
+}
+
+function eventMethod(values, eventData) {
+    if (values[0] <= 0 || !eventData || typeof eventData.getEntity !== "function") return;
+    var player = eventData.getEntity();
+    if (!Player.isInstance(player)) return;
+    var count = config.getInt("Aura.Count", 3);
+    // 读取配置而不是写死数量，使 /sxa reload 后的新值立即作用于后续事件。
+    player.getWorld().spawnParticle(Particle.END_ROD, player.getLocation().add(0, 1, 0), count);
+}
+```
+
+## 生命周期与数据隔离
+
+- `loadAttribute` 可能对同一物品 Lore 多次调用，只累加当前 `values`，不要在此创建任务或修改玩家。
+- `eventMethod` 的 `values` 是当前实体属性快照；事件对象类型不固定，必须先检查方法或使用 Java 类的 `isInstance`。
+- `onEnable` 和 `onReLoad` 适合读取配置、编译脚本和初始化共享常量；重载时应替换旧引用，避免任务重复注册。
+- `onDisable` 必须取消脚本自行创建的任务并清空集合；不要继续访问已经卸载的插件对象。
+- 每个玩家的计时器、角度和叠层数据应放在该属性实例的 `data` 或玩家绑定中，禁止使用全局 `player`、`eventData` 保存实体引用。
+
+## 常见类型转换
+
+Nashorn 返回的 Bukkit 数值可能是 Java 包装类型。比较前可显式转换为 JavaScript 数字；枚举参数则传入 Bukkit 枚举值：
+
+```javascript
+var amount = Number(values[0]);
+var sound = Packages.org.bukkit.Sound.BLOCK_FIRE_AMBIENT;
+player.getWorld().playSound(player.getLocation(), sound, 0.8, 1.2);
+```
+
 ## 故障排查
 
 | 日志/现象 | 处理方式 |
