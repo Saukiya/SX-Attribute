@@ -33,6 +33,8 @@ public class Config {
     public static final String HEALTH_BOSS_BAR_BLACK_CAUSE_LIST = "HealthDisplays.BossBar.BlackCauseList";
 
     public static final String ITEM_DISPLAY_NAME = "ItemDisplayName";
+    /** 控制 SX-Item 物品与随机表达式桥接；默认关闭以避免 SX-Attribute 自带实现抢占配置。 */
+    public static final String SX_ITEM_ENABLED = "SXItem.Enabled";
 
     public static final String DAMAGE_EVENT_PRIORITY = "DamageEvent.Priority";
     public static final String DAMAGE_EVENT_BLACK_CAUSE_LIST = "DamageEvent.BlackCauseList";
@@ -97,6 +99,8 @@ public class Config {
     @Getter
     private static boolean itemDisplayName;
     @Getter
+    private static boolean sxItemEnabled;
+    @Getter
     private static boolean damageCalculationToEVE;
     @Getter
     private static boolean damageGauges;
@@ -145,6 +149,7 @@ public class Config {
         damageEventBlackList = config.getStringList(DAMAGE_EVENT_BLACK_CAUSE_LIST);
         holographicHealthTake = config.getBoolean(HOLOGRAPHIC_HEALTH_TAKE_ENABLED);
         itemDisplayName = config.getBoolean(ITEM_DISPLAY_NAME);
+        sxItemEnabled = config.getBoolean(SX_ITEM_ENABLED, false);
         damageCalculationToEVE = config.getBoolean(DAMAGE_CALCULATION_TO_EVE);
         damageGauges = config.getBoolean(DAMAGE_GAUGES);
         clearDefaultAttribute = config.getBoolean(CLEAR_DEFAULT_ATTRIBUTE);

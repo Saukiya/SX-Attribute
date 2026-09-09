@@ -113,6 +113,10 @@ public class GeneratorSX implements IGenerator, IUpdate {
 
     @Override
     public ItemStack getItem(Player player) {
+        // 开启桥接后必须走 SX-Item 的配置与生成器，避免两套 Item/RandomString 数据不一致。
+        if (Config.isSxItemEnabled() && SXItem.getItemManager() != null) {
+            return SXItem.getItemManager().getItem(key, player);
+        }
         val space = new RandomStringManager.Handler(); // LockMap 在里面呢
         String displayName = SXAttribute.getRandomStringManager().processRandomString(this.displayName, space);
         String id = SXAttribute.getRandomStringManager().processRandomString(ids.get(SXAttribute.getRandom().nextInt(ids.size())), space);

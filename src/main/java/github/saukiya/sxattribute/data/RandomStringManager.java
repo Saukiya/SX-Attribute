@@ -2,6 +2,7 @@ package github.saukiya.sxattribute.data;
 
 import github.saukiya.sxattribute.SXAttribute;
 import github.saukiya.sxitem.data.expression.ExpressionHandler;
+import github.saukiya.sxitem.SXItem;
 import github.saukiya.tools.base.EmptyMap;
 import lombok.Getter;
 import lombok.val;
@@ -166,6 +167,10 @@ public class RandomStringManager {
          */
         @Override
         public String random(String key) {
+            // 桥接开启时直接读取 SX-Item 的 RandomString 配置，保持唯一数据源。
+            if (github.saukiya.sxattribute.util.Config.isSxItemEnabled() && SXItem.getRandomManager() != null) {
+                return SXItem.getRandomManager().random(key);
+            }
             return SXAttribute.getRandomStringManager().random(key);
         }
     }

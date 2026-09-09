@@ -144,6 +144,11 @@ public class ItemDataManager {
      * @return ItemStack / null
      */
     public ItemStack getItem(String itemName, Player player) {
+        // 桥接开启时以 SX-Item 的 Item 配置为唯一来源，避免本地同名物品覆盖它。
+        if (Config.isSxItemEnabled() && github.saukiya.sxitem.SXItem.getItemManager() != null
+                && github.saukiya.sxitem.SXItem.getItemManager().getGenerator(itemName) != null) {
+            return github.saukiya.sxitem.SXItem.getItemManager().getItem(itemName, player);
+        }
         IGenerator ig = itemMap.get(itemName);
         if (ig != null) {
             ItemStack item = ig.getItem(player);
