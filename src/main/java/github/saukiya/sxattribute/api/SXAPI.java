@@ -26,6 +26,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Saukiya
  */
 public class SXAPI {
+    /** 返回 SkillAPI 双向桥是否已完成握手并注册属性/伤害处理器。 */
+    public boolean isSkillApiBridgeEnabled() {
+        return github.saukiya.sxattribute.hook.skillapi.SkillApiHook.isActive();
+    }
 
     /** Class 分源保留名前缀 (旧 API 映射为命名源 class:&lt;全类名&gt;) */
     private static final String CLASS_PREFIX = "class:";

@@ -6,6 +6,9 @@ DecimalFormat: '#.##'
 # 是否启用 SX-Item 物品与随机表达式桥接；关闭时 SX-Attribute 不接管 SX-Item 配置。
 SXItem:
   Enabled: false
+# ProSkillAPI 双向桥接；ProSkillAPI 侧也必须显式开启，SX 才会接管其属性与伤害。
+SkillAPI:
+  Enabled: false
 # 外部插件兼容开关。
 Compatibility:
   MythicMobs: true # 穿戴和掉落物品目前与SX-Item有一定冲突, 如果物品ID相同, 会判断两次. 可选择性关闭SX的掉落/穿戴功能, 重启有效
